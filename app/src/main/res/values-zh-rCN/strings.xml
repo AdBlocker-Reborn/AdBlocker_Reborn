@@ -32,4 +32,6 @@
     <string name="backpress_hook">启用可取消对话框</string>
     <string name="debug_description">记录更多日志以提供调试信息</string>
     <string name="debug">启用调试模式</string>
+    <string name="hide_launcher_icon">隐藏启动器图标</string>
+    <string name="hide_launcher_icon_description">你仍可以通过 Xposed Installer 进入设置</string>
 </resources>

@@ -1,8 +1,10 @@
 package com.aviraxp.adblocker.continued.ui;
 
 import android.app.AlertDialog;
+import android.content.ComponentName;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Bundle;
 import android.preference.Preference;
@@ -31,6 +33,7 @@ public class SettingsActivity extends PreferenceActivity {
         donateAlipay();
         openGithub();
         licenseActivityListener();
+        hideIconListener();
     }
 
     private void checkState() {
@@ -107,6 +110,23 @@ public class SettingsActivity extends PreferenceActivity {
                 intent.setAction(Intent.ACTION_VIEW);
                 intent.setData(Uri.parse("https://github.com/aviraxp/AdBlocker_Reborned"));
                 startActivity(intent);
+                return true;
+            }
+        });
+    }
+
+    @SuppressWarnings("deprecation")
+    private void hideIconListener() {
+        findPreference("HIDEICON").setOnPreferenceChangeListener(new Preference.OnPreferenceChangeListener() {
+            @Override
+            public boolean onPreferenceChange(Preference preference, Object obj) {
+                PackageManager packageManager = SettingsActivity.this.getPackageManager();
+                ComponentName aliasName = new ComponentName(SettingsActivity.this, BuildConfig.APPLICATION_ID + ".SettingsActivityLauncher");
+                if ((boolean) obj) {
+                    packageManager.setComponentEnabledSetting(aliasName, PackageManager.COMPONENT_ENABLED_STATE_DISABLED, PackageManager.DONT_KILL_APP);
+                } else {
+                    packageManager.setComponentEnabledSetting(aliasName, PackageManager.COMPONENT_ENABLED_STATE_ENABLED, PackageManager.DONT_KILL_APP);
+                }
                 return true;
             }
         });

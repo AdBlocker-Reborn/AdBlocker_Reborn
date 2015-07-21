@@ -40,6 +40,11 @@
             android:key="DEBUG"
             android:summary="@string/debug_description"
             android:title="@string/debug" />
+        <CheckBoxPreference
+            android:defaultValue="false"
+            android:key="HIDEICON"
+            android:summary="@string/hide_launcher_icon_description"
+            android:title="@string/hide_launcher_icon" />
     </PreferenceCategory>
     <PreferenceCategory android:title="@string/donation">
         <Preference

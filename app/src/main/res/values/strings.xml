@@ -32,4 +32,6 @@
     <string name="backpress_hook">Enable Cancelable Dialog</string>
     <string name="debug_description">Record more logs to provide debugging information</string>
     <string name="debug">Enable Debugging Mode</string>
+    <string name="hide_launcher_icon">Hide Launcher Icon</string>
+    <string name="hide_launcher_icon_description">You can still access settings through Xposed Installer</string>
 </resources>
