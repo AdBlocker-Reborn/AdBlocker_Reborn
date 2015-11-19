@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android" >
+ 
+    <PreferenceCategory android:title=" " >
+        <Preference android:title="View blocking stats"
+	        android:key="btnLastBlocked"
+	        android:summary="View the last blocked host and information"
+	    />
+    </PreferenceCategory>
+    
+    <PreferenceCategory android:title="Block Lists" >
+        <Preference android:title="Add a new block lists"
+	        android:key="btnAddNewList"
+	        android:summary="Add a new block list to block hosts"
+	    />
+        <Preference android:title="View current block lists"
+	        android:key="btnLastBlocked"
+	        android:summary="View the block lists"
+	    />
+        <Preference android:title="Rebuild Cache"
+	        android:key="btnRebuildCache"
+	        android:summary="Rebuilds the cache to apply new blocked hosts"
+	    />
+        <Preference android:title="Update block lists"
+	        android:key="btnUpdateLists"
+	        android:summary="Updates all the block lists"
+	    />
+        <CheckBoxPreference
+            android:defaultValue="false"
+            android:key="cbAutoUpdate"
+            android:summary="Automatically update the block lists"
+            android:title="Auto Update" >
+        </CheckBoxPreference>
+    </PreferenceCategory>
+    
+    <PreferenceCategory android:title="History" >
+        <Preference android:title="View History"
+	        android:key="btnViewHistory"
+	        android:summary="See all the blocked and allowed connections for apps"
+	    />
+    </PreferenceCategory>
+ 
+    <PreferenceCategory android:title="Notifications" >
+        <CheckBoxPreference
+            android:defaultValue="false"
+            android:key="cbEnableBlockedNotifications"
+            android:summary="Show a notifcation for a blocked host"
+            android:title="Show" >
+        </CheckBoxPreference>
+        <CheckBoxPreference
+            android:defaultValue="false"
+            android:key="cbEnableAllowedNotifications"
+            android:summary="Show a notifcation when a connection is established"
+            android:title="Show" >
+        </CheckBoxPreference>
+    </PreferenceCategory>
+    <PreferenceCategory android:title="Misc" >
+        <Preference android:title="Changelog"
+	        android:key="btnChangeLog"
+	        android:summary="View all the changes and versions"
+	    />
+        <Preference android:title="About"
+	        android:key="btnAbout"
+	        android:summary="About the program and who made it"
+	    />
+    </PreferenceCategory>
+</PreferenceScreen>

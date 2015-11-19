@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.peerblock"
+    android:versionCode="1"
+    android:versionName="1.04" >
+
+    <uses-sdk
+        android:minSdkVersion="14"
+        android:targetSdkVersion="18" />
+    
+    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+
+    <application
+        android:allowBackup="true"
+        android:icon="@drawable/ic_launcher"
+        android:label="@string/app_name"
+        android:theme="@style/AppTheme" >
+        <activity
+            android:name="com.activities.PeerBlock"
+            android:label="@string/app_name"
+            android:configChanges="keyboardHidden|orientation|screenSize" >
+            <!--  <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter> -->
+        </activity>
+        
+        <activity
+            android:name="com.activities.UpdateConfigActivity"
+            android:label="@string/app_name" >
+        </activity>
+        <activity
+            android:name="com.activities.AppHistoryActivity"
+            android:label="@string/app_name" >
+            
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+            </intent-filter>
+        </activity>
+        
+        <!--   -->
+        <activity
+            android:name="com.activities.LastBlockedHostActivity"
+            android:label="@string/app_name" >
+            
+            <intent-filter>
+                <meta-data
+            		android:name="android.support.PARENT_ACTIVITY"
+            		android:value="com.activities.MainActivity"
+				/>
+            </intent-filter>
+        </activity>
+        <activity
+            android:name="com.fragments.HistoryFragment"
+            android:label="@string/app_name" >
+            
+            <intent-filter>
+                <meta-data
+            		android:name="android.support.PARENT_ACTIVITY"
+            		android:value="com.activities.MainActivity"
+				/>
+            </intent-filter>
+        </activity>
+        <activity
+            android:name="com.fragments.ChangeLogFragment"
+            android:label="@string/app_name" >
+            
+            <intent-filter>
+                <meta-data
+            		android:name="android.support.PARENT_ACTIVITY"
+            		android:value="com.activities.MainActivity"
+				/>
+            </intent-filter>
+        </activity>
+        <activity
+            android:name="com.fragments.AboutFragment"
+            android:label="@string/app_name" >
+            
+            <intent-filter>
+                <meta-data
+            		android:name="android.support.PARENT_ACTIVITY"
+            		android:value="com.activities.MainActivity"
+				/>
+            </intent-filter>
+        </activity>
+        
+        <activity
+            android:name="com.activities.MainActivity"
+            android:label="@string/app_name"
+            android:configChanges="keyboardHidden|orientation|screenSize" >
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        
+        <provider
+            android:name=".PeerBlockProvider"
+            android:authorities="com.peerblock.provider"
+            android:enabled="true"
+            android:excludeFromRecents="true"
+            android:exported="true"
+            android:process=":provider"
+            android:syncable="false" >
+        </provider>
+        
+        <receiver android:name=".BootReceiver" >
+            <intent-filter>
+                <action android:name="android.intent.action.BOOT_COMPLETED" />
+            </intent-filter>
+        </receiver>
+        
+        <receiver android:name=".PeerReceiver" >
+            <intent-filter>
+                <action android:name="com.peerblock.PeerBlockReceiver" />
+            </intent-filter>
+        </receiver>
+        
+        <meta-data android:value="true" android:name="xposedmodule"/>
+        <meta-data android:value="2.0*" android:name="xposedminversion"/>
+        <meta-data android:value="PeerBlock For Android, The quieter you become, The less you're able to see" android:name="xposeddescription"/>
+    </application>
+
+</manifest>
