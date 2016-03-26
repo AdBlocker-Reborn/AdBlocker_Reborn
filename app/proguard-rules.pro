@@ -15,4 +15,9 @@
 #-keepclassmembers class fqcn.of.javascript.interface.for.webview {
 #   public *;
 #}
--keep class com.aviraxp.adblocker.continued.** { *; }
+
+-obfuscationdictionary dictionary-elder.txt
+-keep class com.aviraxp.adblocker.continued.hook.HookLoader
+-keepclassmembernames class com.aviraxp.adblocker.continued.ui.SettingsActivity {
+    static boolean isActivated;
+}
