@@ -9,6 +9,8 @@ import java.net.URLDecoder;
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.Set;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import de.robv.android.xposed.IXposedHookLoadPackage;
 import de.robv.android.xposed.IXposedHookZygoteInit;
@@ -21,9 +23,10 @@ public class WebViewHook implements IXposedHookLoadPackage, IXposedHookZygoteIni
 
     public Resources res;
     private boolean adExist;
-    private Set<String> urlList;
+    private Set<String> hostsList;
     private Set<String> whiteList;
-
+    private Set<String> regexList;
+    
     private void removeAdView(final View view) throws Throwable {
         ViewGroup.LayoutParams params = view.getLayoutParams();
         if (params == null) {
@@ -120,11 +123,23 @@ public class WebViewHook implements IXposedHookLoadPackage, IXposedHookZygoteIni
             if (!data.equals("")) {
                 dataDecode = URLDecoder.decode(data, "UTF-8");
             }
-            for (String adUrl : urlList) {
+            for (String adUrl : hostsList) {
                 if ((urlDecode != null && urlDecode.contains(adUrl)) || (dataDecode != null && dataDecode.contains(adUrl))) {
                     param.setResult(new Object());
                     removeAdView((View) param.thisObject);
                     return true;
+                }
+            }
+            for (String regexAdUrl : regexList) {
+                if (urlDecode != null && urlDecode.contains("//")) {
+                    String urlRegex = urlDecode.substring(urlDecode.indexOf("//") + 1);
+                    Pattern regexPattern = Pattern.compile(regexAdUrl);
+                    Matcher matcher = regexPattern.matcher(urlRegex);
+                    if (matcher.matches()) {
+                        param.setResult(new Object());
+                        removeAdView((View) param.thisObject);
+                        return true;
+                    }
                 }
             }
         } catch (Exception e) {
@@ -141,13 +156,18 @@ public class WebViewHook implements IXposedHookLoadPackage, IXposedHookZygoteIni
         res = XModuleResources.createInstance(MODULE_PATH, null);
         byte[] array = XposedHelpers.assetAsByteArray(res, "blocklist/hosts");
         byte[] array2 = XposedHelpers.assetAsByteArray(res, "whitelist/app");
+        byte[] array3 = XposedHelpers.assetAsByteArray(res, "blocklist/regexurls");
         String decoded = new String(array);
         String decoded2 = new String(array2);
+        String decoded3 = new String(array3);
         String[] sUrls = decoded.split("\n");
         String[] sUrls2 = decoded2.split("\n");
-        urlList = new HashSet<>();
+        String[] sUrls3 = decoded3.split("\n");
+        hostsList = new HashSet<>();
         whiteList = new HashSet<>();
-        Collections.addAll(urlList, sUrls);
+        regexList = new HashSet<>();
+        Collections.addAll(hostsList, sUrls);
         Collections.addAll(whiteList, sUrls2);
+        Collections.addAll(regexList, sUrls3);
     }
 }
