@@ -181,7 +181,7 @@ public class WebViewHook implements IXposedHookLoadPackage, IXposedHookZygoteIni
         String MODULE_PATH = startupParam.modulePath;
         res = XModuleResources.createInstance(MODULE_PATH, null);
         byte[] array = XposedHelpers.assetAsByteArray(res, "blocklist/hosts");
-        byte[] array2 = XposedHelpers.assetAsByteArray(res, "whitelist/app");
+        byte[] array2 = XposedHelpers.assetAsByteArray(res, "whitelist/urlapp");
         byte[] array3 = XposedHelpers.assetAsByteArray(res, "blocklist/regexurls");
         String decoded = new String(array, "UTF-8");
         String decoded2 = new String(array2, "UTF-8");

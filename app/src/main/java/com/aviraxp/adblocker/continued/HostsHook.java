@@ -179,7 +179,7 @@ public class HostsHook implements IXposedHookLoadPackage, IXposedHookZygoteInit 
         String MODULE_PATH = startupParam.modulePath;
         Resources res = XModuleResources.createInstance(MODULE_PATH, null);
         byte[] array = XposedHelpers.assetAsByteArray(res, "blocklist/hosts");
-        byte[] array2 = XposedHelpers.assetAsByteArray(res, "whitelist/app");
+        byte[] array2 = XposedHelpers.assetAsByteArray(res, "whitelist/urlapp");
         String decoded = new String(array, "UTF-8");
         String decoded2 = new String(array2, "UTF-8");
         String[] sUrls = decoded.split("\n");

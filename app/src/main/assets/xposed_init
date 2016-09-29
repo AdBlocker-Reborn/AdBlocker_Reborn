@@ -3,3 +3,4 @@ com.aviraxp.adblocker.continued.HostsHook
 com.aviraxp.adblocker.continued.ServicesHook
 com.aviraxp.adblocker.continued.ReceiversHook
 com.aviraxp.adblocker.continued.WebViewHook
+com.aviraxp.adblocker.continued.HidingHook
