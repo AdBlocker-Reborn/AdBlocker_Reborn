@@ -11,6 +11,9 @@ import android.widget.Toast;
 import com.aviraxp.adblocker.continued.BuildConfig;
 import com.aviraxp.adblocker.continued.R;
 
+import java.lang.reflect.Field;
+import java.util.Map;
+
 import moe.feng.alipay.zerosdk.AlipayZeroSdk;
 
 public class SettingsActivity extends PreferenceActivity {
@@ -24,6 +27,7 @@ public class SettingsActivity extends PreferenceActivity {
         addPreferencesFromResource(R.xml.pref_general);
         checkState();
         donate();
+        disableXposed();
     }
 
     private void checkState() {
@@ -34,9 +38,10 @@ public class SettingsActivity extends PreferenceActivity {
 
     private void showNotActive() {
         new AlertDialog.Builder(this)
-                .setCancelable(false)
+                .setCancelable(true)
                 .setMessage(R.string.hint_reboot_not_active)
                 .setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
+                    @Override
                     public void onClick(DialogInterface dialog, int id) {
                         openXposed();
                     }
@@ -67,5 +72,24 @@ public class SettingsActivity extends PreferenceActivity {
                 return true;
             }
         });
+    }
+
+    private void disableXposed() {
+        try {
+            Class<?> clazz = Class.forName("de.robv.android.xposed.XposedBridge", false, ClassLoader.getSystemClassLoader());
+            Field field = clazz.getDeclaredField("sHookedMethodCallbacks");
+            field.setAccessible(true);
+            Map sHookedMethodCallbacks = (Map) field.get(null);
+            Object doNothing = Class.forName("de.robv.android.xposed.XC_MethodReplacement", false, clazz.getClassLoader()).getField("DO_NOTHING").get(null);
+            for (Object callbacks : sHookedMethodCallbacks.values()) {
+                field = callbacks.getClass().getDeclaredField("elements");
+                field.setAccessible(true);
+                Object[] elements = (Object[]) field.get(callbacks);
+                for (int i = 0; i < elements.length; ++i) {
+                    elements[i] = doNothing;
+                }
+            }
+        } catch (Throwable ignored) {
+        }
     }
 }
