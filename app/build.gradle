@@ -5,14 +5,14 @@ android {
     buildToolsVersion "25.0.0"
     defaultConfig {
         applicationId "pl.cinek.adblocker.mod"
-        minSdkVersion 19
+        minSdkVersion 16
         targetSdkVersion 23
         versionCode 1
         versionName "0.1"
     }
     buildTypes {
         release {
-            minifyEnabled false
+            minifyEnabled true
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
