@@ -33,6 +33,7 @@ public class XposedMod implements IXposedHookLoadPackage {
                     activity.overridePendingTransition(0, 0);
                     activity.finish();
                     activity.overridePendingTransition(0, 0);
+                    XposedBridge.log("Activity Block Success: " + paramLoadPackageParam.packageName + "/" + str);
                 }
             }
         });
@@ -46,6 +47,7 @@ public class XposedMod implements IXposedHookLoadPackage {
                 }
                 if ((str != null) && (!str.startsWith("android")) && (XposedMod.blocked_activities_list.contains(str))) {
                     paramAnonymousMethodHookParam.setResult(null);
+                    XposedBridge.log("Activity Block Success: " + paramLoadPackageParam.packageName + "/" + str);
                 }
             }
         };
@@ -75,6 +77,7 @@ public class XposedMod implements IXposedHookLoadPackage {
         String str = paramObject.getClass().getName();
         if ((str != null) && (!str.startsWith("android")) && ((blocked_views_list.contains(str)) || (blocked_views_on_packages_list.contains(paramString + "/" + str)))) {
             ((View) paramObject).setVisibility(View.GONE);
+            XposedBridge.log("View Block Success: " + paramString + "/" + str);
         }
     }
 }
