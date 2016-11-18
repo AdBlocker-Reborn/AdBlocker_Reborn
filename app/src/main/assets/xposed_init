@@ -1,1 +1,2 @@
-pl.cinek.adblocker.mod.XposedMod
+pl.cinek.adblocker.mod.XposedGeneralHook
+pl.cinek.adblocker.mod.XposedSpecificHook

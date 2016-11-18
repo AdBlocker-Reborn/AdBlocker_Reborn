@@ -1,8 +1,10 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="pl.cinek.adblocker.mod">
+    package="pl.cinek.adblocker.mod"
+    android:installLocation="internalOnly">
 
     <application
         android:allowBackup="true"
+        android:fullBackupContent="true"
         android:icon="@mipmap/ic_launcher"
         android:label="ADBlocker Mod"
         android:supportsRtl="true">
@@ -14,7 +16,7 @@
             android:value="53" />
         <meta-data
             android:name="xposeddescription"
-            android:value="ADBlocker Mod" />
+            android:value="Continued ADBlocker, Originally by cienk" />
     </application>
 
 </manifest>

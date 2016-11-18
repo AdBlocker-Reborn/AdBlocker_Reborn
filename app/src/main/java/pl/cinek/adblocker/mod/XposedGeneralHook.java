@@ -17,10 +17,10 @@ import de.robv.android.xposed.XposedBridge;
 import de.robv.android.xposed.XposedHelpers;
 import de.robv.android.xposed.callbacks.XC_LoadPackage;
 
-public class XposedMod implements IXposedHookLoadPackage {
-    private static final List<String> blocked_activities_list = Arrays.asList(ADBlockList.blocked_activities);
-    private static final List<String> blocked_views_list = Arrays.asList(ADBlockList.blocked_views);
-    private static final List<String> blocked_views_on_packages_list = Arrays.asList(ADBlockList.blocked_views_on_packages);
+public class XposedGeneralHook implements IXposedHookLoadPackage {
+    private static final List<String> blocked_activities_list = Arrays.asList(BlockList.blocked_activities);
+    private static final List<String> blocked_views_list = Arrays.asList(BlockList.blocked_views);
+    private static final List<String> blocked_views_on_packages_list = Arrays.asList(BlockList.blocked_views_on_packages);
 
     public void handleLoadPackage(final XC_LoadPackage.LoadPackageParam paramLoadPackageParam)
             throws Throwable {
@@ -29,7 +29,7 @@ public class XposedMod implements IXposedHookLoadPackage {
                     throws Throwable {
                 Activity activity = (Activity) paramAnonymousMethodHookParam.thisObject;
                 String str = activity.getClass().getName();
-                if ((str != null) && (!str.startsWith("android")) && (XposedMod.blocked_activities_list.contains(str))) {
+                if ((str != null) && (!str.startsWith("android")) && (XposedGeneralHook.blocked_activities_list.contains(str))) {
                     activity.overridePendingTransition(0, 0);
                     activity.finish();
                     activity.overridePendingTransition(0, 0);
@@ -45,7 +45,7 @@ public class XposedMod implements IXposedHookLoadPackage {
                 if (localComponentName != null) {
                     str = localComponentName.getClassName();
                 }
-                if ((str != null) && (!str.startsWith("android")) && (XposedMod.blocked_activities_list.contains(str))) {
+                if ((str != null) && (!str.startsWith("android")) && (XposedGeneralHook.blocked_activities_list.contains(str))) {
                     paramAnonymousMethodHookParam.setResult(null);
                     XposedBridge.log("Activity Block Success: " + paramLoadPackageParam.packageName + "/" + str);
                 }
