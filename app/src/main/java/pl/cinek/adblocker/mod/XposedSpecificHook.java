@@ -32,6 +32,7 @@ public class XposedSpecificHook implements IXposedHookLoadPackage {
                     }
                 }
             });
+            XposedBridge.log("Application Specific Hook Success: " + paramLoadPackageParam.packageName);
         }
 
     }
