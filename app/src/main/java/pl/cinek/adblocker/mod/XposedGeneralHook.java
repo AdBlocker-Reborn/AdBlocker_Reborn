@@ -21,56 +21,59 @@ public class XposedGeneralHook implements IXposedHookLoadPackage {
     private static final List<String> blocked_activities_list = Arrays.asList(BlockList.blocked_activities);
     private static final List<String> blocked_views_list = Arrays.asList(BlockList.blocked_views);
     private static final List<String> blocked_views_on_packages_list = Arrays.asList(BlockList.blocked_views_on_packages);
+    private static final List<String> blocked_specific_apps_list = Arrays.asList(BlockList.block_specific_apps);
 
     public void handleLoadPackage(final XC_LoadPackage.LoadPackageParam paramLoadPackageParam)
             throws Throwable {
-        XposedHelpers.findAndHookMethod(Activity.class, "onCreate", Bundle.class, new XC_MethodHook() {
-            protected void afterHookedMethod(XC_MethodHook.MethodHookParam paramAnonymousMethodHookParam)
-                    throws Throwable {
-                Activity activity = (Activity) paramAnonymousMethodHookParam.thisObject;
-                String str = activity.getClass().getName();
-                if ((str != null) && (!str.startsWith("android")) && (XposedGeneralHook.blocked_activities_list.contains(str))) {
-                    activity.overridePendingTransition(0, 0);
-                    activity.finish();
-                    activity.overridePendingTransition(0, 0);
-                    XposedBridge.log("Activity Block Success: " + paramLoadPackageParam.packageName + "/" + str);
+        if (!blocked_specific_apps_list.contains(paramLoadPackageParam.packageName)) {
+            XposedHelpers.findAndHookMethod(Activity.class, "onCreate", Bundle.class, new XC_MethodHook() {
+                protected void afterHookedMethod(XC_MethodHook.MethodHookParam paramAnonymousMethodHookParam)
+                        throws Throwable {
+                    Activity activity = (Activity) paramAnonymousMethodHookParam.thisObject;
+                    String str = activity.getClass().getName();
+                    if ((str != null) && (!str.startsWith("android")) && (blocked_activities_list.contains(str))) {
+                        activity.overridePendingTransition(0, 0);
+                        activity.finish();
+                        activity.overridePendingTransition(0, 0);
+                        XposedBridge.log("Activity Block Success: " + paramLoadPackageParam.packageName + "/" + str);
+                    }
                 }
-            }
-        });
-        Object localObject = new XC_MethodHook() {
-            protected void beforeHookedMethod(XC_MethodHook.MethodHookParam paramAnonymousMethodHookParam)
-                    throws Throwable {
-                ComponentName localComponentName = ((Intent) paramAnonymousMethodHookParam.args[0]).getComponent();
-                String str = null;
-                if (localComponentName != null) {
-                    str = localComponentName.getClassName();
+            });
+            Object localObject = new XC_MethodHook() {
+                protected void beforeHookedMethod(XC_MethodHook.MethodHookParam paramAnonymousMethodHookParam)
+                        throws Throwable {
+                    ComponentName localComponentName = ((Intent) paramAnonymousMethodHookParam.args[0]).getComponent();
+                    String str = null;
+                    if (localComponentName != null) {
+                        str = localComponentName.getClassName();
+                    }
+                    if ((str != null) && (!str.startsWith("android")) && (blocked_activities_list.contains(str))) {
+                        paramAnonymousMethodHookParam.setResult(null);
+                        XposedBridge.log("Activity Block Success: " + paramLoadPackageParam.packageName + "/" + str);
+                    }
                 }
-                if ((str != null) && (!str.startsWith("android")) && (XposedGeneralHook.blocked_activities_list.contains(str))) {
-                    paramAnonymousMethodHookParam.setResult(null);
-                    XposedBridge.log("Activity Block Success: " + paramLoadPackageParam.packageName + "/" + str);
-                }
-            }
-        };
-        XposedHelpers.findAndHookMethod(Activity.class, "startActivity", Intent.class, localObject);
-        XposedHelpers.findAndHookMethod(ContextWrapper.class, "startActivity", Intent.class, localObject);
-        XposedHelpers.findAndHookMethod(Activity.class, "startActivityForResult", Intent.class, Integer.TYPE, localObject);
-        XposedHelpers.findAndHookMethod(Activity.class, "startActivityForResult", Intent.class, Integer.TYPE, Bundle.class, localObject);
-        localObject = new XC_MethodHook() {
-            protected void afterHookedMethod(XC_MethodHook.MethodHookParam paramAnonymousMethodHookParam)
-                    throws Throwable {
-                hideIfAdView(paramAnonymousMethodHookParam.thisObject, paramLoadPackageParam.packageName);
-            }
-        };
-        XposedBridge.hookAllConstructors(View.class, (XC_MethodHook) localObject);
-        XposedBridge.hookAllConstructors(ViewGroup.class, (XC_MethodHook) localObject);
-        XposedHelpers.findAndHookMethod(View.class, "setVisibility", Integer.TYPE, new XC_MethodHook() {
-            protected void afterHookedMethod(XC_MethodHook.MethodHookParam paramAnonymousMethodHookParam)
-                    throws Throwable {
-                if ((Integer) paramAnonymousMethodHookParam.args[0] != 8) {
+            };
+            XposedHelpers.findAndHookMethod(Activity.class, "startActivity", Intent.class, localObject);
+            XposedHelpers.findAndHookMethod(ContextWrapper.class, "startActivity", Intent.class, localObject);
+            XposedHelpers.findAndHookMethod(Activity.class, "startActivityForResult", Intent.class, Integer.TYPE, localObject);
+            XposedHelpers.findAndHookMethod(Activity.class, "startActivityForResult", Intent.class, Integer.TYPE, Bundle.class, localObject);
+            localObject = new XC_MethodHook() {
+                protected void afterHookedMethod(XC_MethodHook.MethodHookParam paramAnonymousMethodHookParam)
+                        throws Throwable {
                     hideIfAdView(paramAnonymousMethodHookParam.thisObject, paramLoadPackageParam.packageName);
                 }
-            }
-        });
+            };
+            XposedBridge.hookAllConstructors(View.class, (XC_MethodHook) localObject);
+            XposedBridge.hookAllConstructors(ViewGroup.class, (XC_MethodHook) localObject);
+            XposedHelpers.findAndHookMethod(View.class, "setVisibility", Integer.TYPE, new XC_MethodHook() {
+                protected void afterHookedMethod(XC_MethodHook.MethodHookParam paramAnonymousMethodHookParam)
+                        throws Throwable {
+                    if ((Integer) paramAnonymousMethodHookParam.args[0] != 8) {
+                        hideIfAdView(paramAnonymousMethodHookParam.thisObject, paramLoadPackageParam.packageName);
+                    }
+                }
+            });
+        }
     }
 
     private void hideIfAdView(Object paramObject, String paramString) {
