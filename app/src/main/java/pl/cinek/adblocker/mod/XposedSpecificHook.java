@@ -93,6 +93,7 @@ public class XposedSpecificHook implements IXposedHookLoadPackage {
                     }
             );
             XposedHelpers.findAndHookMethod("com.tumblr.model.PostAttribution", paramLoadPackageParam.classLoader, "shouldShowNewAppAttribution", XC_MethodReplacement.returnConstant(false));
+            XposedBridge.log("Application Specific Hook Success: " + paramLoadPackageParam.packageName);
         }
     }
 }

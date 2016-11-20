@@ -2,6 +2,7 @@ package pl.cinek.adblocker.mod;
 
 import android.app.Activity;
 import android.content.ComponentName;
+import android.content.Context;
 import android.content.ContextWrapper;
 import android.content.Intent;
 import android.os.Bundle;
@@ -13,6 +14,7 @@ import java.util.List;
 
 import de.robv.android.xposed.IXposedHookLoadPackage;
 import de.robv.android.xposed.XC_MethodHook;
+import de.robv.android.xposed.XC_MethodReplacement;
 import de.robv.android.xposed.XposedBridge;
 import de.robv.android.xposed.XposedHelpers;
 import de.robv.android.xposed.callbacks.XC_LoadPackage;
@@ -22,6 +24,7 @@ public class XposedGeneralHook implements IXposedHookLoadPackage {
     private static final List<String> blocked_views_list = Arrays.asList(BlockList.blocked_views);
     private static final List<String> blocked_views_on_packages_list = Arrays.asList(BlockList.blocked_views_on_packages);
     private static final List<String> blocked_specific_apps_list = Arrays.asList(BlockList.blocked_specific_apps);
+    private static final List<String> blocked_receivers_list = Arrays.asList(BlockList.blocked_receivers);
 
     public void handleLoadPackage(final XC_LoadPackage.LoadPackageParam paramLoadPackageParam)
             throws Throwable {
@@ -73,6 +76,12 @@ public class XposedGeneralHook implements IXposedHookLoadPackage {
                     }
                 }
             });
+        }
+        try {
+            for (String receivers : blocked_receivers_list) {
+                XposedHelpers.findAndHookMethod(receivers, paramLoadPackageParam.classLoader, "onReceive", Context.class, Intent.class, XC_MethodReplacement.DO_NOTHING);
+            }
+        } catch (Throwable ignore) {
         }
     }
 
