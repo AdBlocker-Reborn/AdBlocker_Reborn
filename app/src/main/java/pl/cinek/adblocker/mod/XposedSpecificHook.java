@@ -46,7 +46,7 @@ public class XposedSpecificHook implements IXposedHookLoadPackage {
         if (paramLoadPackageParam.packageName.equals("com.youku.phone")) {
             Class<?> MediaPlayerConfiguration = XposedHelpers.findClass("com.youku.player.config.MediaPlayerConfiguration", paramLoadPackageParam.classLoader);
             Class<?> YoukuUtil = XposedHelpers.findClass("com.youku.util.YoukuUtil", paramLoadPackageParam.classLoader);
-            Object AnalyticWrapper = XposedHelpers.findClass("com.youku.player.util.AnalyticWrapperWrapper", paramLoadPackageParam.classLoader);
+            Object AnalyticWrapper = XposedHelpers.findClass("com.youku.player.util.AnalyticWrapper", paramLoadPackageParam.classLoader);
             Object AnalyticBase = XposedHelpers.findClass("com.youku.AnalyticWrapper.AnalyticWrapperBase", paramLoadPackageParam.classLoader);
             Object GameCenterModel = XposedHelpers.findClass("com.youku.gamecenter.GameCenterModel", paramLoadPackageParam.classLoader);
             XposedHelpers.findAndHookMethod(MediaPlayerConfiguration, "showAdWebView", XC_MethodReplacement.returnConstant(false));
