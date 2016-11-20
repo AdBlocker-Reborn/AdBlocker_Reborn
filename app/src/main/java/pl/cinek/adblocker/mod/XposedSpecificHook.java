@@ -1,5 +1,6 @@
 package pl.cinek.adblocker.mod;
 
+import android.app.Notification;
 import android.content.Context;
 
 import org.json.JSONObject;
@@ -93,6 +94,21 @@ public class XposedSpecificHook implements IXposedHookLoadPackage {
                     }
             );
             XposedHelpers.findAndHookMethod("com.tumblr.model.PostAttribution", paramLoadPackageParam.classLoader, "shouldShowNewAppAttribution", XC_MethodReplacement.returnConstant(false));
+            XposedBridge.log("Application Specific Hook Success: " + paramLoadPackageParam.packageName);
+        }
+
+        //SoundCloud
+        if (paramLoadPackageParam.packageName.equals("com.soundcloud.android")) {
+            XposedHelpers.findAndHookMethod("com.soundcloud.android.ads.AdsOperations", paramLoadPackageParam.classLoader, "insertAudioAd", "com.soundcloud.android.playback.TrackQueueItem", "com.soundcloud.android.ads.ApiAudioAd", XC_MethodReplacement.returnConstant(null));
+            XposedHelpers.findAndHookMethod("android.support.v4.app.NotificationManagerCompat", paramLoadPackageParam.classLoader, "notify", String.class, int.class, Notification.class, new XC_MethodHook() {
+                @Override
+                protected void beforeHookedMethod(MethodHookParam param)
+                        throws Throwable {
+                    if ("appboy_notification".equals(param.args[0])) {
+                        param.setResult(null);
+                    }
+                }
+            });
             XposedBridge.log("Application Specific Hook Success: " + paramLoadPackageParam.packageName);
         }
     }

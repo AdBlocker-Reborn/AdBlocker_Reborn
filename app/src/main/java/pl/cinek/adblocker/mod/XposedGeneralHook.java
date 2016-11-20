@@ -44,6 +44,7 @@ public class XposedGeneralHook implements IXposedHookLoadPackage {
                 }
             });
             Object activityObject = new XC_MethodHook() {
+                @Override
                 protected void beforeHookedMethod(XC_MethodHook.MethodHookParam paramAnonymousMethodHookParam)
                         throws Throwable {
                     ComponentName Component = ((Intent) paramAnonymousMethodHookParam.args[0]).getComponent();
