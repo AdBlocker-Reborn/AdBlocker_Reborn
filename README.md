@@ -6,8 +6,8 @@ All credits to:
 
 cinek - Original ADBlocker
 
-
 CzBix - Youku Patch
 
-
 FatMinMin - MinMinGuard
+
+apsun - SoundCloud & Tumblr Block
