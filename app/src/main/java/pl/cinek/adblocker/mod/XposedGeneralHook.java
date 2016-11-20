@@ -80,8 +80,9 @@ public class XposedGeneralHook implements IXposedHookLoadPackage {
         try {
             for (String receivers : blocked_receivers_list) {
                 XposedHelpers.findAndHookMethod(receivers, paramLoadPackageParam.classLoader, "onReceive", Context.class, Intent.class, XC_MethodReplacement.DO_NOTHING);
+                XposedBridge.log("Receiver Block Success: " + paramLoadPackageParam.packageName + "/" + receivers);
             }
-        } catch (Throwable ignore) {
+        } catch (XposedHelpers.ClassNotFoundError ignored) {
         }
     }
 
