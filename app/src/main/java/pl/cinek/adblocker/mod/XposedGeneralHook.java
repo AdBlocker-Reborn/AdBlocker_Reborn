@@ -30,6 +30,7 @@ public class XposedGeneralHook implements IXposedHookLoadPackage {
             throws Throwable {
         if (!blocked_specific_apps_list.contains(paramLoadPackageParam.packageName)) {
             XposedHelpers.findAndHookMethod(Activity.class, "onCreate", Bundle.class, new XC_MethodHook() {
+                @Override
                 protected void afterHookedMethod(XC_MethodHook.MethodHookParam paramAnonymousMethodHookParam)
                         throws Throwable {
                     Activity activity = (Activity) paramAnonymousMethodHookParam.thisObject;
@@ -61,6 +62,7 @@ public class XposedGeneralHook implements IXposedHookLoadPackage {
             XposedHelpers.findAndHookMethod(Activity.class, "startActivityForResult", Intent.class, Integer.TYPE, activityObject);
             XposedHelpers.findAndHookMethod(Activity.class, "startActivityForResult", Intent.class, Integer.TYPE, Bundle.class, activityObject);
             Object viewObject = new XC_MethodHook() {
+                @Override
                 protected void afterHookedMethod(XC_MethodHook.MethodHookParam paramAnonymousMethodHookParam)
                         throws Throwable {
                     hideIfAdView(paramAnonymousMethodHookParam.thisObject, paramLoadPackageParam.packageName);
@@ -69,6 +71,7 @@ public class XposedGeneralHook implements IXposedHookLoadPackage {
             XposedBridge.hookAllConstructors(View.class, (XC_MethodHook) viewObject);
             XposedBridge.hookAllConstructors(ViewGroup.class, (XC_MethodHook) viewObject);
             XposedHelpers.findAndHookMethod(View.class, "setVisibility", Integer.TYPE, new XC_MethodHook() {
+                @Override
                 protected void afterHookedMethod(XC_MethodHook.MethodHookParam paramAnonymousMethodHookParam)
                         throws Throwable {
                     if ((Integer) paramAnonymousMethodHookParam.args[0] != 8) {

@@ -5,7 +5,7 @@ android {
     buildToolsVersion "25.0.0"
     defaultConfig {
         applicationId "pl.cinek.adblocker.mod"
-        minSdkVersion 16
+        minSdkVersion 15
         targetSdkVersion 23
         versionCode 1
         versionName "0.1"
