@@ -6,7 +6,7 @@
         android:allowBackup="true"
         android:fullBackupContent="true"
         android:icon="@mipmap/ic_launcher"
-        android:label="ADBlocker Mod"
+        android:label="ADBlocker Continued"
         android:supportsRtl="true">
         <meta-data
             android:name="xposedmodule"
@@ -16,7 +16,7 @@
             android:value="53" />
         <meta-data
             android:name="xposeddescription"
-            android:value="Continued ADBlocker, Originally by cienk" />
+            android:value="Continued ADBlocker (Original by cinek)" />
     </application>
 
 </manifest>

@@ -111,5 +111,15 @@ public class XposedSpecificHook implements IXposedHookLoadPackage {
             });
             XposedBridge.log("Application Specific Hook Success: " + paramLoadPackageParam.packageName);
         }
+
+        //Kernel Adiutor
+        if (paramLoadPackageParam.packageName.equals("com.grarak.kerneladiutor")) {
+            Class BuildConfig = XposedHelpers.findClass("com.grarak.kerneladiutor.BuildConfig", paramLoadPackageParam.classLoader);
+            Class Utils = XposedHelpers.findClass("com.grarak.kerneladiutor.utils.Utils", paramLoadPackageParam.classLoader);
+            XposedHelpers.setStaticBooleanField(BuildConfig, "DEBUG", true);
+            XposedHelpers.setStaticObjectField(BuildConfig, "BUILD_TYPE", "DEBUG");
+            XposedHelpers.setStaticBooleanField(Utils, "DONATED", true);
+            XposedBridge.log("Application Specific Hook Success: " + paramLoadPackageParam.packageName);
+        }
     }
 }

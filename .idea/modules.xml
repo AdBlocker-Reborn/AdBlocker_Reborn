@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/ADBlocker-Mod.iml" filepath="$PROJECT_DIR$/ADBlocker-Mod.iml" />
+      <module fileurl="file://$PROJECT_DIR$/ADBlockee.iml" filepath="$PROJECT_DIR$/ADBlockee.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
     </modules>
   </component>
