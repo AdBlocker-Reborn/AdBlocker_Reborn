@@ -125,8 +125,8 @@ public class XposedSpecificHook implements IXposedHookLoadPackage {
             Class KABuildConfig = XposedHelpers.findClass("com.grarak.kerneladiutor.BuildConfig", paramLoadPackageParam.classLoader);
             Class Utils = XposedHelpers.findClass("com.grarak.kerneladiutor.utils.Utils", paramLoadPackageParam.classLoader);
             XposedHelpers.setStaticBooleanField(KABuildConfig, "DEBUG", true);
-            XposedHelpers.setStaticObjectField(KABuildConfig, "BUILD_TYPE", "DEBUG");
             XposedHelpers.setStaticBooleanField(Utils, "DONATED", true);
+            XposedHelpers.setStaticObjectField(KABuildConfig, "BUILD_TYPE", "DEBUG");
             if (BuildConfig.DEBUG) {
                 XposedBridge.log("Application Specific Hook Success: " + paramLoadPackageParam.packageName);
             }
