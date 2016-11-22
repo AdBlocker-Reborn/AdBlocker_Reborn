@@ -25,29 +25,33 @@ public class XposedHostsHook implements IXposedHookLoadPackage, IXposedHookZygot
     Set<String> patterns;
 
     public void handleLoadPackage(XC_LoadPackage.LoadPackageParam lpparam)
-            throws  Throwable{
+            throws Throwable {
         Class<?> inetAddrClz = XposedHelpers.findClass("java.net.InetAddress", lpparam.classLoader);
         Class<?> inetSockAddrClz = XposedHelpers.findClass(" java.net.InetSocketAddress", lpparam.classLoader);
         Class<?> socketClz = XposedHelpers.findClass("java.net.Socket", lpparam.classLoader);
         Class<?> ioBridgeClz = XposedHelpers.findClass("libcore.io.IoBridge", lpparam.classLoader);
 
         XposedBridge.hookAllConstructors(socketClz, new XC_MethodHook() {
-            @Override
-            protected void beforeHookedMethod(MethodHookParam param)
-                    throws Throwable {
-                Object obj = param.args[0];
-                String host = "";
-                if (obj.getClass().getName().equals("java.lang.String")) {
-                    host = (String) obj;
-                } else if (obj.getClass().getName().equals("java.net.InetAddress")) {
-                    host = ((InetAddress) obj).getHostName();
+                    @Override
+                    protected void beforeHookedMethod(MethodHookParam param)
+                            throws Throwable {
+                        try {
+                            Object obj = param.args[0];
+                            String host = null;
+                            if (obj.getClass().getName().equals("java.lang.String")) {
+                                host = (String) obj;
+                            } else if (obj.getClass().getName().equals("java.net.InetAddress")) {
+                                host = ((InetAddress) obj).getHostName();
+                            }
+                            if (host != null && patterns.contains(host)) {
+                                param.args[0] = null;
+                                param.setResult(new Object());
+                            }
+                        } catch (NullPointerException ignored) {
+                        }
+                    }
                 }
-                if (patterns.contains(host)) {
-                    param.args[0] = null;
-                    param.setResult(new Object());
-                }
-            }
-        });
+        );
 
         XC_MethodHook inetAddrHookSingleResult = new XC_MethodHook() {
             @Override
@@ -55,18 +59,16 @@ public class XposedHostsHook implements IXposedHookLoadPackage, IXposedHookZygot
                     throws Throwable {
                 String host = (String) param.args[0];
                 if (patterns.contains(host)) {
-                    Log.d("inet_before_host", host);
                     param.setResult(new Object());
                     param.setThrowable(new UnknownHostException(UNABLE_TO_RESOLVE_HOST));
                 }
             }
+
             @Override
             protected void afterHookedMethod(MethodHookParam param)
                     throws Throwable {
                 String host = (String) param.args[0];
-
                 if (patterns.contains(host)) {
-                    Log.d("inet_after_host", host);
                     param.setResult(new Object());
                     param.setThrowable(new UnknownHostException(UNABLE_TO_RESOLVE_HOST));
                 }
@@ -74,19 +76,20 @@ public class XposedHostsHook implements IXposedHookLoadPackage, IXposedHookZygot
         };
 
         XposedBridge.hookAllMethods(inetAddrClz, "getByName", inetAddrHookSingleResult);
-        XposedBridge.hookAllMethods(inetAddrClz, "getByAddress", inetAddrHookSingleResult);
         XposedBridge.hookAllMethods(inetAddrClz, "getAllByName", inetAddrHookSingleResult);
         XposedBridge.hookAllMethods(inetSockAddrClz, "createUnresolved", inetAddrHookSingleResult);
         XposedBridge.hookAllConstructors(inetSockAddrClz, new XC_MethodHook() {
             @Override
             protected void beforeHookedMethod(MethodHookParam param)
                     throws Throwable {
-                String host = (String) param.args[0];
-                if (patterns.contains(host)) {
-                    Log.d("inet_before_host", host);
-                    param.args[0] = "localhost";
-                    param.setResult(new Object());
-                    param.setThrowable(new UnknownHostException(UNABLE_TO_RESOLVE_HOST));
+                try {
+                    String host = (String) param.args[0];
+                    if (patterns.contains(host)) {
+                        param.args[0] = "localhost";
+                        param.setResult(new Object());
+                        param.setThrowable(new UnknownHostException(UNABLE_TO_RESOLVE_HOST));
+                    }
+                } catch (ClassCastException | NullPointerException ignored) {
                 }
             }
         });
@@ -106,6 +109,7 @@ public class XposedHostsHook implements IXposedHookLoadPackage, IXposedHookZygot
                     param.setThrowable(new UnknownHostException(UNABLE_TO_RESOLVE_HOST));
                 }
             }
+
             @Override
             protected void afterHookedMethod(MethodHookParam param)
                     throws Throwable {
@@ -131,9 +135,7 @@ public class XposedHostsHook implements IXposedHookLoadPackage, IXposedHookZygot
         String decoded = new String(array);
         String[] sUrls = decoded.split("\n");
         patterns = new HashSet<>();
-        for(String url : sUrls) {
-            patterns.add(url);
-        }
+        Collections.addAll(patterns, sUrls);
     }
 
 
