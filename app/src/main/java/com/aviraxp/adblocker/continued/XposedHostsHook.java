@@ -18,13 +18,16 @@ import de.robv.android.xposed.callbacks.XC_LoadPackage;
 
 public class XposedHostsHook implements IXposedHookLoadPackage, IXposedHookZygoteInit {
 
-    String UNABLE_TO_RESOLVE_HOST = "Unable to resolve host";
-    String MODULE_PATH = null;
-    Resources res;
-    Set<String> patterns;
+    private String UNABLE_TO_RESOLVE_HOST = "Unable to resolve host";
+    private Set<String> patterns;
 
     public void handleLoadPackage(XC_LoadPackage.LoadPackageParam lpparam)
             throws Throwable {
+
+        if (XposedGeneralHook.blocked_specific_apps_list.contains(lpparam.packageName)) {
+            return;
+        }
+
         Class<?> inetAddrClz = XposedHelpers.findClass("java.net.InetAddress", lpparam.classLoader);
         Class<?> inetSockAddrClz = XposedHelpers.findClass(" java.net.InetSocketAddress", lpparam.classLoader);
         Class<?> socketClz = XposedHelpers.findClass("java.net.Socket", lpparam.classLoader);
@@ -46,7 +49,7 @@ public class XposedHostsHook implements IXposedHookLoadPackage, IXposedHookZygot
                                 param.args[0] = null;
                                 param.setResult(new Object());
                             }
-                        } catch (NullPointerException e) {
+                        } catch (Exception e) {
                             if (BuildConfig.DEBUG) {
                                 XposedBridge.log(e);
                             }
@@ -90,7 +93,7 @@ public class XposedHostsHook implements IXposedHookLoadPackage, IXposedHookZygot
                         param.setResult(new Object());
                         param.setThrowable(new UnknownHostException(UNABLE_TO_RESOLVE_HOST));
                     }
-                } catch (NullPointerException | ClassCastException e) {
+                } catch (Exception e) {
                     if (BuildConfig.DEBUG) {
                         XposedBridge.log(e);
                     }
@@ -129,8 +132,8 @@ public class XposedHostsHook implements IXposedHookLoadPackage, IXposedHookZygot
 
     public void initZygote(StartupParam startupParam)
             throws Throwable {
-        MODULE_PATH = startupParam.modulePath;
-        res = XModuleResources.createInstance(MODULE_PATH, null);
+        String MODULE_PATH = startupParam.modulePath;
+        Resources res = XModuleResources.createInstance(MODULE_PATH, null);
         byte[] array = XposedHelpers.assetAsByteArray(res, "hosts");
         String decoded = new String(array);
         String[] sUrls = decoded.split("\n");
