@@ -21,3 +21,5 @@ apsun - SoundCloud & Tumblr Block
 3. Import GeneralHook List
 
 4. Block More Specific Apps
+
+5. Introduce Hosts Block

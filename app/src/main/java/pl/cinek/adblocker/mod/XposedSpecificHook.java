@@ -40,7 +40,9 @@ public class XposedSpecificHook implements IXposedHookLoadPackage {
                     }
                 }
             });
-            XposedBridge.log("Application Specific Hook Success: " + paramLoadPackageParam.packageName);
+            if (BuildConfig.DEBUG) {
+                XposedBridge.log("Application Specific Hook Success: " + paramLoadPackageParam.packageName);
+            }
         }
 
         //Youku
@@ -67,7 +69,9 @@ public class XposedSpecificHook implements IXposedHookLoadPackage {
             XposedHelpers.findAndHookMethod((Class) GameCenterModel, "loadLocalPackages", Context.class, XC_MethodReplacement.DO_NOTHING);
             XposedHelpers.findAndHookMethod((Class) GameCenterModel, "registerReceiver", Context.class, XC_MethodReplacement.DO_NOTHING);
             XposedHelpers.findAndHookMethod((Class) GameCenterModel, "unRegisterReceiver", Context.class, XC_MethodReplacement.DO_NOTHING);
-            XposedBridge.log("Application Specific Hook Success: " + paramLoadPackageParam.packageName);
+            if (BuildConfig.DEBUG) {
+                XposedBridge.log("Application Specific Hook Success: " + paramLoadPackageParam.packageName);
+            }
         }
 
         //Tumblr
@@ -94,7 +98,9 @@ public class XposedSpecificHook implements IXposedHookLoadPackage {
                     }
             );
             XposedHelpers.findAndHookMethod("com.tumblr.model.PostAttribution", paramLoadPackageParam.classLoader, "shouldShowNewAppAttribution", XC_MethodReplacement.returnConstant(false));
-            XposedBridge.log("Application Specific Hook Success: " + paramLoadPackageParam.packageName);
+            if (BuildConfig.DEBUG) {
+                XposedBridge.log("Application Specific Hook Success: " + paramLoadPackageParam.packageName);
+            }
         }
 
         //SoundCloud
@@ -109,17 +115,21 @@ public class XposedSpecificHook implements IXposedHookLoadPackage {
                     }
                 }
             });
-            XposedBridge.log("Application Specific Hook Success: " + paramLoadPackageParam.packageName);
+            if (BuildConfig.DEBUG) {
+                XposedBridge.log("Application Specific Hook Success: " + paramLoadPackageParam.packageName);
+            }
         }
 
         //Kernel Adiutor
         if (paramLoadPackageParam.packageName.equals("com.grarak.kerneladiutor")) {
-            Class BuildConfig = XposedHelpers.findClass("com.grarak.kerneladiutor.BuildConfig", paramLoadPackageParam.classLoader);
+            Class KABuildConfig = XposedHelpers.findClass("com.grarak.kerneladiutor.BuildConfig", paramLoadPackageParam.classLoader);
             Class Utils = XposedHelpers.findClass("com.grarak.kerneladiutor.utils.Utils", paramLoadPackageParam.classLoader);
-            XposedHelpers.setStaticBooleanField(BuildConfig, "DEBUG", true);
-            XposedHelpers.setStaticObjectField(BuildConfig, "BUILD_TYPE", "DEBUG");
+            XposedHelpers.setStaticBooleanField(KABuildConfig, "DEBUG", true);
+            XposedHelpers.setStaticObjectField(KABuildConfig, "BUILD_TYPE", "DEBUG");
             XposedHelpers.setStaticBooleanField(Utils, "DONATED", true);
-            XposedBridge.log("Application Specific Hook Success: " + paramLoadPackageParam.packageName);
+            if (BuildConfig.DEBUG) {
+                XposedBridge.log("Application Specific Hook Success: " + paramLoadPackageParam.packageName);
+            }
         }
     }
 }

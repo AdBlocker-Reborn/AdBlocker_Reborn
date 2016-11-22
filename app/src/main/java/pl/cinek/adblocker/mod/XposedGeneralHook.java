@@ -39,7 +39,9 @@ public class XposedGeneralHook implements IXposedHookLoadPackage {
                         activity.overridePendingTransition(0, 0);
                         activity.finish();
                         activity.overridePendingTransition(0, 0);
-                        XposedBridge.log("Activity Block Success: " + paramLoadPackageParam.packageName + "/" + activityClassName);
+                        if (BuildConfig.DEBUG) {
+                            XposedBridge.log("Activity Block Success: " + paramLoadPackageParam.packageName + "/" + activityClassName);
+                        }
                     }
                 }
             });
@@ -54,7 +56,9 @@ public class XposedGeneralHook implements IXposedHookLoadPackage {
                     }
                     if ((activityClassName != null) && (!activityClassName.startsWith("android")) && (blocked_activities_list.contains(activityClassName))) {
                         paramAnonymousMethodHookParam.setResult(null);
-                        XposedBridge.log("Activity Block Success: " + paramLoadPackageParam.packageName + "/" + activityClassName);
+                        if (BuildConfig.DEBUG) {
+                            XposedBridge.log("Activity Block Success: " + paramLoadPackageParam.packageName + "/" + activityClassName);
+                        }
                     }
                 }
             };
@@ -84,7 +88,9 @@ public class XposedGeneralHook implements IXposedHookLoadPackage {
         try {
             for (String receivers : blocked_receivers_list) {
                 XposedHelpers.findAndHookMethod(receivers, paramLoadPackageParam.classLoader, "onReceive", Context.class, Intent.class, XC_MethodReplacement.DO_NOTHING);
-                XposedBridge.log("Receiver Block Success: " + paramLoadPackageParam.packageName + "/" + receivers);
+                if (BuildConfig.DEBUG) {
+                    XposedBridge.log("Receiver Block Success: " + paramLoadPackageParam.packageName + "/" + receivers);
+                }
             }
         } catch (XposedHelpers.ClassNotFoundError ignored) {
         }
@@ -94,7 +100,9 @@ public class XposedGeneralHook implements IXposedHookLoadPackage {
         String str = paramObject.getClass().getName();
         if ((str != null) && (!str.startsWith("android")) && ((blocked_views_list.contains(str)) || (blocked_views_on_packages_list.contains(paramString + "/" + str)))) {
             ((View) paramObject).setVisibility(View.GONE);
-            XposedBridge.log("View Block Success: " + paramString + "/" + str);
+            if (BuildConfig.DEBUG) {
+                XposedBridge.log("View Block Success: " + paramString + "/" + str);
+            }
         }
     }
 }
