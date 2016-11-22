@@ -16,4 +16,4 @@
 #   public *;
 #}
 
--keep class pl.cinek.adblocker.mod.* { *; }
+-keep class com.aviraxp.adblocker.continued.* { *; }

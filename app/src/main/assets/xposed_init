@@ -1,3 +1,3 @@
-pl.cinek.adblocker.mod.XposedGeneralHook
-pl.cinek.adblocker.mod.XposedSpecificHook
-pl.cinek.adblocker.mod.XposedHostsHook
+com.aviraxp.adblocker.continued.XposedGeneralHook
+com.aviraxp.adblocker.continued.XposedSpecificHook
+com.aviraxp.adblocker.continued.XposedHostsHook

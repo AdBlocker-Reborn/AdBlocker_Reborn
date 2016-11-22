@@ -1,5 +1,5 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="pl.cinek.adblocker.mod"
+    package="com.aviraxp.adblocker.continued"
     android:installLocation="internalOnly">
 
     <application

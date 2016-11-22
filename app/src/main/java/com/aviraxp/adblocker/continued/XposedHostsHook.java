@@ -1,4 +1,4 @@
-package pl.cinek.adblocker.mod;
+package com.aviraxp.adblocker.continued;
 
 import android.content.res.Resources;
 import android.content.res.XModuleResources;

@@ -4,7 +4,7 @@ android {
     compileSdkVersion 25
     buildToolsVersion "25.0.0"
     defaultConfig {
-        applicationId "pl.cinek.adblocker.mod"
+        applicationId "com.aviraxp.adblocker.continued"
         minSdkVersion 15
         targetSdkVersion 23
         versionCode 1
