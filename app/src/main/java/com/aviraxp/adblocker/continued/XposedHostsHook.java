@@ -24,10 +24,6 @@ public class XposedHostsHook implements IXposedHookLoadPackage, IXposedHookZygot
     public void handleLoadPackage(XC_LoadPackage.LoadPackageParam lpparam)
             throws Throwable {
 
-        if (XposedGeneralHook.blocked_specific_apps_list.contains(lpparam.packageName)) {
-            return;
-        }
-
         Class<?> inetAddrClz = XposedHelpers.findClass("java.net.InetAddress", lpparam.classLoader);
         Class<?> inetSockAddrClz = XposedHelpers.findClass(" java.net.InetSocketAddress", lpparam.classLoader);
         Class<?> socketClz = XposedHelpers.findClass("java.net.Socket", lpparam.classLoader);

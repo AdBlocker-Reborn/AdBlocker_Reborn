@@ -3,8 +3,6 @@ package com.aviraxp.adblocker.continued;
 import android.app.Notification;
 import android.content.Context;
 
-import org.json.JSONObject;
-
 import java.util.HashMap;
 import java.util.List;
 
