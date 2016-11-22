@@ -2,7 +2,6 @@ package com.aviraxp.adblocker.continued;
 
 import android.content.res.Resources;
 import android.content.res.XModuleResources;
-import android.util.Log;
 
 import java.net.InetAddress;
 import java.net.UnknownHostException;
@@ -47,7 +46,10 @@ public class XposedHostsHook implements IXposedHookLoadPackage, IXposedHookZygot
                                 param.args[0] = null;
                                 param.setResult(new Object());
                             }
-                        } catch (NullPointerException ignored) {
+                        } catch (NullPointerException e) {
+                            if (BuildConfig.DEBUG) {
+                                XposedBridge.log(e);
+                            }
                         }
                     }
                 }
@@ -74,7 +76,6 @@ public class XposedHostsHook implements IXposedHookLoadPackage, IXposedHookZygot
                 }
             }
         };
-
         XposedBridge.hookAllMethods(inetAddrClz, "getByName", inetAddrHookSingleResult);
         XposedBridge.hookAllMethods(inetAddrClz, "getAllByName", inetAddrHookSingleResult);
         XposedBridge.hookAllMethods(inetSockAddrClz, "createUnresolved", inetAddrHookSingleResult);
@@ -89,7 +90,10 @@ public class XposedHostsHook implements IXposedHookLoadPackage, IXposedHookZygot
                         param.setResult(new Object());
                         param.setThrowable(new UnknownHostException(UNABLE_TO_RESOLVE_HOST));
                     }
-                } catch (ClassCastException | NullPointerException ignored) {
+                } catch (NullPointerException | ClassCastException e) {
+                    if (BuildConfig.DEBUG) {
+                        XposedBridge.log(e);
+                    }
                 }
             }
         });
@@ -101,9 +105,6 @@ public class XposedHostsHook implements IXposedHookLoadPackage, IXposedHookZygot
                 InetAddress addr = (InetAddress) param.args[1];
                 String host = addr.getHostName();
                 String ip = addr.getHostAddress();
-
-                Log.d("fatminmin_iobridge", host + ":" + ip);
-
                 if (patterns.contains(host) || patterns.contains(ip)) {
                     param.setResult(false);
                     param.setThrowable(new UnknownHostException(UNABLE_TO_RESOLVE_HOST));
@@ -116,7 +117,6 @@ public class XposedHostsHook implements IXposedHookLoadPackage, IXposedHookZygot
                 InetAddress addr = (InetAddress) param.args[1];
                 String host = addr.getHostName();
                 String ip = addr.getHostAddress();
-
                 if (patterns.contains(host) || patterns.contains(ip)) {
                     param.setResult(false);
                     param.setThrowable(new UnknownHostException(UNABLE_TO_RESOLVE_HOST));
@@ -137,6 +137,4 @@ public class XposedHostsHook implements IXposedHookLoadPackage, IXposedHookZygot
         patterns = new HashSet<>();
         Collections.addAll(patterns, sUrls);
     }
-
-
 }
