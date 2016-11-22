@@ -1,4 +1,4 @@
-# ADBlocker-Mod
+# ADBlocker - Continued
 
 This is the continued version of ADBlocker.
 
@@ -12,6 +12,8 @@ FatMinMin - MinMinGuard
 
 apsun - SoundCloud & Tumblr Block
 
+yhosts - Hosts List
+
 ## Todo List
 
 1. Introduce Services Block
@@ -22,4 +24,4 @@ apsun - SoundCloud & Tumblr Block
 
 4. Block More Specific Apps
 
-5. Introduce Hosts Block
+5. Enhance Hosts Block
