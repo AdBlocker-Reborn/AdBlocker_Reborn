@@ -16,17 +16,12 @@ import de.robv.android.xposed.XposedBridge;
 import de.robv.android.xposed.XposedHelpers;
 import de.robv.android.xposed.callbacks.XC_LoadPackage;
 
-public final class XposedHostsHook implements IXposedHookLoadPackage, IXposedHookZygoteInit {
+public class XposedHostsHook implements IXposedHookLoadPackage, IXposedHookZygoteInit {
 
     String UNABLE_TO_RESOLVE_HOST = "Unable to resolve host";
     String MODULE_PATH = null;
     Resources res;
     Set<String> patterns;
-
-    private XposedHostsHook()
-            throws InstantiationException {
-        throw new InstantiationException("This class is not for instantiation");
-    }
 
     public void handleLoadPackage(XC_LoadPackage.LoadPackageParam lpparam)
             throws  Throwable{
