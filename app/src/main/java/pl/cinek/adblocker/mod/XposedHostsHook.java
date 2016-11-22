@@ -7,6 +7,7 @@ import android.util.Log;
 import java.net.InetAddress;
 import java.net.UnknownHostException;
 import java.util.Collections;
+import java.util.HashSet;
 import java.util.Set;
 
 import de.robv.android.xposed.IXposedHookLoadPackage;
@@ -129,7 +130,10 @@ public class XposedHostsHook implements IXposedHookLoadPackage, IXposedHookZygot
         byte[] array = XposedHelpers.assetAsByteArray(res, "hosts");
         String decoded = new String(array);
         String[] sUrls = decoded.split("\n");
-        Collections.addAll(patterns, sUrls);
+        patterns = new HashSet<>();
+        for(String url : sUrls) {
+            patterns.add(url);
+        }
     }
 
 
