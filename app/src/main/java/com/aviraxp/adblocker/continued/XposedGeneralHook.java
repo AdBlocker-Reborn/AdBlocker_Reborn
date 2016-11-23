@@ -29,10 +29,6 @@ public class XposedGeneralHook implements IXposedHookLoadPackage {
     public void handleLoadPackage(final XC_LoadPackage.LoadPackageParam paramLoadPackageParam)
             throws Throwable {
 
-        if (blocked_specific_apps_list.contains(paramLoadPackageParam.packageName)) {
-            return;
-        }
-
         XposedHelpers.findAndHookMethod(Activity.class, "onCreate", Bundle.class, new XC_MethodHook() {
             @Override
             protected void afterHookedMethod(XC_MethodHook.MethodHookParam paramAnonymousMethodHookParam)
