@@ -1,3 +1,3 @@
-com.aviraxp.adblocker.continued.XposedGeneralHook
+com.aviraxp.adblocker.continued.XposedActivityViewHook
 com.aviraxp.adblocker.continued.XposedSpecificHook
 com.aviraxp.adblocker.continued.XposedHostsHook

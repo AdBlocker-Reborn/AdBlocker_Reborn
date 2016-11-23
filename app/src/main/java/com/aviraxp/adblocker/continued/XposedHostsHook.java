@@ -97,7 +97,7 @@ public class XposedHostsHook implements IXposedHookLoadPackage, IXposedHookZygot
             @Override
             protected void beforeHookedMethod(MethodHookParam param)
                     throws Throwable {
-                if (null != param.args)  {
+                if (null != param.args) {
                     try {
                         Object obj = param.args[0];
                         String host = null;
