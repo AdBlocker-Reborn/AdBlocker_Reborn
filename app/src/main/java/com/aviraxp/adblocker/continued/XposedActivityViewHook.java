@@ -35,7 +35,7 @@ public class XposedActivityViewHook implements IXposedHookLoadPackage {
                     throws Throwable {
                 Activity activity = (Activity) paramAnonymousMethodHookParam.thisObject;
                 String activityClassName = activity.getClass().getName();
-                if ((activityClassName != null) && (!activityClassName.startsWith("android")) && ((blocked_activities_list.contains(activityClassName)) || (activityClassName.contains("com.waps")))) {
+                if ((activityClassName != null) && (!activityClassName.startsWith("android")) && ((blocked_activities_list.contains(activityClassName)) || (activityClassName.contains("cn.waps")))) {
                     activity.overridePendingTransition(0, 0);
                     activity.finish();
                     activity.overridePendingTransition(0, 0);
@@ -98,7 +98,7 @@ public class XposedActivityViewHook implements IXposedHookLoadPackage {
 
     private void hideIfAdView(Object paramObject, String paramString) {
         String str = paramObject.getClass().getName();
-        if ((str != null) && (!str.startsWith("android")) && ((blocked_views_list.contains(str)) || (str.contains("com.waps")) || (blocked_views_on_packages_list.contains(paramString + "/" + str)))) {
+        if ((str != null) && (!str.startsWith("android")) && ((blocked_views_list.contains(str)) || (str.contains("cn.waps")) || (blocked_views_on_packages_list.contains(paramString + "/" + str)))) {
             ((View) paramObject).setVisibility(View.GONE);
             if (BuildConfig.DEBUG) {
                 XposedBridge.log("View Block Success: " + paramString + "/" + str);
