@@ -5,24 +5,30 @@ import android.content.ComponentName;
 import android.content.Context;
 import android.content.ContextWrapper;
 import android.content.Intent;
+import android.content.res.Resources;
+import android.content.res.XModuleResources;
 import android.os.Bundle;
 import android.view.View;
 import android.view.ViewGroup;
 
 import java.util.Arrays;
+import java.util.Collections;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import de.robv.android.xposed.IXposedHookLoadPackage;
+import de.robv.android.xposed.IXposedHookZygoteInit;
 import de.robv.android.xposed.XC_MethodHook;
 import de.robv.android.xposed.XC_MethodReplacement;
 import de.robv.android.xposed.XposedBridge;
 import de.robv.android.xposed.XposedHelpers;
 import de.robv.android.xposed.callbacks.XC_LoadPackage;
 
-public class XposedActivityAndViewHook implements IXposedHookLoadPackage {
+public class XposedActivityAndViewHook implements IXposedHookLoadPackage, IXposedHookZygoteInit {
 
-    private static final List<String> blocked_activities_and_views_list = Arrays.asList(BlockList.blocked_activities_and_views);
-    private static final List<String> blocked_receivers_list = Arrays.asList(BlockList.blocked_receivers);
+    private Set<String> patterns;
+    private Set<String> patterns2;
 
     public void handleLoadPackage(final XC_LoadPackage.LoadPackageParam paramLoadPackageParam)
             throws Throwable {
@@ -33,7 +39,7 @@ public class XposedActivityAndViewHook implements IXposedHookLoadPackage {
                     throws Throwable {
                 Activity activity = (Activity) paramAnonymousMethodHookParam.thisObject;
                 String activityClassName = activity.getClass().getName();
-                if ((activityClassName != null) && (!activityClassName.startsWith("android")) && (blocked_activities_and_views_list.contains(activityClassName))) {
+                if ((activityClassName != null) && (!activityClassName.startsWith("android")) && (patterns.contains(activityClassName))) {
                     activity.overridePendingTransition(0, 0);
                     activity.finish();
                     activity.overridePendingTransition(0, 0);
@@ -43,6 +49,7 @@ public class XposedActivityAndViewHook implements IXposedHookLoadPackage {
                 }
             }
         });
+
         Object activityObject = new XC_MethodHook() {
             @Override
             protected void beforeHookedMethod(XC_MethodHook.MethodHookParam paramAnonymousMethodHookParam)
@@ -52,7 +59,7 @@ public class XposedActivityAndViewHook implements IXposedHookLoadPackage {
                 if (Component != null) {
                     activityClassName = Component.getClassName();
                 }
-                if ((activityClassName != null) && (!activityClassName.startsWith("android")) && (blocked_activities_and_views_list.contains(activityClassName))) {
+                if ((activityClassName != null) && (!activityClassName.startsWith("android")) && (patterns.contains(activityClassName))) {
                     paramAnonymousMethodHookParam.setResult(null);
                     if (BuildConfig.DEBUG) {
                         XposedBridge.log("Activity Block Success: " + paramLoadPackageParam.packageName + "/" + activityClassName);
@@ -64,6 +71,7 @@ public class XposedActivityAndViewHook implements IXposedHookLoadPackage {
         XposedHelpers.findAndHookMethod(ContextWrapper.class, "startActivity", Intent.class, activityObject);
         XposedHelpers.findAndHookMethod(Activity.class, "startActivityForResult", Intent.class, Integer.TYPE, activityObject);
         XposedHelpers.findAndHookMethod(Activity.class, "startActivityForResult", Intent.class, Integer.TYPE, Bundle.class, activityObject);
+
         Object viewObject = new XC_MethodHook() {
             @Override
             protected void afterHookedMethod(XC_MethodHook.MethodHookParam paramAnonymousMethodHookParam)
@@ -84,7 +92,7 @@ public class XposedActivityAndViewHook implements IXposedHookLoadPackage {
         });
 
         try {
-            for (String receivers : blocked_receivers_list) {
+            for (String receivers : patterns2) {
                 XposedHelpers.findAndHookMethod(receivers, paramLoadPackageParam.classLoader, "onReceive", Context.class, Intent.class, XC_MethodReplacement.DO_NOTHING);
                 if (BuildConfig.DEBUG) {
                     XposedBridge.log("Receiver Block Success: " + paramLoadPackageParam.packageName + "/" + receivers);
@@ -94,9 +102,25 @@ public class XposedActivityAndViewHook implements IXposedHookLoadPackage {
         }
     }
 
+    public void initZygote(IXposedHookZygoteInit.StartupParam startupParam)
+            throws Throwable {
+        String MODULE_PATH = startupParam.modulePath;
+        Resources res = XModuleResources.createInstance(MODULE_PATH, null);
+        byte[] array = XposedHelpers.assetAsByteArray(res, "activitiesandviews");
+        byte[] array2 = XposedHelpers.assetAsByteArray(res, "receivers");
+        String decoded = new String(array);
+        String decoded2 = new String(array2);
+        String[] sUrls = decoded.split("\n");
+        String[] sUrls2 = decoded2.split("\n");
+        patterns = new HashSet<>();
+        patterns2 = new HashSet<>();
+        Collections.addAll(patterns, sUrls);
+        Collections.addAll(patterns2, sUrls2);
+    }
+
     private void hideIfAdView(Object paramObject, String paramString) {
         String str = paramObject.getClass().getName();
-        if ((str != null) && (!str.startsWith("android")) && ((blocked_activities_and_views_list.contains(str)))) {
+        if ((str != null) && (!str.startsWith("android")) && ((patterns.contains(str)))) {
             ((View) paramObject).setVisibility(View.GONE);
             if (BuildConfig.DEBUG) {
                 XposedBridge.log("View Block Success: " + paramString + "/" + str);
