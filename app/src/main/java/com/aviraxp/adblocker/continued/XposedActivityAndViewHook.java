@@ -19,8 +19,8 @@ import de.robv.android.xposed.XposedBridge;
 import de.robv.android.xposed.XposedHelpers;
 import de.robv.android.xposed.callbacks.XC_LoadPackage;
 
-public class XposedGeneralHook implements IXposedHookLoadPackage {
-    static final List<String> blocked_specific_apps_list = Arrays.asList(BlockList.blocked_specific_apps);
+public class XposedActivityAndViewHook implements IXposedHookLoadPackage {
+
     private static final List<String> blocked_activities_list = Arrays.asList(BlockList.blocked_activities);
     private static final List<String> blocked_views_list = Arrays.asList(BlockList.blocked_views);
     private static final List<String> blocked_views_on_packages_list = Arrays.asList(BlockList.blocked_views_on_packages);

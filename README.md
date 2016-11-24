@@ -20,7 +20,7 @@ yhosts - Hosts List
 
 2. Rework Receivers Hook
 
-3. Import GeneralHook List
+3. Import ActivityAndViewHook List
 
 4. Block More Specific Apps
 
