@@ -23,7 +23,6 @@ public class XposedActivityAndViewHook implements IXposedHookLoadPackage {
 
     private static final List<String> blocked_activities_list = Arrays.asList(BlockList.blocked_activities);
     private static final List<String> blocked_views_list = Arrays.asList(BlockList.blocked_views);
-    private static final List<String> blocked_views_on_packages_list = Arrays.asList(BlockList.blocked_views_on_packages);
     private static final List<String> blocked_receivers_list = Arrays.asList(BlockList.blocked_receivers);
 
     public void handleLoadPackage(final XC_LoadPackage.LoadPackageParam paramLoadPackageParam)
@@ -98,7 +97,7 @@ public class XposedActivityAndViewHook implements IXposedHookLoadPackage {
 
     private void hideIfAdView(Object paramObject, String paramString) {
         String str = paramObject.getClass().getName();
-        if ((str != null) && (!str.startsWith("android")) && ((blocked_views_list.contains(str)) || (blocked_views_on_packages_list.contains(paramString + "/" + str)))) {
+        if ((str != null) && (!str.startsWith("android")) && ((blocked_views_list.contains(str)))) {
             ((View) paramObject).setVisibility(View.GONE);
             if (BuildConfig.DEBUG) {
                 XposedBridge.log("View Block Success: " + paramString + "/" + str);
