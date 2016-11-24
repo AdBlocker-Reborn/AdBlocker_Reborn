@@ -21,8 +21,7 @@ import de.robv.android.xposed.callbacks.XC_LoadPackage;
 
 public class XposedActivityAndViewHook implements IXposedHookLoadPackage {
 
-    private static final List<String> blocked_activities_list = Arrays.asList(BlockList.blocked_activities);
-    private static final List<String> blocked_views_list = Arrays.asList(BlockList.blocked_views);
+    private static final List<String> blocked_activities_and_views_list = Arrays.asList(BlockList.blocked_activities_and_views);
     private static final List<String> blocked_receivers_list = Arrays.asList(BlockList.blocked_receivers);
 
     public void handleLoadPackage(final XC_LoadPackage.LoadPackageParam paramLoadPackageParam)
@@ -34,7 +33,7 @@ public class XposedActivityAndViewHook implements IXposedHookLoadPackage {
                     throws Throwable {
                 Activity activity = (Activity) paramAnonymousMethodHookParam.thisObject;
                 String activityClassName = activity.getClass().getName();
-                if ((activityClassName != null) && (!activityClassName.startsWith("android")) && (blocked_activities_list.contains(activityClassName))) {
+                if ((activityClassName != null) && (!activityClassName.startsWith("android")) && (blocked_activities_and_views_list.contains(activityClassName))) {
                     activity.overridePendingTransition(0, 0);
                     activity.finish();
                     activity.overridePendingTransition(0, 0);
@@ -53,7 +52,7 @@ public class XposedActivityAndViewHook implements IXposedHookLoadPackage {
                 if (Component != null) {
                     activityClassName = Component.getClassName();
                 }
-                if ((activityClassName != null) && (!activityClassName.startsWith("android")) && (blocked_activities_list.contains(activityClassName))) {
+                if ((activityClassName != null) && (!activityClassName.startsWith("android")) && (blocked_activities_and_views_list.contains(activityClassName))) {
                     paramAnonymousMethodHookParam.setResult(null);
                     if (BuildConfig.DEBUG) {
                         XposedBridge.log("Activity Block Success: " + paramLoadPackageParam.packageName + "/" + activityClassName);
@@ -97,7 +96,7 @@ public class XposedActivityAndViewHook implements IXposedHookLoadPackage {
 
     private void hideIfAdView(Object paramObject, String paramString) {
         String str = paramObject.getClass().getName();
-        if ((str != null) && (!str.startsWith("android")) && ((blocked_views_list.contains(str)))) {
+        if ((str != null) && (!str.startsWith("android")) && ((blocked_activities_and_views_list.contains(str)))) {
             ((View) paramObject).setVisibility(View.GONE);
             if (BuildConfig.DEBUG) {
                 XposedBridge.log("View Block Success: " + paramString + "/" + str);
