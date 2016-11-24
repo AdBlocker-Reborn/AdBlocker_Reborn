@@ -25,7 +25,7 @@ import de.robv.android.xposed.XposedBridge;
 import de.robv.android.xposed.XposedHelpers;
 import de.robv.android.xposed.callbacks.XC_LoadPackage;
 
-public class XposedActivityAndViewHook implements IXposedHookLoadPackage, IXposedHookZygoteInit {
+public class XposedGeneralHook implements IXposedHookLoadPackage, IXposedHookZygoteInit {
 
     private Set<String> patterns;
     private Set<String> patterns2;
