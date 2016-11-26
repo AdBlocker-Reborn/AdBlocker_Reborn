@@ -33,13 +33,13 @@ public class XposedHostsHook implements IXposedHookLoadPackage, IXposedHookZygot
                     @Override
                     protected void beforeHookedMethod(MethodHookParam param)
                             throws Throwable {
-                        if (null != param.args) {
+                        if (null != param.args && param.args.length > 0) {
                             try {
                                 Object obj = param.args[0];
                                 String host = null;
-                                if (obj.getClass().getName().equals("java.lang.String")) {
+                                if ("java.lang.String".equals(obj.getClass().getName())) {
                                     host = (String) obj;
-                                } else if (obj.getClass().getName().equals("java.net.InetAddress")) {
+                                } else if ("java.lang.InetAddress".equals(obj.getClass().getName())) {
                                     host = ((InetAddress) obj).getHostName();
                                 }
                                 if (host != null && patterns.contains(host)) {
@@ -97,13 +97,13 @@ public class XposedHostsHook implements IXposedHookLoadPackage, IXposedHookZygot
             @Override
             protected void beforeHookedMethod(MethodHookParam param)
                     throws Throwable {
-                if (null != param.args) {
+                if (null != param.args && param.args.length > 0) {
                     try {
                         Object obj = param.args[0];
                         String host = null;
-                        if (obj.getClass().getName().equals("java.lang.String")) {
+                        if (("java.lang.String").equals(obj.getClass().getName())) {
                             host = (String) obj;
-                        } else if (obj.getClass().getName().equals("java.net.InetAddress")) {
+                        } else if (("java.net.InetAddress").equals(obj.getClass().getName())) {
                             host = ((InetAddress) obj).getHostName();
                         }
                         if (host != null && patterns.contains(host)) {
