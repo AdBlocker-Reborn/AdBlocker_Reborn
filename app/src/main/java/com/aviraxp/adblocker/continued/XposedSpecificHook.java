@@ -48,7 +48,6 @@ public class XposedSpecificHook implements IXposedHookLoadPackage {
             Class<?> MediaPlayerConfiguration = XposedHelpers.findClass("com.youku.player.config.MediaPlayerConfiguration", paramLoadPackageParam.classLoader);
             Class<?> YoukuUtil = XposedHelpers.findClass("com.youku.util.YoukuUtil", paramLoadPackageParam.classLoader);
             Object AnalyticWrapper = XposedHelpers.findClass("com.youku.player.util.AnalyticsWrapper", paramLoadPackageParam.classLoader);
-            //Object AnalyticBase = XposedHelpers.findClass("com.youku.analytics.AnalyticsBase", paramLoadPackageParam.classLoader);
             Object GameCenterModel = XposedHelpers.findClass("com.youku.gamecenter.GameCenterModel", paramLoadPackageParam.classLoader);
             XposedHelpers.findAndHookMethod(MediaPlayerConfiguration, "showAdWebView", XC_MethodReplacement.returnConstant(false));
             XposedHelpers.findAndHookMethod(MediaPlayerConfiguration, "showOfflineAd", XC_MethodReplacement.returnConstant(false));
@@ -59,11 +58,6 @@ public class XposedSpecificHook implements IXposedHookLoadPackage {
             XposedHelpers.findAndHookMethod(YoukuUtil, "isGamecenterDisplay", XC_MethodReplacement.returnConstant(false));
             XposedHelpers.findAndHookMethod((Class) AnalyticWrapper, "isAnalyticWrapperOpen", XC_MethodReplacement.returnConstant(false));
             XposedHelpers.findAndHookMethod((Class) AnalyticWrapper, "trackExtendCustomEvent", Context.class, String.class, String.class, String.class, String.class, HashMap.class, XC_MethodReplacement.DO_NOTHING);
-            //XposedHelpers.findAndHookMethod((Class) AnalyticBase, "sendAppReport", Context.class, XC_MethodReplacement.DO_NOTHING);
-            //XposedHelpers.findAndHookMethod((Class) AnalyticBase, "sendExceedReport", Context.class, XC_MethodReplacement.DO_NOTHING);
-            //XposedHelpers.findAndHookMethod((Class) AnalyticBase, "saveToDisk", JSONObject.class, XC_MethodReplacement.DO_NOTHING);
-            //XposedHelpers.findAndHookMethod((Class) AnalyticBase, "saveData", Context.class, Boolean.TYPE, XC_MethodReplacement.DO_NOTHING);
-            //XposedHelpers.findAndHookMethod((Class) AnalyticBase, "write", Context.class, Long.TYPE, XC_MethodReplacement.DO_NOTHING);
             XposedHelpers.findAndHookMethod((Class) GameCenterModel, "loadLocalPackages", Context.class, XC_MethodReplacement.DO_NOTHING);
             XposedHelpers.findAndHookMethod((Class) GameCenterModel, "registerReceiver", Context.class, XC_MethodReplacement.DO_NOTHING);
             XposedHelpers.findAndHookMethod((Class) GameCenterModel, "unRegisterReceiver", Context.class, XC_MethodReplacement.DO_NOTHING);
