@@ -47,8 +47,8 @@ public class SpecificHook implements IXposedHookLoadPackage {
         if (paramLoadPackageParam.packageName.equals("com.youku.phone")) {
             Class<?> MediaPlayerConfiguration = XposedHelpers.findClass("com.youku.player.config.MediaPlayerConfiguration", paramLoadPackageParam.classLoader);
             Class<?> YoukuUtil = XposedHelpers.findClass("com.youku.util.YoukuUtil", paramLoadPackageParam.classLoader);
-            Object AnalyticWrapper = XposedHelpers.findClass("com.youku.player.util.AnalyticsWrapper", paramLoadPackageParam.classLoader);
-            Object GameCenterModel = XposedHelpers.findClass("com.youku.gamecenter.GameCenterModel", paramLoadPackageParam.classLoader);
+            Class<?> AnalyticWrapper = XposedHelpers.findClass("com.youku.player.util.AnalyticsWrapper", paramLoadPackageParam.classLoader);
+            Class<?> GameCenterModel = XposedHelpers.findClass("com.youku.gamecenter.GameCenterModel", paramLoadPackageParam.classLoader);
             XposedHelpers.findAndHookMethod(MediaPlayerConfiguration, "showAdWebView", XC_MethodReplacement.returnConstant(false));
             XposedHelpers.findAndHookMethod(MediaPlayerConfiguration, "showOfflineAd", XC_MethodReplacement.returnConstant(false));
             XposedHelpers.findAndHookMethod(MediaPlayerConfiguration, "showPauseAd", XC_MethodReplacement.returnConstant(false));
@@ -56,11 +56,11 @@ public class SpecificHook implements IXposedHookLoadPackage {
             XposedHelpers.findAndHookMethod(MediaPlayerConfiguration, "trackAd", XC_MethodReplacement.returnConstant(false));
             XposedHelpers.findAndHookMethod(MediaPlayerConfiguration, "showSkipAdButton", XC_MethodReplacement.returnConstant(false));
             XposedHelpers.findAndHookMethod(YoukuUtil, "isGamecenterDisplay", XC_MethodReplacement.returnConstant(false));
-            XposedHelpers.findAndHookMethod((Class) AnalyticWrapper, "isAnalyticWrapperOpen", XC_MethodReplacement.returnConstant(false));
-            XposedHelpers.findAndHookMethod((Class) AnalyticWrapper, "trackExtendCustomEvent", Context.class, String.class, String.class, String.class, String.class, HashMap.class, XC_MethodReplacement.DO_NOTHING);
-            XposedHelpers.findAndHookMethod((Class) GameCenterModel, "loadLocalPackages", Context.class, XC_MethodReplacement.DO_NOTHING);
-            XposedHelpers.findAndHookMethod((Class) GameCenterModel, "registerReceiver", Context.class, XC_MethodReplacement.DO_NOTHING);
-            XposedHelpers.findAndHookMethod((Class) GameCenterModel, "unRegisterReceiver", Context.class, XC_MethodReplacement.DO_NOTHING);
+            XposedHelpers.findAndHookMethod(AnalyticWrapper, "isAnalyticWrapperOpen", XC_MethodReplacement.returnConstant(false));
+            XposedHelpers.findAndHookMethod(AnalyticWrapper, "trackExtendCustomEvent", Context.class, String.class, String.class, String.class, String.class, HashMap.class, XC_MethodReplacement.DO_NOTHING);
+            XposedHelpers.findAndHookMethod(GameCenterModel, "loadLocalPackages", Context.class, XC_MethodReplacement.DO_NOTHING);
+            XposedHelpers.findAndHookMethod(GameCenterModel, "registerReceiver", Context.class, XC_MethodReplacement.DO_NOTHING);
+            XposedHelpers.findAndHookMethod(GameCenterModel, "unRegisterReceiver", Context.class, XC_MethodReplacement.DO_NOTHING);
             if (BuildConfig.DEBUG) {
                 XposedBridge.log("Application Specific Hook Success: " + paramLoadPackageParam.packageName);
             }
