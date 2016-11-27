@@ -11,10 +11,8 @@ import android.os.Bundle;
 import android.view.View;
 import android.view.ViewGroup;
 
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
 
 import de.robv.android.xposed.IXposedHookLoadPackage;
@@ -25,7 +23,7 @@ import de.robv.android.xposed.XposedBridge;
 import de.robv.android.xposed.XposedHelpers;
 import de.robv.android.xposed.callbacks.XC_LoadPackage;
 
-public class XposedGeneralHook implements IXposedHookLoadPackage, IXposedHookZygoteInit {
+public class GeneralHook implements IXposedHookLoadPackage, IXposedHookZygoteInit {
 
     private Set<String> patterns;
     private Set<String> patterns2;
@@ -106,7 +104,7 @@ public class XposedGeneralHook implements IXposedHookLoadPackage, IXposedHookZyg
             throws Throwable {
         String MODULE_PATH = startupParam.modulePath;
         Resources res = XModuleResources.createInstance(MODULE_PATH, null);
-        byte[] array = XposedHelpers.assetAsByteArray(res, "activitiesandviews");
+        byte[] array = XposedHelpers.assetAsByteArray(res, "av");
         byte[] array2 = XposedHelpers.assetAsByteArray(res, "receivers");
         String decoded = new String(array);
         String decoded2 = new String(array2);

@@ -13,7 +13,7 @@ import de.robv.android.xposed.XposedBridge;
 import de.robv.android.xposed.XposedHelpers;
 import de.robv.android.xposed.callbacks.XC_LoadPackage;
 
-public class XposedSpecificHook implements IXposedHookLoadPackage {
+public class SpecificHook implements IXposedHookLoadPackage {
 
     public void handleLoadPackage(final XC_LoadPackage.LoadPackageParam paramLoadPackageParam)
             throws Throwable {

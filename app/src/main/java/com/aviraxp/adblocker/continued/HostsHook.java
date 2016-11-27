@@ -16,7 +16,7 @@ import de.robv.android.xposed.XposedBridge;
 import de.robv.android.xposed.XposedHelpers;
 import de.robv.android.xposed.callbacks.XC_LoadPackage;
 
-public class XposedHostsHook implements IXposedHookLoadPackage, IXposedHookZygoteInit {
+public class HostsHook implements IXposedHookLoadPackage, IXposedHookZygoteInit {
 
     private String UNABLE_TO_RESOLVE_HOST = "Unable to resolve host";
     private Set<String> patterns;
