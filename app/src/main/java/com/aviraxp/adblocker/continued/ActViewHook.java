@@ -87,16 +87,6 @@ public class ActViewHook implements IXposedHookLoadPackage, IXposedHookZygoteIni
                 }
             }
         });
-
-        try {
-            for (String receivers : patterns2) {
-                XposedHelpers.findAndHookMethod(receivers, paramLoadPackageParam.classLoader, "onReceive", Context.class, Intent.class, XC_MethodReplacement.DO_NOTHING);
-                if (BuildConfig.DEBUG) {
-                    XposedBridge.log("Receiver Block Success: " + paramLoadPackageParam.packageName + "/" + receivers);
-                }
-            }
-        } catch (XposedHelpers.ClassNotFoundError ignored) {
-        }
     }
 
     public void initZygote(StartupParam startupParam) throws Throwable {
