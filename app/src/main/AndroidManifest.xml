@@ -5,7 +5,6 @@
     <application
         android:allowBackup="true"
         android:fullBackupContent="true"
-        android:icon="@mipmap/ic_launcher"
         android:label="ADBlocker Continued"
         android:supportsRtl="true">
         <meta-data
