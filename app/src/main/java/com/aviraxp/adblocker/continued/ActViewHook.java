@@ -23,13 +23,12 @@ import de.robv.android.xposed.XposedBridge;
 import de.robv.android.xposed.XposedHelpers;
 import de.robv.android.xposed.callbacks.XC_LoadPackage;
 
-public class GeneralHook implements IXposedHookLoadPackage, IXposedHookZygoteInit {
+public class ActViewHook implements IXposedHookLoadPackage, IXposedHookZygoteInit {
 
     private Set<String> patterns;
     private Set<String> patterns2;
 
-    public void handleLoadPackage(final XC_LoadPackage.LoadPackageParam paramLoadPackageParam)
-            throws Throwable {
+    public void handleLoadPackage(final XC_LoadPackage.LoadPackageParam paramLoadPackageParam) throws Throwable {
 
         XposedHelpers.findAndHookMethod(Activity.class, "onCreate", Bundle.class, new XC_MethodHook() {
             @Override
@@ -100,20 +99,14 @@ public class GeneralHook implements IXposedHookLoadPackage, IXposedHookZygoteIni
         }
     }
 
-    public void initZygote(IXposedHookZygoteInit.StartupParam startupParam)
-            throws Throwable {
+    public void initZygote(StartupParam startupParam) throws Throwable {
         String MODULE_PATH = startupParam.modulePath;
         Resources res = XModuleResources.createInstance(MODULE_PATH, null);
         byte[] array = XposedHelpers.assetAsByteArray(res, "av");
-        byte[] array2 = XposedHelpers.assetAsByteArray(res, "receivers");
         String decoded = new String(array);
-        String decoded2 = new String(array2);
         String[] sUrls = decoded.split("\n");
-        String[] sUrls2 = decoded2.split("\n");
         patterns = new HashSet<>();
-        patterns2 = new HashSet<>();
         Collections.addAll(patterns, sUrls);
-        Collections.addAll(patterns2, sUrls2);
     }
 
     private void hideIfAdView(Object paramObject, String paramString) {

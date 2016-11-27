@@ -73,7 +73,7 @@ public class ServicesHook implements IXposedHookLoadPackage, IXposedHookZygoteIn
         }
     }
 
-     private void handleServiceStart(XC_MethodHook.MethodHookParam param, Intent serviceIntent) {
+    private void handleServiceStart(XC_MethodHook.MethodHookParam param, Intent serviceIntent) {
         if (serviceIntent != null && serviceIntent.getComponent() != null) {
             String serviceName = serviceIntent.getComponent().flattenToShortString();
             if (serviceName != null) {
@@ -98,4 +98,3 @@ public class ServicesHook implements IXposedHookLoadPackage, IXposedHookZygoteIn
         Collections.addAll(patterns, sUrls);
     }
 }
-

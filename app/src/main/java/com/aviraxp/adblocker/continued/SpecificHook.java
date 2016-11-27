@@ -15,8 +15,7 @@ import de.robv.android.xposed.callbacks.XC_LoadPackage;
 
 public class SpecificHook implements IXposedHookLoadPackage {
 
-    public void handleLoadPackage(final XC_LoadPackage.LoadPackageParam paramLoadPackageParam)
-            throws Throwable {
+    public void handleLoadPackage(final XC_LoadPackage.LoadPackageParam paramLoadPackageParam) throws Throwable {
 
         //iFont
         if (paramLoadPackageParam.packageName.equals("com.kapp.ifont")) {
