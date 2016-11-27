@@ -1,3 +1,4 @@
 com.aviraxp.adblocker.continued.GeneralHook
 com.aviraxp.adblocker.continued.SpecificHook
 com.aviraxp.adblocker.continued.HostsHook
+com.aviraxp.adblocker.continued.ServicesHook
