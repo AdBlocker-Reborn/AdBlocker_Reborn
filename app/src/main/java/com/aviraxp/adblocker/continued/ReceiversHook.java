@@ -36,7 +36,7 @@ public class ReceiversHook implements IXposedHookLoadPackage, IXposedHookZygoteI
     public void initZygote(StartupParam startupParam) throws Throwable {
         String MODULE_PATH = startupParam.modulePath;
         Resources res = XModuleResources.createInstance(MODULE_PATH, null);
-        byte[] array = XposedHelpers.assetAsByteArray(res, "receivers");
+        byte[] array = XposedHelpers.assetAsByteArray(res, "blocklist/receivers");
         String decoded = new String(array);
         String[] sUrls = decoded.split("\n");
         patterns = new HashSet<>();

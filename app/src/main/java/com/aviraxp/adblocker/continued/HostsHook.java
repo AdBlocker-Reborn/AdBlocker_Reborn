@@ -158,7 +158,7 @@ public class HostsHook implements IXposedHookLoadPackage, IXposedHookZygoteInit 
             throws Throwable {
         String MODULE_PATH = startupParam.modulePath;
         Resources res = XModuleResources.createInstance(MODULE_PATH, null);
-        byte[] array = XposedHelpers.assetAsByteArray(res, "hosts");
+        byte[] array = XposedHelpers.assetAsByteArray(res, "blocklist/hosts");
         String decoded = new String(array);
         String[] sUrls = decoded.split("\n");
         patterns = new HashSet<>();
