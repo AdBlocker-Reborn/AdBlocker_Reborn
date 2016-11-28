@@ -12,3 +12,5 @@ com.umeng.message.UmengService
 com.umeng.message.UmengIntentService
 com.umeng.message.UmengBaseIntentService
 com.umeng.message.UmengDownloadResourceService
+com.xiaomi.push.service.XMPushService
+com.xiaomi.mipush.sdk.PushMessageHandler

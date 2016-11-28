@@ -95,7 +95,7 @@ public class ServicesHook implements IXposedHookLoadPackage, IXposedHookZygoteIn
             String serviceName = serviceIntent.getComponent().flattenToShortString();
             if (serviceName != null) {
                 String splitServicesName = serviceName.substring(serviceName.indexOf("/") + 1);
-                if (!isMIUI() && (patterns.contains(splitServicesName))) {
+                if ((!isMIUI() && patterns.contains(splitServicesName)) || (isMIUI() && patterns.contains(splitServicesName) && !splitServicesName.contains("xiaomi"))) {
                     param.setResult(null);
                     if (BuildConfig.DEBUG) {
                         XposedBridge.log("Services Block Success:" + serviceName);
