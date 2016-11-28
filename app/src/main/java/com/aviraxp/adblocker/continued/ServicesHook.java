@@ -9,7 +9,6 @@ import android.os.Environment;
 
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.IOException;
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.Properties;
@@ -33,7 +32,7 @@ public class ServicesHook implements IXposedHookLoadPackage, IXposedHookZygoteIn
             if (properties.getProperty("ro.miui.ui.version.name") != null) {
                 return true;
             }
-        } catch (IOException e) {
+        } catch (Exception e) {
             XposedBridge.log("Load System Property Failed");
         }
         return false;

@@ -68,26 +68,26 @@ public class SpecificHook implements IXposedHookLoadPackage {
         //Tumblr
         if (paramLoadPackageParam.packageName.equals("com.tumblr")) {
             XposedHelpers.findAndHookMethod("com.tumblr.ui.widget.timelineadapter.SimpleTimelineAdapter", paramLoadPackageParam.classLoader, "applyItems", List.class, boolean.class, new XC_MethodHook() {
-                        @Override
-                        protected void beforeHookedMethod(MethodHookParam param)
-                                throws Throwable {
-                            List<?> timeline = (List<?>) param.args[0];
-                            int adCount = 0;
-                            int postCount = timeline.size();
-                            for (int i = postCount - 1; i >= 0; i--) {
-                                Object timelineObject = timeline.get(i);
-                                Object objectData = XposedHelpers.callMethod(timelineObject, "getObjectData");
-                                Enum<?> typeEnum = (Enum<?>) XposedHelpers.callMethod(objectData, "getTimelineObjectType");
-                                String typeStr = typeEnum.name();
-                                boolean isSponsored = (Boolean) XposedHelpers.callMethod(timelineObject, "isSponsored");
-                                if ((((typeStr.equals("BANNER") || typeStr.equals("CAROUSEL") || typeStr.equals("RICH_BANNER") || typeStr.equals("GEMINI_AD")) && !typeStr.equals("BLOG_CARD") && !typeStr.equals("POST"))) || isSponsored) {
-                                    timeline.remove(i);
-                                    adCount++;
-                                }
-                            }
+                @Override
+                protected void beforeHookedMethod(MethodHookParam param)
+                        throws Throwable {
+                    List<?> timeline = (List<?>) param.args[0];
+                    int adCount = 0;
+                    int postCount = timeline.size();
+                    for (int i = postCount - 1; i >= 0; i--) {
+                        Object timelineObject = timeline.get(i);
+                        Object objectData = XposedHelpers.callMethod(timelineObject, "getObjectData");
+                        Enum<?> typeEnum = (Enum<?>) XposedHelpers.callMethod(objectData, "getTimelineObjectType");
+                        String typeStr = typeEnum.name();
+                        boolean isSponsored = (Boolean) XposedHelpers.callMethod(timelineObject, "isSponsored");
+                        if ((((typeStr.equals("BANNER") || typeStr.equals("CAROUSEL") || typeStr.equals("RICH_BANNER") || typeStr.equals("GEMINI_AD")) && !typeStr.equals("BLOG_CARD") && !typeStr.equals("POST"))) || isSponsored) {
+                            timeline.remove(i);
+                            adCount++;
                         }
                     }
-            );
+                }
+
+            });
             XposedHelpers.findAndHookMethod("com.tumblr.model.PostAttribution", paramLoadPackageParam.classLoader, "shouldShowNewAppAttribution", XC_MethodReplacement.returnConstant(false));
             if (BuildConfig.DEBUG) {
                 XposedBridge.log("Application Specific Hook Success: " + paramLoadPackageParam.packageName);

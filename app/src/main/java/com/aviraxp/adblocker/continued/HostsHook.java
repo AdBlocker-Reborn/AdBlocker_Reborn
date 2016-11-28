@@ -29,30 +29,29 @@ public class HostsHook implements IXposedHookLoadPackage, IXposedHookZygoteInit 
         Class<?> ioBridgeClz = XposedHelpers.findClass("libcore.io.IoBridge", lpparam.classLoader);
 
         XposedBridge.hookAllConstructors(socketClz, new XC_MethodHook() {
-                    @Override
-                    protected void beforeHookedMethod(MethodHookParam param) throws Throwable {
-                        if (null != param.args && param.args.length > 0) {
-                            try {
-                                Object obj = param.args[0];
-                                String host = null;
-                                if ("java.lang.String".equals(obj.getClass().getName())) {
-                                    host = (String) obj;
-                                } else if ("java.lang.InetAddress".equals(obj.getClass().getName())) {
-                                    host = ((InetAddress) obj).getHostName();
-                                }
-                                if (host != null && patterns.contains(host)) {
-                                    param.args[0] = null;
-                                    param.setResult(new Object());
-                                }
-                            } catch (Exception e) {
-                                if (BuildConfig.DEBUG) {
-                                    XposedBridge.log(e);
-                                }
-                            }
+            @Override
+            protected void beforeHookedMethod(MethodHookParam param) throws Throwable {
+                if (null != param.args && param.args.length > 0) {
+                    try {
+                        Object obj = param.args[0];
+                        String host = null;
+                        if ("java.lang.String".equals(obj.getClass().getName())) {
+                            host = (String) obj;
+                        } else if ("java.lang.InetAddress".equals(obj.getClass().getName())) {
+                            host = ((InetAddress) obj).getHostName();
+                        }
+                        if (host != null && patterns.contains(host)) {
+                            param.args[0] = null;
+                            param.setResult(new Object());
+                        }
+                    } catch (Exception e) {
+                        if (BuildConfig.DEBUG) {
+                            XposedBridge.log(e);
                         }
                     }
                 }
-        );
+            }
+        });
 
         XC_MethodHook inetAddrHookSingleResult = new XC_MethodHook() {
             @Override
