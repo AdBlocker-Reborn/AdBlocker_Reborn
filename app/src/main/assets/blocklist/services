@@ -1,1 +1,14 @@
 com.igexin.sdk.PushService
+com.igexin.sdk.PushServiceUser
+com.baidu.android.pushservice.PushService
+com.jpush.android.service.PushService
+com.tencent.android.tpush.service.XGPushService
+com.tencent.android.tpush.rpc.XGRemoteService
+org.android.agoo.service.AgooService
+org.android.agoo.service.ElectionService
+org.android.agoo.service.IElectionService
+org.android.agoo.service.IMessageService
+com.umeng.message.UmengService
+com.umeng.message.UmengIntentService
+com.umeng.message.UmengBaseIntentService
+com.umeng.message.UmengDownloadResourceService
