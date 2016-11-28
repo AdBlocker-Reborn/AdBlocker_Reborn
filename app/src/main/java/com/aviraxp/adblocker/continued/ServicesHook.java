@@ -5,9 +5,14 @@ import android.content.Intent;
 import android.content.res.Resources;
 import android.content.res.XModuleResources;
 import android.os.Build;
+import android.os.Environment;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.IOException;
 import java.util.Collections;
 import java.util.HashSet;
+import java.util.Properties;
 import java.util.Set;
 
 import de.robv.android.xposed.IXposedHookLoadPackage;
@@ -20,6 +25,19 @@ import de.robv.android.xposed.callbacks.XC_LoadPackage;
 public class ServicesHook implements IXposedHookLoadPackage, IXposedHookZygoteInit {
 
     private Set<String> patterns;
+
+    private static boolean isMIUI() {
+        Properties properties = new Properties();
+        try {
+            properties.load(new FileInputStream(new File(Environment.getRootDirectory(), "build.prop")));
+            if (properties.getProperty("ro.miui.ui.version.name") != null) {
+                return true;
+            }
+        } catch (IOException e) {
+            XposedBridge.log("Load System Property Failed");
+        }
+        return false;
+    }
 
     public void handleLoadPackage(XC_LoadPackage.LoadPackageParam lpparam) throws Throwable {
         if (lpparam.packageName.equals("android")) {
@@ -78,7 +96,7 @@ public class ServicesHook implements IXposedHookLoadPackage, IXposedHookZygoteIn
             String serviceName = serviceIntent.getComponent().flattenToShortString();
             if (serviceName != null) {
                 String splitServicesName = serviceName.substring(serviceName.indexOf("/") + 1);
-                if (patterns.contains(splitServicesName)) {
+                if (!isMIUI() && (patterns.contains(splitServicesName))) {
                     param.setResult(null);
                     if (BuildConfig.DEBUG) {
                         XposedBridge.log("Services Block Success:" + serviceName);
