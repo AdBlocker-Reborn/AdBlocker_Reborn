@@ -29,7 +29,8 @@ public class ServicesHook implements IXposedHookLoadPackage, IXposedHookZygoteIn
         Properties properties = new Properties();
         try {
             properties.load(new FileInputStream(new File(Environment.getRootDirectory(), "build.prop")));
-            if (properties.getProperty("ro.miui.ui.version.name") != null) {
+            if (properties.getProperty("ro.miui.ui.version.name") != null || properties.getProperty("ro.miui.ui.version.code") != null || properties.getProperty("ro.miui.internal.storage") != null) {
+                XposedBridge.log("MIUI Detected, Never Block MiPush");
                 return true;
             }
         } catch (Exception e) {
