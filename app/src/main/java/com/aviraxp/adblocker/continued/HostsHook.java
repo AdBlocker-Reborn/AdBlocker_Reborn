@@ -35,9 +35,9 @@ public class HostsHook implements IXposedHookLoadPackage, IXposedHookZygoteInit 
                     try {
                         Object obj = param.args[0];
                         String host = null;
-                        if ("java.lang.String".equals(obj.getClass().getName())) {
+                        if (obj != null && "java.lang.String".equals(obj.getClass().getName())) {
                             host = (String) obj;
-                        } else if ("java.lang.InetAddress".equals(obj.getClass().getName())) {
+                        } else if (obj != null && "java.lang.InetAddress".equals(obj.getClass().getName())) {
                             host = ((InetAddress) obj).getHostName();
                         }
                         if (host != null && patterns.contains(host)) {
@@ -95,9 +95,9 @@ public class HostsHook implements IXposedHookLoadPackage, IXposedHookZygoteInit 
                     try {
                         Object obj = param.args[0];
                         String host = null;
-                        if (("java.lang.String").equals(obj.getClass().getName())) {
+                        if (obj != null && "java.lang.String".equals(obj.getClass().getName())) {
                             host = (String) obj;
-                        } else if (("java.net.InetAddress").equals(obj.getClass().getName())) {
+                        } else if (obj != null && "java.net.InetAddress".equals(obj.getClass().getName())) {
                             host = ((InetAddress) obj).getHostName();
                         }
                         if (host != null && patterns.contains(host)) {
