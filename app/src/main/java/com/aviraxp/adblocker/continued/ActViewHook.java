@@ -25,20 +25,20 @@ public class ActViewHook implements IXposedHookLoadPackage, IXposedHookZygoteIni
 
     private Set<String> patterns;
 
-    public void handleLoadPackage(final XC_LoadPackage.LoadPackageParam paramLoadPackageParam) throws Throwable {
+    public void handleLoadPackage(final XC_LoadPackage.LoadPackageParam lpparam) throws Throwable {
 
         XposedHelpers.findAndHookMethod(Activity.class, "onCreate", Bundle.class, new XC_MethodHook() {
             @Override
-            protected void afterHookedMethod(XC_MethodHook.MethodHookParam paramAnonymousMethodHookParam)
+            protected void afterHookedMethod(XC_MethodHook.MethodHookParam param)
                     throws Throwable {
-                Activity activity = (Activity) paramAnonymousMethodHookParam.thisObject;
+                Activity activity = (Activity) param.thisObject;
                 String activityClassName = activity.getClass().getName();
                 if ((activityClassName != null) && (!activityClassName.startsWith("android")) && (patterns.contains(activityClassName))) {
                     activity.overridePendingTransition(0, 0);
                     activity.finish();
                     activity.overridePendingTransition(0, 0);
                     if (BuildConfig.DEBUG) {
-                        XposedBridge.log("Activity Block Success: " + paramLoadPackageParam.packageName + "/" + activityClassName);
+                        XposedBridge.log("Activity Block Success: " + lpparam.packageName + "/" + activityClassName);
                     }
                 }
             }
@@ -46,17 +46,17 @@ public class ActViewHook implements IXposedHookLoadPackage, IXposedHookZygoteIni
 
         Object activityObject = new XC_MethodHook() {
             @Override
-            protected void beforeHookedMethod(XC_MethodHook.MethodHookParam paramAnonymousMethodHookParam)
+            protected void beforeHookedMethod(XC_MethodHook.MethodHookParam param)
                     throws Throwable {
-                ComponentName Component = ((Intent) paramAnonymousMethodHookParam.args[0]).getComponent();
+                ComponentName Component = ((Intent) param.args[0]).getComponent();
                 String activityClassName = null;
                 if (Component != null) {
                     activityClassName = Component.getClassName();
                 }
                 if ((activityClassName != null) && (!activityClassName.startsWith("android")) && (patterns.contains(activityClassName))) {
-                    paramAnonymousMethodHookParam.setResult(null);
+                    param.setResult(null);
                     if (BuildConfig.DEBUG) {
-                        XposedBridge.log("Activity Block Success: " + paramLoadPackageParam.packageName + "/" + activityClassName);
+                        XposedBridge.log("Activity Block Success: " + lpparam.packageName + "/" + activityClassName);
                     }
                 }
             }
@@ -68,19 +68,19 @@ public class ActViewHook implements IXposedHookLoadPackage, IXposedHookZygoteIni
 
         Object viewObject = new XC_MethodHook() {
             @Override
-            protected void afterHookedMethod(XC_MethodHook.MethodHookParam paramAnonymousMethodHookParam)
+            protected void afterHookedMethod(XC_MethodHook.MethodHookParam param)
                     throws Throwable {
-                hideIfAdView(paramAnonymousMethodHookParam.thisObject, paramLoadPackageParam.packageName);
+                hideIfAdView(param.thisObject, lpparam.packageName);
             }
         };
         XposedBridge.hookAllConstructors(View.class, (XC_MethodHook) viewObject);
         XposedBridge.hookAllConstructors(ViewGroup.class, (XC_MethodHook) viewObject);
         XposedHelpers.findAndHookMethod(View.class, "setVisibility", Integer.TYPE, new XC_MethodHook() {
             @Override
-            protected void afterHookedMethod(XC_MethodHook.MethodHookParam paramAnonymousMethodHookParam)
+            protected void afterHookedMethod(XC_MethodHook.MethodHookParam param)
                     throws Throwable {
-                if ((Integer) paramAnonymousMethodHookParam.args[0] != 8) {
-                    hideIfAdView(paramAnonymousMethodHookParam.thisObject, paramLoadPackageParam.packageName);
+                if ((Integer) param.args[0] != 8) {
+                    hideIfAdView(param.thisObject, lpparam.packageName);
                 }
             }
         });

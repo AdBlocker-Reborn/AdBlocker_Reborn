@@ -20,13 +20,13 @@ public class ReceiversHook implements IXposedHookLoadPackage, IXposedHookZygoteI
 
     private Set<String> patterns;
 
-    public void handleLoadPackage(final XC_LoadPackage.LoadPackageParam paramLoadPackageParam) throws Throwable {
+    public void handleLoadPackage(final XC_LoadPackage.LoadPackageParam lpparam) throws Throwable {
 
         try {
             for (String receivers : patterns) {
-                XposedHelpers.findAndHookMethod(receivers, paramLoadPackageParam.classLoader, "onReceive", Context.class, Intent.class, XC_MethodReplacement.DO_NOTHING);
+                XposedHelpers.findAndHookMethod(receivers, lpparam.classLoader, "onReceive", Context.class, Intent.class, XC_MethodReplacement.DO_NOTHING);
                 if (BuildConfig.DEBUG) {
-                    XposedBridge.log("Receiver Block Success: " + paramLoadPackageParam.packageName + "/" + receivers);
+                    XposedBridge.log("Receiver Block Success: " + lpparam.packageName + "/" + receivers);
                 }
             }
         } catch (XposedHelpers.ClassNotFoundError ignored) {

@@ -15,11 +15,11 @@ import de.robv.android.xposed.callbacks.XC_LoadPackage;
 
 public class SpecificHook implements IXposedHookLoadPackage {
 
-    public void handleLoadPackage(final XC_LoadPackage.LoadPackageParam paramLoadPackageParam) throws Throwable {
+    public void handleLoadPackage(XC_LoadPackage.LoadPackageParam lpparam) throws Throwable {
 
         //iFont
-        if (paramLoadPackageParam.packageName.equals("com.kapp.ifont")) {
-            Object CommonUtil = XposedHelpers.findClass("com.kapp.ifont.core.util.CommonUtil", paramLoadPackageParam.classLoader);
+        if (lpparam.packageName.equals("com.kapp.ifont")) {
+            Object CommonUtil = XposedHelpers.findClass("com.kapp.ifont.core.util.CommonUtil", lpparam.classLoader);
             XposedHelpers.findAndHookMethod((Class) CommonUtil, "isPremium", Context.class, XC_MethodReplacement.returnConstant(true));
             XposedHelpers.findAndHookMethod((Class) CommonUtil, "isShowRecomTab", Context.class, XC_MethodReplacement.returnConstant(false));
             XposedBridge.hookAllMethods((Class) CommonUtil, "isShowAdBanner", XC_MethodReplacement.returnConstant(false));
@@ -29,25 +29,25 @@ public class SpecificHook implements IXposedHookLoadPackage {
             XposedBridge.hookAllMethods((Class) CommonUtil, "showInterstitialAd", XC_MethodReplacement.returnConstant(null));
             XposedBridge.hookAllMethods((Class) CommonUtil, "showInterstitialAdForce", XC_MethodReplacement.returnConstant(null));
             XposedBridge.hookAllMethods((Class) CommonUtil, "supportInterstitialAd", XC_MethodReplacement.returnConstant(null));
-            XposedHelpers.findAndHookMethod("com.kapp.ifont.core.util.t", paramLoadPackageParam.classLoader, "e", Context.class, String.class, new XC_MethodHook() {
-                protected void beforeHookedMethod(MethodHookParam paramAnonymousMethodHookParam)
+            XposedHelpers.findAndHookMethod("com.kapp.ifont.core.util.t", lpparam.classLoader, "e", Context.class, String.class, new XC_MethodHook() {
+                protected void beforeHookedMethod(MethodHookParam param)
                         throws Throwable {
-                    if ("com.kapp.ifont.donate".equals(paramAnonymousMethodHookParam.args[1])) {
-                        paramAnonymousMethodHookParam.setResult(true);
+                    if ("com.kapp.ifont.donate".equals(param.args[1])) {
+                        param.setResult(true);
                     }
                 }
             });
             if (BuildConfig.DEBUG) {
-                XposedBridge.log("Application Specific Hook Success: " + paramLoadPackageParam.packageName);
+                XposedBridge.log("Application Specific Hook Success: " + lpparam.packageName);
             }
         }
 
         //Youku
-        if (paramLoadPackageParam.packageName.equals("com.youku.phone")) {
-            Class<?> MediaPlayerConfiguration = XposedHelpers.findClass("com.youku.player.config.MediaPlayerConfiguration", paramLoadPackageParam.classLoader);
-            Class<?> YoukuUtil = XposedHelpers.findClass("com.youku.util.YoukuUtil", paramLoadPackageParam.classLoader);
-            Class<?> AnalyticWrapper = XposedHelpers.findClass("com.youku.player.util.AnalyticsWrapper", paramLoadPackageParam.classLoader);
-            Class<?> GameCenterModel = XposedHelpers.findClass("com.youku.gamecenter.GameCenterModel", paramLoadPackageParam.classLoader);
+        if (lpparam.packageName.equals("com.youku.phone")) {
+            Class<?> MediaPlayerConfiguration = XposedHelpers.findClass("com.youku.player.config.MediaPlayerConfiguration", lpparam.classLoader);
+            Class<?> YoukuUtil = XposedHelpers.findClass("com.youku.util.YoukuUtil", lpparam.classLoader);
+            Class<?> AnalyticWrapper = XposedHelpers.findClass("com.youku.player.util.AnalyticsWrapper", lpparam.classLoader);
+            Class<?> GameCenterModel = XposedHelpers.findClass("com.youku.gamecenter.GameCenterModel", lpparam.classLoader);
             XposedHelpers.findAndHookMethod(MediaPlayerConfiguration, "showAdWebView", XC_MethodReplacement.returnConstant(false));
             XposedHelpers.findAndHookMethod(MediaPlayerConfiguration, "showOfflineAd", XC_MethodReplacement.returnConstant(false));
             XposedHelpers.findAndHookMethod(MediaPlayerConfiguration, "showPauseAd", XC_MethodReplacement.returnConstant(false));
@@ -61,13 +61,13 @@ public class SpecificHook implements IXposedHookLoadPackage {
             XposedHelpers.findAndHookMethod(GameCenterModel, "registerReceiver", Context.class, XC_MethodReplacement.DO_NOTHING);
             XposedHelpers.findAndHookMethod(GameCenterModel, "unRegisterReceiver", Context.class, XC_MethodReplacement.DO_NOTHING);
             if (BuildConfig.DEBUG) {
-                XposedBridge.log("Application Specific Hook Success: " + paramLoadPackageParam.packageName);
+                XposedBridge.log("Application Specific Hook Success: " + lpparam.packageName);
             }
         }
 
         //Tumblr
-        if (paramLoadPackageParam.packageName.equals("com.tumblr")) {
-            XposedHelpers.findAndHookMethod("com.tumblr.ui.widget.timelineadapter.SimpleTimelineAdapter", paramLoadPackageParam.classLoader, "applyItems", List.class, boolean.class, new XC_MethodHook() {
+        if (lpparam.packageName.equals("com.tumblr")) {
+            XposedHelpers.findAndHookMethod("com.tumblr.ui.widget.timelineadapter.SimpleTimelineAdapter", lpparam.classLoader, "applyItems", List.class, boolean.class, new XC_MethodHook() {
                 @Override
                 protected void beforeHookedMethod(MethodHookParam param)
                         throws Throwable {
@@ -88,16 +88,16 @@ public class SpecificHook implements IXposedHookLoadPackage {
                 }
 
             });
-            XposedHelpers.findAndHookMethod("com.tumblr.model.PostAttribution", paramLoadPackageParam.classLoader, "shouldShowNewAppAttribution", XC_MethodReplacement.returnConstant(false));
+            XposedHelpers.findAndHookMethod("com.tumblr.model.PostAttribution", lpparam.classLoader, "shouldShowNewAppAttribution", XC_MethodReplacement.returnConstant(false));
             if (BuildConfig.DEBUG) {
-                XposedBridge.log("Application Specific Hook Success: " + paramLoadPackageParam.packageName);
+                XposedBridge.log("Application Specific Hook Success: " + lpparam.packageName);
             }
         }
 
         //SoundCloud
-        if (paramLoadPackageParam.packageName.equals("com.soundcloud.android")) {
-            XposedHelpers.findAndHookMethod("com.soundcloud.android.ads.AdsOperations", paramLoadPackageParam.classLoader, "insertAudioAd", "com.soundcloud.android.playback.TrackQueueItem", "com.soundcloud.android.ads.ApiAudioAd", XC_MethodReplacement.returnConstant(null));
-            XposedHelpers.findAndHookMethod("android.support.v4.app.NotificationManagerCompat", paramLoadPackageParam.classLoader, "notify", String.class, int.class, Notification.class, new XC_MethodHook() {
+        if (lpparam.packageName.equals("com.soundcloud.android")) {
+            XposedHelpers.findAndHookMethod("com.soundcloud.android.ads.AdsOperations", lpparam.classLoader, "insertAudioAd", "com.soundcloud.android.playback.TrackQueueItem", "com.soundcloud.android.ads.ApiAudioAd", XC_MethodReplacement.returnConstant(null));
+            XposedHelpers.findAndHookMethod("android.support.v4.app.NotificationManagerCompat", lpparam.classLoader, "notify", String.class, int.class, Notification.class, new XC_MethodHook() {
                 @Override
                 protected void beforeHookedMethod(MethodHookParam param)
                         throws Throwable {
@@ -107,19 +107,19 @@ public class SpecificHook implements IXposedHookLoadPackage {
                 }
             });
             if (BuildConfig.DEBUG) {
-                XposedBridge.log("Application Specific Hook Success: " + paramLoadPackageParam.packageName);
+                XposedBridge.log("Application Specific Hook Success: " + lpparam.packageName);
             }
         }
 
         //Kernel Adiutor
-        if (paramLoadPackageParam.packageName.equals("com.grarak.kerneladiutor")) {
-            Class KABuildConfig = XposedHelpers.findClass("com.grarak.kerneladiutor.BuildConfig", paramLoadPackageParam.classLoader);
-            Class Utils = XposedHelpers.findClass("com.grarak.kerneladiutor.utils.Utils", paramLoadPackageParam.classLoader);
+        if (lpparam.packageName.equals("com.grarak.kerneladiutor")) {
+            Class KABuildConfig = XposedHelpers.findClass("com.grarak.kerneladiutor.BuildConfig", lpparam.classLoader);
+            Class Utils = XposedHelpers.findClass("com.grarak.kerneladiutor.utils.Utils", lpparam.classLoader);
             XposedHelpers.setStaticBooleanField(KABuildConfig, "DEBUG", true);
             XposedHelpers.setStaticBooleanField(Utils, "DONATED", true);
             XposedHelpers.setStaticObjectField(KABuildConfig, "BUILD_TYPE", "DEBUG");
             if (BuildConfig.DEBUG) {
-                XposedBridge.log("Application Specific Hook Success: " + paramLoadPackageParam.packageName);
+                XposedBridge.log("Application Specific Hook Success: " + lpparam.packageName);
             }
         }
     }
