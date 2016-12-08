@@ -15,7 +15,6 @@ import java.util.Set;
 import de.robv.android.xposed.IXposedHookLoadPackage;
 import de.robv.android.xposed.IXposedHookZygoteInit;
 import de.robv.android.xposed.XC_MethodHook;
-import de.robv.android.xposed.XC_MethodHook.MethodHookParam;
 import de.robv.android.xposed.XposedBridge;
 import de.robv.android.xposed.XposedHelpers;
 import de.robv.android.xposed.callbacks.XC_LoadPackage;
@@ -71,35 +70,43 @@ public final class WebViewHook implements IXposedHookLoadPackage, IXposedHookZyg
             Class<?> adView = XposedHelpers.findClass("android.webkit.WebView", lpparam.classLoader);
             XposedBridge.hookAllMethods(adView, "loadUrl", new XC_MethodHook() {
                 @Override
-                protected void beforeHookedMethod(MethodHookParam param) throws Throwable {
+                protected void beforeHookedMethod(XC_MethodHook.MethodHookParam param) throws Throwable {
                     String url = (String) param.args[0];
                     adExist = urlFiltering(url, "", param);
                     if (adExist) {
                         param.setResult(new Object());
+                        if (BuildConfig.DEBUG) {
+                            XposedBridge.log("WebView Block Success: " + lpparam.packageName + "/" + url);
+                        }
                     }
                 }
             });
 
             XposedBridge.hookAllMethods(adView, "loadData", new XC_MethodHook() {
                 @Override
-                protected void beforeHookedMethod(MethodHookParam param) throws Throwable {
-
+                protected void beforeHookedMethod(XC_MethodHook.MethodHookParam param) throws Throwable {
                     String data = (String) param.args[0];
                     adExist = urlFiltering("", data, param);
                     if (adExist) {
                         param.setResult(new Object());
+                        if (BuildConfig.DEBUG) {
+                            XposedBridge.log("WebView Block Success: " + lpparam.packageName + "/" + data);
+                        }
                     }
                 }
             });
 
             XposedBridge.hookAllMethods(adView, "loadDataWithBaseURL", new XC_MethodHook() {
                 @Override
-                protected void beforeHookedMethod(MethodHookParam param) throws Throwable {
+                protected void beforeHookedMethod(XC_MethodHook.MethodHookParam param) throws Throwable {
                     String url = (String) param.args[0];
                     String data = (String) param.args[1];
                     adExist = urlFiltering(url, data, param);
                     if (adExist) {
                         param.setResult(new Object());
+                        if (BuildConfig.DEBUG) {
+                            XposedBridge.log("WebView Block Success: " + lpparam.packageName + "/" + url + "/" + data);
+                        }
                     }
                 }
             });
@@ -107,7 +114,7 @@ public final class WebViewHook implements IXposedHookLoadPackage, IXposedHookZyg
         }
     }
 
-    private boolean urlFiltering(String url, String data, MethodHookParam param) {
+    private boolean urlFiltering(String url, String data, XC_MethodHook.MethodHookParam param) {
         if (url == null) {
             url = "";
         }
@@ -115,7 +122,7 @@ public final class WebViewHook implements IXposedHookLoadPackage, IXposedHookZyg
         try {
             url = URLDecoder.decode(url, "UTF-8");
         } catch (UnsupportedEncodingException e) {
-            e.printStackTrace();
+            XposedBridge.log(e);
         }
 
         for (String adUrl : patterns) {
@@ -129,7 +136,7 @@ public final class WebViewHook implements IXposedHookLoadPackage, IXposedHookZyg
         try {
             data = URLDecoder.decode(data, "UTF-8");
         } catch (Exception e) {
-            e.printStackTrace();
+            XposedBridge.log(e);
         }
 
         for (String adUrl : patterns) {
