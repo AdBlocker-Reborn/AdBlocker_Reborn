@@ -6,7 +6,6 @@ import android.util.DisplayMetrics;
 import android.view.View;
 import android.view.ViewGroup;
 
-import java.io.UnsupportedEncodingException;
 import java.net.URLDecoder;
 import java.util.Collections;
 import java.util.HashSet;
@@ -54,6 +53,7 @@ public final class WebViewHook implements IXposedHookLoadPackage, IXposedHookZyg
                 }
             }
         });
+
         if (view.getParent() != null && view.getParent() instanceof ViewGroup) {
             ViewGroup parent = (ViewGroup) view.getParent();
             removeAdView(parent, false, heightLimit);
@@ -68,6 +68,7 @@ public final class WebViewHook implements IXposedHookLoadPackage, IXposedHookZyg
     public void handleLoadPackage(final XC_LoadPackage.LoadPackageParam lpparam) throws Throwable {
         try {
             Class<?> adView = XposedHelpers.findClass("android.webkit.WebView", lpparam.classLoader);
+
             XposedBridge.hookAllMethods(adView, "loadUrl", new XC_MethodHook() {
                 @Override
                 protected void beforeHookedMethod(XC_MethodHook.MethodHookParam param) throws Throwable {
@@ -121,7 +122,7 @@ public final class WebViewHook implements IXposedHookLoadPackage, IXposedHookZyg
 
         try {
             url = URLDecoder.decode(url, "UTF-8");
-        } catch (UnsupportedEncodingException e) {
+        } catch (Exception e) {
             XposedBridge.log(e);
         }
 

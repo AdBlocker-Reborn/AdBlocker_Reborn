@@ -113,8 +113,8 @@ public class SpecificHook implements IXposedHookLoadPackage {
 
         //Kernel Adiutor
         if (lpparam.packageName.equals("com.grarak.kerneladiutor")) {
-            Class KABuildConfig = XposedHelpers.findClass("com.grarak.kerneladiutor.BuildConfig", lpparam.classLoader);
-            Class Utils = XposedHelpers.findClass("com.grarak.kerneladiutor.utils.Utils", lpparam.classLoader);
+            Class<?> KABuildConfig = XposedHelpers.findClass("com.grarak.kerneladiutor.BuildConfig", lpparam.classLoader);
+            Class<?> Utils = XposedHelpers.findClass("com.grarak.kerneladiutor.utils.Utils", lpparam.classLoader);
             XposedHelpers.setStaticBooleanField(KABuildConfig, "DEBUG", true);
             XposedHelpers.setStaticBooleanField(Utils, "DONATED", true);
             XposedHelpers.setStaticObjectField(KABuildConfig, "BUILD_TYPE", "DEBUG");

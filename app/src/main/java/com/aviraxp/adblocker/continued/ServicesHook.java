@@ -48,7 +48,7 @@ public class ServicesHook implements IXposedHookLoadPackage, IXposedHookZygoteIn
                         Intent intent = (Intent) param.args[1];
                         handleServiceStart(param, intent);
                         if (BuildConfig.DEBUG) {
-                            XposedBridge.log("Hook Services Flag Success:" + Build.VERSION.SDK_INT);
+                            XposedBridge.log("Hook Services Flag Success: " + Build.VERSION.SDK_INT);
                         }
                     }
                 });
@@ -60,7 +60,7 @@ public class ServicesHook implements IXposedHookLoadPackage, IXposedHookZygoteIn
                             Intent intent = (Intent) param.args[1];
                             handleServiceStart(param, intent);
                             if (BuildConfig.DEBUG) {
-                                XposedBridge.log("Hook Services Flag Success:" + Build.VERSION.SDK_INT);
+                                XposedBridge.log("Hook Services Flag Success: " + Build.VERSION.SDK_INT);
                             }
                         }
                     });
@@ -71,7 +71,7 @@ public class ServicesHook implements IXposedHookLoadPackage, IXposedHookZygoteIn
                             Intent intent = (Intent) param.args[1];
                             handleServiceStart(param, intent);
                             if (BuildConfig.DEBUG) {
-                                XposedBridge.log("Hook Services Flag Success:" + Build.VERSION.SDK_INT);
+                                XposedBridge.log("Hook Services Flag Success: " + Build.VERSION.SDK_INT);
                             }
                         }
                     });
@@ -83,7 +83,7 @@ public class ServicesHook implements IXposedHookLoadPackage, IXposedHookZygoteIn
                         Intent intent = (Intent) param.args[1];
                         handleServiceStart(param, intent);
                         if (BuildConfig.DEBUG) {
-                            XposedBridge.log("Hook Services Flags Success:" + Build.VERSION.SDK_INT);
+                            XposedBridge.log("Hook Services Flags Success: " + Build.VERSION.SDK_INT);
                         }
                     }
                 });
@@ -99,7 +99,7 @@ public class ServicesHook implements IXposedHookLoadPackage, IXposedHookZygoteIn
                 if ((!isMIUI() && patterns.contains(splitServicesName)) || (isMIUI() && patterns.contains(splitServicesName) && !splitServicesName.contains("xiaomi"))) {
                     param.setResult(null);
                     if (BuildConfig.DEBUG) {
-                        XposedBridge.log("Service Block Success:" + serviceName);
+                        XposedBridge.log("Service Block Success: " + serviceName);
                     }
                 }
             }
