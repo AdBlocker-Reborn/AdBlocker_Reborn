@@ -25,7 +25,6 @@ public final class WebViewHook implements IXposedHookLoadPackage, IXposedHookZyg
     private Set<String> patterns;
 
     private static void removeAdView(final View view, final boolean first, final float heightLimit) {
-
         float adHeight = convertPixelsToDp(view.getHeight());
 
         if (first || (adHeight > 0 && adHeight <= heightLimit)) {
@@ -152,7 +151,7 @@ public final class WebViewHook implements IXposedHookLoadPackage, IXposedHookZyg
 
     public void initZygote(IXposedHookZygoteInit.StartupParam startupParam) throws Throwable {
         String MODULE_PATH = startupParam.modulePath;
-        Resources res = XModuleResources.createInstance(MODULE_PATH, null);
+        res = XModuleResources.createInstance(MODULE_PATH, null);
         byte[] array = XposedHelpers.assetAsByteArray(res, "blocklist/hosts");
         String decoded = new String(array);
         String[] sUrls = decoded.split("\n");
