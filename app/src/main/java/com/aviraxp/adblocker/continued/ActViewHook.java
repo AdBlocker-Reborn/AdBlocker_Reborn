@@ -29,8 +29,7 @@ public class ActViewHook implements IXposedHookLoadPackage, IXposedHookZygoteIni
 
         XposedHelpers.findAndHookMethod(Activity.class, "onCreate", Bundle.class, new XC_MethodHook() {
             @Override
-            protected void afterHookedMethod(XC_MethodHook.MethodHookParam param)
-                    throws Throwable {
+            protected void afterHookedMethod(XC_MethodHook.MethodHookParam param) throws Throwable {
                 Activity activity = (Activity) param.thisObject;
                 String activityClassName = activity.getClass().getName();
                 if ((activityClassName != null) && (!activityClassName.startsWith("android")) && (patterns.contains(activityClassName))) {
@@ -46,8 +45,7 @@ public class ActViewHook implements IXposedHookLoadPackage, IXposedHookZygoteIni
 
         Object activityObject = new XC_MethodHook() {
             @Override
-            protected void beforeHookedMethod(XC_MethodHook.MethodHookParam param)
-                    throws Throwable {
+            protected void beforeHookedMethod(XC_MethodHook.MethodHookParam param) throws Throwable {
                 ComponentName Component = ((Intent) param.args[0]).getComponent();
                 String activityClassName = null;
                 if (Component != null) {
@@ -68,8 +66,7 @@ public class ActViewHook implements IXposedHookLoadPackage, IXposedHookZygoteIni
 
         Object viewObject = new XC_MethodHook() {
             @Override
-            protected void afterHookedMethod(XC_MethodHook.MethodHookParam param)
-                    throws Throwable {
+            protected void afterHookedMethod(XC_MethodHook.MethodHookParam param) throws Throwable {
                 hideIfAdView(param.thisObject, lpparam.packageName);
             }
         };

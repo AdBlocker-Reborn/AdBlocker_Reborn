@@ -153,8 +153,7 @@ public class HostsHook implements IXposedHookLoadPackage, IXposedHookZygoteInit 
         XposedBridge.hookAllMethods(ioBridgeClz, "connectErrno", ioBridgeHook);
     }
 
-    public void initZygote(StartupParam startupParam)
-            throws Throwable {
+    public void initZygote(StartupParam startupParam) throws Throwable {
         String MODULE_PATH = startupParam.modulePath;
         Resources res = XModuleResources.createInstance(MODULE_PATH, null);
         byte[] array = XposedHelpers.assetAsByteArray(res, "blocklist/hosts");
