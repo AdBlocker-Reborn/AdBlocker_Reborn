@@ -128,7 +128,7 @@ public final class WebViewHook implements IXposedHookLoadPackage, IXposedHookZyg
         for (String adUrl : patterns) {
             if (url.contains(adUrl)) {
                 param.setResult(new Object());
-                removeAdView((View) param.thisObject, true, 51);
+                removeAdView((View) param.thisObject, true, 100);
                 return true;
             }
         }
@@ -142,7 +142,7 @@ public final class WebViewHook implements IXposedHookLoadPackage, IXposedHookZyg
         for (String adUrl : patterns) {
             if (data.contains(adUrl)) {
                 param.setResult(new Object());
-                removeAdView((View) param.thisObject, true, 51);
+                removeAdView((View) param.thisObject, true, 100);
                 return true;
             }
         }
