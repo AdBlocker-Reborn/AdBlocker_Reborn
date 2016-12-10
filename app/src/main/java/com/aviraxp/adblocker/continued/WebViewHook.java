@@ -18,7 +18,7 @@ import de.robv.android.xposed.XposedBridge;
 import de.robv.android.xposed.XposedHelpers;
 import de.robv.android.xposed.callbacks.XC_LoadPackage;
 
-public final class WebViewHook implements IXposedHookLoadPackage, IXposedHookZygoteInit {
+public class WebViewHook implements IXposedHookLoadPackage, IXposedHookZygoteInit {
 
     public Resources res;
     private boolean adExist = false;
