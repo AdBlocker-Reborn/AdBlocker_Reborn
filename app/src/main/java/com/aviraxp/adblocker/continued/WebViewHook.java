@@ -20,11 +20,11 @@ import de.robv.android.xposed.callbacks.XC_LoadPackage;
 
 public final class WebViewHook implements IXposedHookLoadPackage, IXposedHookZygoteInit {
 
-    public static Resources res;
-    private static boolean adExist = false;
+    public Resources res;
+    private boolean adExist = false;
     private Set<String> patterns;
 
-    private static void removeAdView(final View view, final boolean first, final float heightLimit) {
+    private void removeAdView(final View view, final boolean first, final float heightLimit) {
         float adHeight = convertPixelsToDp(view.getHeight());
 
         if (first || (adHeight > 0 && adHeight <= heightLimit)) {
@@ -59,7 +59,7 @@ public final class WebViewHook implements IXposedHookLoadPackage, IXposedHookZyg
         }
     }
 
-    private static float convertPixelsToDp(float px) {
+    private float convertPixelsToDp(float px) {
         DisplayMetrics metrics = res.getDisplayMetrics();
         return px / (metrics.densityDpi / 160f);
     }
