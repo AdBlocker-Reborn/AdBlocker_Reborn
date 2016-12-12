@@ -34,7 +34,8 @@ public class ServicesHook implements IXposedHookLoadPackage, IXposedHookZygoteIn
                 return true;
             }
         } catch (Exception e) {
-            XposedBridge.log("Load System Property Failed");
+            XposedBridge.log("Load System Property Failed, Printing StackTrace");
+            XposedBridge.log(e);
         }
         return false;
     }
