@@ -18,7 +18,6 @@ import de.robv.android.xposed.callbacks.XC_LoadPackage;
 
 public class HostsHook implements IXposedHookLoadPackage, IXposedHookZygoteInit {
 
-    private String UNABLE_TO_RESOLVE_HOST = "Unable to resolve host";
     private Set<String> patterns;
 
     public void handleLoadPackage(final XC_LoadPackage.LoadPackageParam lpparam) throws Throwable {
@@ -63,7 +62,7 @@ public class HostsHook implements IXposedHookLoadPackage, IXposedHookZygoteInit 
                     String host = (String) param.args[0];
                     if (host != null && patterns.contains(host)) {
                         param.setResult(new Object());
-                        param.setThrowable(new UnknownHostException(UNABLE_TO_RESOLVE_HOST));
+                        param.setThrowable(new UnknownHostException());
                         if (BuildConfig.DEBUG) {
                             XposedBridge.log("Hosts Block Success: " + lpparam.packageName + "/" + host);
                         }
@@ -81,7 +80,7 @@ public class HostsHook implements IXposedHookLoadPackage, IXposedHookZygoteInit 
                     String host = (String) param.args[0];
                     if (host != null && patterns.contains(host)) {
                         param.setResult(new Object());
-                        param.setThrowable(new UnknownHostException(UNABLE_TO_RESOLVE_HOST));
+                        param.setThrowable(new UnknownHostException());
                         if (BuildConfig.DEBUG) {
                             XposedBridge.log("Hosts Block Success: " + lpparam.packageName + "/" + host);
                         }
@@ -112,7 +111,7 @@ public class HostsHook implements IXposedHookLoadPackage, IXposedHookZygoteInit 
                         if (host != null && patterns.contains(host)) {
                             param.args[0] = "localhost";
                             param.setResult(new Object());
-                            param.setThrowable(new UnknownHostException(UNABLE_TO_RESOLVE_HOST));
+                            param.setThrowable(new UnknownHostException());
                             if (BuildConfig.DEBUG) {
                                 XposedBridge.log("Hosts Block Success: " + lpparam.packageName + "/" + host);
                             }
@@ -133,15 +132,15 @@ public class HostsHook implements IXposedHookLoadPackage, IXposedHookZygoteInit 
                     InetAddress addr = (InetAddress) param.args[1];
                     String host = addr.getHostName();
                     String ip = addr.getHostAddress();
-                    if ((host != null && patterns.contains(host))) {
+                    if (host != null && patterns.contains(host)) {
                         param.setResult(false);
-                        param.setThrowable(new UnknownHostException(UNABLE_TO_RESOLVE_HOST));
+                        param.setThrowable(new UnknownHostException());
                         if (BuildConfig.DEBUG) {
                             XposedBridge.log("Hosts Block Success: " + lpparam.packageName + "/" + host);
                         }
                     } else if (ip != null && patterns.contains(ip)) {
                         param.setResult(false);
-                        param.setThrowable(new UnknownHostException(UNABLE_TO_RESOLVE_HOST));
+                        param.setThrowable(new UnknownHostException());
                         if (BuildConfig.DEBUG) {
                             XposedBridge.log("Hosts Block Success: " + lpparam.packageName + "/" + ip);
                         }
@@ -159,15 +158,15 @@ public class HostsHook implements IXposedHookLoadPackage, IXposedHookZygoteInit 
                     InetAddress addr = (InetAddress) param.args[1];
                     String host = addr.getHostName();
                     String ip = addr.getHostAddress();
-                    if ((host != null && patterns.contains(host))) {
+                    if (host != null && patterns.contains(host)) {
                         param.setResult(false);
-                        param.setThrowable(new UnknownHostException(UNABLE_TO_RESOLVE_HOST));
+                        param.setThrowable(new UnknownHostException());
                         if (BuildConfig.DEBUG) {
                             XposedBridge.log("Hosts Block Success: " + lpparam.packageName + "/" + host);
                         }
                     } else if (ip != null && patterns.contains(ip)) {
                         param.setResult(false);
-                        param.setThrowable(new UnknownHostException(UNABLE_TO_RESOLVE_HOST));
+                        param.setThrowable(new UnknownHostException());
                         if (BuildConfig.DEBUG) {
                             XposedBridge.log("Hosts Block Success: " + lpparam.packageName + "/" + ip);
                         }
