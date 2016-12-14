@@ -21,13 +21,14 @@ import de.robv.android.xposed.callbacks.XC_LoadPackage;
 public class WebViewHook implements IXposedHookLoadPackage, IXposedHookZygoteInit {
 
     public Resources res;
-    private boolean adExist = false;
+    private boolean adExist;
     private Set<String> patterns;
 
-    private void removeAdView(final View view, final boolean first, final float heightLimit) {
+    private void removeAdView(final View view, final boolean first) throws Throwable {
+
         float adHeight = convertPixelsToDp(view.getHeight());
 
-        if (first || (adHeight > 0 && adHeight <= heightLimit)) {
+        if (first || (adHeight > 0 && adHeight <= 80)) {
             ViewGroup.LayoutParams params = view.getLayoutParams();
             if (params == null) {
                 params = new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, 0);
@@ -41,7 +42,7 @@ public class WebViewHook implements IXposedHookLoadPackage, IXposedHookZygoteIni
             @Override
             public void run() {
                 float adHeight = convertPixelsToDp(view.getHeight());
-                if (first || (adHeight > 0 && adHeight <= heightLimit)) {
+                if (first || (adHeight > 0 && adHeight <= 80)) {
                     ViewGroup.LayoutParams params = view.getLayoutParams();
                     if (params == null) {
                         params = new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, 0);
@@ -55,7 +56,7 @@ public class WebViewHook implements IXposedHookLoadPackage, IXposedHookZygoteIni
 
         if (view.getParent() != null && view.getParent() instanceof ViewGroup) {
             ViewGroup parent = (ViewGroup) view.getParent();
-            removeAdView(parent, false, heightLimit);
+            removeAdView(parent, false);
         }
     }
 
@@ -65,6 +66,7 @@ public class WebViewHook implements IXposedHookLoadPackage, IXposedHookZygoteIni
     }
 
     public void handleLoadPackage(final XC_LoadPackage.LoadPackageParam lpparam) throws Throwable {
+
         try {
             Class<?> adView = XposedHelpers.findClass("android.webkit.WebView", lpparam.classLoader);
 
@@ -114,38 +116,38 @@ public class WebViewHook implements IXposedHookLoadPackage, IXposedHookZygoteIni
         }
     }
 
-    private boolean urlFiltering(String url, String data, XC_MethodHook.MethodHookParam param) {
-        if (url == null) {
-            url = "";
-        }
+    private boolean urlFiltering(String url, String data, XC_MethodHook.MethodHookParam param) throws Throwable {
 
-        try {
-            url = URLDecoder.decode(url, "UTF-8");
-        } catch (Exception e) {
-            XposedBridge.log(e);
-        }
-
-        for (String adUrl : patterns) {
-            if (url.contains(adUrl)) {
-                param.setResult(new Object());
-                removeAdView((View) param.thisObject, true, 100);
-                return true;
+        if (url != null) {
+            try {
+                url = URLDecoder.decode(url, "UTF-8");
+                for (String adUrl : patterns) {
+                    if (url.contains(adUrl)) {
+                        param.setResult(new Object());
+                        removeAdView((View) param.thisObject, true);
+                        return true;
+                    }
+                }
+            } catch (Exception e) {
+                XposedBridge.log(e);
             }
         }
 
-        try {
-            data = URLDecoder.decode(data, "UTF-8");
-        } catch (Exception e) {
-            XposedBridge.log(e);
-        }
-
-        for (String adUrl : patterns) {
-            if (data.contains(adUrl)) {
-                param.setResult(new Object());
-                removeAdView((View) param.thisObject, true, 100);
-                return true;
+        if (data != null) {
+            try {
+                data = URLDecoder.decode(data, "UTF-8");
+                for (String adUrl : patterns) {
+                    if (data.contains(adUrl)) {
+                        param.setResult(new Object());
+                        removeAdView((View) param.thisObject, true);
+                        return true;
+                    }
+                }
+            } catch (Exception e) {
+                XposedBridge.log(e);
             }
         }
+
         return false;
     }
 
