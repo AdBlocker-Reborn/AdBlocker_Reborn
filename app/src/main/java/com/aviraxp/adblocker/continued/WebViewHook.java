@@ -26,9 +26,7 @@ public class WebViewHook implements IXposedHookLoadPackage, IXposedHookZygoteIni
 
     private void removeAdView(final View view, final boolean first) throws Throwable {
 
-        float adHeight = convertPixelsToDp(view.getHeight());
-
-        if (first || (adHeight > 0 && adHeight <= 80)) {
+        if (first) {
             ViewGroup.LayoutParams params = view.getLayoutParams();
             if (params == null) {
                 params = new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, 0);
@@ -41,8 +39,7 @@ public class WebViewHook implements IXposedHookLoadPackage, IXposedHookZygoteIni
         view.post(new Runnable() {
             @Override
             public void run() {
-                float adHeight = convertPixelsToDp(view.getHeight());
-                if (first || (adHeight > 0 && adHeight <= 80)) {
+                if (first) {
                     ViewGroup.LayoutParams params = view.getLayoutParams();
                     if (params == null) {
                         params = new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, 0);
@@ -58,11 +55,6 @@ public class WebViewHook implements IXposedHookLoadPackage, IXposedHookZygoteIni
             ViewGroup parent = (ViewGroup) view.getParent();
             removeAdView(parent, false);
         }
-    }
-
-    private float convertPixelsToDp(float px) {
-        DisplayMetrics metrics = res.getDisplayMetrics();
-        return px / (metrics.densityDpi / 160f);
     }
 
     public void handleLoadPackage(final XC_LoadPackage.LoadPackageParam lpparam) throws Throwable {
