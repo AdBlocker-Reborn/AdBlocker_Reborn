@@ -68,6 +68,7 @@ public class WebViewHook implements IXposedHookLoadPackage, IXposedHookZygoteIni
     public void handleLoadPackage(final XC_LoadPackage.LoadPackageParam lpparam) throws Throwable {
 
         try {
+
             Class<?> webView = XposedHelpers.findClass("android.webkit.WebView", lpparam.classLoader);
 
             XposedBridge.hookAllMethods(webView, "loadUrl", new XC_MethodHook() {
@@ -108,10 +109,12 @@ public class WebViewHook implements IXposedHookLoadPackage, IXposedHookZygoteIni
                     String url = (String) param.args[0];
                     String data = (String) param.args[1];
                     adExist = urlFiltering(url, data, param);
-                    if (adExist) {
-                        param.setResult(new Object());
-                        if (BuildConfig.DEBUG) {
-                            XposedBridge.log("WebView Block Success: " + lpparam.packageName + "/" + url + "/" + data);
+                    if (url != null && data != null) {
+                        if (adExist) {
+                            param.setResult(new Object());
+                            if (BuildConfig.DEBUG) {
+                                XposedBridge.log("WebView Block Success: " + lpparam.packageName + "/" + url + " & " + data);
+                            }
                         }
                     }
                 }
@@ -124,9 +127,9 @@ public class WebViewHook implements IXposedHookLoadPackage, IXposedHookZygoteIni
 
         if (!url.equals("")) {
             try {
-                url = URLDecoder.decode(url, "UTF-8");
+                String urldecode = URLDecoder.decode(url, "UTF-8");
                 for (String adUrl : patterns) {
-                    if (url.contains(adUrl)) {
+                    if (urldecode.contains(adUrl)) {
                         param.setResult(new Object());
                         removeAdView((View) param.thisObject, true);
                         return true;
@@ -141,9 +144,9 @@ public class WebViewHook implements IXposedHookLoadPackage, IXposedHookZygoteIni
 
         if (!data.equals("")) {
             try {
-                data = URLDecoder.decode(data, "UTF-8");
+                String datadecode = URLDecoder.decode(data, "UTF-8");
                 for (String adUrl : patterns) {
-                    if (data.contains(adUrl)) {
+                    if (datadecode.contains(adUrl)) {
                         param.setResult(new Object());
                         removeAdView((View) param.thisObject, true);
                         return true;
