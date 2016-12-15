@@ -2,7 +2,6 @@ package com.aviraxp.adblocker.continued;
 
 import android.content.res.Resources;
 import android.content.res.XModuleResources;
-import android.util.DisplayMetrics;
 import android.view.View;
 import android.view.ViewGroup;
 
@@ -24,51 +23,32 @@ public class WebViewHook implements IXposedHookLoadPackage, IXposedHookZygoteIni
     private boolean adExist;
     private Set<String> patterns;
 
-    private void removeAdView(final View view, final boolean first) throws Throwable {
-
-        float adHeight = convertPixelsToDp(view.getHeight());
-
-        if (first || (adHeight > 0 && adHeight <= 80)) {
-            ViewGroup.LayoutParams params = view.getLayoutParams();
-            if (params == null) {
-                params = new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, 0);
-            } else {
-                params.height = 0;
-            }
-            view.setLayoutParams(params);
+    private void removeAdView(final View view) throws Throwable {
+        ViewGroup.LayoutParams params = view.getLayoutParams();
+        if (params == null) {
+            params = new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, 0);
+        } else {
+            params.height = 0;
         }
+        view.setLayoutParams(params);
 
         view.post(new Runnable() {
             @Override
             public void run() {
-                float adHeight = convertPixelsToDp(view.getHeight());
-                if (first || (adHeight > 0 && adHeight <= 80)) {
-                    ViewGroup.LayoutParams params = view.getLayoutParams();
-                    if (params == null) {
-                        params = new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, 0);
-                    } else {
-                        params.height = 0;
-                    }
-                    view.setLayoutParams(params);
+                ViewGroup.LayoutParams params = view.getLayoutParams();
+                if (params == null) {
+                    params = new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, 0);
+                } else {
+                    params.height = 0;
                 }
+                view.setLayoutParams(params);
             }
         });
-
-        if (view.getParent() != null && view.getParent() instanceof ViewGroup) {
-            ViewGroup parent = (ViewGroup) view.getParent();
-            removeAdView(parent, false);
-        }
-    }
-
-    private float convertPixelsToDp(float px) {
-        DisplayMetrics metrics = res.getDisplayMetrics();
-        return px / (metrics.densityDpi / 160f);
     }
 
     public void handleLoadPackage(final XC_LoadPackage.LoadPackageParam lpparam) throws Throwable {
 
         try {
-
             Class<?> webView = XposedHelpers.findClass("android.webkit.WebView", lpparam.classLoader);
 
             XposedBridge.hookAllMethods(webView, "loadUrl", new XC_MethodHook() {
@@ -131,7 +111,7 @@ public class WebViewHook implements IXposedHookLoadPackage, IXposedHookZygoteIni
                 for (String adUrl : patterns) {
                     if (urldecode.contains(adUrl)) {
                         param.setResult(new Object());
-                        removeAdView((View) param.thisObject, true);
+                        removeAdView((View) param.thisObject);
                         return true;
                     }
                 }
@@ -148,7 +128,7 @@ public class WebViewHook implements IXposedHookLoadPackage, IXposedHookZygoteIni
                 for (String adUrl : patterns) {
                     if (datadecode.contains(adUrl)) {
                         param.setResult(new Object());
-                        removeAdView((View) param.thisObject, true);
+                        removeAdView((View) param.thisObject);
                         return true;
                     }
                 }
