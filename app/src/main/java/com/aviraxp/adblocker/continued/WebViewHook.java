@@ -68,37 +68,41 @@ public class WebViewHook implements IXposedHookLoadPackage, IXposedHookZygoteIni
     public void handleLoadPackage(final XC_LoadPackage.LoadPackageParam lpparam) throws Throwable {
 
         try {
-            Class<?> adView = XposedHelpers.findClass("android.webkit.WebView", lpparam.classLoader);
+            Class<?> webView = XposedHelpers.findClass("android.webkit.WebView", lpparam.classLoader);
 
-            XposedBridge.hookAllMethods(adView, "loadUrl", new XC_MethodHook() {
+            XposedBridge.hookAllMethods(webView, "loadUrl", new XC_MethodHook() {
                 @Override
                 protected void beforeHookedMethod(XC_MethodHook.MethodHookParam param) throws Throwable {
                     String url = (String) param.args[0];
-                    adExist = urlFiltering(url, "", param);
-                    if (adExist) {
-                        param.setResult(new Object());
-                        if (BuildConfig.DEBUG) {
-                            XposedBridge.log("WebView Block Success: " + lpparam.packageName + "/" + url);
+                    if (url != null) {
+                        adExist = urlFiltering(url, "", param);
+                        if (adExist) {
+                            param.setResult(new Object());
+                            if (BuildConfig.DEBUG) {
+                                XposedBridge.log("WebView Block Success: " + lpparam.packageName + "/" + url);
+                            }
                         }
                     }
                 }
             });
 
-            XposedBridge.hookAllMethods(adView, "loadData", new XC_MethodHook() {
+            XposedBridge.hookAllMethods(webView, "loadData", new XC_MethodHook() {
                 @Override
                 protected void beforeHookedMethod(XC_MethodHook.MethodHookParam param) throws Throwable {
                     String data = (String) param.args[0];
-                    adExist = urlFiltering("", data, param);
-                    if (adExist) {
-                        param.setResult(new Object());
-                        if (BuildConfig.DEBUG) {
-                            XposedBridge.log("WebView Block Success: " + lpparam.packageName + "/" + data);
+                    if (data != null) {
+                        adExist = urlFiltering("", data, param);
+                        if (adExist) {
+                            param.setResult(new Object());
+                            if (BuildConfig.DEBUG) {
+                                XposedBridge.log("WebView Block Success: " + lpparam.packageName + "/" + data);
+                            }
                         }
                     }
                 }
             });
 
-            XposedBridge.hookAllMethods(adView, "loadDataWithBaseURL", new XC_MethodHook() {
+            XposedBridge.hookAllMethods(webView, "loadDataWithBaseURL", new XC_MethodHook() {
                 @Override
                 protected void beforeHookedMethod(XC_MethodHook.MethodHookParam param) throws Throwable {
                     String url = (String) param.args[0];
@@ -118,7 +122,7 @@ public class WebViewHook implements IXposedHookLoadPackage, IXposedHookZygoteIni
 
     private boolean urlFiltering(String url, String data, XC_MethodHook.MethodHookParam param) throws Throwable {
 
-        if (url != null) {
+        if (!url.equals("")) {
             try {
                 url = URLDecoder.decode(url, "UTF-8");
                 for (String adUrl : patterns) {
@@ -129,11 +133,13 @@ public class WebViewHook implements IXposedHookLoadPackage, IXposedHookZygoteIni
                     }
                 }
             } catch (Exception e) {
-                XposedBridge.log(e);
+                if (BuildConfig.DEBUG) {
+                    XposedBridge.log(e);
+                }
             }
         }
 
-        if (data != null) {
+        if (!data.equals("")) {
             try {
                 data = URLDecoder.decode(data, "UTF-8");
                 for (String adUrl : patterns) {
@@ -144,7 +150,9 @@ public class WebViewHook implements IXposedHookLoadPackage, IXposedHookZygoteIni
                     }
                 }
             } catch (Exception e) {
-                XposedBridge.log(e);
+                if (BuildConfig.DEBUG) {
+                    XposedBridge.log(e);
+                }
             }
         }
 
