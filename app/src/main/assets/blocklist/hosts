@@ -237,7 +237,6 @@ nfdnserror14.wo.com.cn
 nfdnserror15.wo.com.cn
 nfdnserror16.wo.com.cn
 nfdnserror17.wo.com.cn
-61.156.8.189
 navi.gd.chinamobile.com
 browser.gwdang.com
 router.gwdang.com
@@ -274,12 +273,15 @@ sp3.cndm.com
 ssp.kss.ksyun.com
 stjzh.gdtarget.com
 wo.iuni.com.cn
-114.55.123.44
-222.186.61.94
-47.89.59.182
+ip.l9po.com
+cdn.ads.jlscds.com
 stuff.202m.com
 www.202m.com
 s.jlminte.com
+clickme.net
+ssp.86str.com
+s2.yandui.com
+www.tz-dsp.com
 info.yitsoftware.com
 androidads23.adcolony.com
 adirects.com
@@ -459,6 +461,8 @@ static.youmi.net
 track.dmp.youmi.net
 d8.zedo.com
 z1.zedo.com
+ads.gionee.com
+adres.myaora.net
 fsr.lenovomm.com
 lds.lenovomm.com
 susapi.lenovomm.com
@@ -602,7 +606,6 @@ novelsns.html5.qq.com
 cooperation.html5.qq.com
 zixuncooperation.html5.qq.com
 d3g.qq.com
-qzs.qq.com
 sdk.e.qq.com
 push.wandoujia.com
 adslot.uc.cn
@@ -677,7 +680,7 @@ appsupport.stargame.com
 x.vamaker.com
 ad.jiemian.com
 ad.api.moji.com
-s.trafficjam.cn
+s.trafficjam.cn  
 sdk.cdnmaster.com
 ad.12306.cn
 adgeo.163.com
@@ -1186,6 +1189,7 @@ static.houyi.baofeng.net
 web.houyi.baofeng.net
 wl.houyi.baofeng.net
 xs.houyi.baofeng.net
+vas.fun.tv
 adm.funshion.com
 game.funshion.com
 adv.grtn.cn
@@ -1239,7 +1243,6 @@ fz.letv.com
 g3.letv.com
 letv.m.cn.miaozhen.com
 58749.admaster.com.cn
-stat.titan.imgo.tv
 g.wan.mgtv.com
 hunantv.m.cn.miaozhen.com
 s.mini.kuaibo.com
@@ -1253,7 +1256,6 @@ log.da.hunantv.com
 log.elk.hunantv.com
 log.event.hunantv.com
 log.hunantv.com
-log.rc.hunantv.com
 log.so.hunantv.com
 log.v2.hunantv.com
 mobile.log.hunantv.com
@@ -1296,6 +1298,7 @@ ads.aplus.pptv.com
 ads.aplusapi.pptv.com
 as.aplus.pptv.com
 de.as.pptv.com
+jp.as.pptv.com
 imagecache.g.pptv.com
 img1.g.pptv.com
 img2.g.pptv.com
@@ -1961,6 +1964,7 @@ s.appjiagu.com
 icon.51.la
 img.users.51.la
 js.users.51.la
+js3.users.51.la
 quote.51.la
 users.51.la
 web.51.la
@@ -3010,14 +3014,18 @@ c.69shuwu.com
 s.zzrcz.com
 ss.biquge.la
 tt.biquge.la
+you.ymfzs.com
+cycy.kxrxh.com
+lol.pnhfc.com
+s.mgwcn.com
 gog9.qzdfc.com
+yang.93manhua.com
 ttkx.qyctj.com
 download.350.com
 nnd.xyssp.com
 9990.spqsd.com
 5568.gjghy.com
 gggo.xmbhj.com
-cycy.kxrxh.com
 g.hw6.com
 img.hunlimishu.com
 t.91chs.com
@@ -3072,6 +3080,7 @@ s.polkoi.com
 t.cnsjx.net
 wwwimg.86sjx.com
 material.jusha.com
+sss.jusha.com
 s.ybnrm.com
 s.mxmrt
 www.punuomisi.cn
@@ -3130,7 +3139,6 @@ edc.zzzkxx.com
 ssp.tadseeker.com
 e4.6dad.com
 ad.btba.com.cn
-you.ymfzs.com
 c.bxb.oupeng.com
 r.bxb.oupeng.com
 a.bx518.com
@@ -3768,7 +3776,6 @@ sou.dkdlsj.com
 vip.hys4.com
 www.hejingroup.cn
 www.jisucn.com
-122.225.103.120
 www-360se-cn.newtech-beauty.com
 data.3975.com
 img752.de92.com
@@ -3838,7 +3845,6 @@ zgty365.com
 p.skimresources.com
 img.tz00008.cn
 b.9dreams.net
-gum.criteo.com
 tu.bpmask.com
 cdn.adstract.com
 eyjs.b7nkd.cn
@@ -3853,6 +3859,29 @@ im.tlcs666.com
 im.tuan520.com
 mm.8qzone.com
 vimg.dwstatic.com
+bai3.gushiwen.org
+cr.wowxt.com
+vr.mt145.com
+zzad.com
+s.shaxiq.com
+stat.ff.zmres.com
+request.zzad.com
+zjs.zzad.com
+zz.cc.zzad.com
+fghm.ga25.com
+fghmc.ga25.com
+fghmimg.ga25.com
+www.gouzhibao.cn
+www.istage.com.cn
+www.number1cp.cn
+mememe.dlsjyj.com
+wwe.xiankandy.com
+d.ltss8.com
+down.qiqi.cc
+s.69duk.com
+d7.muzisoft.com
+d8.muzisoft.com
+d9.muzisoft.com
 101com.com
 101order.com
 123found.com
@@ -3913,14 +3942,12 @@ ad-souk.com
 ad-space.net
 ad-tech.com
 ad-up.com
-ad.100.tbn.ru
 ad.71i.de
 ad.980x.com
 ad.a8.net
 ad.abcnews.com
 ad.abctv.com
 ad.about.com
-ad.aboutit.de
 ad.aboutwebservices.com
 ad.abum.com
 ad.afy11.net
@@ -3988,7 +4015,6 @@ ad.seznam.cz
 ad.simgames.net
 ad.slutload.com
 ad.smartclip.net
-ad.tbn.ru
 ad.technoratimedia.com
 ad.thewheelof.com
 ad.turn.com
@@ -4172,6 +4198,7 @@ adriver.ru
 adrolays.de
 adrotate.de
 adrotator.se
+adrta.com
 ads-click.com
 ads.4tube.com
 ads.5ci.lt
@@ -4897,6 +4924,7 @@ bannieres.acces-contenu.com
 bans.adserver.co.il
 bans.bride.ru
 barnesandnoble.bfast.com
+basebanner.com
 baypops.com
 bbelements.com
 bbn.img.com.ua
@@ -4910,6 +4938,7 @@ bestsearch.net
 bhclicks.com
 bidclix.com
 bidclix.net
+bidswitch.net
 bidtrk.com
 bidvertiser.com
 bigbangmedia.com
@@ -4958,6 +4987,7 @@ bwp.download.com
 c.bigmir.net
 c.compete.com
 c1.nowlinux.com
+c1exchange.com
 campaign.bharatmatrimony.com
 caniamedia.com
 carbonads.com
@@ -4983,10 +5013,12 @@ cbx.net
 cdn.freefacti.com
 cdn.freefarcy.com
 cecash.com
+centerpointmedia.com
 ceskydomov.alias.ngs.modry.cz
 cetrk.com
 cgicounter.puretec.de
 ch.questionmarket.com
+chameleon.ad
 channelintelligence.com
 chart.dk
 chartbeat.com
@@ -5023,6 +5055,7 @@ clickhouse.com
 clickhype.com
 clicklink.jp
 clickmedia.ro
+clickonometrics.pl
 clicks.equantum.com
 clicks.mods.de
 clickserve.cc-dt.com
@@ -5126,6 +5159,7 @@ debtbusterloans.com
 decknetwork.net
 deloo.de
 demandbase.com
+demdex.net
 di1.shopping.com
 dialerporn.com
 didtheyreadit.com
@@ -5204,6 +5238,7 @@ exchange-it.com
 exchange.bg
 exchangead.com
 exchangeclicksonline.com
+exelator.com
 exit76.com
 exitexchange.com
 exitfuel.com
@@ -5411,7 +5446,6 @@ itsptp.com
 jcount.com
 jinkads.de
 joetec.net
-jokedollars.com
 js.users.51.la
 juicyads.com
 jumptap.com
@@ -5693,7 +5727,6 @@ pimproll.com
 pixel.adsafeprotected.com
 pixel.jumptap.com
 pixel.redditmedia.com
-planetactive.com
 play4traffic.com
 playhaven.com
 plista.com
@@ -5868,6 +5901,8 @@ sexystat.com
 shareadspace.com
 shareasale.com
 sharepointads.com
+sher.index.hu
+shinystat.com
 shinystat.it
 shoppingads.com
 siccash.com
@@ -5929,6 +5964,7 @@ stats.cts-bv.nl
 stats.directnic.com
 stats.hyperinzerce.cz
 stats.mirrorfootball.co.uk
+stats.multiup.org
 stats.olark.com
 stats.suite101.com
 stats.surfaid.ihost.com
@@ -5972,6 +6008,7 @@ targetnet.com
 targetpoint.com
 tatsumi-sys.jp
 tcads.net
+teads.tv
 techclicks.net
 teenrevenue.com
 teliad.de
@@ -6219,5 +6256,3 @@ zeusclicks.com
 zintext.com
 zmedia.com
 zv1.november-lax.com
-sher.index.hu
-shinystat.com
