@@ -9,6 +9,7 @@ import android.os.Environment;
 
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.IOException;
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.Properties;
@@ -28,12 +29,14 @@ public class ServicesHook implements IXposedHookLoadPackage, IXposedHookZygoteIn
     private static boolean isMIUI() {
         Properties properties = new Properties();
         try {
-            properties.load(new FileInputStream(new File(Environment.getRootDirectory(), "build.prop")));
+            FileInputStream fileInputStream = new FileInputStream(new File(Environment.getRootDirectory(), "build.prop"));
+            properties.load(fileInputStream);
             if (properties.getProperty("ro.miui.ui.version.name") != null || properties.getProperty("ro.miui.ui.version.code") != null || properties.getProperty("ro.miui.internal.storage") != null) {
+                fileInputStream.close();
                 XposedBridge.log("MIUI Detected, Never Block MiPush");
                 return true;
             }
-        } catch (Exception e) {
+        } catch (IOException e) {
             XposedBridge.log("Load System Property Failed, Printing StackTrace");
             XposedBridge.log(e);
         }
