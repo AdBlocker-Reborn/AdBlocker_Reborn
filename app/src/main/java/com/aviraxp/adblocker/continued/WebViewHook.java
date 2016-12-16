@@ -88,8 +88,8 @@ public class WebViewHook implements IXposedHookLoadPackage, IXposedHookZygoteIni
                 protected void beforeHookedMethod(XC_MethodHook.MethodHookParam param) throws Throwable {
                     String url = (String) param.args[0];
                     String data = (String) param.args[1];
-                    adExist = urlFiltering(url, data, param);
                     if (url != null && data != null) {
+                        adExist = urlFiltering(url, data, param);
                         if (adExist) {
                             param.setResult(new Object());
                             if (BuildConfig.DEBUG) {
