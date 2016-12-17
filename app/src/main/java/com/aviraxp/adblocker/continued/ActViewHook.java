@@ -47,14 +47,13 @@ public class ActViewHook implements IXposedHookLoadPackage, IXposedHookZygoteIni
             @Override
             protected void beforeHookedMethod(XC_MethodHook.MethodHookParam param) throws Throwable {
                 ComponentName Component = ((Intent) param.args[0]).getComponent();
-                String activityClassName = null;
                 if (Component != null) {
-                    activityClassName = Component.getClassName();
-                }
-                if ((activityClassName != null) && (!activityClassName.startsWith("android")) && (patterns.contains(activityClassName))) {
-                    param.setResult(null);
-                    if (BuildConfig.DEBUG) {
-                        XposedBridge.log("Activity Block Success: " + lpparam.packageName + "/" + activityClassName);
+                    String activityClassName = Component.getClassName();
+                    if ((activityClassName != null) && (!activityClassName.startsWith("android")) && (patterns.contains(activityClassName))) {
+                        param.setResult(null);
+                        if (BuildConfig.DEBUG) {
+                            XposedBridge.log("Activity Block Success: " + lpparam.packageName + "/" + activityClassName);
+                        }
                     }
                 }
             }
@@ -74,8 +73,7 @@ public class ActViewHook implements IXposedHookLoadPackage, IXposedHookZygoteIni
         XposedBridge.hookAllConstructors(ViewGroup.class, (XC_MethodHook) viewObject);
         XposedHelpers.findAndHookMethod(View.class, "setVisibility", Integer.TYPE, new XC_MethodHook() {
             @Override
-            protected void afterHookedMethod(XC_MethodHook.MethodHookParam param)
-                    throws Throwable {
+            protected void afterHookedMethod(XC_MethodHook.MethodHookParam param) throws Throwable {
                 if ((Integer) param.args[0] != 8) {
                     hideIfAdView(param.thisObject, lpparam.packageName);
                 }
