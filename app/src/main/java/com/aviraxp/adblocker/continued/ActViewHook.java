@@ -32,7 +32,7 @@ public class ActViewHook implements IXposedHookLoadPackage, IXposedHookZygoteIni
             protected void afterHookedMethod(XC_MethodHook.MethodHookParam param) throws Throwable {
                 Activity activity = (Activity) param.thisObject;
                 String activityClassName = activity.getClass().getName();
-                if ((activityClassName != null) && (patterns.contains(activityClassName))) {
+                if (activityClassName != null && patterns.contains(activityClassName)) {
                     activity.overridePendingTransition(0, 0);
                     activity.finish();
                     activity.overridePendingTransition(0, 0);
@@ -49,7 +49,7 @@ public class ActViewHook implements IXposedHookLoadPackage, IXposedHookZygoteIni
                 ComponentName Component = ((Intent) param.args[0]).getComponent();
                 if (Component != null) {
                     String activityClassName = Component.getClassName();
-                    if ((activityClassName != null) && (patterns.contains(activityClassName))) {
+                    if (activityClassName != null && patterns.contains(activityClassName)) {
                         param.setResult(null);
                         if (BuildConfig.DEBUG) {
                             XposedBridge.log("Activity Block Success: " + lpparam.packageName + "/" + activityClassName);
@@ -93,7 +93,7 @@ public class ActViewHook implements IXposedHookLoadPackage, IXposedHookZygoteIni
 
     private void hideIfAdView(Object paramObject, String paramString) {
         String str = paramObject.getClass().getName();
-        if ((str != null) && ((patterns.contains(str)))) {
+        if (str != null && patterns.contains(str)) {
             ((View) paramObject).setVisibility(View.GONE);
             if (BuildConfig.DEBUG) {
                 XposedBridge.log("View Block Success: " + paramString + "/" + str);

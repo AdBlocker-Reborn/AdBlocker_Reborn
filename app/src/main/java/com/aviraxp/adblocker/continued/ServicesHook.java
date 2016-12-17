@@ -42,7 +42,8 @@ public class ServicesHook implements IXposedHookLoadPackage, IXposedHookZygoteIn
             if (fileInputStream != null) {
                 try {
                     fileInputStream.close();
-                } catch (Exception ignored) {
+                } catch (Exception e) {
+                    e.printStackTrace();
                 }
             }
         }
