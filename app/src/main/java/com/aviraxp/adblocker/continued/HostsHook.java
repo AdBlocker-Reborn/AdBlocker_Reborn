@@ -62,7 +62,7 @@ public class HostsHook implements IXposedHookLoadPackage, IXposedHookZygoteInit 
                     String host = (String) param.args[0];
                     if (host != null && patterns.contains(host)) {
                         param.setResult(new Object());
-                        param.setThrowable(new UnknownHostException("Blocked by ADBlocker Continued"));
+                        param.setThrowable(new UnknownHostException("Blocked by ADBlocker Continued: " + host));
                         if (BuildConfig.DEBUG) {
                             XposedBridge.log("Hosts Block Success: " + lpparam.packageName + "/" + host);
                         }
@@ -80,7 +80,7 @@ public class HostsHook implements IXposedHookLoadPackage, IXposedHookZygoteInit 
                     String host = (String) param.args[0];
                     if (host != null && patterns.contains(host)) {
                         param.setResult(new Object());
-                        param.setThrowable(new UnknownHostException("Blocked by ADBlocker Continued"));
+                        param.setThrowable(new UnknownHostException("Blocked by ADBlocker Continued: " + host));
                         if (BuildConfig.DEBUG) {
                             XposedBridge.log("Hosts Block Success: " + lpparam.packageName + "/" + host);
                         }
@@ -111,7 +111,7 @@ public class HostsHook implements IXposedHookLoadPackage, IXposedHookZygoteInit 
                         if (host != null && patterns.contains(host)) {
                             param.args[0] = "localhost";
                             param.setResult(new Object());
-                            param.setThrowable(new UnknownHostException("Blocked by ADBlocker Continued"));
+                            param.setThrowable(new UnknownHostException("Blocked by ADBlocker Continued: " + host));
                             if (BuildConfig.DEBUG) {
                                 XposedBridge.log("Hosts Block Success: " + lpparam.packageName + "/" + host);
                             }
@@ -134,13 +134,13 @@ public class HostsHook implements IXposedHookLoadPackage, IXposedHookZygoteInit 
                     String ip = addr.getHostAddress();
                     if (host != null && patterns.contains(host)) {
                         param.setResult(false);
-                        param.setThrowable(new UnknownHostException("Blocked by ADBlocker Continued"));
+                        param.setThrowable(new UnknownHostException("Blocked by ADBlocker Continued: " + host));
                         if (BuildConfig.DEBUG) {
                             XposedBridge.log("Hosts Block Success: " + lpparam.packageName + "/" + host);
                         }
                     } else if (ip != null && patterns.contains(ip)) {
                         param.setResult(false);
-                        param.setThrowable(new UnknownHostException("Blocked by ADBlocker Continued"));
+                        param.setThrowable(new UnknownHostException("Blocked by ADBlocker Continued: " + ip));
                         if (BuildConfig.DEBUG) {
                             XposedBridge.log("Hosts Block Success: " + lpparam.packageName + "/" + ip);
                         }
@@ -160,13 +160,13 @@ public class HostsHook implements IXposedHookLoadPackage, IXposedHookZygoteInit 
                     String ip = addr.getHostAddress();
                     if (host != null && patterns.contains(host)) {
                         param.setResult(false);
-                        param.setThrowable(new UnknownHostException("Blocked by ADBlocker Continued"));
+                        param.setThrowable(new UnknownHostException("Blocked by ADBlocker Continued: " + host));
                         if (BuildConfig.DEBUG) {
                             XposedBridge.log("Hosts Block Success: " + lpparam.packageName + "/" + host);
                         }
                     } else if (ip != null && patterns.contains(ip)) {
                         param.setResult(false);
-                        param.setThrowable(new UnknownHostException("Blocked by ADBlocker Continued"));
+                        param.setThrowable(new UnknownHostException("Blocked by ADBlocker Continued: " + ip));
                         if (BuildConfig.DEBUG) {
                             XposedBridge.log("Hosts Block Success: " + lpparam.packageName + "/" + ip);
                         }
