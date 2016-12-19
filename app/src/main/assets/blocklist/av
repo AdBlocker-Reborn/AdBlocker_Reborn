@@ -227,11 +227,11 @@ com.doumob.main.WebViewActivity
 com.winad.android.wall.MoreAdActivity
 com.longmob.service.LongActivity
 com.adwo.adsdk.AdwoAdBrowserActivity
-com.adchina.android.ads.views.FullScreenAdActivity":"
+com.adchina.android.ads.views.FullScreenAdActivity
 com.mdotm.android.ads.MdotmLandingPage
-com.waps.OffersWebView":"WAPS Ad"
+com.waps.OffersWebView
 com.greystripe.android.sdk.AdContentProvider
-com.huawei.hiad.core.BrowserActivity":"Juads"
+com.huawei.hiad.core.BrowserActivity
 com.etonenet.pointwall.EtonenetPointWallActivity
 com.telead.adlib_android.FullActivity
 com.iadpush.adp.IA
@@ -253,10 +253,9 @@ net.cavas.show.MainLoadCavasActivity
 com.winad.android.adwall.push.PushContentActivity
 com.yjfsdk.advertSdk.AdverWallActivity
 cn.jpush.android.ui.PushActivity
-com.wiyun.offer.OfferList":"Wiyun"
+com.wiyun.offer.OfferList
 com.millennialmedia.android.MMAdViewOverlayActivity
-com.mt.airad.MultiAD":"AirAD"
-com.l.adlib_android.AdBrowseActivity":"Adlib"
+com.mt.airad.MultiAD
 com.suizong.mobplate.ads.AdActivity
 com.umengAd.android.UmengAdDetailActivity
 com.adwo.adsdk.AdwoSplashAdActivity
