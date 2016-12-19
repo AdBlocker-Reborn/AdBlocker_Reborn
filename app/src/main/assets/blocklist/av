@@ -2,7 +2,9 @@ com.mt.airad.MultiAD
 com.l.adlib_android.AdBrowseActivity
 com.huawei.hiad.core.BrowserActivity
 com.adchina.android.ads.views.FullScreenAdActivity
-com.waps.OffersWebView
+cn.waps.OffersWebView
+cn.waps.MiniAdView
+cn.waps.AdView
 com.uucun.adsdk.OfferActivity
 com.appnext.ads.interstitial.InterstitialActivity
 com.appnext.ads.fullscreen.FullscreenActivity
@@ -229,7 +231,6 @@ com.longmob.service.LongActivity
 com.adwo.adsdk.AdwoAdBrowserActivity
 com.adchina.android.ads.views.FullScreenAdActivity
 com.mdotm.android.ads.MdotmLandingPage
-com.waps.OffersWebView
 com.greystripe.android.sdk.AdContentProvider
 com.huawei.hiad.core.BrowserActivity
 com.etonenet.pointwall.EtonenetPointWallActivity
