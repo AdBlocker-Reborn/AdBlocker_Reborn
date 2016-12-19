@@ -24,8 +24,9 @@ import de.robv.android.xposed.callbacks.XC_LoadPackage;
 public class ServicesHook implements IXposedHookLoadPackage, IXposedHookZygoteInit {
 
     private Set<String> patterns;
+    private boolean isMIUI = false;
 
-    private static boolean isMIUI() {
+    private void isMIUI() {
         Properties properties = new Properties();
         FileInputStream fileInputStream = null;
         try {
@@ -33,7 +34,7 @@ public class ServicesHook implements IXposedHookLoadPackage, IXposedHookZygoteIn
             properties.load(fileInputStream);
             if (properties.getProperty("ro.miui.ui.version.name") != null || properties.getProperty("ro.miui.ui.version.code") != null || properties.getProperty("ro.miui.internal.storage") != null) {
                 XposedBridge.log("MIUI Detected, Never Block MiPush");
-                return true;
+                isMIUI = true;
             }
         } catch (Exception e) {
             XposedBridge.log("Load System Property Failed, Printing StackTrace");
@@ -47,7 +48,6 @@ public class ServicesHook implements IXposedHookLoadPackage, IXposedHookZygoteIn
                 }
             }
         }
-        return false;
     }
 
     public void handleLoadPackage(XC_LoadPackage.LoadPackageParam lpparam) throws Throwable {
@@ -107,7 +107,7 @@ public class ServicesHook implements IXposedHookLoadPackage, IXposedHookZygoteIn
             String serviceName = serviceIntent.getComponent().flattenToShortString();
             if (serviceName != null) {
                 String splitServicesName = serviceName.substring(serviceName.indexOf("/") + 1);
-                if ((!isMIUI() && patterns.contains(splitServicesName)) || (isMIUI() && patterns.contains(splitServicesName) && !splitServicesName.contains("xiaomi"))) {
+                if ((!isMIUI && patterns.contains(splitServicesName)) || (isMIUI && patterns.contains(splitServicesName) && !splitServicesName.contains("xiaomi"))) {
                     param.setResult(null);
                     if (BuildConfig.DEBUG) {
                         XposedBridge.log("Service Block Success: " + serviceName);
@@ -125,5 +125,6 @@ public class ServicesHook implements IXposedHookLoadPackage, IXposedHookZygoteIn
         String[] sUrls = decoded.split("\n");
         patterns = new HashSet<>();
         Collections.addAll(patterns, sUrls);
+        isMIUI();
     }
 }
