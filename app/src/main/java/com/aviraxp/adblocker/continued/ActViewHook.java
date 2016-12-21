@@ -46,13 +46,15 @@ public class ActViewHook implements IXposedHookLoadPackage, IXposedHookZygoteIni
         Object activityObject = new XC_MethodHook() {
             @Override
             protected void beforeHookedMethod(XC_MethodHook.MethodHookParam param) throws Throwable {
-                ComponentName Component = ((Intent) param.args[0]).getComponent();
-                if (Component != null) {
-                    String activityClassName = Component.getClassName();
-                    if (activityClassName != null && patterns.contains(activityClassName)) {
-                        param.setResult(null);
-                        if (BuildConfig.DEBUG) {
-                            XposedBridge.log("Activity Block Success: " + lpparam.packageName + "/" + activityClassName);
+                if (param.args[0] != null) {
+                    ComponentName Component = ((Intent) param.args[0]).getComponent();
+                    if (Component != null) {
+                        String activityClassName = Component.getClassName();
+                        if (activityClassName != null && patterns.contains(activityClassName)) {
+                            param.setResult(null);
+                            if (BuildConfig.DEBUG) {
+                                XposedBridge.log("Activity Block Success: " + lpparam.packageName + "/" + activityClassName);
+                            }
                         }
                     }
                 }
