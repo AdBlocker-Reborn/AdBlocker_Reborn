@@ -86,7 +86,7 @@ public class ServicesHook implements IXposedHookLoadPackage, IXposedHookZygoteIn
                         }
                     });
                 }
-            } else if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.ICE_CREAM_SANDWICH) {
+            } else {
                 XposedHelpers.findAndHookMethod("com.android.server.am.ActivityManagerService", lpparam.classLoader, "startServiceLocked", "android.app.IApplicationThread", Intent.class, String.class, int.class, int.class, new XC_MethodHook() {
                     @Override
                     protected void beforeHookedMethod(MethodHookParam param) throws Throwable {
