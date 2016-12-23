@@ -278,7 +278,6 @@ cdn.ads.jlscds.com
 stuff.202m.com
 www.202m.com
 s.jlminte.com
-clickme.net
 ssp.86str.com
 s2.yandui.com
 www.tz-dsp.com
@@ -462,6 +461,7 @@ track.dmp.youmi.net
 d8.zedo.com
 z1.zedo.com
 ads.gionee.com
+pdl.gionee.com
 adres.myaora.net
 fsr.lenovomm.com
 lds.lenovomm.com
@@ -654,6 +654,7 @@ mr.da.netease.com
 rd.da.netease.com
 www.qchannel04.cn
 ad.toutiao.com
+dsp.toutiao.com
 partner.toutiao.com
 push.mobile.meituan.com
 sta.haloall.com
@@ -682,6 +683,14 @@ ad.jiemian.com
 ad.api.moji.com
 s.trafficjam.cn  
 sdk.cdnmaster.com
+analytics.rayjump.com
+net.rayjump.com
+setting.rayjump.com
+api.vungle.com
+tdcv3.talkingdata.net
+wpc.32df9.rhocdn.net
+d3v1lb83psg9di.cloudfront.net
+newswifiapi.dfshurufa.com
 ad.12306.cn
 adgeo.163.com
 iad.g.163.com
@@ -702,7 +711,6 @@ mimg.126.net
 news.push.126.net
 b.bst.126.net
 haitaoad.nosdn.127.net
-imglf0.nosdn.127.net
 statis.push.netease.com
 wr.da.netease.com
 pr.da.netease.com
@@ -827,9 +835,14 @@ sax.sina.com.cn
 slog.sina.com.cn
 staticadm.leju.sina.com.cn
 woocall.sina.com.cn
+dd.iask.cn
 dd.iaskgo.com
 whn.star-media.cn
 qiye11.ejunshi.net
+qiyezs.aiwen.cc
+qiyem.aiwen.cc
+m.haowj.com.cn
+pic.haowj.com.cn
 cast.ra.icast.cn
 rack.ra.icast.cn
 res.icast.cn
@@ -1049,6 +1062,7 @@ click.focusad.cn
 finead.cn
 www.finead.cn
 sugar.zhihu.com
+zhihu-web-analytics.zhihu.com
 100.admin5.com
 eezdx.erc.18183.com
 outer.anquan.org
@@ -1930,6 +1944,7 @@ pr.ybp.yahoo.com
 y.analytics.yahoo.com
 yads.c.yimg.jp
 yads.yahoo.co.jp
+imgwx3.2345.com
 app.50bang.org
 guess.union2.50bang.org
 union2.50bang.org
@@ -2218,6 +2233,7 @@ bce.baidu.com
 bdimg.share.baidu.com
 bzclk.baidu.com
 cbjs.baidu.com
+cpu.baidu.com
 cm.pos.baidu.com
 cpro.baidu.com
 crs.baidu.com
@@ -2339,6 +2355,7 @@ max-l.mediav.com
 max.mediav.com
 mvp.mediav.com
 pv.mediav.com
+s3m.mediav.com
 secure.mediav.com
 show-g.mediav.com
 show.g.mediav.com
@@ -2664,6 +2681,7 @@ www.bfshan.cn
 ads.wasu.tv
 adwasu.wasu.tv
 adsystem.wasu.tv
+pb3.pstatp.com
 20161201.biz5.kankan.com
 20161201.logic.cpm.cm.kankan.com
 20161201.float.kankan.com
@@ -2997,6 +3015,8 @@ img.geruishengwu.com
 img.95duk.com
 img.xrtzf.com
 s.meimeidaren.com
+m.sdhzstone.net
+m.ucxxii.com
 ef363.263zw.com
 ef364.263zw.com
 ef365.263zw.com
@@ -3041,6 +3061,7 @@ llsp.gfd80.com
 kiki.ykjmy.com
 myjj.pyzkk.com
 bobo.xmwty.com
+hao.dian500.com
 fx.worldqueen.org.cn
 s.msltzer.cn
 ucuc.baiducu.com
@@ -3453,6 +3474,8 @@ pic1.59wd.com
 m.snow001.com
 img.sankezhi.cn
 e.0313413.com
+img2.cs153.com
+img.yingkeduo.cn
 rc.bbhtek.com
 s.bbhtek.com
 img.78dxc.com
@@ -3477,7 +3500,6 @@ imgcdn.de92.com
 go.88lmimg.com
 img.88lmimg.com
 static.88lmimg.com
-pic.haowj.com.cn
 99qqc.com
 www.5188yy.com
 gg.btnk024.com
@@ -3882,6 +3904,11 @@ s.69duk.com
 d7.muzisoft.com
 d8.muzisoft.com
 d9.muzisoft.com
+s.faloo.com
+wapad11.btdcw.com
+wapad12.btdcw.com
+kiss.cncy8.com
+titi.18tzx.com
 101com.com
 101order.com
 123found.com
@@ -3942,6 +3969,7 @@ ad-souk.com
 ad-space.net
 ad-tech.com
 ad-up.com
+ad.100.tbn.ru
 ad.71i.de
 ad.980x.com
 ad.a8.net
@@ -4015,6 +4043,7 @@ ad.seznam.cz
 ad.simgames.net
 ad.slutload.com
 ad.smartclip.net
+ad.tbn.ru
 ad.technoratimedia.com
 ad.thewheelof.com
 ad.turn.com
@@ -4076,7 +4105,6 @@ adcept.net
 adclick.com
 adclient.uimserv.net
 adclient1.tucows.com
-adcloud.net
 adcomplete.com
 adconion.com
 adcontent.gamespy.com
@@ -4102,7 +4130,6 @@ adgoto.com
 adgridwork.com
 adhese.be
 adhese.com
-adi.mainichi.co.jp
 adimage.asiaone.com.sg
 adimage.guardian.co.uk
 adimages.been.com
@@ -4572,7 +4599,6 @@ adsatt.espn.starwave.com
 Adsatt.go.starwave.com
 adsby.bidtheatre.com
 adscale.de
-adscholar.com
 adscience.nl
 adscpm.com
 adsdaq.com
@@ -4786,6 +4812,7 @@ alladvantage.com
 allosponsor.com
 amazingcounters.com
 amazon-adsystem.com
+americash.com
 amung.us
 an.tacoda.net
 anahtars.com
@@ -5009,7 +5036,6 @@ casinotreasure.com
 cbanners.virtuagirlhd.com
 cben1.net
 cbmall.com
-cbx.net
 cdn.freefacti.com
 cdn.freefarcy.com
 cecash.com
@@ -5094,7 +5120,6 @@ confirmed-profits.com
 connextra.com
 contaxe.de
 content.acc-hd.de
-content.ad
 contextweb.com
 conversantmedia.com
 conversionruler.com
@@ -5132,7 +5157,6 @@ craktraffic.com
 crawlability.com
 crazypopups.com
 creafi-online-media.com
-creative.ak.facebook.com
 creative.whi.co.nz
 creatives.as4x.tmcs.net
 creatives.livejasmin.com
@@ -5228,9 +5252,9 @@ eu-adcenter.net
 eu1.madsone.com
 eur.a1.yimg.com
 eurekster.com
+euro-linkindex.de
 euroclick.com
 euros4click.de
-eusta.de
 evergage.com
 evidencecleanergold.com
 ewebcounter.com
@@ -5827,7 +5851,6 @@ realtracker.com
 reduxmedia.com
 reduxmediagroup.com
 reedbusiness.com.invalid
-reefaquarium.biz
 referralware.com
 regnow.com
 reinvigorate.net
@@ -5869,6 +5892,8 @@ rubiconproject.com
 s.adroll.com
 s2d6.com
 sageanalyst.net
+samsungacr.com
+samsungads.com
 sbx.pagesjaunes.fr
 scambiobanner.aruba.it
 scanscout.com
@@ -6213,6 +6238,7 @@ www.money4exit.de
 www.photo-ads.co.uk
 www1.gto-media.com
 www8.glam.com
+wwwpromoter.com
 x-traceur.com
 x6.yakiuchi.com
 xchange.ro
