@@ -22,6 +22,7 @@ public class WebViewHook implements IXposedHookLoadPackage, IXposedHookZygoteIni
     public Resources res;
     private boolean adExist;
     private Set<String> patterns;
+    private Set<String> patterns2;
 
     private void removeAdView(final View view) throws Throwable {
         ViewGroup.LayoutParams params = view.getLayoutParams();
@@ -47,6 +48,10 @@ public class WebViewHook implements IXposedHookLoadPackage, IXposedHookZygoteIni
     }
 
     public void handleLoadPackage(final XC_LoadPackage.LoadPackageParam lpparam) throws Throwable {
+
+        if (patterns2.contains(lpparam.packageName)) {
+            return;
+        }
 
         try {
             Class<?> webView = XposedHelpers.findClass("android.webkit.WebView", lpparam.classLoader);
@@ -144,11 +149,16 @@ public class WebViewHook implements IXposedHookLoadPackage, IXposedHookZygoteIni
 
     public void initZygote(StartupParam startupParam) throws Throwable {
         String MODULE_PATH = startupParam.modulePath;
-        res = XModuleResources.createInstance(MODULE_PATH, null);
+        Resources res = XModuleResources.createInstance(MODULE_PATH, null);
         byte[] array = XposedHelpers.assetAsByteArray(res, "blocklist/hosts");
+        byte[] array2 = XposedHelpers.assetAsByteArray(res, "whitelist/app");
         String decoded = new String(array);
+        String decoded2 = new String(array2);
         String[] sUrls = decoded.split("\n");
+        String[] sUrls2 = decoded2.split("\n");
         patterns = new HashSet<>();
+        patterns2 = new HashSet<>();
         Collections.addAll(patterns, sUrls);
+        Collections.addAll(patterns2, sUrls2);
     }
 }

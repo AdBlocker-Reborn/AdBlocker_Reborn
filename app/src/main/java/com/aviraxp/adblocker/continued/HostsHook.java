@@ -19,8 +19,13 @@ import de.robv.android.xposed.callbacks.XC_LoadPackage;
 public class HostsHook implements IXposedHookLoadPackage, IXposedHookZygoteInit {
 
     private Set<String> patterns;
+    private Set<String> patterns2;
 
     public void handleLoadPackage(final XC_LoadPackage.LoadPackageParam lpparam) throws Throwable {
+
+        if (patterns2.contains(lpparam.packageName)) {
+            return;
+        }
 
         Class<?> inetAddrClz = XposedHelpers.findClass("java.net.InetAddress", lpparam.classLoader);
         Class<?> inetSockAddrClz = XposedHelpers.findClass("java.net.InetSocketAddress", lpparam.classLoader);
@@ -186,9 +191,14 @@ public class HostsHook implements IXposedHookLoadPackage, IXposedHookZygoteInit 
         String MODULE_PATH = startupParam.modulePath;
         Resources res = XModuleResources.createInstance(MODULE_PATH, null);
         byte[] array = XposedHelpers.assetAsByteArray(res, "blocklist/hosts");
+        byte[] array2 = XposedHelpers.assetAsByteArray(res, "whitelist/app");
         String decoded = new String(array);
+        String decoded2 = new String(array2);
         String[] sUrls = decoded.split("\n");
+        String[] sUrls2 = decoded2.split("\n");
         patterns = new HashSet<>();
+        patterns2 = new HashSet<>();
         Collections.addAll(patterns, sUrls);
+        Collections.addAll(patterns2, sUrls2);
     }
 }
