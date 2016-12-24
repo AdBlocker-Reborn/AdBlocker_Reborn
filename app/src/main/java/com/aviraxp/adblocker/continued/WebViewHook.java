@@ -149,7 +149,7 @@ public class WebViewHook implements IXposedHookLoadPackage, IXposedHookZygoteIni
 
     public void initZygote(StartupParam startupParam) throws Throwable {
         String MODULE_PATH = startupParam.modulePath;
-        Resources res = XModuleResources.createInstance(MODULE_PATH, null);
+        res = XModuleResources.createInstance(MODULE_PATH, null);
         byte[] array = XposedHelpers.assetAsByteArray(res, "blocklist/hosts");
         byte[] array2 = XposedHelpers.assetAsByteArray(res, "whitelist/app");
         String decoded = new String(array);
