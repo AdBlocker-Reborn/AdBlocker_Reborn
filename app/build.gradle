@@ -7,8 +7,8 @@ android {
         applicationId "com.aviraxp.adblocker.continued"
         minSdkVersion 15
         targetSdkVersion 23
-        versionCode 4
-        versionName "四月は君の嘘"
+        versionCode 5
+        versionName "秒速5センチメートル"
     }
     buildTypes {
         release {
