@@ -18,12 +18,12 @@ import de.robv.android.xposed.callbacks.XC_LoadPackage;
 
 public class HostsHook implements IXposedHookLoadPackage, IXposedHookZygoteInit {
 
-    private Set<String> patterns;
-    private Set<String> patterns2;
+    private Set<String> urlList;
+    private Set<String> whiteList;
 
     public void handleLoadPackage(final XC_LoadPackage.LoadPackageParam lpparam) throws Throwable {
 
-        if (patterns2.contains(lpparam.packageName)) {
+        if (whiteList.contains(lpparam.packageName)) {
             return;
         }
 
@@ -44,7 +44,7 @@ public class HostsHook implements IXposedHookLoadPackage, IXposedHookZygoteInit 
                         } else if (null != obj && "java.lang.InetAddress".equals(obj.getClass().getName())) {
                             host = ((InetAddress) obj).getHostName();
                         }
-                        if (host != null && patterns.contains(host)) {
+                        if (host != null && urlList.contains(host)) {
                             param.args[0] = null;
                             param.setResult(new Object());
                             if (BuildConfig.DEBUG) {
@@ -65,7 +65,7 @@ public class HostsHook implements IXposedHookLoadPackage, IXposedHookZygoteInit 
             protected void beforeHookedMethod(MethodHookParam param) throws Throwable {
                 try {
                     String host = (String) param.args[0];
-                    if (host != null && patterns.contains(host)) {
+                    if (host != null && urlList.contains(host)) {
                         param.setResult(new Object());
                         param.setThrowable(new UnknownHostException("Blocked by ADBlocker Continued: " + host));
                         if (BuildConfig.DEBUG) {
@@ -83,7 +83,7 @@ public class HostsHook implements IXposedHookLoadPackage, IXposedHookZygoteInit 
             protected void afterHookedMethod(MethodHookParam param) throws Throwable {
                 try {
                     String host = (String) param.args[0];
-                    if (host != null && patterns.contains(host)) {
+                    if (host != null && urlList.contains(host)) {
                         param.setResult(new Object());
                         param.setThrowable(new UnknownHostException("Blocked by ADBlocker Continued: " + host));
                         if (BuildConfig.DEBUG) {
@@ -99,8 +99,8 @@ public class HostsHook implements IXposedHookLoadPackage, IXposedHookZygoteInit 
         };
         XposedBridge.hookAllMethods(inetAddrClz, "getAllByName", inetAddrHookSingleResult);
         XposedBridge.hookAllMethods(inetAddrClz, "getByName", inetAddrHookSingleResult);
-
         XposedBridge.hookAllMethods(inetSockAddrClz, "createUnresolved", inetAddrHookSingleResult);
+
         XposedBridge.hookAllConstructors(inetSockAddrClz, new XC_MethodHook() {
             @Override
             protected void beforeHookedMethod(MethodHookParam param) throws Throwable {
@@ -113,7 +113,7 @@ public class HostsHook implements IXposedHookLoadPackage, IXposedHookZygoteInit 
                         } else if (null != obj && "java.net.InetAddress".equals(obj.getClass().getName())) {
                             host = ((InetAddress) obj).getHostName();
                         }
-                        if (host != null && patterns.contains(host)) {
+                        if (host != null && urlList.contains(host)) {
                             param.args[0] = "localhost";
                             param.setResult(new Object());
                             param.setThrowable(new UnknownHostException("Blocked by ADBlocker Continued: " + host));
@@ -137,13 +137,13 @@ public class HostsHook implements IXposedHookLoadPackage, IXposedHookZygoteInit 
                     InetAddress addr = (InetAddress) param.args[1];
                     String host = addr.getHostName();
                     String ip = addr.getHostAddress();
-                    if (host != null && patterns.contains(host)) {
+                    if (host != null && urlList.contains(host)) {
                         param.setResult(false);
                         param.setThrowable(new UnknownHostException("Blocked by ADBlocker Continued: " + host));
                         if (BuildConfig.DEBUG) {
                             XposedBridge.log("Hosts Block Success: " + lpparam.packageName + "/" + host);
                         }
-                    } else if (ip != null && patterns.contains(ip)) {
+                    } else if (ip != null && urlList.contains(ip)) {
                         param.setResult(false);
                         param.setThrowable(new UnknownHostException("Blocked by ADBlocker Continued: " + ip));
                         if (BuildConfig.DEBUG) {
@@ -163,13 +163,13 @@ public class HostsHook implements IXposedHookLoadPackage, IXposedHookZygoteInit 
                     InetAddress addr = (InetAddress) param.args[1];
                     String host = addr.getHostName();
                     String ip = addr.getHostAddress();
-                    if (host != null && patterns.contains(host)) {
+                    if (host != null && urlList.contains(host)) {
                         param.setResult(false);
                         param.setThrowable(new UnknownHostException("Blocked by ADBlocker Continued: " + host));
                         if (BuildConfig.DEBUG) {
                             XposedBridge.log("Hosts Block Success: " + lpparam.packageName + "/" + host);
                         }
-                    } else if (ip != null && patterns.contains(ip)) {
+                    } else if (ip != null && urlList.contains(ip)) {
                         param.setResult(false);
                         param.setThrowable(new UnknownHostException("Blocked by ADBlocker Continued: " + ip));
                         if (BuildConfig.DEBUG) {
@@ -196,9 +196,9 @@ public class HostsHook implements IXposedHookLoadPackage, IXposedHookZygoteInit 
         String decoded2 = new String(array2);
         String[] sUrls = decoded.split("\n");
         String[] sUrls2 = decoded2.split("\n");
-        patterns = new HashSet<>();
-        patterns2 = new HashSet<>();
-        Collections.addAll(patterns, sUrls);
-        Collections.addAll(patterns2, sUrls2);
+        urlList = new HashSet<>();
+        whiteList = new HashSet<>();
+        Collections.addAll(urlList, sUrls);
+        Collections.addAll(whiteList, sUrls2);
     }
 }

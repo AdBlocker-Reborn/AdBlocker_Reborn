@@ -23,7 +23,7 @@ import de.robv.android.xposed.callbacks.XC_LoadPackage;
 
 public class ServicesHook implements IXposedHookLoadPackage, IXposedHookZygoteInit {
 
-    private Set<String> patterns;
+    private Set<String> servicesList;
     private boolean isMIUI = false;
 
     private void isMIUI() {
@@ -106,7 +106,7 @@ public class ServicesHook implements IXposedHookLoadPackage, IXposedHookZygoteIn
             String serviceName = serviceIntent.getComponent().flattenToShortString();
             if (serviceName != null) {
                 String splitServicesName = serviceName.substring(serviceName.indexOf("/") + 1);
-                if ((!isMIUI && patterns.contains(splitServicesName)) || (isMIUI && patterns.contains(splitServicesName) && !splitServicesName.contains("xiaomi"))) {
+                if ((!isMIUI && servicesList.contains(splitServicesName)) || (isMIUI && servicesList.contains(splitServicesName) && !splitServicesName.contains("xiaomi"))) {
                     param.setResult(null);
                     if (BuildConfig.DEBUG) {
                         XposedBridge.log("Service Block Success: " + serviceName);
@@ -122,8 +122,8 @@ public class ServicesHook implements IXposedHookLoadPackage, IXposedHookZygoteIn
         byte[] array = XposedHelpers.assetAsByteArray(res, "blocklist/services");
         String decoded = new String(array);
         String[] sUrls = decoded.split("\n");
-        patterns = new HashSet<>();
-        Collections.addAll(patterns, sUrls);
+        servicesList = new HashSet<>();
+        Collections.addAll(servicesList, sUrls);
         isMIUI();
     }
 }

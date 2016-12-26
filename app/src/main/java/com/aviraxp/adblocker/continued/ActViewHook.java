@@ -23,7 +23,7 @@ import de.robv.android.xposed.callbacks.XC_LoadPackage;
 
 public class ActViewHook implements IXposedHookLoadPackage, IXposedHookZygoteInit {
 
-    private Set<String> patterns;
+    private Set<String> actViewList;
 
     public void handleLoadPackage(final XC_LoadPackage.LoadPackageParam lpparam) throws Throwable {
 
@@ -32,7 +32,7 @@ public class ActViewHook implements IXposedHookLoadPackage, IXposedHookZygoteIni
             protected void afterHookedMethod(XC_MethodHook.MethodHookParam param) throws Throwable {
                 Activity activity = (Activity) param.thisObject;
                 String activityClassName = activity.getClass().getName();
-                if (activityClassName != null && patterns.contains(activityClassName)) {
+                if (activityClassName != null && actViewList.contains(activityClassName)) {
                     activity.overridePendingTransition(0, 0);
                     activity.finish();
                     activity.overridePendingTransition(0, 0);
@@ -50,7 +50,7 @@ public class ActViewHook implements IXposedHookLoadPackage, IXposedHookZygoteIni
                     ComponentName Component = ((Intent) param.args[0]).getComponent();
                     if (Component != null) {
                         String activityClassName = Component.getClassName();
-                        if (activityClassName != null && patterns.contains(activityClassName)) {
+                        if (activityClassName != null && actViewList.contains(activityClassName)) {
                             param.setResult(null);
                             if (BuildConfig.DEBUG) {
                                 XposedBridge.log("Activity Block Success: " + lpparam.packageName + "/" + activityClassName);
@@ -89,13 +89,13 @@ public class ActViewHook implements IXposedHookLoadPackage, IXposedHookZygoteIni
         byte[] array = XposedHelpers.assetAsByteArray(res, "blocklist/av");
         String decoded = new String(array);
         String[] sUrls = decoded.split("\n");
-        patterns = new HashSet<>();
-        Collections.addAll(patterns, sUrls);
+        actViewList = new HashSet<>();
+        Collections.addAll(actViewList, sUrls);
     }
 
     private void hideIfAdView(Object paramObject, String paramString) {
         String str = paramObject.getClass().getName();
-        if (str != null && patterns.contains(str)) {
+        if (str != null && actViewList.contains(str)) {
             ((View) paramObject).setVisibility(View.GONE);
             if (BuildConfig.DEBUG) {
                 XposedBridge.log("View Block Success: " + paramString + "/" + str);

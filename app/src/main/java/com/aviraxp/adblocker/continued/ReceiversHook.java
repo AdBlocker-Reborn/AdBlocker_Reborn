@@ -18,11 +18,11 @@ import de.robv.android.xposed.callbacks.XC_LoadPackage;
 
 public class ReceiversHook implements IXposedHookLoadPackage, IXposedHookZygoteInit {
 
-    private Set<String> patterns;
+    private Set<String> receiversList;
 
     public void handleLoadPackage(final XC_LoadPackage.LoadPackageParam lpparam) throws Throwable {
         try {
-            for (String receivers : patterns) {
+            for (String receivers : receiversList) {
                 XposedHelpers.findAndHookMethod(receivers, lpparam.classLoader, "onReceive", Context.class, Intent.class, XC_MethodReplacement.DO_NOTHING);
                 if (BuildConfig.DEBUG) {
                     XposedBridge.log("Receiver Block Success: " + lpparam.packageName + "/" + receivers);
@@ -38,7 +38,7 @@ public class ReceiversHook implements IXposedHookLoadPackage, IXposedHookZygoteI
         byte[] array = XposedHelpers.assetAsByteArray(res, "blocklist/receivers");
         String decoded = new String(array);
         String[] sUrls = decoded.split("\n");
-        patterns = new HashSet<>();
-        Collections.addAll(patterns, sUrls);
+        receiversList = new HashSet<>();
+        Collections.addAll(receiversList, sUrls);
     }
 }

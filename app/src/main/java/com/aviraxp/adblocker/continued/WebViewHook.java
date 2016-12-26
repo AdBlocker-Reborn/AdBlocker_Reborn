@@ -21,8 +21,8 @@ public class WebViewHook implements IXposedHookLoadPackage, IXposedHookZygoteIni
 
     public Resources res;
     private boolean adExist;
-    private Set<String> patterns;
-    private Set<String> patterns2;
+    private Set<String> urlList;
+    private Set<String> whiteList;
 
     private void removeAdView(final View view) throws Throwable {
         ViewGroup.LayoutParams params = view.getLayoutParams();
@@ -49,7 +49,7 @@ public class WebViewHook implements IXposedHookLoadPackage, IXposedHookZygoteIni
 
     public void handleLoadPackage(final XC_LoadPackage.LoadPackageParam lpparam) throws Throwable {
 
-        if (patterns2.contains(lpparam.packageName)) {
+        if (whiteList.contains(lpparam.packageName)) {
             return;
         }
 
@@ -120,7 +120,7 @@ public class WebViewHook implements IXposedHookLoadPackage, IXposedHookZygoteIni
             if (!data.equals("")) {
                 dataDecode = URLDecoder.decode(data, "UTF-8");
             }
-            for (String adUrl : patterns) {
+            for (String adUrl : urlList) {
                 if ((urlDecode != null && urlDecode.contains(adUrl)) || (dataDecode != null && dataDecode.contains(adUrl))) {
                     param.setResult(new Object());
                     removeAdView((View) param.thisObject);
@@ -145,9 +145,9 @@ public class WebViewHook implements IXposedHookLoadPackage, IXposedHookZygoteIni
         String decoded2 = new String(array2);
         String[] sUrls = decoded.split("\n");
         String[] sUrls2 = decoded2.split("\n");
-        patterns = new HashSet<>();
-        patterns2 = new HashSet<>();
-        Collections.addAll(patterns, sUrls);
-        Collections.addAll(patterns2, sUrls2);
+        urlList = new HashSet<>();
+        whiteList = new HashSet<>();
+        Collections.addAll(urlList, sUrls);
+        Collections.addAll(whiteList, sUrls2);
     }
 }
