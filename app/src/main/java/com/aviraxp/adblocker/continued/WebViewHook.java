@@ -121,7 +121,7 @@ public class WebViewHook implements IXposedHookLoadPackage, IXposedHookZygoteIni
                 dataDecode = URLDecoder.decode(data, "UTF-8");
             }
             for (String adUrl : patterns) {
-                if (urlDecode != null && urlDecode.contains(adUrl) || dataDecode != null && dataDecode.contains(adUrl)) {
+                if ((urlDecode != null && urlDecode.contains(adUrl)) || (dataDecode != null && dataDecode.contains(adUrl))) {
                     param.setResult(new Object());
                     removeAdView((View) param.thisObject);
                     return true;
