@@ -110,37 +110,26 @@ public class WebViewHook implements IXposedHookLoadPackage, IXposedHookZygoteIni
 
     private boolean urlFiltering(String url, String data, XC_MethodHook.MethodHookParam param) throws Throwable {
 
-        if (!url.equals("")) {
-            try {
-                String urlDecode = URLDecoder.decode(url, "UTF-8");
-                for (String adUrl : patterns) {
-                    if (urlDecode.contains(adUrl)) {
-                        param.setResult(new Object());
-                        removeAdView((View) param.thisObject);
-                        return true;
-                    }
-                }
-            } catch (Exception e) {
-                if (BuildConfig.DEBUG) {
-                    XposedBridge.log(e);
+        String urlDecode = null;
+        String dataDecode = null;
+
+        try {
+            if (!url.equals("")) {
+                urlDecode = URLDecoder.decode(url, "UTF-8");
+            }
+            if (!data.equals("")) {
+                dataDecode = URLDecoder.decode(data, "UTF-8");
+            }
+            for (String adUrl : patterns) {
+                if (urlDecode != null && urlDecode.contains(adUrl) || dataDecode != null && dataDecode.contains(adUrl)) {
+                    param.setResult(new Object());
+                    removeAdView((View) param.thisObject);
+                    return true;
                 }
             }
-        }
-
-        if (!data.equals("")) {
-            try {
-                String dataDecode = URLDecoder.decode(data, "UTF-8");
-                for (String adUrl : patterns) {
-                    if (dataDecode.contains(adUrl)) {
-                        param.setResult(new Object());
-                        removeAdView((View) param.thisObject);
-                        return true;
-                    }
-                }
-            } catch (Exception e) {
-                if (BuildConfig.DEBUG) {
-                    XposedBridge.log(e);
-                }
+        } catch (Exception e) {
+            if (BuildConfig.DEBUG) {
+                XposedBridge.log(e);
             }
         }
 
