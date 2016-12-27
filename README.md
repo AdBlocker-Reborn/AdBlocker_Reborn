@@ -1,6 +1,6 @@
-# ADBlocker - Continued
+# ADBlocker - Reborned
 
-This is the continued version of ADBlocker.
+This is the reborn version of ADBlocker.
 
 Part of this Application Credits to:
 
