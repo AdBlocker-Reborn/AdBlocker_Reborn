@@ -114,7 +114,7 @@ public class HostsHook implements IXposedHookLoadPackage, IXposedHookZygoteInit 
                             host = ((InetAddress) obj).getHostName();
                         }
                         if (host != null && hostsList.contains(host)) {
-                            param.args[0] = "localhost";
+                            param.args[0] = "0.0.0.0";
                             param.setResult(new Object());
                             param.setThrowable(new UnknownHostException("Blocked by ADBlocker Continued: " + host));
                             if (BuildConfig.DEBUG) {
