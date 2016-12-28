@@ -26,7 +26,7 @@ public class WebViewHook implements IXposedHookLoadPackage, IXposedHookZygoteIni
     private Set<String> hostsList;
     private Set<String> whiteList;
     private Set<String> regexList;
-    
+
     private void removeAdView(final View view) throws Throwable {
         ViewGroup.LayoutParams params = view.getLayoutParams();
         if (params == null) {
@@ -116,22 +116,30 @@ public class WebViewHook implements IXposedHookLoadPackage, IXposedHookZygoteIni
         String urlDecode = null;
         String dataDecode = null;
 
-        try {
-            if (!url.equals("")) {
-                urlDecode = URLDecoder.decode(url, "UTF-8");
-            }
-            if (!data.equals("")) {
-                dataDecode = URLDecoder.decode(data, "UTF-8");
-            }
-            for (String adUrl : hostsList) {
-                if ((urlDecode != null && urlDecode.contains(adUrl)) || (dataDecode != null && dataDecode.contains(adUrl))) {
+        if (!url.equals("")) {
+            urlDecode = URLDecoder.decode(url, "UTF-8");
+        }
+        if (!data.equals("")) {
+            dataDecode = URLDecoder.decode(data, "UTF-8");
+        }
+
+        for (String adUrl : hostsList) {
+            if ((urlDecode != null && urlDecode.contains(adUrl)) || (dataDecode != null && dataDecode.contains(adUrl))) {
+                try {
                     param.setResult(new Object());
                     removeAdView((View) param.thisObject);
                     return true;
+                } catch (Exception e) {
+                    if (BuildConfig.DEBUG) {
+                        XposedBridge.log(e);
+                    }
                 }
             }
-            for (String regexAdUrl : regexList) {
-                if (urlDecode != null && urlDecode.contains("//")) {
+        }
+
+        for (String regexAdUrl : regexList) {
+            if (urlDecode != null && urlDecode.contains("//")) {
+                try {
                     String urlRegex = urlDecode.substring(urlDecode.indexOf("//") + 1);
                     Pattern regexPattern = Pattern.compile(regexAdUrl);
                     Matcher matcher = regexPattern.matcher(urlRegex);
@@ -140,11 +148,11 @@ public class WebViewHook implements IXposedHookLoadPackage, IXposedHookZygoteIni
                         removeAdView((View) param.thisObject);
                         return true;
                     }
+                } catch (Exception e) {
+                    if (BuildConfig.DEBUG) {
+                        XposedBridge.log(e);
+                    }
                 }
-            }
-        } catch (Exception e) {
-            if (BuildConfig.DEBUG) {
-                XposedBridge.log(e);
             }
         }
 
