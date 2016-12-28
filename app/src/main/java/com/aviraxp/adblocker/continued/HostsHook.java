@@ -52,9 +52,7 @@ public class HostsHook implements IXposedHookLoadPackage, IXposedHookZygoteInit 
                             }
                         }
                     } catch (Exception e) {
-                        if (BuildConfig.DEBUG) {
-                            XposedBridge.log(e);
-                        }
+                        XposedBridge.log(e);
                     }
                 }
             }
@@ -73,9 +71,7 @@ public class HostsHook implements IXposedHookLoadPackage, IXposedHookZygoteInit 
                         }
                     }
                 } catch (Exception e) {
-                    if (BuildConfig.DEBUG) {
-                        XposedBridge.log(e);
-                    }
+                    XposedBridge.log(e);
                 }
             }
 
@@ -91,9 +87,7 @@ public class HostsHook implements IXposedHookLoadPackage, IXposedHookZygoteInit 
                         }
                     }
                 } catch (Exception e) {
-                    if (BuildConfig.DEBUG) {
-                        XposedBridge.log(e);
-                    }
+                    XposedBridge.log(e);
                 }
             }
         };
@@ -122,9 +116,7 @@ public class HostsHook implements IXposedHookLoadPackage, IXposedHookZygoteInit 
                             }
                         }
                     } catch (Exception e) {
-                        if (BuildConfig.DEBUG) {
-                            XposedBridge.log(e);
-                        }
+                        XposedBridge.log(e);
                     }
                 }
             }
@@ -151,9 +143,7 @@ public class HostsHook implements IXposedHookLoadPackage, IXposedHookZygoteInit 
                         }
                     }
                 } catch (Exception e) {
-                    if (BuildConfig.DEBUG) {
-                        XposedBridge.log(e);
-                    }
+                    XposedBridge.log(e);
                 }
             }
 
@@ -177,9 +167,7 @@ public class HostsHook implements IXposedHookLoadPackage, IXposedHookZygoteInit 
                         }
                     }
                 } catch (Exception e) {
-                    if (BuildConfig.DEBUG) {
-                        XposedBridge.log(e);
-                    }
+                    XposedBridge.log(e);
                 }
             }
         };
