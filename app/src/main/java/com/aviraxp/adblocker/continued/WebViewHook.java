@@ -137,15 +137,27 @@ public class WebViewHook implements IXposedHookLoadPackage, IXposedHookZygoteIni
         }
 
         for (String regexAdUrl : regexList) {
-            if (urlDecode != null && urlDecode.contains("//")) {
+            if ((urlDecode != null && (urlDecode.contains("http://") || urlDecode.contains("https://"))) || (dataDecode != null && (dataDecode.contains("http://") || dataDecode.contains("https://")))) {
                 try {
-                    String urlRegex = urlDecode.substring(urlDecode.indexOf("//") + 1);
-                    Pattern regexPattern = Pattern.compile(regexAdUrl);
-                    Matcher matcher = regexPattern.matcher(urlRegex);
-                    if (matcher.matches()) {
-                        param.setResult(new Object());
-                        removeAdView((View) param.thisObject);
-                        return true;
+                    if (urlDecode != null) {
+                        String urlRegex = urlDecode.substring(urlDecode.indexOf("//") + 1);
+                        Pattern regexPattern = Pattern.compile(regexAdUrl);
+                        Matcher matcher = regexPattern.matcher(urlRegex);
+                        if (matcher.matches()) {
+                            param.setResult(new Object());
+                            removeAdView((View) param.thisObject);
+                            return true;
+                        }
+                    }
+                    if (dataDecode != null) {
+                        String dataRegex = dataDecode.substring(dataDecode.indexOf("//") + 1);
+                        Pattern regexPattern = Pattern.compile(regexAdUrl);
+                        Matcher matcher = regexPattern.matcher(dataRegex);
+                        if (matcher.matches()) {
+                            param.setResult(new Object());
+                            removeAdView((View) param.thisObject);
+                            return true;
+                        }
                     }
                 } catch (Exception e) {
                     XposedBridge.log(e);
