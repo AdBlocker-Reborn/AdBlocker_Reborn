@@ -28,6 +28,7 @@ public class WebViewHook implements IXposedHookLoadPackage, IXposedHookZygoteIni
     private Set<String> regexList;
 
     private void removeAdView(final View view) throws Throwable {
+
         ViewGroup.LayoutParams params = view.getLayoutParams();
         if (params == null) {
             params = new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, 0);
@@ -130,9 +131,7 @@ public class WebViewHook implements IXposedHookLoadPackage, IXposedHookZygoteIni
                     removeAdView((View) param.thisObject);
                     return true;
                 } catch (Exception e) {
-                    if (BuildConfig.DEBUG) {
-                        XposedBridge.log(e);
-                    }
+                    XposedBridge.log(e);
                 }
             }
         }
@@ -149,9 +148,7 @@ public class WebViewHook implements IXposedHookLoadPackage, IXposedHookZygoteIni
                         return true;
                     }
                 } catch (Exception e) {
-                    if (BuildConfig.DEBUG) {
-                        XposedBridge.log(e);
-                    }
+                    XposedBridge.log(e);
                 }
             }
         }
