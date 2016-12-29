@@ -112,16 +112,23 @@ public class WebViewHook implements IXposedHookLoadPackage, IXposedHookZygoteIni
         }
     }
 
-    private boolean urlFiltering(String url, String data, XC_MethodHook.MethodHookParam param) throws Throwable {
+    private boolean urlFiltering(String url, String data, XC_MethodHook.MethodHookParam param) {
 
         String urlDecode = null;
         String dataDecode = null;
 
         if (!url.equals("")) {
-            urlDecode = URLDecoder.decode(url, "UTF-8");
+            try {
+                urlDecode = URLDecoder.decode(url, "UTF-8");
+            } catch (Exception ignored) {
+            }
         }
+
         if (!data.equals("")) {
-            dataDecode = URLDecoder.decode(data, "UTF-8");
+            try {
+                dataDecode = URLDecoder.decode(data, "UTF-8");
+            } catch (Exception ignored) {
+            }
         }
 
         for (String adUrl : hostsList) {
@@ -130,8 +137,8 @@ public class WebViewHook implements IXposedHookLoadPackage, IXposedHookZygoteIni
                     param.setResult(new Object());
                     removeAdView((View) param.thisObject);
                     return true;
-                } catch (Exception e) {
-                    XposedBridge.log(e);
+                } catch (Throwable t) {
+                    XposedBridge.log(t);
                 }
             }
         }
@@ -159,8 +166,8 @@ public class WebViewHook implements IXposedHookLoadPackage, IXposedHookZygoteIni
                             return true;
                         }
                     }
-                } catch (Exception e) {
-                    XposedBridge.log(e);
+                } catch (Throwable t) {
+                    XposedBridge.log(t);
                 }
             }
         }
