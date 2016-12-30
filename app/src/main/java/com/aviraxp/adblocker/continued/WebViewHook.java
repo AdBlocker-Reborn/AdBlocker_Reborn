@@ -137,6 +137,7 @@ public class WebViewHook implements IXposedHookLoadPackage, IXposedHookZygoteIni
                     param.setResult(new Object());
                     removeAdView((View) param.thisObject);
                     return true;
+                } catch (IllegalArgumentException ignored) {
                 } catch (Throwable t) {
                     XposedBridge.log(t);
                 }
@@ -166,6 +167,7 @@ public class WebViewHook implements IXposedHookLoadPackage, IXposedHookZygoteIni
                             return true;
                         }
                     }
+                } catch (IllegalArgumentException ignored) {
                 } catch (Throwable t) {
                     XposedBridge.log(t);
                 }
