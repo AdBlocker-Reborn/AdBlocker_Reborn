@@ -151,7 +151,7 @@ public class WebViewHook implements IXposedHookLoadPackage, IXposedHookZygoteIni
                         String urlRegex = urlDecode.substring(urlDecode.indexOf("//") + 1);
                         Pattern regexPattern = Pattern.compile(regexAdUrl);
                         Matcher matcher = regexPattern.matcher(urlRegex);
-                        if (matcher.matches()) {
+                        if (matcher.find()) {
                             param.setResult(new Object());
                             removeAdView((View) param.thisObject);
                             return true;
@@ -161,7 +161,7 @@ public class WebViewHook implements IXposedHookLoadPackage, IXposedHookZygoteIni
                         String dataRegex = dataDecode.substring(dataDecode.indexOf("//") + 1);
                         Pattern regexPattern = Pattern.compile(regexAdUrl);
                         Matcher matcher = regexPattern.matcher(dataRegex);
-                        if (matcher.matches()) {
+                        if (matcher.find()) {
                             param.setResult(new Object());
                             removeAdView((View) param.thisObject);
                             return true;
