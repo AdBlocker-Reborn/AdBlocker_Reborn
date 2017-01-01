@@ -35,7 +35,7 @@ public class HostsHook implements IXposedHookLoadPackage, IXposedHookZygoteInit 
         XposedBridge.hookAllConstructors(socketClz, new XC_MethodHook() {
             @Override
             protected void beforeHookedMethod(MethodHookParam param) throws Throwable {
-                if (param.args != null && param.args[0] != null) {
+                if (param.args != null && param.args.length > 0 && param.args[0] != null) {
                     try {
                         Object obj = param.args[0];
                         String host = null;
@@ -98,7 +98,7 @@ public class HostsHook implements IXposedHookLoadPackage, IXposedHookZygoteInit 
         XposedBridge.hookAllConstructors(inetSockAddrClz, new XC_MethodHook() {
             @Override
             protected void beforeHookedMethod(MethodHookParam param) throws Throwable {
-                if (param.args != null && param.args[0] != null) {
+                if (param.args != null && param.args.length > 0 && param.args[0] != null) {
                     try {
                         Object obj = param.args[0];
                         String host = null;
