@@ -87,7 +87,7 @@ public class ActViewHook implements IXposedHookLoadPackage, IXposedHookZygoteIni
         String MODULE_PATH = startupParam.modulePath;
         Resources res = XModuleResources.createInstance(MODULE_PATH, null);
         byte[] array = XposedHelpers.assetAsByteArray(res, "blocklist/av");
-        String decoded = new String(array);
+        String decoded = new String(array, "UTF-8");
         String[] sUrls = decoded.split("\n");
         actViewList = new HashSet<>();
         Collections.addAll(actViewList, sUrls);

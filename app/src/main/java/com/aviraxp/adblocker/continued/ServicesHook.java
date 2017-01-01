@@ -120,7 +120,7 @@ public class ServicesHook implements IXposedHookLoadPackage, IXposedHookZygoteIn
         String MODULE_PATH = startupParam.modulePath;
         Resources res = XModuleResources.createInstance(MODULE_PATH, null);
         byte[] array = XposedHelpers.assetAsByteArray(res, "blocklist/services");
-        String decoded = new String(array);
+        String decoded = new String(array, "UTF-8");
         String[] sUrls = decoded.split("\n");
         servicesList = new HashSet<>();
         Collections.addAll(servicesList, sUrls);
