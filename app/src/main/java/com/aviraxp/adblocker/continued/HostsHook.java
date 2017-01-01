@@ -35,13 +35,13 @@ public class HostsHook implements IXposedHookLoadPackage, IXposedHookZygoteInit 
         XposedBridge.hookAllConstructors(socketClz, new XC_MethodHook() {
             @Override
             protected void beforeHookedMethod(MethodHookParam param) throws Throwable {
-                if (null != param.args && param.args.length > 0) {
+                if (param.args != null && param.args[0] != null) {
                     try {
                         Object obj = param.args[0];
                         String host = null;
-                        if (null != obj && "java.lang.String".equals(obj.getClass().getName())) {
+                        if (obj.getClass().getName().equals("java.lang.String")) {
                             host = (String) obj;
-                        } else if (null != obj && "java.lang.InetAddress".equals(obj.getClass().getName())) {
+                        } else if (obj.getClass().getName().equals("java.lang.InetAddress")) {
                             host = ((InetAddress) obj).getHostName();
                         }
                         if (host != null && hostsList.contains(host)) {
@@ -98,13 +98,13 @@ public class HostsHook implements IXposedHookLoadPackage, IXposedHookZygoteInit 
         XposedBridge.hookAllConstructors(inetSockAddrClz, new XC_MethodHook() {
             @Override
             protected void beforeHookedMethod(MethodHookParam param) throws Throwable {
-                if (null != param.args && param.args.length > 0) {
+                if (param.args != null && param.args[0] != null) {
                     try {
                         Object obj = param.args[0];
                         String host = null;
-                        if (null != obj && "java.lang.String".equals(obj.getClass().getName())) {
+                        if (obj.getClass().getName().equals("java.lang.String")) {
                             host = (String) obj;
-                        } else if (null != obj && "java.net.InetAddress".equals(obj.getClass().getName())) {
+                        } else if (obj.getClass().getName().equals("java.lang.InetAddress")) {
                             host = ((InetAddress) obj).getHostName();
                         }
                         if (host != null && hostsList.contains(host)) {
