@@ -65,7 +65,7 @@ public class WebViewHook implements IXposedHookLoadPackage, IXposedHookZygoteIni
                 protected void beforeHookedMethod(XC_MethodHook.MethodHookParam param) throws Throwable {
                     String url = (String) param.args[0];
                     if (url != null) {
-                        adExist = urlFiltering(url, "", param);
+                        adExist = urlFiltering(url, null, param);
                         if (adExist) {
                             param.setResult(new Object());
                             if (BuildConfig.DEBUG) {
@@ -81,7 +81,7 @@ public class WebViewHook implements IXposedHookLoadPackage, IXposedHookZygoteIni
                 protected void beforeHookedMethod(XC_MethodHook.MethodHookParam param) throws Throwable {
                     String data = (String) param.args[0];
                     if (data != null) {
-                        adExist = urlFiltering("", data, param);
+                        adExist = urlFiltering(null, data, param);
                         if (adExist) {
                             param.setResult(new Object());
                             if (BuildConfig.DEBUG) {
@@ -117,14 +117,14 @@ public class WebViewHook implements IXposedHookLoadPackage, IXposedHookZygoteIni
         String urlDecode = null;
         String dataDecode = null;
 
-        if (!url.equals("")) {
+        if (url != null) {
             try {
                 urlDecode = URLDecoder.decode(url, "UTF-8");
             } catch (Exception ignored) {
             }
         }
 
-        if (!data.equals("")) {
+        if (data != null) {
             try {
                 dataDecode = URLDecoder.decode(data, "UTF-8");
             } catch (Exception ignored) {
