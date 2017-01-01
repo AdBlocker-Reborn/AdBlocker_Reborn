@@ -6,7 +6,7 @@ android {
     defaultConfig {
         applicationId "com.aviraxp.adblocker.continued"
         minSdkVersion 15
-        targetSdkVersion 23
+        targetSdkVersion 25
         versionCode 6
         versionName "六花の勇者"
     }
