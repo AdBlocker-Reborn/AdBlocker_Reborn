@@ -51,8 +51,8 @@ public class HostsHook implements IXposedHookLoadPackage, IXposedHookZygoteInit 
                                 XposedBridge.log("Hosts Block Success: " + lpparam.packageName + "/" + host);
                             }
                         }
-                    } catch (Exception e) {
-                        XposedBridge.log(e);
+                    } catch (Throwable t) {
+                        XposedBridge.log(t);
                     }
                 }
             }
@@ -70,8 +70,8 @@ public class HostsHook implements IXposedHookLoadPackage, IXposedHookZygoteInit 
                             XposedBridge.log("Hosts Block Success: " + lpparam.packageName + "/" + host);
                         }
                     }
-                } catch (Exception e) {
-                    XposedBridge.log(e);
+                } catch (Throwable t) {
+                    XposedBridge.log(t);
                 }
             }
 
@@ -86,8 +86,8 @@ public class HostsHook implements IXposedHookLoadPackage, IXposedHookZygoteInit 
                             XposedBridge.log("Hosts Block Success: " + lpparam.packageName + "/" + host);
                         }
                     }
-                } catch (Exception e) {
-                    XposedBridge.log(e);
+                } catch (Throwable t) {
+                    XposedBridge.log(t);
                 }
             }
         };
@@ -115,8 +115,8 @@ public class HostsHook implements IXposedHookLoadPackage, IXposedHookZygoteInit 
                                 XposedBridge.log("Hosts Block Success: " + lpparam.packageName + "/" + host);
                             }
                         }
-                    } catch (Exception e) {
-                        XposedBridge.log(e);
+                    } catch (Throwable t) {
+                        XposedBridge.log(t);
                     }
                 }
             }
@@ -142,8 +142,8 @@ public class HostsHook implements IXposedHookLoadPackage, IXposedHookZygoteInit 
                             XposedBridge.log("Hosts Block Success: " + lpparam.packageName + "/" + ip);
                         }
                     }
-                } catch (Exception e) {
-                    XposedBridge.log(e);
+                } catch (Throwable t) {
+                    XposedBridge.log(t);
                 }
             }
 
@@ -166,8 +166,8 @@ public class HostsHook implements IXposedHookLoadPackage, IXposedHookZygoteInit 
                             XposedBridge.log("Hosts Block Success: " + lpparam.packageName + "/" + ip);
                         }
                     }
-                } catch (Exception e) {
-                    XposedBridge.log(e);
+                } catch (Throwable t) {
+                    XposedBridge.log(t);
                 }
             }
         };

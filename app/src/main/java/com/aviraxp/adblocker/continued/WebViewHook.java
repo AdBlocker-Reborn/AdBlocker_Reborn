@@ -120,14 +120,16 @@ public class WebViewHook implements IXposedHookLoadPackage, IXposedHookZygoteIni
         if (url != null) {
             try {
                 urlDecode = URLDecoder.decode(url, "UTF-8");
-            } catch (Exception ignored) {
+            } catch (Throwable t) {
+                XposedBridge.log(t);
             }
         }
 
         if (data != null) {
             try {
                 dataDecode = URLDecoder.decode(data, "UTF-8");
-            } catch (Exception ignored) {
+            } catch (Throwable t) {
+                XposedBridge.log(t);
             }
         }
 

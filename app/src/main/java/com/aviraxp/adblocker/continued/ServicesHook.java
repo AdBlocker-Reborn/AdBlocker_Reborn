@@ -36,14 +36,15 @@ public class ServicesHook implements IXposedHookLoadPackage, IXposedHookZygoteIn
                 XposedBridge.log("MIUI Detected, Never Block MiPush");
                 isMIUI = true;
             }
-        } catch (Exception e) {
+        } catch (Throwable t) {
             XposedBridge.log("Load System Property Failed, Printing StackTrace");
-            XposedBridge.log(e);
+            XposedBridge.log(t);
         } finally {
             if (fileInputStream != null) {
                 try {
                     fileInputStream.close();
-                } catch (Exception ignored) {
+                } catch (Throwable t) {
+                    XposedBridge.log(t);
                 }
             }
         }
