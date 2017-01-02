@@ -5,19 +5,15 @@
 # Modified by aviraxp
 
 """
-SQUID Config：
-   acl adblock url_regex "/etc/squid/adblock.acl"
-   http_access deny adblock
-
 Run：
-   sudo python rules2regex.py > /etc/squid/adblock.acl
+   sudo python rules2regex.py > regexurl
 """
 
 import urllib2
 
 
 def addrules(url):
-    html = urllib2.urlopen(url, timeout=60).readlines()
+    html = urllib2.urlopen(url, timeout=10).readlines()
     for line in html:
         line = line.strip()
         if line == '': continue
