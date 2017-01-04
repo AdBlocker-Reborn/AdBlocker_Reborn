@@ -11,7 +11,7 @@ import com.aviraxp.adblocker.continued.R;
 
 public class SettingsActivity extends PreferenceActivity {
 
-    public final static boolean isActivated = false;
+    public static boolean isActivated = false;
 
     @SuppressWarnings("deprecation")
     @Override
