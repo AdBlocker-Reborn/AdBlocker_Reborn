@@ -26,6 +26,17 @@ public class ServicesHook implements IXposedHookLoadPackage, IXposedHookZygoteIn
     private Set<String> servicesList;
     private boolean isMIUI = false;
 
+    private XC_MethodHook servicesStartHook = new XC_MethodHook() {
+        @Override
+        protected void beforeHookedMethod(MethodHookParam param) throws Throwable {
+            Intent intent = (Intent) param.args[1];
+            handleServiceStart(param, intent);
+            if (BuildConfig.DEBUG) {
+                XposedBridge.log("Hook Services Flag Success: " + Build.VERSION.SDK_INT);
+            }
+        }
+    };
+
     private void isMIUI() {
         Properties properties = new Properties();
         FileInputStream fileInputStream = null;
@@ -53,51 +64,15 @@ public class ServicesHook implements IXposedHookLoadPackage, IXposedHookZygoteIn
     public void handleLoadPackage(XC_LoadPackage.LoadPackageParam lpparam) throws Throwable {
         if (lpparam.packageName.equals("android")) {
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-                XposedHelpers.findAndHookMethod("com.android.server.am.ActiveServices", lpparam.classLoader, "startServiceLocked", "android.app.IApplicationThread", Intent.class, String.class, int.class, int.class, String.class, int.class, new XC_MethodHook() {
-                    @Override
-                    protected void beforeHookedMethod(MethodHookParam param) throws Throwable {
-                        Intent intent = (Intent) param.args[1];
-                        handleServiceStart(param, intent);
-                        if (BuildConfig.DEBUG) {
-                            XposedBridge.log("Hook Services Flag Success: " + Build.VERSION.SDK_INT);
-                        }
-                    }
-                });
+                XposedHelpers.findAndHookMethod("com.android.server.am.ActiveServices", lpparam.classLoader, "startServiceLocked", "android.app.IApplicationThread", Intent.class, String.class, int.class, int.class, String.class, int.class, servicesStartHook);
             } else if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1) {
                 try {
-                    XposedHelpers.findAndHookMethod("com.android.server.am.ActiveServices", lpparam.classLoader, "startServiceLocked", "android.app.IApplicationThread", Intent.class, String.class, int.class, int.class, int.class, new XC_MethodHook() {
-                        @Override
-                        protected void beforeHookedMethod(MethodHookParam param) throws Throwable {
-                            Intent intent = (Intent) param.args[1];
-                            handleServiceStart(param, intent);
-                            if (BuildConfig.DEBUG) {
-                                XposedBridge.log("Hook Services Flag Success: " + Build.VERSION.SDK_INT);
-                            }
-                        }
-                    });
+                    XposedHelpers.findAndHookMethod("com.android.server.am.ActiveServices", lpparam.classLoader, "startServiceLocked", "android.app.IApplicationThread", Intent.class, String.class, int.class, int.class, int.class, servicesStartHook);
                 } catch (NoSuchMethodError e) {
-                    XposedHelpers.findAndHookMethod("com.android.server.am.ActiveServices", lpparam.classLoader, "startServiceLocked", "android.app.IApplicationThread", Intent.class, String.class, int.class, int.class, int.class, Context.class, new XC_MethodHook() {
-                        @Override
-                        protected void beforeHookedMethod(MethodHookParam param) throws Throwable {
-                            Intent intent = (Intent) param.args[1];
-                            handleServiceStart(param, intent);
-                            if (BuildConfig.DEBUG) {
-                                XposedBridge.log("Hook Services Flag Success: " + Build.VERSION.SDK_INT);
-                            }
-                        }
-                    });
+                    XposedHelpers.findAndHookMethod("com.android.server.am.ActiveServices", lpparam.classLoader, "startServiceLocked", "android.app.IApplicationThread", Intent.class, String.class, int.class, int.class, int.class, Context.class, servicesStartHook);
                 }
             } else {
-                XposedHelpers.findAndHookMethod("com.android.server.am.ActivityManagerService", lpparam.classLoader, "startServiceLocked", "android.app.IApplicationThread", Intent.class, String.class, int.class, int.class, new XC_MethodHook() {
-                    @Override
-                    protected void beforeHookedMethod(MethodHookParam param) throws Throwable {
-                        Intent intent = (Intent) param.args[1];
-                        handleServiceStart(param, intent);
-                        if (BuildConfig.DEBUG) {
-                            XposedBridge.log("Hook Services Flags Success: " + Build.VERSION.SDK_INT);
-                        }
-                    }
-                });
+                XposedHelpers.findAndHookMethod("com.android.server.am.ActivityManagerService", lpparam.classLoader, "startServiceLocked", "android.app.IApplicationThread", Intent.class, String.class, int.class, int.class, servicesStartHook);
             }
         }
     }
