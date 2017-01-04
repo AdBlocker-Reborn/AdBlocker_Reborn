@@ -17,3 +17,4 @@
 #}
 
 -keep class com.aviraxp.adblocker.continued.* { *; }
+-keep class com.aviraxp.adblocker.continued.ui.* { *; }

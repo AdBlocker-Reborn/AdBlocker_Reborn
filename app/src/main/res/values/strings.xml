@@ -1,4 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">AdBlocker Reborned</string>
-    <string name="app_description">Reborn AdBlocker (Based on cinek\'s Work)</string>
+    <string name="xposed_description">Reborn Adblocker</string>
+    <string name="ok">OK</string>
+    <string name="cancel">Cancel</string>
+    <string name="hint_reboot_not_active">Module not activated!</string>
+    <string name="actview_hook">Enable Activity and View Blocking</string>
+    <string name="hosts_hook">Enable Hosts Blocking</string>
+    <string name="webview_hook">Enable WebView Blocking</string>
+    <string name="services_hook">Enable Services Blocking</string>
+    <string name="receivers_hook">Enable Receivers Blocking</string>
+    <string name="hiding_hook">Enable Self Hiding</string>
+
 </resources>

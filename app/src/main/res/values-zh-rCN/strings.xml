@@ -1,4 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">AdBlocker 重生版</string>
-    <string name="app_description">重生的 AdBlocker (基于 cinek 的工作)</string>
+    <string name="xposed_description">重生的 AdBlocker</string>
+    <string name="ok">确定</string>
+    <string name="cancel">取消</string>
+    <string name="hint_reboot_not_active">模块没有激活!</string>
+    <string name="actview_hook">启用活动和 View 拦截</string>
+    <string name="hosts_hook">启用 Hosts 拦截</string>
+    <string name="webview_hook">启用 WebView 拦截</string>
+    <string name="services_hook">启用服务拦截</string>
+    <string name="receivers_hook">启用接收器拦截</string>
+    <string name="hiding_hook">启用自我隐藏</string>
+
 </resources>

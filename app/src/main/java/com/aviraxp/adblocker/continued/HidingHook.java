@@ -24,6 +24,10 @@ public class HidingHook implements IXposedHookLoadPackage, IXposedHookZygoteInit
     @SuppressWarnings("unchecked")
     public void handleLoadPackage(final XC_LoadPackage.LoadPackageParam lpparam) {
 
+        if (!PreferencesHelper.isHidingHookEnabled()) {
+            return;
+        }
+
         if (whiteList.contains(lpparam.packageName)) {
             return;
         }

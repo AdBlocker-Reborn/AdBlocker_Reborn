@@ -21,6 +21,11 @@ public class ReceiversHook implements IXposedHookLoadPackage, IXposedHookZygoteI
     private Set<String> receiversList;
 
     public void handleLoadPackage(final XC_LoadPackage.LoadPackageParam lpparam) throws Throwable {
+
+        if (!PreferencesHelper.isReceiversHookEnabled()) {
+            return;
+        }
+
         try {
             for (String receivers : receiversList) {
                 XposedHelpers.findAndHookMethod(receivers, lpparam.classLoader, "onReceive", Context.class, Intent.class, XC_MethodReplacement.DO_NOTHING);

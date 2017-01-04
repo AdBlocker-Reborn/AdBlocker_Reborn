@@ -27,6 +27,10 @@ public class ActViewHook implements IXposedHookLoadPackage, IXposedHookZygoteIni
 
     public void handleLoadPackage(final XC_LoadPackage.LoadPackageParam lpparam) throws Throwable {
 
+        if (!PreferencesHelper.isActViewHookEnabled()) {
+            return;
+        }
+
         XposedHelpers.findAndHookMethod(Activity.class, "onCreate", Bundle.class, new XC_MethodHook() {
             @Override
             protected void afterHookedMethod(XC_MethodHook.MethodHookParam param) throws Throwable {

@@ -62,6 +62,11 @@ public class ServicesHook implements IXposedHookLoadPackage, IXposedHookZygoteIn
     }
 
     public void handleLoadPackage(XC_LoadPackage.LoadPackageParam lpparam) throws Throwable {
+
+        if (!PreferencesHelper.isServicesHookEnabled()) {
+            return;
+        }
+
         if (lpparam.packageName.equals("android")) {
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
                 XposedHelpers.findAndHookMethod("com.android.server.am.ActiveServices", lpparam.classLoader, "startServiceLocked", "android.app.IApplicationThread", Intent.class, String.class, int.class, int.class, String.class, int.class, servicesStartHook);
