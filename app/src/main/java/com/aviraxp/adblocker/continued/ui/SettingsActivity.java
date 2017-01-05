@@ -84,7 +84,10 @@ public class SettingsActivity extends PreferenceActivity {
     private void disableXposed() {
         try {
             Class<?> clazz = Class.forName("de.robv.android.xposed.XposedBridge", false, ClassLoader.getSystemClassLoader());
-            Field field = clazz.getDeclaredField("sHookedMethodCallbacks");
+            Field field = clazz.getDeclaredField("disableHooks");
+            field.setAccessible(true);
+            field.set(null, true);
+            field = clazz.getDeclaredField("sHookedMethodCallbacks");
             field.setAccessible(true);
             Map sHookedMethodCallbacks = (Map) field.get(null);
             Object doNothing = Class.forName("de.robv.android.xposed.XC_MethodReplacement", false, clazz.getClassLoader()).getField("DO_NOTHING").get(null);
