@@ -36,12 +36,12 @@ public class SettingsActivity extends PreferenceActivity {
         new AlertDialog.Builder(this)
                 .setCancelable(false)
                 .setMessage(R.string.hint_reboot_not_active)
-                .setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
+                .setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
                         openXposed();
                     }
                 })
-                .setNegativeButton(R.string.cancel, null)
+                .setNegativeButton(android.R.string.cancel, null)
                 .show();
     }
 

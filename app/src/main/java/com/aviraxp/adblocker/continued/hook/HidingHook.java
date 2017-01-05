@@ -54,7 +54,6 @@ public class HidingHook implements IXposedHookLoadPackage, IXposedHookZygoteInit
             protected void afterHookedMethod(MethodHookParam param) throws Throwable {
                 List<PackageInfo> packageInfoList = (List) param.getResult();
                 List<PackageInfo> resultpackageInfoList = new ArrayList<>();
-
                 for (PackageInfo packageInfo : packageInfoList) {
                     String packageName = packageInfo.packageName;
                     if (!isTarget(packageName)) {

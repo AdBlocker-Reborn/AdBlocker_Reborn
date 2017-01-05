@@ -2,8 +2,6 @@
 <resources>
     <string name="app_name">AdBlocker Reborned</string>
     <string name="xposed_description">Reborn Adblocker</string>
-    <string name="ok">OK</string>
-    <string name="cancel">Cancel</string>
     <string name="hint_reboot_not_active">Module not activated!</string>
     <string name="actview_hook">Enable Activity and View Blocking</string>
     <string name="hosts_hook">Enable Hosts Blocking</string>
