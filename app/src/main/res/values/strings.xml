@@ -11,5 +11,7 @@
     <string name="services_hook">Enable Services Blocking</string>
     <string name="receivers_hook">Enable Receivers Blocking</string>
     <string name="hiding_hook">Enable Self Hiding</string>
+    <string name="donate">Alipay Donation</string>
+    <string name="donate_failed">Alipay not installed</string>
 
 </resources>

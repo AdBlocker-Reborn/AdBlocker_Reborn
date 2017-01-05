@@ -11,5 +11,7 @@
     <string name="services_hook">启用服务拦截</string>
     <string name="receivers_hook">启用接收器拦截</string>
     <string name="hiding_hook">启用自我隐藏</string>
+    <string name="donate">支付宝捐赠</string>
+    <string name="donate_failed">未安装支付宝</string>
 
 </resources>

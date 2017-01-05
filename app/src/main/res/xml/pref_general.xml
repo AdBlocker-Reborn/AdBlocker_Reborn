@@ -23,4 +23,7 @@
         android:defaultValue="true"
         android:key="HIDING_HOOK"
         android:title="@string/hiding_hook" />
+    <Preference
+        android:key="DONATE"
+        android:title="@string/donate" />
 </PreferenceScreen>
