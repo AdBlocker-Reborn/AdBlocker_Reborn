@@ -4,22 +4,26 @@ import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.preference.Preference;
 import android.preference.PreferenceActivity;
+import android.widget.Toast;
 
 import com.aviraxp.adblocker.continued.BuildConfig;
 import com.aviraxp.adblocker.continued.R;
 
+import moe.feng.alipay.zerosdk.AlipayZeroSdk;
+
 public class SettingsActivity extends PreferenceActivity {
 
-    public static boolean isActivated = false;
+    static boolean isActivated = false;
 
     @SuppressWarnings("deprecation")
-    @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         getPreferenceManager().setSharedPreferencesMode(MODE_WORLD_READABLE);
         addPreferencesFromResource(R.xml.pref_general);
         checkState();
+        donate();
     }
 
     private void checkState() {
@@ -48,5 +52,20 @@ public class SettingsActivity extends PreferenceActivity {
         }
         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK).putExtra("section", "modules").putExtra("fragment", 1).putExtra("module", BuildConfig.APPLICATION_ID);
         startActivity(intent);
+    }
+
+    @SuppressWarnings("deprecation")
+    private void donate() {
+        findPreference("DONATE").setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
+            @Override
+            public boolean onPreferenceClick(Preference preference) {
+                if (AlipayZeroSdk.hasInstalledAlipayClient(getApplicationContext())) {
+                    AlipayZeroSdk.startAlipayClient(SettingsActivity.this, "aex00388woilyb9ln32hlfe");
+                } else {
+                    Toast.makeText(getApplicationContext(), R.string.donate_failed, Toast.LENGTH_SHORT).show();
+                }
+                return true;
+            }
+        });
     }
 }
