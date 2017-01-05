@@ -3,6 +3,7 @@
     <string name="app_name">AdBlocker 重生版</string>
     <string name="xposed_description">重生的 AdBlocker</string>
     <string name="hint_reboot_not_active">模块没有激活!</string>
+    <string name="hint_reboot_not_active_failed">请自行启用模块!</string>
     <string name="actview_hook">启用活动和 View 拦截</string>
     <string name="hosts_hook">启用 Hosts 拦截</string>
     <string name="webview_hook">启用 WebView 拦截</string>
