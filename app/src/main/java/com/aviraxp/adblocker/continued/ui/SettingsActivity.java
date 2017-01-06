@@ -26,7 +26,7 @@ public class SettingsActivity extends PreferenceActivity {
         getPreferenceManager().setSharedPreferencesMode(MODE_WORLD_READABLE);
         addPreferencesFromResource(R.xml.pref_general);
         checkState();
-        donate();
+        donateAlipay();
         disableXposed();
     }
 
@@ -67,14 +67,14 @@ public class SettingsActivity extends PreferenceActivity {
     }
 
     @SuppressWarnings("deprecation")
-    private void donate() {
-        findPreference("DONATE").setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
+    private void donateAlipay() {
+        findPreference("DONATE_ALIPAY").setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
             @Override
             public boolean onPreferenceClick(Preference preference) {
                 if (AlipayZeroSdk.hasInstalledAlipayClient(getApplicationContext())) {
                     AlipayZeroSdk.startAlipayClient(SettingsActivity.this, "aex00388woilyb9ln32hlfe");
                 } else {
-                    Toast.makeText(getApplicationContext(), R.string.donate_failed, Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getApplicationContext(), R.string.donate_alipay_failed, Toast.LENGTH_SHORT).show();
                 }
                 return true;
             }

@@ -10,7 +10,9 @@
     <string name="services_hook">Enable Services Blocking</string>
     <string name="receivers_hook">Enable Receivers Blocking</string>
     <string name="hiding_hook">Enable Self Hiding</string>
-    <string name="donate">Alipay Donation</string>
-    <string name="donate_failed">Alipay not installed</string>
+    <string name="donate_alipay">Alipay Donation</string>
+    <string name="donate_wechat">Wechat Donation</string>
+    <string name="donate_alipay_failed">Alipay not installed</string>
+    <string name="donate_wechat_failed">Wecaht not installed</string>
 
 </resources>
