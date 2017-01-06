@@ -5,6 +5,7 @@ import android.content.pm.PackageInfo;
 import android.content.res.Resources;
 import android.content.res.XModuleResources;
 
+import com.aviraxp.adblocker.continued.BuildConfig;
 import com.aviraxp.adblocker.continued.helper.PreferencesHelper;
 
 import java.util.ArrayList;
@@ -21,7 +22,7 @@ import de.robv.android.xposed.callbacks.XC_LoadPackage;
 
 public class HidingHook implements IXposedHookLoadPackage, IXposedHookZygoteInit {
 
-    private Set<String> whiteList;
+    private Set<String> blackList;
 
     @SuppressWarnings("unchecked")
     public void handleLoadPackage(final XC_LoadPackage.LoadPackageParam lpparam) {
@@ -30,7 +31,7 @@ public class HidingHook implements IXposedHookLoadPackage, IXposedHookZygoteInit
             return;
         }
 
-        if (whiteList.contains(lpparam.packageName)) {
+        if (!blackList.contains(lpparam.packageName)) {
             return;
         }
 
@@ -86,16 +87,16 @@ public class HidingHook implements IXposedHookLoadPackage, IXposedHookZygoteInit
     }
 
     private boolean isTarget(String name) {
-        return name.equals("com.aviraxp.adblocker.continued");
+        return name.equals(BuildConfig.APPLICATION_ID);
     }
 
     public void initZygote(IXposedHookZygoteInit.StartupParam startupParam) throws Throwable {
         String MODULE_PATH = startupParam.modulePath;
         Resources res = XModuleResources.createInstance(MODULE_PATH, null);
-        byte[] array = XposedHelpers.assetAsByteArray(res, "whitelist/hidingapp");
+        byte[] array = XposedHelpers.assetAsByteArray(res, "blacklist/hidingapp");
         String decoded = new String(array, "UTF-8");
         String[] sUrls = decoded.split("\n");
-        whiteList = new HashSet<>();
-        Collections.addAll(whiteList, sUrls);
+        blackList = new HashSet<>();
+        Collections.addAll(blackList, sUrls);
     }
 }
