@@ -19,3 +19,5 @@ com.avos.avoscloud.PushService
 com.igexin.download.DownloadService
 com.bilibili.infoeyes.InfoEyesLocalService
 com.bilibili.infoeyes.InfoEyesRemoteService
+com.xiaomi.miui.ad.thrift.service.MiuiAdQueryService
+com.xiaomi.miui.ad.exchange.thrift.bid.service.MiuiAdExchangeBidService
