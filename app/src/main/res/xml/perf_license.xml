@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
+    android:title="许可">
+
+    <PreferenceCategory android:title="Preference category">
+        <Preference
+            android:key="DONATE_WECHAT"
+            android:title="@string/donate_wechat" />
+        <Preference
+            android:key="DONATE_WECHAT"
+            android:title="@string/donate_wechat" />
+    </PreferenceCategory>
+</PreferenceScreen>
