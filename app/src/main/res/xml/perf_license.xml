@@ -4,10 +4,9 @@
 
     <PreferenceCategory android:title="Preference category">
         <Preference
-            android:key="DONATE_WECHAT"
-            android:title="@string/donate_wechat" />
+            android:title="AdBlocker"
+            android:summary="Developed by cinek"/>
         <Preference
-            android:key="DONATE_WECHAT"
             android:title="@string/donate_wechat" />
     </PreferenceCategory>
 </PreferenceScreen>

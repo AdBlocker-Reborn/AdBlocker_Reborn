@@ -20,6 +20,7 @@ com.adsdk.sdk.mraid.MraidBrowser
 com.adsdk.sdk.video.RichMediaActivity
 com.aerserv.sdk.view.ASVastInterstitialActivity
 com.aerserv.sdk.view.ASVpaidInterstitalActivity
+com.adwo.adsdk.AdwoAdView
 com.aerserv.sdk.view.ASWebviewInterstitialActivity
 com.amazon.device.ads.AdActivity
 com.amobee.richmedia.view.AmobeeActionHandler
@@ -220,7 +221,13 @@ com.mobile.app.adlist.GEList
 net.miidi.ad.banner.AdBannerActivity
 com.fractalist.sdk.base.sys.FtActivity
 com.dianle.DianleOfferActivity
+com.kyview.AdviewWebView
+com.baidu.mobad.feeds.BaiduActivity
 cn.domob.android.ads.DomobActivity
+cn.domob.android.ads.AdView
+cn.domob.android.ads.FeedsAdView
+cn.domob.android.ads.RTSplashAd
+cn.domob.android.ads.SplashAd
 cn.appmedia.ad.AdActivity
 com.tencent.mobwin.MobinWINBrowserActivity
 com.mobisage.android.MobiSageActivity

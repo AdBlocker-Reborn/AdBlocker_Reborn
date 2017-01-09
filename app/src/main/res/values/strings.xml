@@ -14,5 +14,6 @@
     <string name="donate_wechat">Wechat Donation</string>
     <string name="donate_alipay_failed">Alipay not installed</string>
     <string name="donate_wechat_failed">Wecaht not installed</string>
+    <string name="preference_license" />
 
 </resources>

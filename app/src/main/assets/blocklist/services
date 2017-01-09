@@ -21,3 +21,4 @@ com.bilibili.infoeyes.InfoEyesLocalService
 com.bilibili.infoeyes.InfoEyesRemoteService
 com.xiaomi.miui.ad.thrift.service.MiuiAdQueryService
 com.xiaomi.miui.ad.exchange.thrift.bid.service.MiuiAdExchangeBidService
+com.qq.e.comm.DownloadService

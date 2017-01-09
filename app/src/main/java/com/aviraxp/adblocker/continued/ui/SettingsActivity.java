@@ -21,10 +21,10 @@ public class SettingsActivity extends PreferenceActivity {
     static boolean isActivated = false;
 
     @SuppressWarnings("deprecation")
-    protected void onCreate(Bundle savedInstanceState) {
+    public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         getPreferenceManager().setSharedPreferencesMode(MODE_WORLD_READABLE);
-        addPreferencesFromResource(R.xml.pref_general);
+        addPreferencesFromResource(R.xml.pref_settings);
         checkState();
         donateAlipay();
         disableXposed();

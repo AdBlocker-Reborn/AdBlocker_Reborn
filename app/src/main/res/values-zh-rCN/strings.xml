@@ -14,5 +14,6 @@
     <string name="donate_wechat">微信捐赠</string>
     <string name="donate_alipay_failed">未安装支付宝</string>
     <string name="donate_wechat_failed">未安装微信</string>
+    <string name="preference_license" />
 
 </resources>
