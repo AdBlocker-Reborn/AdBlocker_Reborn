@@ -2,20 +2,16 @@ package com.aviraxp.adblocker.continued.helper;
 
 import com.aviraxp.adblocker.continued.BuildConfig;
 
-import java.lang.ref.WeakReference;
-
 import de.robv.android.xposed.XSharedPreferences;
 
 public class PreferencesHelper {
 
-    private static WeakReference<XSharedPreferences> xSharedPreferences = new WeakReference<>(null);
+    private static XSharedPreferences preferences = null;
 
     private static XSharedPreferences getModuleSharedPreferences() {
-        XSharedPreferences preferences = xSharedPreferences.get();
         if (preferences == null) {
             preferences = new XSharedPreferences(BuildConfig.APPLICATION_ID);
             preferences.makeWorldReadable();
-            xSharedPreferences = new WeakReference<>(preferences);
         } else {
             preferences.reload();
         }
