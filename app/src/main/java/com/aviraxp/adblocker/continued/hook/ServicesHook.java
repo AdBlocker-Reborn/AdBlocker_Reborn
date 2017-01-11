@@ -34,9 +34,6 @@ public class ServicesHook implements IXposedHookLoadPackage, IXposedHookZygoteIn
         protected void beforeHookedMethod(MethodHookParam param) throws Throwable {
             Intent intent = (Intent) param.args[1];
             handleServiceStart(param, intent);
-            if (BuildConfig.DEBUG) {
-                XposedBridge.log("Hook Services Flag Success: " + Build.VERSION.SDK_INT);
-            }
         }
     };
 
