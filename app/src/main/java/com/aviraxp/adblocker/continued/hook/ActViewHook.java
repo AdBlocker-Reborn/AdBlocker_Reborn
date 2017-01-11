@@ -10,8 +10,8 @@ import android.os.Bundle;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.aviraxp.adblocker.continued.BuildConfig;
 import com.aviraxp.adblocker.continued.helper.PreferencesHelper;
+import com.aviraxp.adblocker.continued.util.LogUtils;
 
 import java.util.Collections;
 import java.util.HashSet;
@@ -43,9 +43,7 @@ public class ActViewHook implements IXposedHookLoadPackage, IXposedHookZygoteIni
                     activity.overridePendingTransition(0, 0);
                     activity.finish();
                     activity.overridePendingTransition(0, 0);
-                    if (BuildConfig.DEBUG) {
-                        XposedBridge.log("Activity Block Success: " + lpparam.packageName + "/" + activityClassName);
-                    }
+                    LogUtils.logRecord("Activity Block Success: " + lpparam.packageName + "/" + activityClassName);
                 }
             }
         });
@@ -59,9 +57,7 @@ public class ActViewHook implements IXposedHookLoadPackage, IXposedHookZygoteIni
                         String activityClassName = Component.getClassName();
                         if (activityClassName != null && actViewList.contains(activityClassName)) {
                             param.setResult(null);
-                            if (BuildConfig.DEBUG) {
-                                XposedBridge.log("Activity Block Success: " + lpparam.packageName + "/" + activityClassName);
-                            }
+                            LogUtils.logRecord("Activity Block Success: " + lpparam.packageName + "/" + activityClassName);
                         }
                     }
                 }
@@ -104,9 +100,7 @@ public class ActViewHook implements IXposedHookLoadPackage, IXposedHookZygoteIni
         String str = paramObject.getClass().getName();
         if (str != null && actViewList.contains(str)) {
             ((View) paramObject).setVisibility(View.GONE);
-            if (BuildConfig.DEBUG) {
-                XposedBridge.log("View Block Success: " + paramString + "/" + str);
-            }
+            LogUtils.logRecord("View Block Success: " + paramString + "/" + str);
         }
     }
 }

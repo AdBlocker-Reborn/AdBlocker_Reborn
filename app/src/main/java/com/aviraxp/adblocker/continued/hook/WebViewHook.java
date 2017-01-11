@@ -5,8 +5,8 @@ import android.content.res.XModuleResources;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.aviraxp.adblocker.continued.BuildConfig;
 import com.aviraxp.adblocker.continued.helper.PreferencesHelper;
+import com.aviraxp.adblocker.continued.util.LogUtils;
 
 import java.net.URLDecoder;
 import java.util.Collections;
@@ -75,9 +75,7 @@ public class WebViewHook implements IXposedHookLoadPackage, IXposedHookZygoteIni
                         adExist = urlFiltering(url, null, param);
                         if (adExist) {
                             param.setResult(new Object());
-                            if (BuildConfig.DEBUG) {
-                                XposedBridge.log("WebView Block Success: " + lpparam.packageName + "/" + url);
-                            }
+                            LogUtils.logRecord("WebView Block Success: " + lpparam.packageName + "/" + url);
                         }
                     }
                 }
@@ -91,9 +89,7 @@ public class WebViewHook implements IXposedHookLoadPackage, IXposedHookZygoteIni
                         adExist = urlFiltering(null, data, param);
                         if (adExist) {
                             param.setResult(new Object());
-                            if (BuildConfig.DEBUG) {
-                                XposedBridge.log("WebView Block Success: " + lpparam.packageName + "/" + data);
-                            }
+                            LogUtils.logRecord("WebView Block Success: " + lpparam.packageName + "/" + data);
                         }
                     }
                 }
@@ -108,9 +104,7 @@ public class WebViewHook implements IXposedHookLoadPackage, IXposedHookZygoteIni
                         adExist = urlFiltering(url, data, param);
                         if (adExist) {
                             param.setResult(new Object());
-                            if (BuildConfig.DEBUG) {
-                                XposedBridge.log("WebView Block Success: " + lpparam.packageName + "/" + url + " & " + data);
-                            }
+                            LogUtils.logRecord("WebView Block Success: " + lpparam.packageName + "/" + url + " & " + data);
                         }
                     }
                 }
@@ -129,7 +123,7 @@ public class WebViewHook implements IXposedHookLoadPackage, IXposedHookZygoteIni
                 urlDecode = URLDecoder.decode(url, "UTF-8");
             } catch (IllegalArgumentException ignored) {
             } catch (Throwable t) {
-                XposedBridge.log(t);
+                LogUtils.logRecord(t);
             }
         }
 
@@ -138,7 +132,7 @@ public class WebViewHook implements IXposedHookLoadPackage, IXposedHookZygoteIni
                 dataDecode = URLDecoder.decode(data, "UTF-8");
             } catch (IllegalArgumentException ignored) {
             } catch (Throwable t) {
-                XposedBridge.log(t);
+                LogUtils.logRecord(t);
             }
         }
 
@@ -150,7 +144,7 @@ public class WebViewHook implements IXposedHookLoadPackage, IXposedHookZygoteIni
                     return true;
                 } catch (IllegalArgumentException ignored) {
                 } catch (Throwable t) {
-                    XposedBridge.log(t);
+                    LogUtils.logRecord(t);
                 }
             }
         }
@@ -178,7 +172,7 @@ public class WebViewHook implements IXposedHookLoadPackage, IXposedHookZygoteIni
                     }
                 } catch (IllegalArgumentException ignored) {
                 } catch (Throwable t) {
-                    XposedBridge.log(t);
+                    LogUtils.logRecord(t);
                 }
             }
         }

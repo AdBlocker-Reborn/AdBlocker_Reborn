@@ -5,8 +5,8 @@ import android.content.Intent;
 import android.content.res.Resources;
 import android.content.res.XModuleResources;
 
-import com.aviraxp.adblocker.continued.BuildConfig;
 import com.aviraxp.adblocker.continued.helper.PreferencesHelper;
+import com.aviraxp.adblocker.continued.util.LogUtils;
 
 import java.util.Collections;
 import java.util.HashSet;
@@ -15,7 +15,6 @@ import java.util.Set;
 import de.robv.android.xposed.IXposedHookLoadPackage;
 import de.robv.android.xposed.IXposedHookZygoteInit;
 import de.robv.android.xposed.XC_MethodReplacement;
-import de.robv.android.xposed.XposedBridge;
 import de.robv.android.xposed.XposedHelpers;
 import de.robv.android.xposed.callbacks.XC_LoadPackage;
 
@@ -32,9 +31,7 @@ public class ReceiversHook implements IXposedHookLoadPackage, IXposedHookZygoteI
         try {
             for (String receivers : receiversList) {
                 XposedHelpers.findAndHookMethod(receivers, lpparam.classLoader, "onReceive", Context.class, Intent.class, XC_MethodReplacement.DO_NOTHING);
-                if (BuildConfig.DEBUG) {
-                    XposedBridge.log("Receiver Block Success: " + lpparam.packageName + "/" + receivers);
-                }
+                LogUtils.logRecord("Receiver Block Success: " + lpparam.packageName + "/" + receivers);
             }
         } catch (XposedHelpers.ClassNotFoundError ignored) {
         }

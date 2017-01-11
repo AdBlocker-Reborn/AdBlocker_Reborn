@@ -3,8 +3,8 @@ package com.aviraxp.adblocker.continued.hook;
 import android.content.res.Resources;
 import android.content.res.XModuleResources;
 
-import com.aviraxp.adblocker.continued.BuildConfig;
 import com.aviraxp.adblocker.continued.helper.PreferencesHelper;
+import com.aviraxp.adblocker.continued.util.LogUtils;
 
 import java.net.InetAddress;
 import java.net.UnknownHostException;
@@ -54,12 +54,10 @@ public class HostsHook implements IXposedHookLoadPackage, IXposedHookZygoteInit 
                         if (host != null && hostsList.contains(host)) {
                             param.args[0] = null;
                             param.setResult(new Object());
-                            if (BuildConfig.DEBUG) {
-                                XposedBridge.log("Hosts Block Success: " + lpparam.packageName + "/" + host);
-                            }
+                            LogUtils.logRecord("Hosts Block Success: " + lpparam.packageName + "/" + host);
                         }
                     } catch (Throwable t) {
-                        XposedBridge.log(t);
+                        LogUtils.logRecord(t);
                     }
                 }
             }
@@ -73,12 +71,10 @@ public class HostsHook implements IXposedHookLoadPackage, IXposedHookZygoteInit 
                     if (host != null && hostsList.contains(host)) {
                         param.setResult(new Object());
                         param.setThrowable(new UnknownHostException("Blocked by ADBlocker Continued: " + host));
-                        if (BuildConfig.DEBUG) {
-                            XposedBridge.log("Hosts Block Success: " + lpparam.packageName + "/" + host);
-                        }
+                        LogUtils.logRecord("Hosts Block Success: " + lpparam.packageName + "/" + host);
                     }
                 } catch (Throwable t) {
-                    XposedBridge.log(t);
+                    LogUtils.logRecord(t);
                 }
             }
 
@@ -89,12 +85,10 @@ public class HostsHook implements IXposedHookLoadPackage, IXposedHookZygoteInit 
                     if (host != null && hostsList.contains(host)) {
                         param.setResult(new Object());
                         param.setThrowable(new UnknownHostException("Blocked by ADBlocker Continued: " + host));
-                        if (BuildConfig.DEBUG) {
-                            XposedBridge.log("Hosts Block Success: " + lpparam.packageName + "/" + host);
-                        }
+                        LogUtils.logRecord("Hosts Block Success: " + lpparam.packageName + "/" + host);
                     }
                 } catch (Throwable t) {
-                    XposedBridge.log(t);
+                    LogUtils.logRecord(t);
                 }
             }
         };
@@ -118,12 +112,10 @@ public class HostsHook implements IXposedHookLoadPackage, IXposedHookZygoteInit 
                             param.args[0] = "0.0.0.0";
                             param.setResult(new Object());
                             param.setThrowable(new UnknownHostException("Blocked by ADBlocker Continued: " + host));
-                            if (BuildConfig.DEBUG) {
-                                XposedBridge.log("Hosts Block Success: " + lpparam.packageName + "/" + host);
-                            }
+                            LogUtils.logRecord("Hosts Block Success: " + lpparam.packageName + "/" + host);
                         }
                     } catch (Throwable t) {
-                        XposedBridge.log(t);
+                        LogUtils.logRecord(t);
                     }
                 }
             }
@@ -139,18 +131,14 @@ public class HostsHook implements IXposedHookLoadPackage, IXposedHookZygoteInit 
                     if (host != null && hostsList.contains(host)) {
                         param.setResult(false);
                         param.setThrowable(new UnknownHostException("Blocked by ADBlocker Continued: " + host));
-                        if (BuildConfig.DEBUG) {
-                            XposedBridge.log("Hosts Block Success: " + lpparam.packageName + "/" + host);
-                        }
+                        LogUtils.logRecord("Hosts Block Success: " + lpparam.packageName + "/" + host);
                     } else if (ip != null && hostsList.contains(ip)) {
                         param.setResult(false);
                         param.setThrowable(new UnknownHostException("Blocked by ADBlocker Continued: " + ip));
-                        if (BuildConfig.DEBUG) {
-                            XposedBridge.log("Hosts Block Success: " + lpparam.packageName + "/" + ip);
-                        }
+                        LogUtils.logRecord("Hosts Block Success: " + lpparam.packageName + "/" + ip);
                     }
                 } catch (Throwable t) {
-                    XposedBridge.log(t);
+                    LogUtils.logRecord(t);
                 }
             }
 
@@ -163,18 +151,14 @@ public class HostsHook implements IXposedHookLoadPackage, IXposedHookZygoteInit 
                     if (host != null && hostsList.contains(host)) {
                         param.setResult(false);
                         param.setThrowable(new UnknownHostException("Blocked by ADBlocker Continued: " + host));
-                        if (BuildConfig.DEBUG) {
-                            XposedBridge.log("Hosts Block Success: " + lpparam.packageName + "/" + host);
-                        }
+                        LogUtils.logRecord("Hosts Block Success: " + lpparam.packageName + "/" + host);
                     } else if (ip != null && hostsList.contains(ip)) {
                         param.setResult(false);
                         param.setThrowable(new UnknownHostException("Blocked by ADBlocker Continued: " + ip));
-                        if (BuildConfig.DEBUG) {
-                            XposedBridge.log("Hosts Block Success: " + lpparam.packageName + "/" + ip);
-                        }
+                        LogUtils.logRecord("Hosts Block Success: " + lpparam.packageName + "/" + ip);
                     }
                 } catch (Throwable t) {
-                    XposedBridge.log(t);
+                    LogUtils.logRecord(t);
                 }
             }
         };
