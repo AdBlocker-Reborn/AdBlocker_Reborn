@@ -16,7 +16,4 @@
 #   public *;
 #}
 
--keep class com.aviraxp.adblocker.continued.* { *; }
--keep class com.aviraxp.adblocker.continued.ui.* { *; }
--keep class com.aviraxp.adblocker.continued.hook.* { *; }
--keep class com.aviraxp.adblocker.continued.helper.* { *; }
+-keep class com.aviraxp.adblocker.continued.** { *; }
