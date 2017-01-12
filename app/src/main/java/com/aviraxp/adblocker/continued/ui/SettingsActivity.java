@@ -26,8 +26,9 @@ public class SettingsActivity extends PreferenceActivity {
         getPreferenceManager().setSharedPreferencesMode(MODE_WORLD_READABLE);
         addPreferencesFromResource(R.xml.pref_settings);
         checkState();
-        donateAlipay();
         disableXposed();
+        donateAlipay();
+        licenseActivityListener();
     }
 
     private void checkState() {
@@ -76,6 +77,20 @@ public class SettingsActivity extends PreferenceActivity {
                 } else {
                     Toast.makeText(getApplicationContext(), R.string.donate_alipay_failed, Toast.LENGTH_SHORT).show();
                 }
+                return true;
+            }
+        });
+    }
+
+    @SuppressWarnings("deprecation")
+    private void licenseActivityListener() {
+        findPreference("ABOUT").setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
+            @Override
+            public boolean onPreferenceClick(Preference preference) {
+                Intent intent = new Intent();
+                intent.setAction(Intent.ACTION_MAIN);
+                intent.setClass(SettingsActivity.this, LicensesActivity.class);
+                startActivity(intent);
                 return true;
             }
         });

@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+    <Preference
+        android:summary="by cinek"
+        android:title="AdBlocker for Original Module" />
+    <Preference
+        android:summary="by FatMinMin"
+        android:title="MinMinGuard for Massive Blocking Methods" />
+    <Preference
+        android:summary="by vokins &amp; sy619"
+        android:title="yhosts for Hosts List" />
+    <Preference
+        android:summary="by The EasyList authors &amp; cjx"
+        android:title="Easylist Lite for Regex Rules" />
+    <Preference
+        android:summary="by one-leaf"
+        android:title="adblocktosquid for Rules2Regex Tool" />
+    <Preference
+        android:summary="by liudongmiao"
+        android:title="Brevent for Xposed Disabling Method" />
+</PreferenceScreen>

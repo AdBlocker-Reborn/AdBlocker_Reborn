@@ -1,43 +1,38 @@
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
-    <PreferenceCategory android:title="AA">
-
+    <PreferenceCategory android:title="@string/settings">
+        <CheckBoxPreference
+            android:defaultValue="true"
+            android:key="ACTVIEW_HOOK"
+            android:title="@string/actview_hook" />
+        <CheckBoxPreference
+            android:defaultValue="true"
+            android:key="HOSTS_HOOK"
+            android:title="@string/hosts_hook" />
+        <CheckBoxPreference
+            android:defaultValue="false"
+            android:key="WEBVIEW_HOOK"
+            android:title="@string/webview_hook" />
+        <CheckBoxPreference
+            android:defaultValue="true"
+            android:key="SERVICES_HOOK"
+            android:title="@string/services_hook" />
+        <CheckBoxPreference
+            android:defaultValue="true"
+            android:key="RECEIVERS_HOOK"
+            android:title="@string/receivers_hook" />
+        <CheckBoxPreference
+            android:defaultValue="true"
+            android:key="HIDING_HOOK"
+            android:title="@string/hiding_hook" />
     </PreferenceCategory>
-    <CheckBoxPreference
-        android:defaultValue="true"
-        android:key="ACTVIEW_HOOK"
-        android:title="@string/actview_hook" />
-    <CheckBoxPreference
-        android:defaultValue="true"
-        android:key="HOSTS_HOOK"
-        android:title="@string/hosts_hook" />
-    <CheckBoxPreference
-        android:defaultValue="false"
-        android:key="WEBVIEW_HOOK"
-        android:title="@string/webview_hook" />
-    <CheckBoxPreference
-        android:defaultValue="true"
-        android:key="SERVICES_HOOK"
-        android:title="@string/services_hook" />
-    <CheckBoxPreference
-        android:defaultValue="true"
-        android:key="RECEIVERS_HOOK"
-        android:title="@string/receivers_hook" />
-    <CheckBoxPreference
-        android:defaultValue="true"
-        android:key="HIDING_HOOK"
-        android:title="@string/hiding_hook" />
-    <PreferenceCategory android:title="Preference category">
-
+    <PreferenceCategory android:title="@string/donation">
+        <Preference
+            android:key="DONATE_ALIPAY"
+            android:title="@string/donate_alipay" />
     </PreferenceCategory>
-    <Preference
-        android:key="DONATE_ALIPAY"
-        android:title="@string/donate_alipay" />
-    <Preference
-        android:key="DONATE_WECHAT"
-        android:title="@string/donate_wechat" />
-    <PreferenceCategory android:title="Preference category">
+    <PreferenceCategory android:title="@string/about">
         <PreferenceScreen
-            android:key="LICENSE"
-            android:title="DD" />
+            android:key="ABOUT"
+            android:title="@string/license" />
     </PreferenceCategory>
 </PreferenceScreen>
