@@ -39,6 +39,10 @@
     </PreferenceCategory>
     <PreferenceCategory android:title="@string/about">
         <PreferenceScreen
+            android:key="GITHUB"
+            android:summary="@string/open_project_description"
+            android:title="@string/open_project" />
+        <PreferenceScreen
             android:key="ABOUT"
             android:summary="@string/license_description"
             android:title="@string/license" />

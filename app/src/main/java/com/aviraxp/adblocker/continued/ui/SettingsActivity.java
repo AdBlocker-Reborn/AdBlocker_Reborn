@@ -3,6 +3,7 @@ package com.aviraxp.adblocker.continued.ui;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.preference.Preference;
 import android.preference.PreferenceActivity;
@@ -28,6 +29,7 @@ public class SettingsActivity extends PreferenceActivity {
         checkState();
         disableXposed();
         donateAlipay();
+        openGithub();
         licenseActivityListener();
     }
 
@@ -90,6 +92,20 @@ public class SettingsActivity extends PreferenceActivity {
                 Intent intent = new Intent();
                 intent.setAction(Intent.ACTION_MAIN);
                 intent.setClass(SettingsActivity.this, LicensesActivity.class);
+                startActivity(intent);
+                return true;
+            }
+        });
+    }
+
+    @SuppressWarnings("deprecation")
+    private void openGithub() {
+        findPreference("GITHUB").setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
+            @Override
+            public boolean onPreferenceClick(Preference preference) {
+                Intent intent = new Intent();
+                intent.setAction(Intent.ACTION_VIEW);
+                intent.setData(Uri.parse("https://github.com/aviraxp/AdBlocker_Reborned"));
                 startActivity(intent);
                 return true;
             }

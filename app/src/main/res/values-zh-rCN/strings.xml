@@ -4,7 +4,7 @@
     <string name="xposed_description">重生的 AdBlocker</string>
     <string name="hint_reboot_not_active">模块没有激活!</string>
     <string name="hint_reboot_not_active_failed">请自行启用模块!</string>
-    <string name="actview_hook">启用活动和 View 拦截</string>
+    <string name="actview_hook">启用活动和视图拦截</string>
     <string name="hosts_hook">启用 Hosts 拦截</string>
     <string name="webview_hook">启用 WebView 拦截</string>
     <string name="services_hook">启用服务拦截</string>
@@ -26,5 +26,7 @@
     <string name="receivers_hook_description">根据内置列表拦截接收器</string>
     <string name="services_hook_description">根据内置列表拦截服务</string>
     <string name="webview_hook_description">根据内置列表拦截页面元素（高度实验性，只支持特定方法）</string>
+    <string name="open_project">浏览开源项目</string>
+    <string name="open_project_description">在 Github 上浏览本项目</string>
 
 </resources>
