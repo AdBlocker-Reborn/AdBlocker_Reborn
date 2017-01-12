@@ -8,7 +8,10 @@
         android:title="MinMinGuard for Massive Blocking Methods" />
     <Preference
         android:summary="by vokins &amp; sy619"
-        android:title="yhosts for Hosts List" />
+        android:title="yhosts for Chinese Hosts List" />
+    <Preference
+        android:summary="by Peter Lowe"
+        android:title="pgl.yoyo Hosts for English Hosts List" />
     <Preference
         android:summary="by The EasyList authors &amp; cjx"
         android:title="Easylist Lite for Regex Rules" />
@@ -18,4 +21,7 @@
     <Preference
         android:summary="by liudongmiao"
         android:title="Brevent for Xposed Disabling Method" />
+    <Preference
+        android:summary="by FatMinMin &amp; Wissam Khalil"
+        android:title="SudoHide for Module Hiding Method" />
 </PreferenceScreen>
