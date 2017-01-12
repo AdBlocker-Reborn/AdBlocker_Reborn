@@ -3,36 +3,44 @@
         <CheckBoxPreference
             android:defaultValue="true"
             android:key="ACTVIEW_HOOK"
+            android:summary="@string/actview_hook_description"
             android:title="@string/actview_hook" />
         <CheckBoxPreference
             android:defaultValue="true"
             android:key="HOSTS_HOOK"
+            android:summary="@string/hosts_hook_description"
             android:title="@string/hosts_hook" />
         <CheckBoxPreference
             android:defaultValue="false"
             android:key="WEBVIEW_HOOK"
+            android:summary="@string/webview_hook_description"
             android:title="@string/webview_hook" />
         <CheckBoxPreference
             android:defaultValue="true"
             android:key="SERVICES_HOOK"
+            android:summary="@string/services_hook_description"
             android:title="@string/services_hook" />
         <CheckBoxPreference
             android:defaultValue="true"
             android:key="RECEIVERS_HOOK"
+            android:summary="@string/receivers_hook_description"
             android:title="@string/receivers_hook" />
         <CheckBoxPreference
             android:defaultValue="true"
             android:key="HIDING_HOOK"
+            android:summary="@string/hiding_hook_description"
             android:title="@string/hiding_hook" />
     </PreferenceCategory>
     <PreferenceCategory android:title="@string/donation">
         <Preference
             android:key="DONATE_ALIPAY"
+            android:summary="@string/donate_description"
             android:title="@string/donate_alipay" />
     </PreferenceCategory>
     <PreferenceCategory android:title="@string/about">
         <PreferenceScreen
             android:key="ABOUT"
+            android:summary="@string/license_description"
             android:title="@string/license" />
     </PreferenceCategory>
 </PreferenceScreen>

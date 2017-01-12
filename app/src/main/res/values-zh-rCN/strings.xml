@@ -18,5 +18,13 @@
     <string name="settings">设置</string>
     <string name="donation">捐赠</string>
     <string name="about">关于</string>
+    <string name="donate_description">请我喝咖啡</string>
+    <string name="actview_hook_description">根据内置列表拦截活动和视图</string>
+    <string name="hiding_hook_description">对特定应用隐藏模块</string>
+    <string name="hosts_hook_description">根据内置列表拦截 URL （只支持特定方法）</string>
+    <string name="license_description">本模块按照 GPL-3.0 协议发布</string>
+    <string name="receivers_hook_description">根据内置列表拦截接收器</string>
+    <string name="services_hook_description">根据内置列表拦截服务</string>
+    <string name="webview_hook_description">根据内置列表拦截页面元素（高度实验性，只支持特定方法）</string>
 
 </resources>
