@@ -1,5 +1,6 @@
 package com.aviraxp.adblocker.continued.hook;
 
+import android.app.ActivityManager;
 import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageInfo;
 import android.content.res.Resources;
@@ -82,6 +83,36 @@ public class HidingHook implements IXposedHookLoadPackage, IXposedHookZygoteInit
                 if (isTarget(packageName)) {
                     param.args[0] = lpparam.packageName;
                 }
+            }
+        });
+
+        XposedHelpers.findAndHookMethod("android.app.ActivityManager", lpparam.classLoader, "getRunningTasks", int.class, new XC_MethodHook() {
+            @Override
+            protected void afterHookedMethod(MethodHookParam param) throws Throwable {
+                List<ActivityManager.RunningTaskInfo> serviceInfoList = (List) param.getResult();
+                List<ActivityManager.RunningTaskInfo> resultList = new ArrayList<>();
+                for (ActivityManager.RunningTaskInfo runningTaskInfo : serviceInfoList) {
+                    String taskName = runningTaskInfo.baseActivity.flattenToString();
+                    if (!isTarget(taskName)) {
+                        resultList.add(runningTaskInfo);
+                    }
+                }
+                param.setResult(resultList);
+            }
+        });
+
+        XposedHelpers.findAndHookMethod("android.app.ActivityManager", lpparam.classLoader, "getRunningAppProcesses", new XC_MethodHook() {
+            @Override
+            protected void afterHookedMethod(MethodHookParam param) throws Throwable {
+                List<ActivityManager.RunningAppProcessInfo> runningAppProcessInfos = (List) param.getResult();
+                List<ActivityManager.RunningAppProcessInfo> resultList = new ArrayList<>();
+                for (ActivityManager.RunningAppProcessInfo runningAppProcessInfo : runningAppProcessInfos) {
+                    String processName = runningAppProcessInfo.processName;
+                    if (!isTarget(processName)) {
+                        resultList.add(runningAppProcessInfo);
+                    }
+                }
+                param.setResult(resultList);
             }
         });
     }
