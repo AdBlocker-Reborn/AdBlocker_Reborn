@@ -45,4 +45,8 @@ public class PreferencesHelper {
     public static boolean isBackPressHookEnabled() {
         return getModuleSharedPreferences().getBoolean("BACKPRESS_HOOK", false);
     }
+
+    public static boolean isDebugModeEnabled() {
+        return getModuleSharedPreferences().getBoolean("DEBUG", false);
+    }
 }

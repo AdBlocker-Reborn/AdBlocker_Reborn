@@ -30,4 +30,6 @@
     <string name="about">About</string>
     <string name="backpress_hook_description">Allow canceling any dialog (Useful when applications show anti-ad dialog)</string>
     <string name="backpress_hook">Enable Cancelable Dialog</string>
+    <string name="debug_description">Record more logs to provide debugging information</string>
+    <string name="debug">Enable Debugging Mode</string>
 </resources>

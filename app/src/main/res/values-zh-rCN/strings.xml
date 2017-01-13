@@ -30,5 +30,6 @@
     <string name="open_project_description">在 Github 上浏览本项目</string>
     <string name="backpress_hook_description">允许取消任何对话框（当应用显示广告被拦截对话框时有用）</string>
     <string name="backpress_hook">启用可取消对话框</string>
-
+    <string name="debug_description">记录更多日志以提供调试信息</string>
+    <string name="debug">启用调试模式</string>
 </resources>
