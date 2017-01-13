@@ -30,6 +30,11 @@
             android:key="HIDING_HOOK"
             android:summary="@string/hiding_hook_description"
             android:title="@string/hiding_hook" />
+        <CheckBoxPreference
+            android:defaultValue="true"
+            android:key="BACKPRESS_HOOK"
+            android:summary="@string/backpress_hook_description"
+            android:title="@string/backpress_hook" />
     </PreferenceCategory>
     <PreferenceCategory android:title="@string/donation">
         <Preference

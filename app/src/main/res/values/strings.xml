@@ -28,4 +28,6 @@
     <string name="settings">Settings</string>
     <string name="donation">Donation</string>
     <string name="about">About</string>
+    <string name="backpress_hook_description">Allow canceling any dialog (Useful when applications show anti-ad dialog)</string>
+    <string name="backpress_hook">Enable Cancelable Dialog</string>
 </resources>
