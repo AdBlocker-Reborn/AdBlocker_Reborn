@@ -31,7 +31,7 @@
             android:summary="@string/hiding_hook_description"
             android:title="@string/hiding_hook" />
         <CheckBoxPreference
-            android:defaultValue="true"
+            android:defaultValue="false"
             android:key="BACKPRESS_HOOK"
             android:summary="@string/backpress_hook_description"
             android:title="@string/backpress_hook" />
