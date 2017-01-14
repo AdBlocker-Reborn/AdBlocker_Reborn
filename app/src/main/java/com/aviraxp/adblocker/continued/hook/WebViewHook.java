@@ -114,40 +114,40 @@ public class WebViewHook implements IXposedHookLoadPackage, IXposedHookZygoteIni
         String urlDecode = null;
         String dataDecode = null;
 
-        if (url != null) {
-            try {
+        try {
+            if (url != null) {
                 urlDecode = URLDecoder.decode(url, "UTF-8");
-            } catch (IllegalArgumentException ignored) {
-            } catch (Throwable t) {
-                LogUtils.logRecord(t, false);
             }
+        } catch (IllegalArgumentException ignored) {
+        } catch (Throwable t) {
+            LogUtils.logRecord(t, false);
         }
 
-        if (data != null) {
-            try {
+        try {
+            if (data != null) {
                 dataDecode = URLDecoder.decode(data, "UTF-8");
-            } catch (IllegalArgumentException ignored) {
-            } catch (Throwable t) {
-                LogUtils.logRecord(t, false);
             }
+        } catch (IllegalArgumentException ignored) {
+        } catch (Throwable t) {
+            LogUtils.logRecord(t, false);
         }
 
-        for (String adUrl : hostsList) {
-            if ((urlDecode != null && urlDecode.startsWith("http") && urlDecode.contains(adUrl)) || (dataDecode != null && dataDecode.startsWith("http") && dataDecode.contains(adUrl))) {
-                try {
+        try {
+            for (String adUrl : hostsList) {
+                if ((urlDecode != null && urlDecode.startsWith("http") && urlDecode.contains(adUrl)) || (dataDecode != null && dataDecode.startsWith("http") && dataDecode.contains(adUrl))) {
                     param.setResult(new Object());
                     removeAdView((View) param.thisObject);
                     return true;
-                } catch (IllegalArgumentException ignored) {
-                } catch (Throwable t) {
-                    LogUtils.logRecord(t, false);
                 }
             }
+        } catch (IllegalArgumentException ignored) {
+        } catch (Throwable t) {
+            LogUtils.logRecord(t, false);
         }
 
-        for (String regexAdUrl : regexList) {
-            if ((urlDecode != null && urlDecode.startsWith("http")) || (dataDecode != null && dataDecode.startsWith("http"))) {
-                try {
+        try {
+            for (String regexAdUrl : regexList) {
+                if ((urlDecode != null && urlDecode.startsWith("http")) || (dataDecode != null && dataDecode.startsWith("http"))) {
                     if (urlDecode != null) {
                         Pattern regexPattern = Pattern.compile(regexAdUrl);
                         Matcher matcher = regexPattern.matcher(urlDecode);
@@ -166,11 +166,11 @@ public class WebViewHook implements IXposedHookLoadPackage, IXposedHookZygoteIni
                             return true;
                         }
                     }
-                } catch (IllegalArgumentException ignored) {
-                } catch (Throwable t) {
-                    LogUtils.logRecord(t, false);
                 }
             }
+        } catch (IllegalArgumentException ignored) {
+        } catch (Throwable t) {
+            LogUtils.logRecord(t, false);
         }
 
         return false;

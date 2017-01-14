@@ -38,8 +38,8 @@ public class HostsHook implements IXposedHookLoadPackage, IXposedHookZygoteInit 
         XposedBridge.hookAllConstructors(socketClz, new XC_MethodHook() {
             @Override
             protected void beforeHookedMethod(MethodHookParam param) throws Throwable {
-                if (param.args != null && param.args.length > 0 && param.args[0] != null) {
-                    try {
+                try {
+                    if (param.args != null && param.args.length > 0 && param.args[0] != null) {
                         Object obj = param.args[0];
                         String host = null;
                         if (obj.getClass().getName().equals("java.lang.String")) {
@@ -52,9 +52,9 @@ public class HostsHook implements IXposedHookLoadPackage, IXposedHookZygoteInit 
                             param.setResult(new Object());
                             LogUtils.logRecord("Hosts Block Success: " + lpparam.packageName + "/" + host, true);
                         }
-                    } catch (Throwable t) {
-                        LogUtils.logRecord(t, false);
                     }
+                } catch (Throwable t) {
+                    LogUtils.logRecord(t, false);
                 }
             }
         });
@@ -95,8 +95,8 @@ public class HostsHook implements IXposedHookLoadPackage, IXposedHookZygoteInit 
         XposedBridge.hookAllConstructors(inetSockAddrClz, new XC_MethodHook() {
             @Override
             protected void beforeHookedMethod(MethodHookParam param) throws Throwable {
-                if (param.args != null && param.args.length > 0 && param.args[0] != null) {
-                    try {
+                try {
+                    if (param.args != null && param.args.length > 0 && param.args[0] != null) {
                         Object obj = param.args[0];
                         String host = null;
                         if (obj.getClass().getName().equals("java.lang.String")) {
@@ -110,9 +110,9 @@ public class HostsHook implements IXposedHookLoadPackage, IXposedHookZygoteInit 
                             param.setThrowable(new UnknownHostException("Blocked by ADBlocker Continued: " + host));
                             LogUtils.logRecord("Hosts Block Success: " + lpparam.packageName + "/" + host, true);
                         }
-                    } catch (Throwable t) {
-                        LogUtils.logRecord(t, false);
                     }
+                } catch (Throwable t) {
+                    LogUtils.logRecord(t, false);
                 }
             }
         });
