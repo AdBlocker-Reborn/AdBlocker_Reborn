@@ -43,7 +43,7 @@ public class ActViewHook implements IXposedHookLoadPackage, IXposedHookZygoteIni
                     activity.overridePendingTransition(0, 0);
                     activity.finish();
                     activity.overridePendingTransition(0, 0);
-                    LogUtils.logRecord("Activity Block Success: " + lpparam.packageName + "/" + activityClassName);
+                    LogUtils.logRecord("Activity Block Success: " + lpparam.packageName + "/" + activityClassName, true);
                 }
             }
         });
@@ -57,7 +57,7 @@ public class ActViewHook implements IXposedHookLoadPackage, IXposedHookZygoteIni
                         String activityClassName = Component.getClassName();
                         if (activityClassName != null && actViewList.contains(activityClassName)) {
                             param.setResult(null);
-                            LogUtils.logRecord("Activity Block Success: " + lpparam.packageName + "/" + activityClassName);
+                            LogUtils.logRecord("Activity Block Success: " + lpparam.packageName + "/" + activityClassName, true);
                         }
                     }
                 }
@@ -100,7 +100,7 @@ public class ActViewHook implements IXposedHookLoadPackage, IXposedHookZygoteIni
         String str = paramObject.getClass().getName();
         if (str != null && actViewList.contains(str)) {
             ((View) paramObject).setVisibility(View.GONE);
-            LogUtils.logRecord("View Block Success: " + paramString + "/" + str);
+            LogUtils.logRecord("View Block Success: " + paramString + "/" + str, true);
         }
     }
 }

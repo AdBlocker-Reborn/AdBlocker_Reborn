@@ -50,10 +50,10 @@ public class HostsHook implements IXposedHookLoadPackage, IXposedHookZygoteInit 
                         if (host != null && hostsList.contains(host)) {
                             param.args[0] = null;
                             param.setResult(new Object());
-                            LogUtils.logRecord("Hosts Block Success: " + lpparam.packageName + "/" + host);
+                            LogUtils.logRecord("Hosts Block Success: " + lpparam.packageName + "/" + host, true);
                         }
                     } catch (Throwable t) {
-                        LogUtils.logRecord(t);
+                        LogUtils.logRecord(t, false);
                     }
                 }
             }
@@ -67,10 +67,10 @@ public class HostsHook implements IXposedHookLoadPackage, IXposedHookZygoteInit 
                     if (host != null && hostsList.contains(host)) {
                         param.setResult(new Object());
                         param.setThrowable(new UnknownHostException("Blocked by ADBlocker Continued: " + host));
-                        LogUtils.logRecord("Hosts Block Success: " + lpparam.packageName + "/" + host);
+                        LogUtils.logRecord("Hosts Block Success: " + lpparam.packageName + "/" + host, true);
                     }
                 } catch (Throwable t) {
-                    LogUtils.logRecord(t);
+                    LogUtils.logRecord(t, false);
                 }
             }
 
@@ -81,10 +81,10 @@ public class HostsHook implements IXposedHookLoadPackage, IXposedHookZygoteInit 
                     if (host != null && hostsList.contains(host)) {
                         param.setResult(new Object());
                         param.setThrowable(new UnknownHostException("Blocked by ADBlocker Continued: " + host));
-                        LogUtils.logRecord("Hosts Block Success: " + lpparam.packageName + "/" + host);
+                        LogUtils.logRecord("Hosts Block Success: " + lpparam.packageName + "/" + host, true);
                     }
                 } catch (Throwable t) {
-                    LogUtils.logRecord(t);
+                    LogUtils.logRecord(t, false);
                 }
             }
         };
@@ -108,10 +108,10 @@ public class HostsHook implements IXposedHookLoadPackage, IXposedHookZygoteInit 
                             param.args[0] = "0.0.0.0";
                             param.setResult(new Object());
                             param.setThrowable(new UnknownHostException("Blocked by ADBlocker Continued: " + host));
-                            LogUtils.logRecord("Hosts Block Success: " + lpparam.packageName + "/" + host);
+                            LogUtils.logRecord("Hosts Block Success: " + lpparam.packageName + "/" + host, true);
                         }
                     } catch (Throwable t) {
-                        LogUtils.logRecord(t);
+                        LogUtils.logRecord(t, false);
                     }
                 }
             }
@@ -127,14 +127,14 @@ public class HostsHook implements IXposedHookLoadPackage, IXposedHookZygoteInit 
                     if (host != null && hostsList.contains(host)) {
                         param.setResult(false);
                         param.setThrowable(new UnknownHostException("Blocked by ADBlocker Continued: " + host));
-                        LogUtils.logRecord("Hosts Block Success: " + lpparam.packageName + "/" + host);
+                        LogUtils.logRecord("Hosts Block Success: " + lpparam.packageName + "/" + host, true);
                     } else if (ip != null && hostsList.contains(ip)) {
                         param.setResult(false);
                         param.setThrowable(new UnknownHostException("Blocked by ADBlocker Continued: " + ip));
-                        LogUtils.logRecord("Hosts Block Success: " + lpparam.packageName + "/" + ip);
+                        LogUtils.logRecord("Hosts Block Success: " + lpparam.packageName + "/" + ip, true);
                     }
                 } catch (Throwable t) {
-                    LogUtils.logRecord(t);
+                    LogUtils.logRecord(t, false);
                 }
             }
 
@@ -147,14 +147,14 @@ public class HostsHook implements IXposedHookLoadPackage, IXposedHookZygoteInit 
                     if (host != null && hostsList.contains(host)) {
                         param.setResult(false);
                         param.setThrowable(new UnknownHostException("Blocked by ADBlocker Continued: " + host));
-                        LogUtils.logRecord("Hosts Block Success: " + lpparam.packageName + "/" + host);
+                        LogUtils.logRecord("Hosts Block Success: " + lpparam.packageName + "/" + host, true);
                     } else if (ip != null && hostsList.contains(ip)) {
                         param.setResult(false);
                         param.setThrowable(new UnknownHostException("Blocked by ADBlocker Continued: " + ip));
-                        LogUtils.logRecord("Hosts Block Success: " + lpparam.packageName + "/" + ip);
+                        LogUtils.logRecord("Hosts Block Success: " + lpparam.packageName + "/" + ip, true);
                     }
                 } catch (Throwable t) {
-                    LogUtils.logRecord(t);
+                    LogUtils.logRecord(t, false);
                 }
             }
         };

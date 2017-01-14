@@ -71,7 +71,7 @@ public class WebViewHook implements IXposedHookLoadPackage, IXposedHookZygoteIni
                         adExist = urlFiltering(url, null, param);
                         if (adExist) {
                             param.setResult(new Object());
-                            LogUtils.logRecord("WebView Block Success: " + lpparam.packageName + "/" + url);
+                            LogUtils.logRecord("WebView Block Success: " + lpparam.packageName + "/" + url, true);
                         }
                     }
                 }
@@ -85,7 +85,7 @@ public class WebViewHook implements IXposedHookLoadPackage, IXposedHookZygoteIni
                         adExist = urlFiltering(null, data, param);
                         if (adExist) {
                             param.setResult(new Object());
-                            LogUtils.logRecord("WebView Block Success: " + lpparam.packageName + "/" + data);
+                            LogUtils.logRecord("WebView Block Success: " + lpparam.packageName + "/" + data, true);
                         }
                     }
                 }
@@ -100,7 +100,7 @@ public class WebViewHook implements IXposedHookLoadPackage, IXposedHookZygoteIni
                         adExist = urlFiltering(url, data, param);
                         if (adExist) {
                             param.setResult(new Object());
-                            LogUtils.logRecord("WebView Block Success: " + lpparam.packageName + "/" + url + " & " + data);
+                            LogUtils.logRecord("WebView Block Success: " + lpparam.packageName + "/" + url + " & " + data, true);
                         }
                     }
                 }
@@ -119,7 +119,7 @@ public class WebViewHook implements IXposedHookLoadPackage, IXposedHookZygoteIni
                 urlDecode = URLDecoder.decode(url, "UTF-8");
             } catch (IllegalArgumentException ignored) {
             } catch (Throwable t) {
-                LogUtils.logRecord(t);
+                LogUtils.logRecord(t, false);
             }
         }
 
@@ -128,7 +128,7 @@ public class WebViewHook implements IXposedHookLoadPackage, IXposedHookZygoteIni
                 dataDecode = URLDecoder.decode(data, "UTF-8");
             } catch (IllegalArgumentException ignored) {
             } catch (Throwable t) {
-                LogUtils.logRecord(t);
+                LogUtils.logRecord(t, false);
             }
         }
 
@@ -140,7 +140,7 @@ public class WebViewHook implements IXposedHookLoadPackage, IXposedHookZygoteIni
                     return true;
                 } catch (IllegalArgumentException ignored) {
                 } catch (Throwable t) {
-                    LogUtils.logRecord(t);
+                    LogUtils.logRecord(t, false);
                 }
             }
         }
@@ -168,7 +168,7 @@ public class WebViewHook implements IXposedHookLoadPackage, IXposedHookZygoteIni
                     }
                 } catch (IllegalArgumentException ignored) {
                 } catch (Throwable t) {
-                    LogUtils.logRecord(t);
+                    LogUtils.logRecord(t, false);
                 }
             }
         }

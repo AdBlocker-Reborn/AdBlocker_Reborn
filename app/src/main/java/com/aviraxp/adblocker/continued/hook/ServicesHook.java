@@ -43,18 +43,18 @@ public class ServicesHook implements IXposedHookLoadPackage, IXposedHookZygoteIn
             fileInputStream = new FileInputStream(new File(Environment.getRootDirectory(), "build.prop"));
             properties.load(fileInputStream);
             if (properties.getProperty("ro.miui.ui.version.name") != null || properties.getProperty("ro.miui.ui.version.code") != null || properties.getProperty("ro.miui.internal.storage") != null) {
-                LogUtils.logRecord("MIUI Detected, Never Block MiPush");
                 isMIUI = true;
             }
+            LogUtils.logRecord("MIUI Based: " + isMIUI, false);
         } catch (Throwable t) {
-            LogUtils.logRecord("Load System Property Failed, Printing StackTrace");
-            LogUtils.logRecord(t);
+            LogUtils.logRecord("Load System Property Failed, Printing StackTrace", false);
+            LogUtils.logRecord(t, false);
         } finally {
             if (fileInputStream != null) {
                 try {
                     fileInputStream.close();
                 } catch (Throwable t) {
-                    LogUtils.logRecord(t);
+                    LogUtils.logRecord(t, false);
                 }
             }
         }
@@ -88,7 +88,7 @@ public class ServicesHook implements IXposedHookLoadPackage, IXposedHookZygoteIn
                 String splitServicesName = serviceName.substring(serviceName.indexOf("/") + 1);
                 if ((!isMIUI && servicesList.contains(splitServicesName)) || (isMIUI && servicesList.contains(splitServicesName) && (!splitServicesName.contains("xiaomi") || splitServicesName.contains("ad")))) {
                     param.setResult(null);
-                    LogUtils.logRecord("Service Block Success: " + serviceName);
+                    LogUtils.logRecord("Service Block Success: " + serviceName, true);
                 }
             }
         }
