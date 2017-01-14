@@ -56,11 +56,7 @@ public class WebViewHook implements IXposedHookLoadPackage, IXposedHookZygoteIni
 
     public void handleLoadPackage(final XC_LoadPackage.LoadPackageParam lpparam) throws Throwable {
 
-        if (!PreferencesHelper.isWebViewHookEnabled()) {
-            return;
-        }
-
-        if (whiteList.contains(lpparam.packageName)) {
+        if (!PreferencesHelper.isWebViewHookEnabled() || whiteList.contains(lpparam.packageName)) {
             return;
         }
 

@@ -26,11 +26,7 @@ public class HostsHook implements IXposedHookLoadPackage, IXposedHookZygoteInit 
 
     public void handleLoadPackage(final XC_LoadPackage.LoadPackageParam lpparam) throws Throwable {
 
-        if (!PreferencesHelper.isHostsHookEnabled()) {
-            return;
-        }
-
-        if (whiteList.contains(lpparam.packageName)) {
+        if (!PreferencesHelper.isHostsHookEnabled() || whiteList.contains(lpparam.packageName)) {
             return;
         }
 
