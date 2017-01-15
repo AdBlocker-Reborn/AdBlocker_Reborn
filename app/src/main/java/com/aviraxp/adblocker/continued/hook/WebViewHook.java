@@ -24,13 +24,12 @@ import de.robv.android.xposed.callbacks.XC_LoadPackage;
 
 public class WebViewHook implements IXposedHookLoadPackage, IXposedHookZygoteInit {
 
-    public Resources res;
     private boolean adExist;
     private Set<String> hostsList;
     private Set<String> whiteList;
     private Set<String> regexList;
 
-    private void removeAdView(final View view) throws Throwable {
+    private void removeAdView(final View view) {
 
         ViewGroup.LayoutParams params = view.getLayoutParams();
         if (params == null) {
@@ -178,7 +177,7 @@ public class WebViewHook implements IXposedHookLoadPackage, IXposedHookZygoteIni
 
     public void initZygote(StartupParam startupParam) throws Throwable {
         String MODULE_PATH = startupParam.modulePath;
-        res = XModuleResources.createInstance(MODULE_PATH, null);
+        Resources res = XModuleResources.createInstance(MODULE_PATH, null);
         byte[] array = XposedHelpers.assetAsByteArray(res, "blocklist/hosts");
         byte[] array2 = XposedHelpers.assetAsByteArray(res, "whitelist/urlapp");
         byte[] array3 = XposedHelpers.assetAsByteArray(res, "blocklist/regexurls");

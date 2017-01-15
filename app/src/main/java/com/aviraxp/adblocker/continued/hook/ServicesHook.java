@@ -28,7 +28,7 @@ public class ServicesHook implements IXposedHookLoadPackage, IXposedHookZygoteIn
     private Set<String> servicesList;
     private boolean isMIUI = false;
 
-    private XC_MethodHook servicesStartHook = new XC_MethodHook() {
+    private final XC_MethodHook servicesStartHook = new XC_MethodHook() {
         @Override
         protected void beforeHookedMethod(MethodHookParam param) throws Throwable {
             Intent intent = (Intent) param.args[1];
