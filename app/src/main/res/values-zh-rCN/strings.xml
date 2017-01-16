@@ -11,9 +11,7 @@
     <string name="receivers_hook">启用接收器拦截</string>
     <string name="hiding_hook">启用自我隐藏</string>
     <string name="donate_alipay">支付宝捐赠</string>
-    <string name="donate_wechat">微信捐赠</string>
     <string name="donate_alipay_failed">未安装支付宝</string>
-    <string name="donate_wechat_failed">未安装微信</string>
     <string name="license">开放源代码许可</string>
     <string name="settings">设置</string>
     <string name="donation">捐赠</string>
