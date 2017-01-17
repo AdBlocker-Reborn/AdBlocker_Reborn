@@ -1,6 +1,5 @@
 package com.aviraxp.adblocker.continued.hook;
 
-import android.content.Context;
 import android.content.Intent;
 import android.content.res.Resources;
 import android.content.res.XModuleResources;
@@ -20,6 +19,7 @@ import java.util.Set;
 import de.robv.android.xposed.IXposedHookLoadPackage;
 import de.robv.android.xposed.IXposedHookZygoteInit;
 import de.robv.android.xposed.XC_MethodHook;
+import de.robv.android.xposed.XposedBridge;
 import de.robv.android.xposed.XposedHelpers;
 import de.robv.android.xposed.callbacks.XC_LoadPackage;
 
@@ -67,16 +67,10 @@ public class ServicesHook implements IXposedHookLoadPackage, IXposedHookZygoteIn
         }
 
         if (lpparam.packageName.equals("android")) {
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-                XposedHelpers.findAndHookMethod("com.android.server.am.ActiveServices", lpparam.classLoader, "startServiceLocked", "android.app.IApplicationThread", Intent.class, String.class, int.class, int.class, String.class, int.class, servicesStartHook);
-            } else if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1) {
-                try {
-                    XposedHelpers.findAndHookMethod("com.android.server.am.ActiveServices", lpparam.classLoader, "startServiceLocked", "android.app.IApplicationThread", Intent.class, String.class, int.class, int.class, int.class, servicesStartHook);
-                } catch (NoSuchMethodError e) {
-                    XposedHelpers.findAndHookMethod("com.android.server.am.ActiveServices", lpparam.classLoader, "startServiceLocked", "android.app.IApplicationThread", Intent.class, String.class, int.class, int.class, int.class, Context.class, servicesStartHook);
-                }
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1) {
+                XposedBridge.hookAllMethods(XposedHelpers.findClass("com.android.server.am.ActiveServices", lpparam.classLoader), "startServiceLocked", servicesStartHook);
             } else {
-                XposedHelpers.findAndHookMethod("com.android.server.am.ActivityManagerService", lpparam.classLoader, "startServiceLocked", "android.app.IApplicationThread", Intent.class, String.class, int.class, int.class, servicesStartHook);
+                XposedBridge.hookAllMethods(XposedHelpers.findClass("com.android.server.am.ActivityManagerService", lpparam.classLoader), "startServiceLocked", servicesStartHook);
             }
         }
     }
