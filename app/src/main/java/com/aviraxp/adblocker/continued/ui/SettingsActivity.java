@@ -31,6 +31,7 @@ public class SettingsActivity extends PreferenceActivity {
         checkState();
         disableXposed();
         donateAlipay();
+        donateWechat();
         openGithub();
         licenseActivityListener();
         hideIconListener();
@@ -82,6 +83,20 @@ public class SettingsActivity extends PreferenceActivity {
                 } else {
                     Toast.makeText(getApplicationContext(), R.string.donate_alipay_failed, Toast.LENGTH_SHORT).show();
                 }
+                return true;
+            }
+        });
+    }
+
+    @SuppressWarnings("deprecation")
+    private void donateWechat() {
+        findPreference("DONATE_WECHAT").setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
+            @Override
+            public boolean onPreferenceClick(Preference preference) {
+                Intent intent = new Intent();
+                intent.setClassName("com.tencent.mm", "com.tencent.mm.ui.LauncherUI");
+                intent.putExtra("wechat_donate", true);
+                startActivity(intent);
                 return true;
             }
         });

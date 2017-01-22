@@ -49,8 +49,12 @@
     <PreferenceCategory android:title="@string/donation">
         <Preference
             android:key="DONATE_ALIPAY"
-            android:summary="@string/donate_description"
+            android:summary="@string/donate_description_alipay"
             android:title="@string/donate_alipay" />
+        <Preference
+            android:key="DONATE_WECHAT"
+            android:summary="@string/donate_description_wechat"
+            android:title="@string/donate_wechat" />
     </PreferenceCategory>
     <PreferenceCategory android:title="@string/about">
         <PreferenceScreen

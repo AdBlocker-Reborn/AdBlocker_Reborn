@@ -17,7 +17,8 @@
     <string name="hiding_hook">Enable Self Hiding</string>
     <string name="hiding_hook_description">Hide module to certain applications</string>
     <string name="donate_alipay">Alipay Donation</string>
-    <string name="donate_description">Offer me a cup of coffee</string>
+    <string name="donate_description_alipay">Offer me a cup of coffee</string>
+    <string name="donate_description_wechat">Offer me spicy strips</string>
     <string name="donate_alipay_failed">Alipay not installed</string>
     <string name="license">Opensource Licenses</string>
     <string name="license_description">This module is distributed under GPL-3.0 license</string>
@@ -32,4 +33,5 @@
     <string name="debug">Enable Debugging Mode</string>
     <string name="hide_launcher_icon">Hide Launcher Icon</string>
     <string name="hide_launcher_icon_description">You can still access settings through Xposed Installer</string>
+    <string name="donate_wechat" >Wechat Donation</string>
 </resources>
