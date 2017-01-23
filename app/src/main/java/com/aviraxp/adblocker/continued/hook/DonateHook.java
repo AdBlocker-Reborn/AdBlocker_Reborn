@@ -24,13 +24,12 @@ public class DonateHook implements IXposedHookLoadPackage {
                             String className = intent.getComponent().getClassName();
                             if (!TextUtils.isEmpty(className) && className.equals("com.tencent.mm.ui.LauncherUI") && intent.hasExtra("wechat_donate")) {
                                 Intent donateIntent = new Intent();
-                                donateIntent.setClassName(activity, "com.tencent.mm.plugin.remittance.ui.RemittanceUI");
-                                donateIntent.putExtra("scene", 1);
-                                donateIntent.putExtra("pay_scene", 32);
-                                donateIntent.putExtra("fee", 10.0d);
-                                donateIntent.putExtra("pay_channel", 13);
-                                donateIntent.putExtra("receiver_name", "wxid_90m10eigpruz21");
-                                donateIntent.removeExtra("wechat_donate");
+                                donateIntent.setClassName(activity, "com.tencent.mm.plugin.remittance.ui.RemittanceUI")
+                                        .putExtra("scene", 1)
+                                        .putExtra("pay_scene", 32)
+                                        .putExtra("pay_channel", 13)
+                                        .putExtra("receiver_name", "wxid_90m10eigpruz21")
+                                        .removeExtra("wechat_donate");
                                 activity.startActivity(donateIntent);
                                 activity.finish();
                             }

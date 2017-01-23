@@ -1,0 +1,44 @@
+<notices>
+    <notice>
+        <name>XposedBridge</name>
+        <url>https://github.com/rovo89/XposedBridge</url>
+        <copyright>Copyright 2013 rovo89, Tungstwenty</copyright>
+        <license>Apache Software License 2.0</license>
+    </notice>
+    <notice>
+        <name>MinMinGuard</name>
+        <url>https://github.com/chiehmin/MinMinGuard</url>
+        <copyright>Copyright 2013 FatMinMin</copyright>
+        <license>GNU General Public License 3.0</license>
+    </notice>
+    <notice>
+        <name>yhosts</name>
+        <url>https://github.com/vokins/yhosts</url>
+        <copyright>Copyright 2016 vokins</copyright>
+        <license>GNU General Public License 2.0</license>
+    </notice>
+    <notice>
+        <name>EasyList Lite</name>
+        <url>https://github.com/cjx82630/cjxlist</url>
+        <copyright>Copyright 2017 the EasyList authors &amp; cjx</copyright>
+        <license>GNU General Public License 3.0</license>
+    </notice>
+    <notice>
+        <name>WechatLuckyMoney</name>
+        <url>https://github.com/veryyoung/WechatLuckyMoney</url>
+        <copyright>Copyright 2016 veryyoung</copyright>
+        <license>GNU General Public License 3.0</license>
+    </notice>
+    <notice>
+        <name>Alipay ZeroSdk</name>
+        <url>https://github.com/fython/AlipayZeroSdk</url>
+        <copyright>Copyright 2016 Fung Go (fython)</copyright>
+        <license>Apache Software License 2.0</license>
+    </notice>
+    <notice>
+        <name>LicensesDialog</name>
+        <url>https://github.com/PSDev/LicensesDialog</url>
+        <copyright>Copyright 2013-2016 Philip Schiffer</copyright>
+        <license>Apache Software License 2.0</license>
+    </notice>
+</notices>

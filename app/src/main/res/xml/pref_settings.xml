@@ -62,7 +62,7 @@
             android:summary="@string/open_project_description"
             android:title="@string/open_project" />
         <PreferenceScreen
-            android:key="ABOUT"
+            android:key="LICENSES"
             android:summary="@string/license_description"
             android:title="@string/license" />
     </PreferenceCategory>

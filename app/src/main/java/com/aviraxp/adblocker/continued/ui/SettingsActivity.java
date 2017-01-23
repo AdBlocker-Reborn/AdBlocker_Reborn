@@ -17,6 +17,7 @@ import com.aviraxp.adblocker.continued.R;
 import java.lang.reflect.Field;
 import java.util.Map;
 
+import de.psdev.licensesdialog.LicensesDialog;
 import moe.feng.alipay.zerosdk.AlipayZeroSdk;
 
 public class SettingsActivity extends PreferenceActivity {
@@ -33,8 +34,23 @@ public class SettingsActivity extends PreferenceActivity {
         donateAlipay();
         donateWechat();
         openGithub();
-        licenseActivityListener();
         hideIconListener();
+        licensesListener();
+    }
+
+    @SuppressWarnings("deprecation")
+    private void licensesListener() {
+        findPreference("LICENSES").setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
+            @Override
+            public boolean onPreferenceClick(Preference preference) {
+                new LicensesDialog.Builder(SettingsActivity.this)
+                        .setNotices(R.raw.licenses)
+                        .setIncludeOwnLicense(false)
+                        .build()
+                        .show();
+                return true;
+            }
+        });
     }
 
     private void checkState() {
@@ -96,20 +112,6 @@ public class SettingsActivity extends PreferenceActivity {
                 Intent intent = new Intent();
                 intent.setClassName("com.tencent.mm", "com.tencent.mm.ui.LauncherUI");
                 intent.putExtra("wechat_donate", true);
-                startActivity(intent);
-                return true;
-            }
-        });
-    }
-
-    @SuppressWarnings("deprecation")
-    private void licenseActivityListener() {
-        findPreference("ABOUT").setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
-            @Override
-            public boolean onPreferenceClick(Preference preference) {
-                Intent intent = new Intent();
-                intent.setAction(Intent.ACTION_MAIN);
-                intent.setClass(SettingsActivity.this, LicensesActivity.class);
                 startActivity(intent);
                 return true;
             }
