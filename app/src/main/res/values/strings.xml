@@ -33,5 +33,5 @@
     <string name="debug">Enable Debugging Mode</string>
     <string name="hide_launcher_icon">Hide Launcher Icon</string>
     <string name="hide_launcher_icon_description">You can still access settings through Xposed Installer</string>
-    <string name="donate_wechat" >Wechat Donation</string>
+    <string name="donate_wechat">Wechat Donation</string>
 </resources>
