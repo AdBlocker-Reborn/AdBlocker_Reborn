@@ -51,12 +51,7 @@ public class SettingsActivity extends PreferenceActivity {
 
     private void checkState() {
         if (!isActivated) {
-            showNotActive();
-        }
-    }
-
-    private void showNotActive() {
-        new AlertDialog.Builder(this)
+            new AlertDialog.Builder(this)
                 .setCancelable(true)
                 .setMessage(R.string.hint_reboot_not_active)
                 .setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
@@ -67,6 +62,7 @@ public class SettingsActivity extends PreferenceActivity {
                 })
                 .setNegativeButton(android.R.string.cancel, null)
                 .show();
+        }
     }
 
     private void openXposed() {
@@ -105,10 +101,14 @@ public class SettingsActivity extends PreferenceActivity {
         findPreference("DONATE_WECHAT").setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
             @Override
             public boolean onPreferenceClick(Preference preference) {
-                Intent intent = new Intent();
-                intent.setClassName("com.tencent.mm", "com.tencent.mm.ui.LauncherUI");
-                intent.putExtra("wechat_donate", true);
-                startActivity(intent);
+            	try {
+                    Intent intent = new Intent();
+                    intent.setClassName("com.tencent.mm", "com.tencent.mm.ui.LauncherUI")
+                            .putExtra("wechat_donate", true);
+                    startActivity(intent);
+                } catch (Throwable t) {
+                	Toast.makeText(getApplicationContext(), R.string.donate_wechat_failed, Toast.LENGTH_SHORT).show();
+                }
                 return true;
             }
         });
@@ -120,8 +120,8 @@ public class SettingsActivity extends PreferenceActivity {
             @Override
             public boolean onPreferenceClick(Preference preference) {
                 Intent intent = new Intent();
-                intent.setAction(Intent.ACTION_VIEW);
-                intent.setData(Uri.parse("https://github.com/aviraxp/AdBlocker_Reborned"));
+                intent.setAction(Intent.ACTION_VIEW)
+                        .setData(Uri.parse("https://github.com/aviraxp/AdBlocker_Reborn"));
                 startActivity(intent);
                 return true;
             }

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">AdBlocker Reborned</string>
+    <string name="app_name">AdBlocker Reborn</string>
     <string name="xposed_description">Reborn Adblocker</string>
     <string name="hint_reboot_not_active">Module not activated!</string>
     <string name="hint_reboot_not_active_failed">Please activate the module manually!</string>
