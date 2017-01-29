@@ -66,7 +66,7 @@ public class HostsHook implements IXposedHookLoadPackage, IXposedHookZygoteInit 
                     String host = (String) param.args[0];
                     if (host != null && hostsList.contains(host)) {
                         param.setResult(new Object());
-                        param.setThrowable(new UnknownHostException("Blocked by ADBlocker Continued: " + host));
+                        param.setThrowable(new UnknownHostException("Blocked by ADBlocker Reborn: " + host));
                         LogUtils.logRecord("Hosts Block Success: " + lpparam.packageName + "/" + host, true);
                     }
                 } catch (Throwable t) {
@@ -80,7 +80,7 @@ public class HostsHook implements IXposedHookLoadPackage, IXposedHookZygoteInit 
                     String host = (String) param.args[0];
                     if (host != null && hostsList.contains(host)) {
                         param.setResult(new Object());
-                        param.setThrowable(new UnknownHostException("Blocked by ADBlocker Continued: " + host));
+                        param.setThrowable(new UnknownHostException("Blocked by ADBlocker Reborn: " + host));
                         LogUtils.logRecord("Hosts Block Success: " + lpparam.packageName + "/" + host, true);
                     }
                 } catch (Throwable t) {
@@ -107,7 +107,7 @@ public class HostsHook implements IXposedHookLoadPackage, IXposedHookZygoteInit 
                         if (host != null && hostsList.contains(host)) {
                             param.args[0] = "0.0.0.0";
                             param.setResult(new Object());
-                            param.setThrowable(new UnknownHostException("Blocked by ADBlocker Continued: " + host));
+                            param.setThrowable(new UnknownHostException("Blocked by ADBlocker Reborn: " + host));
                             LogUtils.logRecord("Hosts Block Success: " + lpparam.packageName + "/" + host, true);
                         }
                     }
@@ -126,11 +126,11 @@ public class HostsHook implements IXposedHookLoadPackage, IXposedHookZygoteInit 
                     String ip = addr.getHostAddress();
                     if (host != null && hostsList.contains(host)) {
                         param.setResult(false);
-                        param.setThrowable(new UnknownHostException("Blocked by ADBlocker Continued: " + host));
+                        param.setThrowable(new UnknownHostException("Blocked by ADBlocker Reborn: " + host));
                         LogUtils.logRecord("Hosts Block Success: " + lpparam.packageName + "/" + host, true);
                     } else if (ip != null && hostsList.contains(ip)) {
                         param.setResult(false);
-                        param.setThrowable(new UnknownHostException("Blocked by ADBlocker Continued: " + ip));
+                        param.setThrowable(new UnknownHostException("Blocked by ADBlocker Reborn: " + ip));
                         LogUtils.logRecord("Hosts Block Success: " + lpparam.packageName + "/" + ip, true);
                     }
                 } catch (Throwable t) {
@@ -146,11 +146,11 @@ public class HostsHook implements IXposedHookLoadPackage, IXposedHookZygoteInit 
                     String ip = addr.getHostAddress();
                     if (host != null && hostsList.contains(host)) {
                         param.setResult(false);
-                        param.setThrowable(new UnknownHostException("Blocked by ADBlocker Continued: " + host));
+                        param.setThrowable(new UnknownHostException("Blocked by ADBlocker Reborn: " + host));
                         LogUtils.logRecord("Hosts Block Success: " + lpparam.packageName + "/" + host, true);
                     } else if (ip != null && hostsList.contains(ip)) {
                         param.setResult(false);
-                        param.setThrowable(new UnknownHostException("Blocked by ADBlocker Continued: " + ip));
+                        param.setThrowable(new UnknownHostException("Blocked by ADBlocker Reborn: " + ip));
                         LogUtils.logRecord("Hosts Block Success: " + lpparam.packageName + "/" + ip, true);
                     }
                 } catch (Throwable t) {
