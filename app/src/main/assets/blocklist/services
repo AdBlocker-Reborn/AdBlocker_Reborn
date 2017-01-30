@@ -22,3 +22,7 @@ com.bilibili.infoeyes.InfoEyesRemoteService
 com.xiaomi.miui.ad.thrift.service.MiuiAdQueryService
 com.xiaomi.miui.ad.exchange.thrift.bid.service.MiuiAdExchangeBidService
 com.qq.e.comm.DownloadService
+com.tencent.tinker.lib.service.DefaultTinkerResultService
+com.tencent.mm.plugin.recovery.service.RecoveryTinkerResultService
+com.tencent.mm.plugin.hp.tinker.TinkerPatchResultService
+com.tencent.tinker.lib.service.TinkerPatchService
