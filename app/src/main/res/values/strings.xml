@@ -21,7 +21,7 @@
     <string name="donate_description_wechat">Offer me spicy strips</string>
     <string name="donate_alipay_failed">Alipay not installed</string>
     <string name="donate_wechat_failed">Wechat not installed</string>
-    <string name="license">Opensource Licenses</string>
+    <string name="license">OpenSource Licenses</string>
     <string name="license_description">This module is distributed under GPL-3.0 license</string>
     <string name="open_project">Explore Project Source</string>
     <string name="open_project_description">View this project on Github</string>
@@ -35,4 +35,5 @@
     <string name="hide_launcher_icon">Hide Launcher Icon</string>
     <string name="hide_launcher_icon_description">You can still access settings through Xposed Installer</string>
     <string name="donate_wechat">Wechat Donation</string>
+    <string name="licensedialog">Licenses</string>
 </resources>

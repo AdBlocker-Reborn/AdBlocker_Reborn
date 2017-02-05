@@ -82,7 +82,7 @@ public class HidingHook implements IXposedHookLoadPackage, IXposedHookZygoteInit
                 }
             }
         });
-        
+
         if (Build.VERSION.SDK_INT < Build.VERSION_CODES.LOLLIPOP) {
             XposedHelpers.findAndHookMethod("android.app.ActivityManager", lpparam.classLoader, "getRunningTasks", int.class, new XC_MethodHook() {
                 @Override

@@ -35,4 +35,5 @@
     <string name="hide_launcher_icon_description">你仍可以通过 Xposed Installer 进入设置</string>
     <string name="donate_wechat">微信捐赠</string>
     <string name="donate_description_wechat">请我吃辣条</string>
+    <string name="licensedialog">许可</string>
 </resources>

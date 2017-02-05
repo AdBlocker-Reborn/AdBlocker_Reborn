@@ -14,7 +14,6 @@ import android.widget.Toast;
 import com.aviraxp.adblocker.continued.BuildConfig;
 import com.aviraxp.adblocker.continued.R;
 
-import de.psdev.licensesdialog.LicensesDialog;
 import moe.feng.alipay.zerosdk.AlipayZeroSdk;
 
 public class SettingsActivity extends PreferenceActivity {
@@ -39,10 +38,9 @@ public class SettingsActivity extends PreferenceActivity {
         findPreference("LICENSES").setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
             @Override
             public boolean onPreferenceClick(Preference preference) {
-                new LicensesDialog.Builder(SettingsActivity.this)
-                        .setNotices(R.raw.licenses)
-                        .setIncludeOwnLicense(false)
-                        .build()
+                new LicensesDialog(SettingsActivity.this)
+                        .setTitle(R.string.licensedialog)
+                        .setPositiveButton(android.R.string.ok, null)
                         .show();
                 return true;
             }
@@ -52,16 +50,16 @@ public class SettingsActivity extends PreferenceActivity {
     private void checkState() {
         if (!isActivated) {
             new AlertDialog.Builder(this)
-                .setCancelable(true)
-                .setMessage(R.string.hint_reboot_not_active)
-                .setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int id) {
-                        openXposed();
-                    }
-                })
-                .setNegativeButton(android.R.string.cancel, null)
-                .show();
+                    .setCancelable(true)
+                    .setMessage(R.string.hint_reboot_not_active)
+                    .setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int id) {
+                            openXposed();
+                        }
+                    })
+                    .setNegativeButton(android.R.string.cancel, null)
+                    .show();
         }
     }
 
@@ -101,13 +99,13 @@ public class SettingsActivity extends PreferenceActivity {
         findPreference("DONATE_WECHAT").setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
             @Override
             public boolean onPreferenceClick(Preference preference) {
-            	try {
+                try {
                     Intent intent = new Intent();
                     intent.setClassName("com.tencent.mm", "com.tencent.mm.ui.LauncherUI")
                             .putExtra("wechat_donate", true);
                     startActivity(intent);
                 } catch (Throwable t) {
-                	Toast.makeText(getApplicationContext(), R.string.donate_wechat_failed, Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getApplicationContext(), R.string.donate_wechat_failed, Toast.LENGTH_SHORT).show();
                 }
                 return true;
             }
