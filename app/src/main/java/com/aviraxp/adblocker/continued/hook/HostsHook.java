@@ -10,21 +10,19 @@ import java.net.InetAddress;
 import java.net.UnknownHostException;
 import java.util.Collections;
 import java.util.HashSet;
-import java.util.Set;
 
-import de.robv.android.xposed.IXposedHookLoadPackage;
 import de.robv.android.xposed.IXposedHookZygoteInit;
 import de.robv.android.xposed.XC_MethodHook;
 import de.robv.android.xposed.XposedBridge;
 import de.robv.android.xposed.XposedHelpers;
 import de.robv.android.xposed.callbacks.XC_LoadPackage;
 
-public class HostsHook implements IXposedHookLoadPackage, IXposedHookZygoteInit {
+import static com.aviraxp.adblocker.continued.hook.HookLoader.hostsList;
+import static com.aviraxp.adblocker.continued.hook.HookLoader.whiteList;
 
-    private Set<String> hostsList;
-    private Set<String> whiteList;
+class HostsHook {
 
-    public void handleLoadPackage(final XC_LoadPackage.LoadPackageParam lpparam) throws Throwable {
+    public void hook(final XC_LoadPackage.LoadPackageParam lpparam) {
 
         if (!PreferencesHelper.isHostsHookEnabled() || whiteList.contains(lpparam.packageName)) {
             return;
@@ -162,7 +160,7 @@ public class HostsHook implements IXposedHookLoadPackage, IXposedHookZygoteInit 
         XposedBridge.hookAllMethods(ioBridgeClz, "connectErrno", ioBridgeHook);
     }
 
-    public void initZygote(StartupParam startupParam) throws Throwable {
+    void init(IXposedHookZygoteInit.StartupParam startupParam) throws Throwable {
         String MODULE_PATH = startupParam.modulePath;
         Resources res = XModuleResources.createInstance(MODULE_PATH, null);
         byte[] array = XposedHelpers.assetAsByteArray(res, "blocklist/hosts");

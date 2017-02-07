@@ -11,23 +11,20 @@ import com.aviraxp.adblocker.continued.util.LogUtils;
 import java.net.URLDecoder;
 import java.util.Collections;
 import java.util.HashSet;
-import java.util.Set;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import de.robv.android.xposed.IXposedHookLoadPackage;
 import de.robv.android.xposed.IXposedHookZygoteInit;
 import de.robv.android.xposed.XC_MethodHook;
 import de.robv.android.xposed.XposedBridge;
 import de.robv.android.xposed.XposedHelpers;
 import de.robv.android.xposed.callbacks.XC_LoadPackage;
 
-public class WebViewHook implements IXposedHookLoadPackage, IXposedHookZygoteInit {
+import static com.aviraxp.adblocker.continued.hook.HookLoader.regexList;
+
+class WebViewHook {
 
     private boolean adExist;
-    private Set<String> hostsList;
-    private Set<String> whiteList;
-    private Set<String> regexList;
 
     private void removeAdView(final View view) {
 
@@ -53,9 +50,9 @@ public class WebViewHook implements IXposedHookLoadPackage, IXposedHookZygoteIni
         });
     }
 
-    public void handleLoadPackage(final XC_LoadPackage.LoadPackageParam lpparam) throws Throwable {
+    public void hook(final XC_LoadPackage.LoadPackageParam lpparam) {
 
-        if (!PreferencesHelper.isWebViewHookEnabled() || whiteList.contains(lpparam.packageName)) {
+        if (!PreferencesHelper.isWebViewHookEnabled() || HookLoader.whiteList.contains(lpparam.packageName)) {
             return;
         }
 
@@ -132,7 +129,7 @@ public class WebViewHook implements IXposedHookLoadPackage, IXposedHookZygoteIni
         }
 
         try {
-            for (String adUrl : hostsList) {
+            for (String adUrl : HookLoader.hostsList) {
                 if ((urlDecode != null && urlDecode.startsWith("http") && urlDecode.contains(adUrl)) || (dataDecode != null && dataDecode.startsWith("http") && dataDecode.contains(adUrl))) {
                     param.setResult(new Object());
                     removeAdView((View) param.thisObject);
@@ -175,23 +172,13 @@ public class WebViewHook implements IXposedHookLoadPackage, IXposedHookZygoteIni
         return false;
     }
 
-    public void initZygote(StartupParam startupParam) throws Throwable {
+    void init(IXposedHookZygoteInit.StartupParam startupParam) throws Throwable {
         String MODULE_PATH = startupParam.modulePath;
         Resources res = XModuleResources.createInstance(MODULE_PATH, null);
-        byte[] array = XposedHelpers.assetAsByteArray(res, "blocklist/hosts");
-        byte[] array2 = XposedHelpers.assetAsByteArray(res, "whitelist/urlapp");
-        byte[] array3 = XposedHelpers.assetAsByteArray(res, "blocklist/regexurls");
+        byte[] array = XposedHelpers.assetAsByteArray(res, "blocklist/regexurls");
         String decoded = new String(array, "UTF-8");
-        String decoded2 = new String(array2, "UTF-8");
-        String decoded3 = new String(array3, "UTF-8");
         String[] sUrls = decoded.split("\n");
-        String[] sUrls2 = decoded2.split("\n");
-        String[] sUrls3 = decoded3.split("\n");
-        hostsList = new HashSet<>();
-        whiteList = new HashSet<>();
         regexList = new HashSet<>();
-        Collections.addAll(hostsList, sUrls);
-        Collections.addAll(whiteList, sUrls2);
-        Collections.addAll(regexList, sUrls3);
+        Collections.addAll(regexList, sUrls);
     }
 }

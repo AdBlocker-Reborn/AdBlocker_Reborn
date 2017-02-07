@@ -5,14 +5,13 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
 
-import de.robv.android.xposed.IXposedHookLoadPackage;
 import de.robv.android.xposed.XC_MethodHook;
 import de.robv.android.xposed.XposedHelpers;
 import de.robv.android.xposed.callbacks.XC_LoadPackage;
 
-public class DonateHook implements IXposedHookLoadPackage {
+class DonateHook {
 
-    public void handleLoadPackage(XC_LoadPackage.LoadPackageParam lpparam) {
+    public void hook(XC_LoadPackage.LoadPackageParam lpparam) {
         if (lpparam.packageName.equals("com.tencent.mm")) {
             XposedHelpers.findAndHookMethod("com.tencent.mm.ui.LauncherUI", lpparam.classLoader, "onCreate", Bundle.class, new XC_MethodHook() {
                 @Override

@@ -14,18 +14,17 @@ import java.io.FileInputStream;
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.Properties;
-import java.util.Set;
 
-import de.robv.android.xposed.IXposedHookLoadPackage;
 import de.robv.android.xposed.IXposedHookZygoteInit;
 import de.robv.android.xposed.XC_MethodHook;
 import de.robv.android.xposed.XposedBridge;
 import de.robv.android.xposed.XposedHelpers;
 import de.robv.android.xposed.callbacks.XC_LoadPackage;
 
-public class ServicesHook implements IXposedHookLoadPackage, IXposedHookZygoteInit {
+import static com.aviraxp.adblocker.continued.hook.HookLoader.servicesList;
 
-    private Set<String> servicesList;
+class ServicesHook {
+
     private boolean isMIUI = false;
 
     private final XC_MethodHook servicesStartHook = new XC_MethodHook() {
@@ -60,7 +59,7 @@ public class ServicesHook implements IXposedHookLoadPackage, IXposedHookZygoteIn
         }
     }
 
-    public void handleLoadPackage(XC_LoadPackage.LoadPackageParam lpparam) throws Throwable {
+    public void hook(XC_LoadPackage.LoadPackageParam lpparam) {
 
         if (!PreferencesHelper.isServicesHookEnabled()) {
             return;
@@ -88,7 +87,7 @@ public class ServicesHook implements IXposedHookLoadPackage, IXposedHookZygoteIn
         }
     }
 
-    public void initZygote(StartupParam startupParam) throws Throwable {
+    void init(IXposedHookZygoteInit.StartupParam startupParam) throws Throwable {
         String MODULE_PATH = startupParam.modulePath;
         Resources res = XModuleResources.createInstance(MODULE_PATH, null);
         byte[] array = XposedHelpers.assetAsByteArray(res, "blocklist/services");

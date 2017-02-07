@@ -9,7 +9,7 @@ import android.webkit.WebViewClient;
 
 class LicensesDialog extends AlertDialog.Builder {
 
-    private Context ctx;
+    private final Context ctx;
 
     LicensesDialog(Context context) {
         super(context);

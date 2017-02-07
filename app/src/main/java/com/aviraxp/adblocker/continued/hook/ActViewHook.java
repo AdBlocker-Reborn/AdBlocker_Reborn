@@ -15,20 +15,18 @@ import com.aviraxp.adblocker.continued.util.LogUtils;
 
 import java.util.Collections;
 import java.util.HashSet;
-import java.util.Set;
 
-import de.robv.android.xposed.IXposedHookLoadPackage;
 import de.robv.android.xposed.IXposedHookZygoteInit;
 import de.robv.android.xposed.XC_MethodHook;
 import de.robv.android.xposed.XposedBridge;
 import de.robv.android.xposed.XposedHelpers;
 import de.robv.android.xposed.callbacks.XC_LoadPackage;
 
-public class ActViewHook implements IXposedHookLoadPackage, IXposedHookZygoteInit {
+import static com.aviraxp.adblocker.continued.hook.HookLoader.actViewList;
 
-    private Set<String> actViewList;
+class ActViewHook {
 
-    public void handleLoadPackage(final XC_LoadPackage.LoadPackageParam lpparam) throws Throwable {
+    public void hook(final XC_LoadPackage.LoadPackageParam lpparam) {
 
         if (!PreferencesHelper.isActViewHookEnabled()) {
             return;
@@ -86,7 +84,7 @@ public class ActViewHook implements IXposedHookLoadPackage, IXposedHookZygoteIni
         });
     }
 
-    public void initZygote(StartupParam startupParam) throws Throwable {
+    void init(IXposedHookZygoteInit.StartupParam startupParam) throws Throwable {
         String MODULE_PATH = startupParam.modulePath;
         Resources res = XModuleResources.createInstance(MODULE_PATH, null);
         byte[] array = XposedHelpers.assetAsByteArray(res, "blocklist/av");

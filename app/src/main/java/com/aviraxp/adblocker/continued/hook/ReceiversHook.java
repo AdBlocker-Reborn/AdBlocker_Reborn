@@ -13,19 +13,18 @@ import com.aviraxp.adblocker.continued.util.LogUtils;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashSet;
-import java.util.Set;
 
-import de.robv.android.xposed.IXposedHookLoadPackage;
 import de.robv.android.xposed.IXposedHookZygoteInit;
 import de.robv.android.xposed.XC_MethodReplacement;
 import de.robv.android.xposed.XposedHelpers;
 import de.robv.android.xposed.callbacks.XC_LoadPackage;
 
-public class ReceiversHook implements IXposedHookLoadPackage, IXposedHookZygoteInit {
+import static com.aviraxp.adblocker.continued.hook.HookLoader.receiversList;
 
-    private Set<String> receiversList;
+class ReceiversHook {
 
-    public void handleLoadPackage(XC_LoadPackage.LoadPackageParam lpparam) throws Throwable {
+
+    public void hook(XC_LoadPackage.LoadPackageParam lpparam) throws Throwable {
 
         if (!PreferencesHelper.isReceiversHookEnabled() || lpparam.packageName.equals("android")) {
             return;
@@ -50,7 +49,7 @@ public class ReceiversHook implements IXposedHookLoadPackage, IXposedHookZygoteI
         }
     }
 
-    public void initZygote(StartupParam startupParam) throws Throwable {
+    void init(IXposedHookZygoteInit.StartupParam startupParam) throws Throwable {
         String MODULE_PATH = startupParam.modulePath;
         Resources res = XModuleResources.createInstance(MODULE_PATH, null);
         byte[] array = XposedHelpers.assetAsByteArray(res, "blocklist/receivers");

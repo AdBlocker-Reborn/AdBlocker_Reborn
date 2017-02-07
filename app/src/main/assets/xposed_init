@@ -1,9 +1,1 @@
-com.aviraxp.adblocker.continued.hook.ActViewHook
-com.aviraxp.adblocker.continued.hook.HostsHook
-com.aviraxp.adblocker.continued.hook.ServicesHook
-com.aviraxp.adblocker.continued.hook.ReceiversHook
-com.aviraxp.adblocker.continued.hook.WebViewHook
-com.aviraxp.adblocker.continued.hook.HidingHook
-com.aviraxp.adblocker.continued.hook.BackPressHook
-com.aviraxp.adblocker.continued.hook.SelfHook
-com.aviraxp.adblocker.continued.hook.DonateHook
+com.aviraxp.adblocker.continued.hook.HookLoader
