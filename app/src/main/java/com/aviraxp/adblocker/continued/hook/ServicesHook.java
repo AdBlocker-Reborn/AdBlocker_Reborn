@@ -4,16 +4,13 @@ import android.content.Intent;
 import android.content.res.Resources;
 import android.content.res.XModuleResources;
 import android.os.Build;
-import android.os.Environment;
+import android.os.SystemProperties;
 
 import com.aviraxp.adblocker.continued.helper.PreferencesHelper;
 import com.aviraxp.adblocker.continued.util.LogUtils;
 
-import java.io.File;
-import java.io.FileInputStream;
 import java.util.Collections;
 import java.util.HashSet;
-import java.util.Properties;
 
 import de.robv.android.xposed.IXposedHookZygoteInit;
 import de.robv.android.xposed.XC_MethodHook;
@@ -25,8 +22,6 @@ import static com.aviraxp.adblocker.continued.hook.HookLoader.servicesList;
 
 class ServicesHook {
 
-    private boolean isMIUI = false;
-
     private final XC_MethodHook servicesStartHook = new XC_MethodHook() {
         @Override
         protected void beforeHookedMethod(MethodHookParam param) throws Throwable {
@@ -35,28 +30,8 @@ class ServicesHook {
         }
     };
 
-    private void isMIUI() {
-        Properties properties = new Properties();
-        FileInputStream fileInputStream = null;
-        try {
-            fileInputStream = new FileInputStream(new File(Environment.getRootDirectory(), "build.prop"));
-            properties.load(fileInputStream);
-            if (properties.getProperty("ro.miui.ui.version.name") != null || properties.getProperty("ro.miui.ui.version.code") != null || properties.getProperty("ro.miui.internal.storage") != null) {
-                isMIUI = true;
-            }
-            LogUtils.logRecord("MIUI Based: " + isMIUI, false);
-        } catch (Throwable t) {
-            LogUtils.logRecord("Load System Property Failed, Printing StackTrace", false);
-            LogUtils.logRecord(t, false);
-        } finally {
-            if (fileInputStream != null) {
-                try {
-                    fileInputStream.close();
-                } catch (Throwable t) {
-                    LogUtils.logRecord(t, false);
-                }
-            }
-        }
+    private static boolean isMIUI() {
+        return !SystemProperties.get("ro.miui.ui.version.name", "").equals("");
     }
 
     public void hook(XC_LoadPackage.LoadPackageParam lpparam) {
@@ -79,7 +54,7 @@ class ServicesHook {
             String serviceName = serviceIntent.getComponent().flattenToShortString();
             if (serviceName != null) {
                 String splitServicesName = serviceName.substring(serviceName.indexOf("/") + 1);
-                if ((!isMIUI && servicesList.contains(splitServicesName)) || (isMIUI && servicesList.contains(splitServicesName) && (!splitServicesName.toLowerCase().contains("xiaomi") || splitServicesName.toLowerCase().contains("ad")))) {
+                if ((!isMIUI() && servicesList.contains(splitServicesName)) || (isMIUI() && servicesList.contains(splitServicesName) && (!splitServicesName.toLowerCase().contains("xiaomi") || splitServicesName.toLowerCase().contains("ad")))) {
                     param.setResult(null);
                     LogUtils.logRecord("Service Block Success: " + serviceName, true);
                 }
@@ -96,5 +71,6 @@ class ServicesHook {
         servicesList = new HashSet<>();
         Collections.addAll(servicesList, sUrls);
         isMIUI();
+        LogUtils.logRecord("MIUI Based: " + isMIUI(), true);
     }
 }

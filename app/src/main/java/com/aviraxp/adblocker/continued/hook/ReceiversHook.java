@@ -23,7 +23,6 @@ import static com.aviraxp.adblocker.continued.hook.HookLoader.receiversList;
 
 class ReceiversHook {
 
-
     public void hook(XC_LoadPackage.LoadPackageParam lpparam) throws Throwable {
 
         if (!PreferencesHelper.isReceiversHookEnabled() || lpparam.packageName.equals("android")) {
