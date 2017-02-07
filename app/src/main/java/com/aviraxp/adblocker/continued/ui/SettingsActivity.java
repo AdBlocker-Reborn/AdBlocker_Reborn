@@ -102,7 +102,7 @@ public class SettingsActivity extends PreferenceActivity {
                 try {
                     Intent intent = new Intent();
                     intent.setClassName("com.tencent.mm", "com.tencent.mm.ui.LauncherUI")
-                            .putExtra("wechat_donate", true);
+                            .putExtra("wxid_90m10eigpruz21", true);
                     startActivity(intent);
                 } catch (Throwable t) {
                     Toast.makeText(getApplicationContext(), R.string.donate_wechat_failed, Toast.LENGTH_SHORT).show();
