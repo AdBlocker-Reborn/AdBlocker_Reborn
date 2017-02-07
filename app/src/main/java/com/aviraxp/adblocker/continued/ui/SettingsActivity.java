@@ -6,6 +6,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.preference.Preference;
 import android.preference.PreferenceActivity;
@@ -23,7 +24,9 @@ public class SettingsActivity extends PreferenceActivity {
     @SuppressWarnings("deprecation")
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        getPreferenceManager().setSharedPreferencesMode(MODE_WORLD_READABLE);
+        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.N) {
+            getPreferenceManager().setSharedPreferencesMode(MODE_WORLD_READABLE);
+        }
         addPreferencesFromResource(R.xml.pref_settings);
         checkState();
         donateAlipay();
