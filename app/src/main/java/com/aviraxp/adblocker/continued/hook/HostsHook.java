@@ -22,6 +22,8 @@ import static com.aviraxp.adblocker.continued.hook.HookLoader.whiteList;
 
 class HostsHook {
 
+    private String BLOCK_MESSAGE = "Blocked by AdBlocker Reborn: ";
+
     public void hook(final XC_LoadPackage.LoadPackageParam lpparam) {
 
         if (!PreferencesHelper.isHostsHookEnabled() || whiteList.contains(lpparam.packageName)) {
@@ -64,7 +66,7 @@ class HostsHook {
                     String host = (String) param.args[0];
                     if (host != null && hostsList.contains(host)) {
                         param.setResult(new Object());
-                        param.setThrowable(new UnknownHostException("Blocked by ADBlocker Reborn: " + host));
+                        param.setThrowable(new UnknownHostException(BLOCK_MESSAGE + host));
                         LogUtils.logRecord("Hosts Block Success: " + lpparam.packageName + "/" + host, true);
                     }
                 } catch (Throwable t) {
@@ -78,7 +80,7 @@ class HostsHook {
                     String host = (String) param.args[0];
                     if (host != null && hostsList.contains(host)) {
                         param.setResult(new Object());
-                        param.setThrowable(new UnknownHostException("Blocked by ADBlocker Reborn: " + host));
+                        param.setThrowable(new UnknownHostException(BLOCK_MESSAGE + host));
                         LogUtils.logRecord("Hosts Block Success: " + lpparam.packageName + "/" + host, true);
                     }
                 } catch (Throwable t) {
@@ -105,7 +107,7 @@ class HostsHook {
                         if (host != null && hostsList.contains(host)) {
                             param.args[0] = "0.0.0.0";
                             param.setResult(new Object());
-                            param.setThrowable(new UnknownHostException("Blocked by ADBlocker Reborn: " + host));
+                            param.setThrowable(new UnknownHostException(BLOCK_MESSAGE + host));
                             LogUtils.logRecord("Hosts Block Success: " + lpparam.packageName + "/" + host, true);
                         }
                     }
@@ -124,11 +126,11 @@ class HostsHook {
                     String ip = addr.getHostAddress();
                     if (host != null && hostsList.contains(host)) {
                         param.setResult(false);
-                        param.setThrowable(new UnknownHostException("Blocked by ADBlocker Reborn: " + host));
+                        param.setThrowable(new UnknownHostException(BLOCK_MESSAGE + host));
                         LogUtils.logRecord("Hosts Block Success: " + lpparam.packageName + "/" + host, true);
                     } else if (ip != null && hostsList.contains(ip)) {
                         param.setResult(false);
-                        param.setThrowable(new UnknownHostException("Blocked by ADBlocker Reborn: " + ip));
+                        param.setThrowable(new UnknownHostException(BLOCK_MESSAGE + ip));
                         LogUtils.logRecord("Hosts Block Success: " + lpparam.packageName + "/" + ip, true);
                     }
                 } catch (Throwable t) {
@@ -144,11 +146,11 @@ class HostsHook {
                     String ip = addr.getHostAddress();
                     if (host != null && hostsList.contains(host)) {
                         param.setResult(false);
-                        param.setThrowable(new UnknownHostException("Blocked by ADBlocker Reborn: " + host));
+                        param.setThrowable(new UnknownHostException(BLOCK_MESSAGE + host));
                         LogUtils.logRecord("Hosts Block Success: " + lpparam.packageName + "/" + host, true);
                     } else if (ip != null && hostsList.contains(ip)) {
                         param.setResult(false);
-                        param.setThrowable(new UnknownHostException("Blocked by ADBlocker Reborn: " + ip));
+                        param.setThrowable(new UnknownHostException(BLOCK_MESSAGE + ip));
                         LogUtils.logRecord("Hosts Block Success: " + lpparam.packageName + "/" + ip, true);
                     }
                 } catch (Throwable t) {
