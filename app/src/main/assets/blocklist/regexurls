@@ -1,3 +1,8 @@
+\?ad_ids=
+/file/ads/.*
+/Api/Ad\.
+/adsame/.*
+/securepubads\.
 _advert\.
 /advert_
 /admonitor\.
