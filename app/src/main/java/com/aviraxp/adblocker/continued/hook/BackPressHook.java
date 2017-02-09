@@ -15,7 +15,7 @@ class BackPressHook {
         }
 
         XC_MethodHook backPressHook = new XC_MethodHook() {
-            protected void beforeHookedMethod(XC_MethodHook.MethodHookParam param) throws Throwable {
+            protected void beforeHookedMethod(XC_MethodHook.MethodHookParam param) {
                 param.args[0] = true;
             }
         };

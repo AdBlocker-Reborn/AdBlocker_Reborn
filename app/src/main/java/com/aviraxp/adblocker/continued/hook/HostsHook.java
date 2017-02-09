@@ -22,7 +22,7 @@ import static com.aviraxp.adblocker.continued.hook.HookLoader.whiteList;
 
 class HostsHook {
 
-    private String BLOCK_MESSAGE = "Blocked by AdBlocker Reborn: ";
+    private final String BLOCK_MESSAGE = "Blocked by AdBlocker Reborn: ";
 
     public void hook(final XC_LoadPackage.LoadPackageParam lpparam) {
 

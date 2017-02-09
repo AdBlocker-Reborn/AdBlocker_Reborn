@@ -46,7 +46,7 @@ class ActViewHook {
             }
         });
 
-        Object activityObject = new XC_MethodHook() {
+        XC_MethodHook activityHook = new XC_MethodHook() {
             @Override
             protected void beforeHookedMethod(XC_MethodHook.MethodHookParam param) throws Throwable {
                 if (param.args[0] != null) {
@@ -61,19 +61,22 @@ class ActViewHook {
                 }
             }
         };
-        XposedHelpers.findAndHookMethod(Activity.class, "startActivity", Intent.class, activityObject);
-        XposedHelpers.findAndHookMethod(ContextWrapper.class, "startActivity", Intent.class, activityObject);
-        XposedHelpers.findAndHookMethod(Activity.class, "startActivityForResult", Intent.class, Integer.TYPE, activityObject);
-        XposedHelpers.findAndHookMethod(Activity.class, "startActivityForResult", Intent.class, Integer.TYPE, Bundle.class, activityObject);
 
-        Object viewObject = new XC_MethodHook() {
+        XposedHelpers.findAndHookMethod(Activity.class, "startActivity", Intent.class, activityHook);
+        XposedHelpers.findAndHookMethod(ContextWrapper.class, "startActivity", Intent.class, activityHook);
+        XposedHelpers.findAndHookMethod(Activity.class, "startActivityForResult", Intent.class, Integer.TYPE, activityHook);
+        XposedHelpers.findAndHookMethod(Activity.class, "startActivityForResult", Intent.class, Integer.TYPE, Bundle.class, activityHook);
+
+        XC_MethodHook viewHook = new XC_MethodHook() {
             @Override
             protected void afterHookedMethod(XC_MethodHook.MethodHookParam param) throws Throwable {
                 hideIfAdView(param.thisObject, lpparam.packageName);
             }
         };
-        XposedBridge.hookAllConstructors(View.class, (XC_MethodHook) viewObject);
-        XposedBridge.hookAllConstructors(ViewGroup.class, (XC_MethodHook) viewObject);
+
+        XposedBridge.hookAllConstructors(View.class, viewHook);
+        XposedBridge.hookAllConstructors(ViewGroup.class, viewHook);
+
         XposedHelpers.findAndHookMethod(View.class, "setVisibility", Integer.TYPE, new XC_MethodHook() {
             @Override
             protected void afterHookedMethod(XC_MethodHook.MethodHookParam param) throws Throwable {
