@@ -158,11 +158,11 @@ public class SettingsActivity extends PreferenceActivity {
     public class AppPicker extends AsyncTask<Void, Void, Void> {
 
         @SuppressWarnings("deprecation")
-        MultiSelectListPreference disabledApps = (MultiSelectListPreference) findPreference("DISABLED_APPS");
-        List<CharSequence> appNames = new ArrayList<>();
-        List<CharSequence> packageNames = new ArrayList<>();
-        PackageManager pm = getApplicationContext().getPackageManager();
-        List<ApplicationInfo> packages = pm.getInstalledApplications(PackageManager.GET_META_DATA);
+        final MultiSelectListPreference disabledApps = (MultiSelectListPreference) findPreference("DISABLED_APPS");
+        final List<CharSequence> appNames = new ArrayList<>();
+        final List<CharSequence> packageNames = new ArrayList<>();
+        final PackageManager pm = getApplicationContext().getPackageManager();
+        final List<ApplicationInfo> packages = pm.getInstalledApplications(PackageManager.GET_META_DATA);
 
         @Override
         protected void onPreExecute() {

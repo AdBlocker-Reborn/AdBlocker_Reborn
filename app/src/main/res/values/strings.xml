@@ -26,7 +26,6 @@
     <string name="open_project">Explore Project Source</string>
     <string name="open_project_description">View this project on Github</string>
     <string name="settings">Settings</string>
-    <string name="donation">Donation</string>
     <string name="about">About</string>
     <string name="backpress_hook_description">Allow canceling any dialog (Useful when applications show anti-ad dialogs)</string>
     <string name="backpress_hook">Enable Cancelable Dialog</string>

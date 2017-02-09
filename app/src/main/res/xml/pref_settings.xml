@@ -50,7 +50,7 @@
             android:summary="@string/hide_launcher_icon_description"
             android:title="@string/hide_launcher_icon" />
     </PreferenceCategory>
-    <PreferenceCategory android:title="@string/donation">
+    <PreferenceCategory android:title="@string/about">
         <Preference
             android:key="DONATE_ALIPAY"
             android:summary="@string/donate_description_alipay"
@@ -59,8 +59,6 @@
             android:key="DONATE_WECHAT"
             android:summary="@string/donate_description_wechat"
             android:title="@string/donate_wechat" />
-    </PreferenceCategory>
-    <PreferenceCategory android:title="@string/about">
         <PreferenceScreen
             android:key="GITHUB"
             android:summary="@string/open_project_description"
