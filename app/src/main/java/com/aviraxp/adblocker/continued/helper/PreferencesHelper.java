@@ -2,6 +2,9 @@ package com.aviraxp.adblocker.continued.helper;
 
 import com.aviraxp.adblocker.continued.BuildConfig;
 
+import java.util.HashSet;
+import java.util.Set;
+
 import de.robv.android.xposed.XSharedPreferences;
 
 public class PreferencesHelper {
@@ -48,5 +51,9 @@ public class PreferencesHelper {
 
     public static boolean isDebugModeEnabled() {
         return getModuleSharedPreferences().getBoolean("DEBUG", false);
+    }
+
+    public static Set<String> disabledApps() {
+        return getModuleSharedPreferences().getStringSet("DISABLED_APPS", new HashSet<String>());
     }
 }

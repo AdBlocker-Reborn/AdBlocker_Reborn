@@ -36,4 +36,6 @@
     <string name="hide_launcher_icon_description">You can still access settings through Xposed Installer</string>
     <string name="donate_wechat">Wechat Donation</string>
     <string name="licensedialog">Licenses</string>
+    <string name="whitelist">Appliation Whitelist</string>
+    <string name="whitelist_description">Select appliations which are not affected by this module</string>
 </resources>

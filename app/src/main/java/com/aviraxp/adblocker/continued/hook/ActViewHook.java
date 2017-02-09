@@ -28,7 +28,7 @@ class ActViewHook {
 
     public void hook(final XC_LoadPackage.LoadPackageParam lpparam) {
 
-        if (!PreferencesHelper.isActViewHookEnabled()) {
+        if (!PreferencesHelper.isActViewHookEnabled() || PreferencesHelper.disabledApps().contains(lpparam.packageName)) {
             return;
         }
 

@@ -24,8 +24,7 @@ class LicensesDialog extends AlertDialog.Builder {
             @SuppressWarnings("deprecation")
             public boolean shouldOverrideUrlLoading(WebView view, String url) {
                 if (url != null && url.startsWith("http")) {
-                    view.getContext().startActivity(
-                            new Intent(Intent.ACTION_VIEW, Uri.parse(url)));
+                    view.getContext().startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(url)));
                     return true;
                 } else {
                     return false;

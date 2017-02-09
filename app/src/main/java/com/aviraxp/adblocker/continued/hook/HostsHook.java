@@ -26,7 +26,7 @@ class HostsHook {
 
     public void hook(final XC_LoadPackage.LoadPackageParam lpparam) {
 
-        if (!PreferencesHelper.isHostsHookEnabled() || whiteList.contains(lpparam.packageName)) {
+        if (!PreferencesHelper.isHostsHookEnabled() || PreferencesHelper.disabledApps().contains(lpparam.packageName) || whiteList.contains(lpparam.packageName)) {
             return;
         }
 

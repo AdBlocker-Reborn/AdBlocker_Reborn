@@ -27,7 +27,7 @@ class HidingHook {
     @SuppressWarnings("unchecked")
     public void hook(final XC_LoadPackage.LoadPackageParam lpparam) {
 
-        if (!PreferencesHelper.isHidingHookEnabled() || !hideList.contains(lpparam.packageName)) {
+        if (!PreferencesHelper.isHidingHookEnabled() || PreferencesHelper.disabledApps().contains(lpparam.packageName) || !hideList.contains(lpparam.packageName)) {
             return;
         }
 

@@ -52,7 +52,7 @@ class WebViewHook {
 
     public void hook(final XC_LoadPackage.LoadPackageParam lpparam) {
 
-        if (!PreferencesHelper.isWebViewHookEnabled() || HookLoader.whiteList.contains(lpparam.packageName)) {
+        if (!PreferencesHelper.isWebViewHookEnabled() || PreferencesHelper.disabledApps().contains(lpparam.packageName) || HookLoader.whiteList.contains(lpparam.packageName)) {
             return;
         }
 

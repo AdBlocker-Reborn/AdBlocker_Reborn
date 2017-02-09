@@ -1,5 +1,9 @@
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
     <PreferenceCategory android:title="@string/settings">
+        <MultiSelectListPreference
+            android:key="DISABLED_APPS"
+            android:summary="@string/whitelist_description"
+            android:title="@string/whitelist" />
         <CheckBoxPreference
             android:defaultValue="true"
             android:key="ACTVIEW_HOOK"

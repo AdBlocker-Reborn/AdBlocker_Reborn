@@ -4,16 +4,24 @@ import android.app.AlertDialog;
 import android.content.ComponentName;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageManager;
 import android.net.Uri;
+import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
+import android.preference.MultiSelectListPreference;
 import android.preference.Preference;
 import android.preference.PreferenceActivity;
 import android.widget.Toast;
 
 import com.aviraxp.adblocker.continued.BuildConfig;
 import com.aviraxp.adblocker.continued.R;
+
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.List;
 
 import moe.feng.alipay.zerosdk.AlipayZeroSdk;
 
@@ -28,6 +36,7 @@ public class SettingsActivity extends PreferenceActivity {
             getPreferenceManager().setSharedPreferencesMode(MODE_WORLD_READABLE);
         }
         addPreferencesFromResource(R.xml.pref_settings);
+        new AppPicker().execute();
         checkState();
         donateAlipay();
         donateWechat();
@@ -144,5 +153,53 @@ public class SettingsActivity extends PreferenceActivity {
                 return true;
             }
         });
+    }
+
+    public class AppPicker extends AsyncTask<Void, Void, Void> {
+
+        @SuppressWarnings("deprecation")
+        MultiSelectListPreference disabledApps = (MultiSelectListPreference) findPreference("DISABLED_APPS");
+        List<CharSequence> appNames = new ArrayList<>();
+        List<CharSequence> packageNames = new ArrayList<>();
+        PackageManager pm = getApplicationContext().getPackageManager();
+        List<ApplicationInfo> packages = pm.getInstalledApplications(PackageManager.GET_META_DATA);
+
+        @Override
+        protected void onPreExecute() {
+            disabledApps.setEnabled(false);
+        }
+
+        @Override
+        protected Void doInBackground(Void... arg0) {
+
+            List<String[]> sortedApps = new ArrayList<>();
+
+            for (ApplicationInfo app : packages) {
+                sortedApps.add(new String[]{app.packageName, app.loadLabel(pm).toString()});
+            }
+
+            Collections.sort(sortedApps, new Comparator<String[]>() {
+                @Override
+                public int compare(String[] entry1, String[] entry2) {
+                    return entry1[1].compareToIgnoreCase(entry2[1]);
+                }
+            });
+
+            for (int i = 0; i < sortedApps.size(); i++) {
+                appNames.add(sortedApps.get(i)[1] + "\n" + "(" + sortedApps.get(i)[0] + ")");
+                packageNames.add(sortedApps.get(i)[0]);
+            }
+
+            return null;
+        }
+
+        @Override
+        protected void onPostExecute(Void result) {
+            CharSequence[] appNamesList = appNames.toArray(new CharSequence[appNames.size()]);
+            CharSequence[] packageNamesList = packageNames.toArray(new CharSequence[packageNames.size()]);
+            disabledApps.setEntries(appNamesList);
+            disabledApps.setEntryValues(packageNamesList);
+            disabledApps.setEnabled(true);
+        }
     }
 }

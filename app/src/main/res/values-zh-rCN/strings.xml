@@ -36,4 +36,6 @@
     <string name="donate_wechat">微信捐赠</string>
     <string name="donate_description_wechat">请我吃辣条</string>
     <string name="licensedialog">许可</string>
+    <string name="whitelist">应用白名单</string>
+    <string name="whitelist_description">选择本模块不作用的应用</string>
 </resources>
