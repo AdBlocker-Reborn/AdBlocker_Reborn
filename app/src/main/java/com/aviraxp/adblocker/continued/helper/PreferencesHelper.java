@@ -11,7 +11,7 @@ public class PreferencesHelper {
 
     private static XSharedPreferences preferences = null;
 
-    private static XSharedPreferences getModuleSharedPreferences() {
+    public static XSharedPreferences getModuleSharedPreferences() {
         if (preferences == null) {
             preferences = new XSharedPreferences(BuildConfig.APPLICATION_ID);
             preferences.makeWorldReadable();
