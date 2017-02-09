@@ -1,11 +1,4 @@
 apply plugin: 'com.android.application'
-apply plugin: 'maven'
-
-repositories {
-    maven {
-        url "https://jitpack.io"
-    }
-}
 
 android {
     compileSdkVersion 25
