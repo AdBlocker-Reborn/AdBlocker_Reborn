@@ -105,7 +105,7 @@ class HostsHook {
                             host = ((InetAddress) obj).getHostName();
                         }
                         if (host != null && hostsList.contains(host)) {
-                            param.args[0] = "0.0.0.0";
+                            param.args[0] = "localhost";
                             param.setResult(new Object());
                             param.setThrowable(new UnknownHostException(BLOCK_MESSAGE + host));
                             LogUtils.logRecord("Hosts Block Success: " + lpparam.packageName + "/" + host, true);
