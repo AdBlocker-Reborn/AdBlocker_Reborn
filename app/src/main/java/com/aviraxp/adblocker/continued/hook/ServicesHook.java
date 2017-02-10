@@ -1,6 +1,5 @@
 package com.aviraxp.adblocker.continued.hook;
 
-import android.content.Context;
 import android.content.Intent;
 import android.content.res.Resources;
 import android.content.res.XModuleResources;
@@ -26,15 +25,15 @@ class ServicesHook {
     private final XC_MethodHook servicesStartHook = new XC_MethodHook() {
         @Override
         protected void beforeHookedMethod(MethodHookParam param) throws Throwable {
-            Object activityThread = XposedHelpers.callStaticMethod(XposedHelpers.findClass("android.app.ActivityThread", null), "currentActivityThread");
-            Context systemContext = (Context) XposedHelpers.callMethod(activityThread, "getSystemContext");
-            for (String i : PreferencesHelper.disabledApps()) {
-                int whiteUid = systemContext.getPackageManager().getApplicationInfo(i, 0).uid;
-                if ((Integer) param.args[4] == whiteUid) {
-                    return;
-                }
-            }
             Intent intent = (Intent) param.args[1];
+            handleServiceStart(param, intent);
+        }
+    };
+
+    private final XC_MethodHook servicesBindHook = new XC_MethodHook() {
+        @Override
+        protected void beforeHookedMethod(MethodHookParam param) throws Throwable {
+            Intent intent = (Intent) param.args[2];
             handleServiceStart(param, intent);
         }
     };
@@ -52,8 +51,10 @@ class ServicesHook {
         if (lpparam.packageName.equals("android")) {
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1) {
                 XposedBridge.hookAllMethods(XposedHelpers.findClass("com.android.server.am.ActiveServices", lpparam.classLoader), "startServiceLocked", servicesStartHook);
+                XposedBridge.hookAllMethods(XposedHelpers.findClass("com.android.server.am.ActiveServices", lpparam.classLoader), "bindServiceLocked", servicesBindHook);
             } else {
                 XposedBridge.hookAllMethods(XposedHelpers.findClass("com.android.server.am.ActivityManagerService", lpparam.classLoader), "startServiceLocked", servicesStartHook);
+                XposedBridge.hookAllMethods(XposedHelpers.findClass("com.android.server.am.ActivityManagerService", lpparam.classLoader), "bindService", servicesBindHook);
             }
         }
     }
@@ -62,7 +63,13 @@ class ServicesHook {
         if (serviceIntent != null && serviceIntent.getComponent() != null) {
             String serviceName = serviceIntent.getComponent().flattenToShortString();
             if (serviceName != null) {
+                String packageName = serviceName.substring(0, serviceName.indexOf("/"));
                 String splitServicesName = serviceName.substring(serviceName.indexOf("/") + 1);
+                for (String disabledApp : PreferencesHelper.disabledApps()) {
+                    if (packageName.equals(disabledApp)) {
+                        return;
+                    }
+                }
                 if ((!isMIUI() && servicesList.contains(splitServicesName)) || (isMIUI() && servicesList.contains(splitServicesName) && (!splitServicesName.toLowerCase().contains("xiaomi") || splitServicesName.toLowerCase().contains("ad")))) {
                     param.setResult(null);
                     LogUtils.logRecord("Service Block Success: " + serviceName, true);
