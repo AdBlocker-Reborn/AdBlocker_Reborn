@@ -23,6 +23,7 @@ import de.robv.android.xposed.XposedHelpers;
 import de.robv.android.xposed.callbacks.XC_LoadPackage;
 
 import static com.aviraxp.adblocker.continued.hook.HookLoader.actViewList;
+import static com.aviraxp.adblocker.continued.hook.HookLoader.actViewList_aggressive;
 
 class ActViewHook {
 
@@ -37,7 +38,7 @@ class ActViewHook {
             protected void afterHookedMethod(XC_MethodHook.MethodHookParam param) throws Throwable {
                 Activity activity = (Activity) param.thisObject;
                 String activityClassName = activity.getClass().getName();
-                if (activityClassName != null && actViewList.contains(activityClassName)) {
+                if (activityClassName != null && (actViewList.contains(activityClassName) || isAggressiveBlock(activityClassName))) {
                     activity.overridePendingTransition(0, 0);
                     activity.finish();
                     activity.overridePendingTransition(0, 0);
@@ -87,19 +88,33 @@ class ActViewHook {
         });
     }
 
+    private boolean isAggressiveBlock(String string) {
+        for (String listItem : actViewList_aggressive) {
+            if (string.contains(listItem)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
     void init(IXposedHookZygoteInit.StartupParam startupParam) throws Throwable {
         String MODULE_PATH = startupParam.modulePath;
         Resources res = XModuleResources.createInstance(MODULE_PATH, null);
         byte[] array = XposedHelpers.assetAsByteArray(res, "blocklist/av");
+        byte[] array2 = XposedHelpers.assetAsByteArray(res, "blocklist/av_aggressive");
         String decoded = new String(array, "UTF-8");
+        String decoded2 = new String(array2, "UTF-8");
         String[] sUrls = decoded.split("\n");
+        String[] sUrls2 = decoded2.split("\n");
         actViewList = new HashSet<>();
+        actViewList_aggressive = new HashSet<>();
         Collections.addAll(actViewList, sUrls);
+        Collections.addAll(actViewList_aggressive, sUrls2);
     }
 
     private void hideIfAdView(Object paramObject, String paramString) {
         String str = paramObject.getClass().getName();
-        if (str != null && actViewList.contains(str)) {
+        if (str != null && (actViewList.contains(str) || isAggressiveBlock(str))) {
             ((View) paramObject).setVisibility(View.GONE);
             LogUtils.logRecord("View Block Success: " + paramString + "/" + str, true);
         }

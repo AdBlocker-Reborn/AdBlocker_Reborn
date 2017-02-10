@@ -9,6 +9,7 @@ import de.robv.android.xposed.callbacks.XC_LoadPackage;
 public class HookLoader implements IXposedHookLoadPackage, IXposedHookZygoteInit {
 
     static HashSet<String> actViewList;
+    static HashSet<String> actViewList_aggressive;
     static HashSet<String> hideList;
     static HashSet<String> hostsList;
     static HashSet<String> whiteList;
