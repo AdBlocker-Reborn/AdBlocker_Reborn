@@ -22,7 +22,22 @@ import static com.aviraxp.adblocker.continued.hook.HookLoader.whiteList;
 
 class HostsHook {
 
-    private final String BLOCK_MESSAGE = "Blocked by AdBlocker Reborn: ";
+    private static final String BLOCK_MESSAGE = "Blocked by AdBlocker Reborn: ";
+
+    static void init(IXposedHookZygoteInit.StartupParam startupParam) throws Throwable {
+        String MODULE_PATH = startupParam.modulePath;
+        Resources res = XModuleResources.createInstance(MODULE_PATH, null);
+        byte[] array = XposedHelpers.assetAsByteArray(res, "blocklist/hosts");
+        byte[] array2 = XposedHelpers.assetAsByteArray(res, "whitelist/urlapp");
+        String decoded = new String(array, "UTF-8");
+        String decoded2 = new String(array2, "UTF-8");
+        String[] sUrls = decoded.split("\n");
+        String[] sUrls2 = decoded2.split("\n");
+        hostsList = new HashSet<>();
+        whiteList = new HashSet<>();
+        Collections.addAll(hostsList, sUrls);
+        Collections.addAll(whiteList, sUrls2);
+    }
 
     public void hook(final XC_LoadPackage.LoadPackageParam lpparam) {
 
@@ -35,7 +50,7 @@ class HostsHook {
         Class<?> socketClz = XposedHelpers.findClass("java.net.Socket", lpparam.classLoader);
         Class<?> ioBridgeClz = XposedHelpers.findClass("libcore.io.IoBridge", lpparam.classLoader);
 
-        XposedBridge.hookAllConstructors(socketClz, new XC_MethodHook() {
+        XC_MethodHook socketClzHook = new XC_MethodHook() {
             @Override
             protected void beforeHookedMethod(MethodHookParam param) throws Throwable {
                 try {
@@ -57,7 +72,7 @@ class HostsHook {
                     LogUtils.logRecord(t, false);
                 }
             }
-        });
+        };
 
         XC_MethodHook inetAddrHookSingleResult = new XC_MethodHook() {
             @Override
@@ -88,11 +103,8 @@ class HostsHook {
                 }
             }
         };
-        XposedBridge.hookAllMethods(inetAddrClz, "getAllByName", inetAddrHookSingleResult);
-        XposedBridge.hookAllMethods(inetAddrClz, "getByName", inetAddrHookSingleResult);
-        XposedBridge.hookAllMethods(inetSockAddrClz, "createUnresolved", inetAddrHookSingleResult);
 
-        XposedBridge.hookAllConstructors(inetSockAddrClz, new XC_MethodHook() {
+        XC_MethodHook inetSockAddrClzHook = new XC_MethodHook() {
             @Override
             protected void beforeHookedMethod(MethodHookParam param) throws Throwable {
                 try {
@@ -115,7 +127,7 @@ class HostsHook {
                     LogUtils.logRecord(t, false);
                 }
             }
-        });
+        };
 
         XC_MethodHook ioBridgeHook = new XC_MethodHook() {
             @Override
@@ -158,22 +170,13 @@ class HostsHook {
                 }
             }
         };
+
+        XposedBridge.hookAllConstructors(socketClz, socketClzHook);
+        XposedBridge.hookAllConstructors(inetSockAddrClz, inetSockAddrClzHook);
+        XposedBridge.hookAllMethods(inetAddrClz, "getAllByName", inetAddrHookSingleResult);
+        XposedBridge.hookAllMethods(inetAddrClz, "getByName", inetAddrHookSingleResult);
+        XposedBridge.hookAllMethods(inetSockAddrClz, "createUnresolved", inetAddrHookSingleResult);
         XposedBridge.hookAllMethods(ioBridgeClz, "connect", ioBridgeHook);
         XposedBridge.hookAllMethods(ioBridgeClz, "connectErrno", ioBridgeHook);
-    }
-
-    void init(IXposedHookZygoteInit.StartupParam startupParam) throws Throwable {
-        String MODULE_PATH = startupParam.modulePath;
-        Resources res = XModuleResources.createInstance(MODULE_PATH, null);
-        byte[] array = XposedHelpers.assetAsByteArray(res, "blocklist/hosts");
-        byte[] array2 = XposedHelpers.assetAsByteArray(res, "whitelist/urlapp");
-        String decoded = new String(array, "UTF-8");
-        String decoded2 = new String(array2, "UTF-8");
-        String[] sUrls = decoded.split("\n");
-        String[] sUrls2 = decoded2.split("\n");
-        hostsList = new HashSet<>();
-        whiteList = new HashSet<>();
-        Collections.addAll(hostsList, sUrls);
-        Collections.addAll(whiteList, sUrls2);
     }
 }

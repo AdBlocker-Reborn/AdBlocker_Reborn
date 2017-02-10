@@ -23,6 +23,16 @@ import static com.aviraxp.adblocker.continued.hook.HookLoader.receiversList;
 
 class ReceiversHook {
 
+    static void init(IXposedHookZygoteInit.StartupParam startupParam) throws Throwable {
+        String MODULE_PATH = startupParam.modulePath;
+        Resources res = XModuleResources.createInstance(MODULE_PATH, null);
+        byte[] array = XposedHelpers.assetAsByteArray(res, "blocklist/receivers");
+        String decoded = new String(array, "UTF-8");
+        String[] sUrls = decoded.split("\n");
+        receiversList = new HashSet<>();
+        Collections.addAll(receiversList, sUrls);
+    }
+
     public void hook(XC_LoadPackage.LoadPackageParam lpparam) throws Throwable {
 
         if (!PreferencesHelper.isReceiversHookEnabled() || PreferencesHelper.disabledApps().contains(lpparam.packageName) || lpparam.packageName.equals("android")) {
@@ -46,15 +56,5 @@ class ReceiversHook {
                 LogUtils.logRecord("Receiver Block Success: " + lpparam.packageName + "/" + checkReceiver, true);
             }
         }
-    }
-
-    void init(IXposedHookZygoteInit.StartupParam startupParam) throws Throwable {
-        String MODULE_PATH = startupParam.modulePath;
-        Resources res = XModuleResources.createInstance(MODULE_PATH, null);
-        byte[] array = XposedHelpers.assetAsByteArray(res, "blocklist/receivers");
-        String decoded = new String(array, "UTF-8");
-        String[] sUrls = decoded.split("\n");
-        receiversList = new HashSet<>();
-        Collections.addAll(receiversList, sUrls);
     }
 }

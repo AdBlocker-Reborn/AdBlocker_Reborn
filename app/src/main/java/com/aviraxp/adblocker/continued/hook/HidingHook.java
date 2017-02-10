@@ -24,6 +24,16 @@ import static com.aviraxp.adblocker.continued.hook.HookLoader.hideList;
 
 class HidingHook {
 
+    static void init(IXposedHookZygoteInit.StartupParam startupParam) throws Throwable {
+        String MODULE_PATH = startupParam.modulePath;
+        Resources res = XModuleResources.createInstance(MODULE_PATH, null);
+        byte[] array = XposedHelpers.assetAsByteArray(res, "blacklist/hidingapp");
+        String decoded = new String(array, "UTF-8");
+        String[] sUrls = decoded.split("\n");
+        hideList = new HashSet<>();
+        Collections.addAll(hideList, sUrls);
+    }
+
     @SuppressWarnings("unchecked")
     public void hook(final XC_LoadPackage.LoadPackageParam lpparam) {
 
@@ -31,7 +41,7 @@ class HidingHook {
             return;
         }
 
-        XposedHelpers.findAndHookMethod("android.app.ApplicationPackageManager", lpparam.classLoader, "getInstalledApplications", int.class, new XC_MethodHook() {
+        XC_MethodHook getInstalledApplicationsHook = new XC_MethodHook() {
             @Override
             protected void afterHookedMethod(MethodHookParam param) throws Throwable {
                 List<ApplicationInfo> applicationList = (List) param.getResult();
@@ -44,9 +54,9 @@ class HidingHook {
                 }
                 param.setResult(resultapplicationList);
             }
-        });
+        };
 
-        XposedHelpers.findAndHookMethod("android.app.ApplicationPackageManager", lpparam.classLoader, "getInstalledPackages", int.class, new XC_MethodHook() {
+        XC_MethodHook getInstalledPackagesHook = new XC_MethodHook() {
             @Override
             protected void afterHookedMethod(MethodHookParam param) throws Throwable {
                 List<PackageInfo> packageInfoList = (List) param.getResult();
@@ -59,9 +69,9 @@ class HidingHook {
                 }
                 param.setResult(resultpackageInfoList);
             }
-        });
+        };
 
-        XposedHelpers.findAndHookMethod("android.app.ApplicationPackageManager", lpparam.classLoader, "getPackageInfo", String.class, int.class, new XC_MethodHook() {
+        XC_MethodHook getPackageInfoHook = new XC_MethodHook() {
             @Override
             protected void beforeHookedMethod(MethodHookParam param) throws Throwable {
                 String packageName = (String) param.args[0];
@@ -69,9 +79,9 @@ class HidingHook {
                     param.args[0] = lpparam.packageName;
                 }
             }
-        });
+        };
 
-        XposedHelpers.findAndHookMethod("android.app.ApplicationPackageManager", lpparam.classLoader, "getApplicationInfo", String.class, int.class, new XC_MethodHook() {
+        XC_MethodHook getApplicationInfoHook = new XC_MethodHook() {
             @Override
             protected void beforeHookedMethod(MethodHookParam param) throws Throwable {
                 String packageName = (String) param.args[0];
@@ -79,54 +89,51 @@ class HidingHook {
                     param.args[0] = lpparam.packageName;
                 }
             }
-        });
+        };
 
+        XC_MethodHook getRunningTasksHook = new XC_MethodHook() {
+            @Override
+            protected void afterHookedMethod(MethodHookParam param) throws Throwable {
+                List<ActivityManager.RunningTaskInfo> serviceInfoList = (List) param.getResult();
+                List<ActivityManager.RunningTaskInfo> resultList = new ArrayList<>();
+                for (ActivityManager.RunningTaskInfo runningTaskInfo : serviceInfoList) {
+                    String taskName = runningTaskInfo.baseActivity.flattenToString();
+                    if (!isTarget(taskName)) {
+                        resultList.add(runningTaskInfo);
+                    }
+                }
+                param.setResult(resultList);
+            }
+        };
+
+        XC_MethodHook getRunningAppProcessesHook = new XC_MethodHook() {
+            @Override
+            protected void afterHookedMethod(MethodHookParam param) throws Throwable {
+                List<ActivityManager.RunningAppProcessInfo> runningAppProcessInfos = (List) param.getResult();
+                List<ActivityManager.RunningAppProcessInfo> resultList = new ArrayList<>();
+                for (ActivityManager.RunningAppProcessInfo runningAppProcessInfo : runningAppProcessInfos) {
+                    String processName = runningAppProcessInfo.processName;
+                    if (!isTarget(processName)) {
+                        resultList.add(runningAppProcessInfo);
+                    }
+                }
+                param.setResult(resultList);
+            }
+        };
+
+        XposedHelpers.findAndHookMethod("android.app.ApplicationPackageManager", lpparam.classLoader, "getInstalledApplications", int.class, getInstalledApplicationsHook);
+        XposedHelpers.findAndHookMethod("android.app.ApplicationPackageManager", lpparam.classLoader, "getInstalledPackages", int.class, getInstalledPackagesHook);
+        XposedHelpers.findAndHookMethod("android.app.ApplicationPackageManager", lpparam.classLoader, "getPackageInfo", String.class, int.class, getPackageInfoHook);
+        XposedHelpers.findAndHookMethod("android.app.ApplicationPackageManager", lpparam.classLoader, "getApplicationInfo", String.class, int.class, getApplicationInfoHook);
         if (Build.VERSION.SDK_INT < Build.VERSION_CODES.LOLLIPOP) {
-            XposedHelpers.findAndHookMethod("android.app.ActivityManager", lpparam.classLoader, "getRunningTasks", int.class, new XC_MethodHook() {
-                @Override
-                protected void afterHookedMethod(MethodHookParam param) throws Throwable {
-                    List<ActivityManager.RunningTaskInfo> serviceInfoList = (List) param.getResult();
-                    List<ActivityManager.RunningTaskInfo> resultList = new ArrayList<>();
-                    for (ActivityManager.RunningTaskInfo runningTaskInfo : serviceInfoList) {
-                        String taskName = runningTaskInfo.baseActivity.flattenToString();
-                        if (!isTarget(taskName)) {
-                            resultList.add(runningTaskInfo);
-                        }
-                    }
-                    param.setResult(resultList);
-                }
-            });
+            XposedHelpers.findAndHookMethod("android.app.ActivityManager", lpparam.classLoader, "getRunningTasks", int.class, getRunningTasksHook);
         }
-
         if (Build.VERSION.SDK_INT < Build.VERSION_CODES.LOLLIPOP_MR1) {
-            XposedHelpers.findAndHookMethod("android.app.ActivityManager", lpparam.classLoader, "getRunningAppProcesses", new XC_MethodHook() {
-                @Override
-                protected void afterHookedMethod(MethodHookParam param) throws Throwable {
-                    List<ActivityManager.RunningAppProcessInfo> runningAppProcessInfos = (List) param.getResult();
-                    List<ActivityManager.RunningAppProcessInfo> resultList = new ArrayList<>();
-                    for (ActivityManager.RunningAppProcessInfo runningAppProcessInfo : runningAppProcessInfos) {
-                        String processName = runningAppProcessInfo.processName;
-                        if (!isTarget(processName)) {
-                            resultList.add(runningAppProcessInfo);
-                        }
-                    }
-                    param.setResult(resultList);
-                }
-            });
+            XposedHelpers.findAndHookMethod("android.app.ActivityManager", lpparam.classLoader, "getRunningAppProcesses", getRunningAppProcessesHook);
         }
     }
 
     private boolean isTarget(String name) {
         return name.equals(BuildConfig.APPLICATION_ID);
-    }
-
-    void init(IXposedHookZygoteInit.StartupParam startupParam) throws Throwable {
-        String MODULE_PATH = startupParam.modulePath;
-        Resources res = XModuleResources.createInstance(MODULE_PATH, null);
-        byte[] array = XposedHelpers.assetAsByteArray(res, "blacklist/hidingapp");
-        String decoded = new String(array, "UTF-8");
-        String[] sUrls = decoded.split("\n");
-        hideList = new HashSet<>();
-        Collections.addAll(hideList, sUrls);
     }
 }

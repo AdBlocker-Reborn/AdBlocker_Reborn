@@ -42,6 +42,18 @@ class ServicesHook {
         return !SystemProperties.get("ro.miui.ui.version.name", "").equals("");
     }
 
+    static void init(IXposedHookZygoteInit.StartupParam startupParam) throws Throwable {
+        String MODULE_PATH = startupParam.modulePath;
+        Resources res = XModuleResources.createInstance(MODULE_PATH, null);
+        byte[] array = XposedHelpers.assetAsByteArray(res, "blocklist/services");
+        String decoded = new String(array, "UTF-8");
+        String[] sUrls = decoded.split("\n");
+        servicesList = new HashSet<>();
+        Collections.addAll(servicesList, sUrls);
+        isMIUI();
+        LogUtils.logRecord("MIUI Based: " + isMIUI(), true);
+    }
+
     public void hook(XC_LoadPackage.LoadPackageParam lpparam) {
 
         if (!PreferencesHelper.isServicesHookEnabled()) {
@@ -76,17 +88,5 @@ class ServicesHook {
                 }
             }
         }
-    }
-
-    void init(IXposedHookZygoteInit.StartupParam startupParam) throws Throwable {
-        String MODULE_PATH = startupParam.modulePath;
-        Resources res = XModuleResources.createInstance(MODULE_PATH, null);
-        byte[] array = XposedHelpers.assetAsByteArray(res, "blocklist/services");
-        String decoded = new String(array, "UTF-8");
-        String[] sUrls = decoded.split("\n");
-        servicesList = new HashSet<>();
-        Collections.addAll(servicesList, sUrls);
-        isMIUI();
-        LogUtils.logRecord("MIUI Based: " + isMIUI(), true);
     }
 }

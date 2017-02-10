@@ -26,9 +26,20 @@ class WebViewHook {
 
     private boolean adExist;
 
+    static void init(IXposedHookZygoteInit.StartupParam startupParam) throws Throwable {
+        String MODULE_PATH = startupParam.modulePath;
+        Resources res = XModuleResources.createInstance(MODULE_PATH, null);
+        byte[] array = XposedHelpers.assetAsByteArray(res, "blocklist/regexurls");
+        String decoded = new String(array, "UTF-8");
+        String[] sUrls = decoded.split("\n");
+        regexList = new HashSet<>();
+        Collections.addAll(regexList, sUrls);
+    }
+
     private void removeAdView(final View view) {
 
         ViewGroup.LayoutParams params = view.getLayoutParams();
+
         if (params == null) {
             params = new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, 0);
         } else {
@@ -59,7 +70,7 @@ class WebViewHook {
         try {
             Class<?> webView = XposedHelpers.findClass("android.webkit.WebView", lpparam.classLoader);
 
-            XposedBridge.hookAllMethods(webView, "loadUrl", new XC_MethodHook() {
+            XC_MethodHook loadUrlHook = new XC_MethodHook() {
                 @Override
                 protected void beforeHookedMethod(XC_MethodHook.MethodHookParam param) throws Throwable {
                     String url = (String) param.args[0];
@@ -71,9 +82,9 @@ class WebViewHook {
                         }
                     }
                 }
-            });
+            };
 
-            XposedBridge.hookAllMethods(webView, "loadData", new XC_MethodHook() {
+            XC_MethodHook loadDataHook = new XC_MethodHook() {
                 @Override
                 protected void beforeHookedMethod(XC_MethodHook.MethodHookParam param) throws Throwable {
                     String data = (String) param.args[0];
@@ -85,9 +96,9 @@ class WebViewHook {
                         }
                     }
                 }
-            });
+            };
 
-            XposedBridge.hookAllMethods(webView, "loadDataWithBaseURL", new XC_MethodHook() {
+            XC_MethodHook loadDataWithBaseURL = new XC_MethodHook() {
                 @Override
                 protected void beforeHookedMethod(XC_MethodHook.MethodHookParam param) throws Throwable {
                     String url = (String) param.args[0];
@@ -100,7 +111,11 @@ class WebViewHook {
                         }
                     }
                 }
-            });
+            };
+
+            XposedBridge.hookAllMethods(webView, "loadUrl", loadUrlHook);
+            XposedBridge.hookAllMethods(webView, "loadData", loadDataHook);
+            XposedBridge.hookAllMethods(webView, "loadDataWithBaseURL", loadDataWithBaseURL);
         } catch (XposedHelpers.ClassNotFoundError ignored) {
         }
     }
@@ -114,12 +129,6 @@ class WebViewHook {
             if (url != null) {
                 urlDecode = URLDecoder.decode(url, "UTF-8");
             }
-        } catch (IllegalArgumentException ignored) {
-        } catch (Throwable t) {
-            LogUtils.logRecord(t, false);
-        }
-
-        try {
             if (data != null) {
                 dataDecode = URLDecoder.decode(data, "UTF-8");
             }
@@ -170,15 +179,5 @@ class WebViewHook {
         }
 
         return false;
-    }
-
-    void init(IXposedHookZygoteInit.StartupParam startupParam) throws Throwable {
-        String MODULE_PATH = startupParam.modulePath;
-        Resources res = XModuleResources.createInstance(MODULE_PATH, null);
-        byte[] array = XposedHelpers.assetAsByteArray(res, "blocklist/regexurls");
-        String decoded = new String(array, "UTF-8");
-        String[] sUrls = decoded.split("\n");
-        regexList = new HashSet<>();
-        Collections.addAll(regexList, sUrls);
     }
 }

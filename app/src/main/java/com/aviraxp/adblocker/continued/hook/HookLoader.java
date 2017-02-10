@@ -30,11 +30,11 @@ public class HookLoader implements IXposedHookLoadPackage, IXposedHookZygoteInit
     }
 
     public void initZygote(StartupParam startupParam) throws Throwable {
-        new ActViewHook().init(startupParam);
-        new HidingHook().init(startupParam);
-        new HostsHook().init(startupParam);
-        new ReceiversHook().init(startupParam);
-        new ServicesHook().init(startupParam);
-        new WebViewHook().init(startupParam);
+        ActViewHook.init(startupParam);
+        HidingHook.init(startupParam);
+        HostsHook.init(startupParam);
+        ReceiversHook.init(startupParam);
+        ServicesHook.init(startupParam);
+        WebViewHook.init(startupParam);
     }
 }

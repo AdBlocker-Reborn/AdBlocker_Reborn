@@ -27,14 +27,28 @@ import static com.aviraxp.adblocker.continued.hook.HookLoader.actViewList_aggres
 
 class ActViewHook {
 
+    static void init(IXposedHookZygoteInit.StartupParam startupParam) throws Throwable {
+        String MODULE_PATH = startupParam.modulePath;
+        Resources res = XModuleResources.createInstance(MODULE_PATH, null);
+        byte[] array = XposedHelpers.assetAsByteArray(res, "blocklist/av");
+        byte[] array2 = XposedHelpers.assetAsByteArray(res, "blocklist/av_aggressive");
+        String decoded = new String(array, "UTF-8");
+        String decoded2 = new String(array2, "UTF-8");
+        String[] sUrls = decoded.split("\n");
+        String[] sUrls2 = decoded2.split("\n");
+        actViewList = new HashSet<>();
+        actViewList_aggressive = new HashSet<>();
+        Collections.addAll(actViewList, sUrls);
+        Collections.addAll(actViewList_aggressive, sUrls2);
+    }
+
     public void hook(final XC_LoadPackage.LoadPackageParam lpparam) {
 
         if (!PreferencesHelper.isActViewHookEnabled() || PreferencesHelper.disabledApps().contains(lpparam.packageName)) {
             return;
         }
 
-        XposedHelpers.findAndHookMethod(Activity.class, "onCreate", Bundle.class, new XC_MethodHook() {
-            @Override
+        XC_MethodHook activityCreateHook = new XC_MethodHook() {
             protected void afterHookedMethod(XC_MethodHook.MethodHookParam param) throws Throwable {
                 Activity activity = (Activity) param.thisObject;
                 String activityClassName = activity.getClass().getName();
@@ -45,9 +59,9 @@ class ActViewHook {
                     LogUtils.logRecord("Activity Block Success: " + lpparam.packageName + "/" + activityClassName, true);
                 }
             }
-        });
+        };
 
-        XC_MethodHook activityHook = new XC_MethodHook() {
+        XC_MethodHook activityStartHook = new XC_MethodHook() {
             @Override
             protected void beforeHookedMethod(XC_MethodHook.MethodHookParam param) throws Throwable {
                 if (param.args[0] != null) {
@@ -63,11 +77,6 @@ class ActViewHook {
             }
         };
 
-        XposedHelpers.findAndHookMethod(Activity.class, "startActivity", Intent.class, activityHook);
-        XposedHelpers.findAndHookMethod(ContextWrapper.class, "startActivity", Intent.class, activityHook);
-        XposedHelpers.findAndHookMethod(Activity.class, "startActivityForResult", Intent.class, Integer.TYPE, activityHook);
-        XposedHelpers.findAndHookMethod(Activity.class, "startActivityForResult", Intent.class, Integer.TYPE, Bundle.class, activityHook);
-
         XC_MethodHook viewHook = new XC_MethodHook() {
             @Override
             protected void afterHookedMethod(XC_MethodHook.MethodHookParam param) throws Throwable {
@@ -75,17 +84,23 @@ class ActViewHook {
             }
         };
 
-        XposedBridge.hookAllConstructors(View.class, viewHook);
-        XposedBridge.hookAllConstructors(ViewGroup.class, viewHook);
-
-        XposedHelpers.findAndHookMethod(View.class, "setVisibility", Integer.TYPE, new XC_MethodHook() {
+        XC_MethodHook visibilityHook = new XC_MethodHook() {
             @Override
             protected void afterHookedMethod(XC_MethodHook.MethodHookParam param) throws Throwable {
                 if ((Integer) param.args[0] != 8) {
                     hideIfAdView(param.thisObject, lpparam.packageName);
                 }
             }
-        });
+        };
+
+        XposedHelpers.findAndHookMethod(Activity.class, "onCreate", Bundle.class, activityCreateHook);
+        XposedHelpers.findAndHookMethod(Activity.class, "startActivity", Intent.class, activityStartHook);
+        XposedHelpers.findAndHookMethod(ContextWrapper.class, "startActivity", Intent.class, activityStartHook);
+        XposedHelpers.findAndHookMethod(Activity.class, "startActivityForResult", Intent.class, Integer.TYPE, activityStartHook);
+        XposedHelpers.findAndHookMethod(Activity.class, "startActivityForResult", Intent.class, Integer.TYPE, Bundle.class, activityStartHook);
+        XposedHelpers.findAndHookMethod(View.class, "setVisibility", Integer.TYPE, visibilityHook);
+        XposedBridge.hookAllConstructors(View.class, viewHook);
+        XposedBridge.hookAllConstructors(ViewGroup.class, viewHook);
     }
 
     private boolean isAggressiveBlock(String string) {
@@ -95,21 +110,6 @@ class ActViewHook {
             }
         }
         return false;
-    }
-
-    void init(IXposedHookZygoteInit.StartupParam startupParam) throws Throwable {
-        String MODULE_PATH = startupParam.modulePath;
-        Resources res = XModuleResources.createInstance(MODULE_PATH, null);
-        byte[] array = XposedHelpers.assetAsByteArray(res, "blocklist/av");
-        byte[] array2 = XposedHelpers.assetAsByteArray(res, "blocklist/av_aggressive");
-        String decoded = new String(array, "UTF-8");
-        String decoded2 = new String(array2, "UTF-8");
-        String[] sUrls = decoded.split("\n");
-        String[] sUrls2 = decoded2.split("\n");
-        actViewList = new HashSet<>();
-        actViewList_aggressive = new HashSet<>();
-        Collections.addAll(actViewList, sUrls);
-        Collections.addAll(actViewList_aggressive, sUrls2);
     }
 
     private void hideIfAdView(Object paramObject, String paramString) {
