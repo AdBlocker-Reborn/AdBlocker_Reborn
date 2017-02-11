@@ -18,7 +18,6 @@ import de.robv.android.xposed.XposedHelpers;
 import de.robv.android.xposed.callbacks.XC_LoadPackage;
 
 import static com.aviraxp.adblocker.continued.hook.HookLoader.hostsList;
-import static com.aviraxp.adblocker.continued.hook.HookLoader.whiteList;
 
 class HostsHook {
 
@@ -28,20 +27,15 @@ class HostsHook {
         String MODULE_PATH = startupParam.modulePath;
         Resources res = XModuleResources.createInstance(MODULE_PATH, null);
         byte[] array = XposedHelpers.assetAsByteArray(res, "blocklist/hosts");
-        byte[] array2 = XposedHelpers.assetAsByteArray(res, "whitelist/urlapp");
         String decoded = new String(array, "UTF-8");
-        String decoded2 = new String(array2, "UTF-8");
         String[] sUrls = decoded.split("\n");
-        String[] sUrls2 = decoded2.split("\n");
         hostsList = new HashSet<>();
-        whiteList = new HashSet<>();
         Collections.addAll(hostsList, sUrls);
-        Collections.addAll(whiteList, sUrls2);
     }
 
     public void hook(final XC_LoadPackage.LoadPackageParam lpparam) {
 
-        if (!PreferencesHelper.isHostsHookEnabled() || PreferencesHelper.disabledApps().contains(lpparam.packageName) || whiteList.contains(lpparam.packageName)) {
+        if (!PreferencesHelper.isHostsHookEnabled() || PreferencesHelper.disabledApps().contains(lpparam.packageName)) {
             return;
         }
 
