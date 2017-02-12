@@ -5,6 +5,7 @@ import android.content.ComponentName;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.ApplicationInfo;
+import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.AsyncTask;
@@ -13,6 +14,7 @@ import android.os.Bundle;
 import android.preference.MultiSelectListPreference;
 import android.preference.Preference;
 import android.preference.PreferenceActivity;
+import android.preference.PreferenceGroup;
 import android.widget.Toast;
 
 import com.aviraxp.adblocker.continued.BuildConfig;
@@ -38,11 +40,37 @@ public class SettingsActivity extends PreferenceActivity {
         addPreferencesFromResource(R.xml.pref_settings);
         new AppPicker().execute();
         checkState();
-        donateAlipay();
-        donateWechat();
+        prepareDonationStatus();
         openGithub();
         hideIconListener();
         licensesListener();
+    }
+
+    @SuppressWarnings("deprecation")
+    private void prepareDonationStatus() {
+        removePreference("com.tencent.mm", "DONATE_WECHAT");
+        removePreference("com.eg.android.AlipayGphone", "DONATE_ALIPAY");
+    }
+
+    @SuppressWarnings("deprecation")
+    private void removePreference(String packageName, String perfName) {
+        try {
+            PackageInfo info = getApplicationContext().getPackageManager().getPackageInfo(packageName, 0);
+            boolean isAvailable = (info != null);
+            if (!isAvailable) {
+                PreferenceGroup displayOptions = (PreferenceGroup) findPreference("ABOUT");
+                displayOptions.removePreference(findPreference(perfName));
+            } else {
+                if (packageName.equals("com.tencent.mm")) {
+                    donateWechat();
+                } else if (packageName.equals("com.eg.android.AlipayGphone")) {
+                    donateAlipay();
+                }
+            }
+        } catch (Throwable t) {
+            PreferenceGroup displayOptions = (PreferenceGroup) findPreference("ABOUT");
+            displayOptions.removePreference(findPreference(perfName));
+        }
     }
 
     @SuppressWarnings("deprecation")

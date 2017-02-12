@@ -1,5 +1,7 @@
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
-    <PreferenceCategory android:title="@string/settings">
+    <PreferenceCategory
+        android:key="SETTINGS"
+        android:title="@string/settings">
         <MultiSelectListPreference
             android:key="DISABLED_APPS"
             android:summary="@string/whitelist_description"
@@ -50,7 +52,9 @@
             android:summary="@string/hide_launcher_icon_description"
             android:title="@string/hide_launcher_icon" />
     </PreferenceCategory>
-    <PreferenceCategory android:title="@string/about">
+    <PreferenceCategory
+        android:key="ABOUT"
+        android:title="@string/about">
         <Preference
             android:key="DONATE_ALIPAY"
             android:summary="@string/donate_description_alipay"
