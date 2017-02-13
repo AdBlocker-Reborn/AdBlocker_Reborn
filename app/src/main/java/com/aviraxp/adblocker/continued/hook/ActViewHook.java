@@ -52,7 +52,7 @@ class ActViewHook {
             protected void afterHookedMethod(XC_MethodHook.MethodHookParam param) throws Throwable {
                 Activity activity = (Activity) param.thisObject;
                 String activityClassName = activity.getClass().getName();
-                if (activityClassName != null && (actViewList.contains(activityClassName) || isAggressiveBlock(activityClassName))) {
+                if (activityClassName != null && (actViewList.contains(activityClassName) || (PreferencesHelper.isAggressiveHookEnabled() && isAggressiveBlock(activityClassName)))) {
                     activity.overridePendingTransition(0, 0);
                     activity.finish();
                     activity.overridePendingTransition(0, 0);
@@ -114,7 +114,7 @@ class ActViewHook {
 
     private void hideIfAdView(Object paramObject, String paramString) {
         String str = paramObject.getClass().getName();
-        if (str != null && (actViewList.contains(str) || isAggressiveBlock(str))) {
+        if (str != null && (actViewList.contains(str) || (PreferencesHelper.isAggressiveHookEnabled() && isAggressiveBlock(str)))) {
             ((View) paramObject).setVisibility(View.GONE);
             LogUtils.logRecord("View Block Success: " + paramString + "/" + str, true);
         }

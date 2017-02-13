@@ -49,6 +49,10 @@ public class PreferencesHelper {
         return getModuleSharedPreferences().getBoolean("BACKPRESS_HOOK", false);
     }
 
+    public static boolean isAggressiveHookEnabled() {
+        return getModuleSharedPreferences().getBoolean("AGGRESSIVE_HOOK", false);
+    }
+
     public static boolean isDebugModeEnabled() {
         return getModuleSharedPreferences().getBoolean("DEBUG", false);
     }
