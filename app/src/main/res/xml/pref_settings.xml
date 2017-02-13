@@ -68,6 +68,14 @@
             android:key="DONATE_WECHAT"
             android:summary="@string/donate_description_wechat"
             android:title="@string/donate_wechat" />
+        <Preference
+            android:key="DONATE_PAYPAL"
+            android:summary="@string/donate_description_payapl"
+            android:title="@string/donate_paypal" />
+        <PreferenceScreen
+            android:key="XDA"
+            android:summary="@string/open_xda_description"
+            android:title="@string/open_xda" />
         <PreferenceScreen
             android:key="GITHUB"
             android:summary="@string/open_project_description"

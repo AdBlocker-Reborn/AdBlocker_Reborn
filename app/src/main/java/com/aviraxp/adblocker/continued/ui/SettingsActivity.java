@@ -27,11 +27,11 @@ import java.util.List;
 
 import moe.feng.alipay.zerosdk.AlipayZeroSdk;
 
+@SuppressWarnings("deprecation")
 public class SettingsActivity extends PreferenceActivity {
 
     static boolean isActivated = false;
 
-    @SuppressWarnings("deprecation")
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (Build.VERSION.SDK_INT < Build.VERSION_CODES.N) {
@@ -43,11 +43,24 @@ public class SettingsActivity extends PreferenceActivity {
         prepareDonationStatus();
         paypalDonate();
         openGithub();
+        openXDA();
         hideIconListener();
         licensesListener();
     }
 
-    @SuppressWarnings("deprecation")
+    private void openXDA() {
+        findPreference("XDA").setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
+            @Override
+            public boolean onPreferenceClick(Preference preference) {
+                Intent intent = new Intent();
+                intent.setAction(Intent.ACTION_VIEW)
+                        .setData(Uri.parse("https://forum.xda-developers.com/xposed/modules/xposed-adblocker-reborn-1-0-1-2017-02-11-t3554617"));
+                startActivity(intent);
+                return true;
+            }
+        });
+    }
+
     private void paypalDonate() {
         findPreference("DONATE_PAYPAL").setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
             @Override
@@ -61,13 +74,11 @@ public class SettingsActivity extends PreferenceActivity {
         });
     }
 
-    @SuppressWarnings("deprecation")
     private void prepareDonationStatus() {
         removePreference("com.tencent.mm", "DONATE_WECHAT");
         removePreference("com.eg.android.AlipayGphone", "DONATE_ALIPAY");
     }
 
-    @SuppressWarnings("deprecation")
     private void removePreference(String packageName, String perfName) {
         try {
             PackageInfo info = getApplicationContext().getPackageManager().getPackageInfo(packageName, 0);
@@ -75,12 +86,10 @@ public class SettingsActivity extends PreferenceActivity {
             if (!isAvailable) {
                 PreferenceCategory displayOptions = (PreferenceCategory) findPreference("ABOUT");
                 displayOptions.removePreference(findPreference(perfName));
-            } else {
-                if (packageName.equals("com.tencent.mm")) {
-                    donateWechat();
-                } else if (packageName.equals("com.eg.android.AlipayGphone")) {
-                    donateAlipay();
-                }
+            } else if (packageName.equals("com.tencent.mm")) {
+                donateWechat();
+            } else if (packageName.equals("com.eg.android.AlipayGphone")) {
+                donateAlipay();
             }
         } catch (Throwable t) {
             PreferenceCategory displayOptions = (PreferenceCategory) findPreference("ABOUT");
@@ -88,7 +97,6 @@ public class SettingsActivity extends PreferenceActivity {
         }
     }
 
-    @SuppressWarnings("deprecation")
     private void licensesListener() {
         findPreference("LICENSES").setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
             @Override
@@ -134,7 +142,6 @@ public class SettingsActivity extends PreferenceActivity {
         }
     }
 
-    @SuppressWarnings("deprecation")
     private void donateAlipay() {
         findPreference("DONATE_ALIPAY").setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
             @Override
@@ -145,7 +152,6 @@ public class SettingsActivity extends PreferenceActivity {
         });
     }
 
-    @SuppressWarnings("deprecation")
     private void donateWechat() {
         findPreference("DONATE_WECHAT").setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
             @Override
@@ -159,7 +165,6 @@ public class SettingsActivity extends PreferenceActivity {
         });
     }
 
-    @SuppressWarnings("deprecation")
     private void openGithub() {
         findPreference("GITHUB").setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
             @Override
@@ -173,7 +178,6 @@ public class SettingsActivity extends PreferenceActivity {
         });
     }
 
-    @SuppressWarnings("deprecation")
     private void hideIconListener() {
         findPreference("HIDEICON").setOnPreferenceChangeListener(new Preference.OnPreferenceChangeListener() {
             @Override
@@ -192,19 +196,16 @@ public class SettingsActivity extends PreferenceActivity {
 
     public class AppPicker extends AsyncTask<Void, Void, Void> {
 
-        @SuppressWarnings("deprecation")
         final MultiSelectListPreference disabledApps = (MultiSelectListPreference) findPreference("DISABLED_APPS");
         final List<CharSequence> appNames = new ArrayList<>();
         final List<CharSequence> packageNames = new ArrayList<>();
         final PackageManager pm = getApplicationContext().getPackageManager();
         final List<ApplicationInfo> packages = pm.getInstalledApplications(PackageManager.GET_META_DATA);
 
-        @Override
         protected void onPreExecute() {
             disabledApps.setEnabled(false);
         }
 
-        @Override
         protected Void doInBackground(Void... arg0) {
 
             List<String[]> sortedApps = new ArrayList<>();
