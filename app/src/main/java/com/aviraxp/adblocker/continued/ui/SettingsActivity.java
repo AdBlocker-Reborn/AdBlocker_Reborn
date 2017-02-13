@@ -14,7 +14,7 @@ import android.os.Bundle;
 import android.preference.MultiSelectListPreference;
 import android.preference.Preference;
 import android.preference.PreferenceActivity;
-import android.preference.PreferenceGroup;
+import android.preference.PreferenceCategory;
 import android.widget.Toast;
 
 import com.aviraxp.adblocker.continued.BuildConfig;
@@ -41,9 +41,24 @@ public class SettingsActivity extends PreferenceActivity {
         new AppPicker().execute();
         checkState();
         prepareDonationStatus();
+        paypalDonate();
         openGithub();
         hideIconListener();
         licensesListener();
+    }
+
+    @SuppressWarnings("deprecation")
+    private void paypalDonate() {
+        findPreference("DONATE_PAYPAL").setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
+            @Override
+            public boolean onPreferenceClick(Preference preference) {
+                Intent intent = new Intent();
+                intent.setAction(Intent.ACTION_VIEW)
+                        .setData(Uri.parse("https://paypal.me/wanghan1995315"));
+                startActivity(intent);
+                return true;
+            }
+        });
     }
 
     @SuppressWarnings("deprecation")
@@ -58,7 +73,7 @@ public class SettingsActivity extends PreferenceActivity {
             PackageInfo info = getApplicationContext().getPackageManager().getPackageInfo(packageName, 0);
             boolean isAvailable = (info != null);
             if (!isAvailable) {
-                PreferenceGroup displayOptions = (PreferenceGroup) findPreference("ABOUT");
+                PreferenceCategory displayOptions = (PreferenceCategory) findPreference("ABOUT");
                 displayOptions.removePreference(findPreference(perfName));
             } else {
                 if (packageName.equals("com.tencent.mm")) {
@@ -68,7 +83,7 @@ public class SettingsActivity extends PreferenceActivity {
                 }
             }
         } catch (Throwable t) {
-            PreferenceGroup displayOptions = (PreferenceGroup) findPreference("ABOUT");
+            PreferenceCategory displayOptions = (PreferenceCategory) findPreference("ABOUT");
             displayOptions.removePreference(findPreference(perfName));
         }
     }
@@ -124,11 +139,7 @@ public class SettingsActivity extends PreferenceActivity {
         findPreference("DONATE_ALIPAY").setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
             @Override
             public boolean onPreferenceClick(Preference preference) {
-                if (AlipayZeroSdk.hasInstalledAlipayClient(getApplicationContext())) {
-                    AlipayZeroSdk.startAlipayClient(SettingsActivity.this, "aex00388woilyb9ln32hlfe");
-                } else {
-                    Toast.makeText(getApplicationContext(), R.string.donate_alipay_failed, Toast.LENGTH_SHORT).show();
-                }
+                AlipayZeroSdk.startAlipayClient(SettingsActivity.this, "aex00388woilyb9ln32hlfe");
                 return true;
             }
         });
@@ -139,14 +150,10 @@ public class SettingsActivity extends PreferenceActivity {
         findPreference("DONATE_WECHAT").setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
             @Override
             public boolean onPreferenceClick(Preference preference) {
-                try {
-                    Intent intent = new Intent();
-                    intent.setClassName("com.tencent.mm", "com.tencent.mm.ui.LauncherUI")
-                            .putExtra("wxid_90m10eigpruz21", true);
-                    startActivity(intent);
-                } catch (Throwable t) {
-                    Toast.makeText(getApplicationContext(), R.string.donate_wechat_failed, Toast.LENGTH_SHORT).show();
-                }
+                Intent intent = new Intent();
+                intent.setClassName("com.tencent.mm", "com.tencent.mm.ui.LauncherUI")
+                        .putExtra("wxid_90m10eigpruz21", true);
+                startActivity(intent);
                 return true;
             }
         });
