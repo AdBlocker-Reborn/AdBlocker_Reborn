@@ -22,7 +22,7 @@ import static com.aviraxp.adblocker.continued.hook.HookLoader.servicesList;
 
 class ServicesHook {
 
-    private final XC_MethodHook servicesStartHook = new XC_MethodHook() {
+    private static final XC_MethodHook servicesStartHook = new XC_MethodHook() {
         @Override
         protected void beforeHookedMethod(MethodHookParam param) throws Throwable {
             Intent intent = (Intent) param.args[1];
@@ -30,7 +30,7 @@ class ServicesHook {
         }
     };
 
-    private final XC_MethodHook servicesBindHook = new XC_MethodHook() {
+    private static final XC_MethodHook servicesBindHook = new XC_MethodHook() {
         @Override
         protected void beforeHookedMethod(MethodHookParam param) throws Throwable {
             Intent intent = (Intent) param.args[2];
@@ -54,7 +54,7 @@ class ServicesHook {
         LogUtils.logRecord("MIUI Based: " + isMIUI(), true);
     }
 
-    public void hook(XC_LoadPackage.LoadPackageParam lpparam) {
+    public static void hook(XC_LoadPackage.LoadPackageParam lpparam) {
 
         if (!PreferencesHelper.isServicesHookEnabled()) {
             return;
@@ -71,7 +71,7 @@ class ServicesHook {
         }
     }
 
-    private void handleServiceStart(XC_MethodHook.MethodHookParam param, Intent serviceIntent) {
+    private static void handleServiceStart(XC_MethodHook.MethodHookParam param, Intent serviceIntent) {
         if (serviceIntent != null && serviceIntent.getComponent() != null) {
             String serviceName = serviceIntent.getComponent().flattenToShortString();
             if (serviceName != null) {

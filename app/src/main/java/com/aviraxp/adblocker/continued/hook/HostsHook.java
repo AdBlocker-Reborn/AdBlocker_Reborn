@@ -33,7 +33,7 @@ class HostsHook {
         Collections.addAll(hostsList, sUrls);
     }
 
-    public void hook(final XC_LoadPackage.LoadPackageParam lpparam) {
+    public static void hook(final XC_LoadPackage.LoadPackageParam lpparam) {
 
         if (!PreferencesHelper.isHostsHookEnabled() || PreferencesHelper.disabledApps().contains(lpparam.packageName)) {
             return;

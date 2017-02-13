@@ -42,7 +42,7 @@ class ActViewHook {
         Collections.addAll(actViewList_aggressive, sUrls2);
     }
 
-    public void hook(final XC_LoadPackage.LoadPackageParam lpparam) {
+    public static void hook(final XC_LoadPackage.LoadPackageParam lpparam) {
 
         if (!PreferencesHelper.isActViewHookEnabled() || PreferencesHelper.disabledApps().contains(lpparam.packageName)) {
             return;
@@ -103,7 +103,7 @@ class ActViewHook {
         XposedBridge.hookAllConstructors(ViewGroup.class, viewHook);
     }
 
-    private boolean isAggressiveBlock(String string) {
+    private static boolean isAggressiveBlock(String string) {
         for (String listItem : actViewList_aggressive) {
             if (string.contains(listItem)) {
                 return true;
@@ -112,7 +112,7 @@ class ActViewHook {
         return false;
     }
 
-    private void hideIfAdView(Object paramObject, String paramString) {
+    private static void hideIfAdView(Object paramObject, String paramString) {
         String str = paramObject.getClass().getName();
         if (str != null && (actViewList.contains(str) || (PreferencesHelper.isAggressiveHookEnabled() && isAggressiveBlock(str)))) {
             ((View) paramObject).setVisibility(View.GONE);

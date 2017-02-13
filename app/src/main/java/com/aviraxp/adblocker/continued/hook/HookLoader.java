@@ -17,15 +17,15 @@ public class HookLoader implements IXposedHookLoadPackage, IXposedHookZygoteInit
     static HashSet<String> regexList;
 
     public void handleLoadPackage(XC_LoadPackage.LoadPackageParam lpparam) throws Throwable {
-        new ActViewHook().hook(lpparam);
-        new BackPressHook().hook(lpparam);
-        new DonateHook().hook(lpparam);
-        new HidingHook().hook(lpparam);
-        new HostsHook().hook(lpparam);
-        new ReceiversHook().hook(lpparam);
-        new SelfHook().hook(lpparam);
-        new ServicesHook().hook(lpparam);
-        new WebViewHook().hook(lpparam);
+        ActViewHook.hook(lpparam);
+        BackPressHook.hook(lpparam);
+        DonateHook.hook(lpparam);
+        HidingHook.hook(lpparam);
+        HostsHook.hook(lpparam);
+        ReceiversHook.hook(lpparam);
+        SelfHook.hook(lpparam);
+        ServicesHook.hook(lpparam);
+        WebViewHook.hook(lpparam);
     }
 
     public void initZygote(StartupParam startupParam) throws Throwable {

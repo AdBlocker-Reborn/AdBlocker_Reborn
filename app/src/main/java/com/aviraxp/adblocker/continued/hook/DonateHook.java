@@ -11,7 +11,7 @@ import de.robv.android.xposed.callbacks.XC_LoadPackage;
 
 class DonateHook {
 
-    public void hook(XC_LoadPackage.LoadPackageParam lpparam) {
+    public static void hook(XC_LoadPackage.LoadPackageParam lpparam) {
 
         XC_MethodHook paymentIntentHook = new XC_MethodHook() {
             @Override

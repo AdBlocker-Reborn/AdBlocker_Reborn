@@ -33,7 +33,7 @@ class ReceiversHook {
         Collections.addAll(receiversList, sUrls);
     }
 
-    public void hook(XC_LoadPackage.LoadPackageParam lpparam) throws Throwable {
+    public static void hook(XC_LoadPackage.LoadPackageParam lpparam) throws Throwable {
 
         if (!PreferencesHelper.isReceiversHookEnabled() || PreferencesHelper.disabledApps().contains(lpparam.packageName) || lpparam.packageName.equals("android")) {
             return;

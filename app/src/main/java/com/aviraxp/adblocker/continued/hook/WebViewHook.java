@@ -24,7 +24,7 @@ import static com.aviraxp.adblocker.continued.hook.HookLoader.regexList;
 
 class WebViewHook {
 
-    private boolean adExist;
+    private static boolean adExist;
 
     static void init(IXposedHookZygoteInit.StartupParam startupParam) throws Throwable {
         String MODULE_PATH = startupParam.modulePath;
@@ -36,7 +36,7 @@ class WebViewHook {
         Collections.addAll(regexList, sUrls);
     }
 
-    private void removeAdView(final View view) {
+    private static void removeAdView(final View view) {
 
         ViewGroup.LayoutParams params = view.getLayoutParams();
 
@@ -61,7 +61,7 @@ class WebViewHook {
         });
     }
 
-    public void hook(final XC_LoadPackage.LoadPackageParam lpparam) {
+    public static void hook(final XC_LoadPackage.LoadPackageParam lpparam) {
 
         if (!PreferencesHelper.isWebViewHookEnabled() || PreferencesHelper.disabledApps().contains(lpparam.packageName)) {
             return;
@@ -120,7 +120,7 @@ class WebViewHook {
         }
     }
 
-    private boolean urlFiltering(String url, String data, XC_MethodHook.MethodHookParam param) {
+    private static boolean urlFiltering(String url, String data, XC_MethodHook.MethodHookParam param) {
 
         String urlDecode = null;
         String dataDecode = null;
