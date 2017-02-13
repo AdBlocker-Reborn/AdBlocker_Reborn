@@ -19,8 +19,6 @@
     <string name="donate_alipay">Alipay Donation</string>
     <string name="donate_description_alipay">Offer me a cup of coffee</string>
     <string name="donate_description_wechat">Offer me spicy strips</string>
-    <string name="donate_alipay_failed">Alipay not installed</string>
-    <string name="donate_wechat_failed">Wechat not installed</string>
     <string name="license">OpenSource Licenses</string>
     <string name="license_description">This module is distributed under GPL-3.0 license</string>
     <string name="open_project">Explore Project Source</string>
