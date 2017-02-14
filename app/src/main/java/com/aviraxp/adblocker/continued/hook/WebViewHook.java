@@ -139,7 +139,7 @@ class WebViewHook {
 
         try {
             for (String adUrl : HookLoader.hostsList) {
-                if ((urlDecode != null && urlDecode.startsWith("http") && urlDecode.contains(adUrl)) || (dataDecode != null && dataDecode.startsWith("http") && dataDecode.contains(adUrl))) {
+                if ((urlDecode != null && urlDecode.startsWith("http") && urlDecode.substring(urlDecode.indexOf("://") + 3).startsWith(adUrl)) || (dataDecode != null && dataDecode.startsWith("http") && dataDecode.substring(dataDecode.indexOf("://") + 3).startsWith(adUrl))) {
                     param.setResult(new Object());
                     removeAdView((View) param.thisObject);
                     return true;
