@@ -72,12 +72,11 @@ class WebViewHook {
 
             XC_MethodHook loadUrlHook = new XC_MethodHook() {
                 @Override
-                protected void beforeHookedMethod(XC_MethodHook.MethodHookParam param) throws Throwable {
+                protected void beforeHookedMethod(XC_MethodHook.MethodHookParam param) {
                     String url = (String) param.args[0];
                     if (url != null) {
                         adExist = urlFiltering(url, null, param);
                         if (adExist) {
-                            param.setResult(new Object());
                             LogUtils.logRecord("WebView Block Success: " + lpparam.packageName + "/" + url, true);
                         }
                     }
@@ -86,12 +85,11 @@ class WebViewHook {
 
             XC_MethodHook loadDataHook = new XC_MethodHook() {
                 @Override
-                protected void beforeHookedMethod(XC_MethodHook.MethodHookParam param) throws Throwable {
+                protected void beforeHookedMethod(XC_MethodHook.MethodHookParam param) {
                     String data = (String) param.args[0];
                     if (data != null) {
                         adExist = urlFiltering(null, data, param);
                         if (adExist) {
-                            param.setResult(new Object());
                             LogUtils.logRecord("WebView Block Success: " + lpparam.packageName + "/" + data, true);
                         }
                     }
@@ -100,13 +98,12 @@ class WebViewHook {
 
             XC_MethodHook loadDataWithBaseURL = new XC_MethodHook() {
                 @Override
-                protected void beforeHookedMethod(XC_MethodHook.MethodHookParam param) throws Throwable {
+                protected void beforeHookedMethod(XC_MethodHook.MethodHookParam param) {
                     String url = (String) param.args[0];
                     String data = (String) param.args[1];
                     if (url != null && data != null) {
                         adExist = urlFiltering(url, data, param);
                         if (adExist) {
-                            param.setResult(new Object());
                             LogUtils.logRecord("WebView Block Success: " + lpparam.packageName + "/" + url + " & " + data, true);
                         }
                     }
@@ -142,6 +139,7 @@ class WebViewHook {
                 if ((urlDecode != null && urlDecode.startsWith("http") && urlDecode.substring(urlDecode.indexOf("://") + 3).startsWith(adUrl)) || (dataDecode != null && dataDecode.startsWith("http") && dataDecode.substring(dataDecode.indexOf("://") + 3).startsWith(adUrl))) {
                     param.setResult(new Object());
                     removeAdView((View) param.thisObject);
+                    param.setResult(new Object());
                     return true;
                 }
             }
@@ -159,6 +157,7 @@ class WebViewHook {
                         if (matcher.find()) {
                             param.setResult(new Object());
                             removeAdView((View) param.thisObject);
+                            param.setResult(new Object());
                             return true;
                         }
                     }
@@ -168,6 +167,7 @@ class WebViewHook {
                         if (matcher.find()) {
                             param.setResult(new Object());
                             removeAdView((View) param.thisObject);
+                            param.setResult(new Object());
                             return true;
                         }
                     }
