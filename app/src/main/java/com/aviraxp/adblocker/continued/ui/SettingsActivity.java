@@ -199,8 +199,6 @@ public class SettingsActivity extends PreferenceActivity {
         final MultiSelectListPreference disabledApps = (MultiSelectListPreference) findPreference("DISABLED_APPS");
         final List<CharSequence> appNames = new ArrayList<>();
         final List<CharSequence> packageNames = new ArrayList<>();
-        final PackageManager pm = getApplicationContext().getPackageManager();
-        final List<ApplicationInfo> packages = pm.getInstalledApplications(PackageManager.GET_META_DATA);
 
         protected void onPreExecute() {
             disabledApps.setEnabled(false);
@@ -208,7 +206,9 @@ public class SettingsActivity extends PreferenceActivity {
 
         protected Void doInBackground(Void... arg0) {
 
-            List<String[]> sortedApps = new ArrayList<>();
+            final List<String[]> sortedApps = new ArrayList<>();
+            final PackageManager pm = getApplicationContext().getPackageManager();
+            final List<ApplicationInfo> packages = pm.getInstalledApplications(PackageManager.GET_META_DATA);
 
             for (ApplicationInfo app : packages) {
                 sortedApps.add(new String[]{app.packageName, app.loadLabel(pm).toString()});
