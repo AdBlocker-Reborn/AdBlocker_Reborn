@@ -75,7 +75,7 @@ class WebViewHook {
                 protected void beforeHookedMethod(XC_MethodHook.MethodHookParam param) {
                     String url = (String) param.args[0];
                     if (url != null) {
-                        adExist = urlFiltering(url, null, param);
+                        adExist = urlFiltering(url, null, null, param);
                         if (adExist) {
                             LogUtils.logRecord("WebView Block Success: " + lpparam.packageName + "/" + url, true);
                         }
@@ -87,8 +87,9 @@ class WebViewHook {
                 @Override
                 protected void beforeHookedMethod(XC_MethodHook.MethodHookParam param) {
                     String data = (String) param.args[0];
+                    String encodingType = (String) param.args[2];
                     if (data != null) {
-                        adExist = urlFiltering(null, data, param);
+                        adExist = urlFiltering(null, data, encodingType, param);
                         if (adExist) {
                             LogUtils.logRecord("WebView Block Success: " + lpparam.packageName + "/" + data, true);
                         }
@@ -101,8 +102,9 @@ class WebViewHook {
                 protected void beforeHookedMethod(XC_MethodHook.MethodHookParam param) {
                     String url = (String) param.args[0];
                     String data = (String) param.args[1];
+                    String encodingType = (String) param.args[3];
                     if (url != null && data != null) {
-                        adExist = urlFiltering(url, data, param);
+                        adExist = urlFiltering(url, data, encodingType, param);
                         if (adExist) {
                             LogUtils.logRecord("WebView Block Success: " + lpparam.packageName + "/" + url + " & " + data, true);
                         }
@@ -117,16 +119,23 @@ class WebViewHook {
         }
     }
 
-    private static boolean urlFiltering(String url, String data, XC_MethodHook.MethodHookParam param) {
+    private static boolean urlFiltering(String url, String data, String encodingType, XC_MethodHook.MethodHookParam param) {
 
         String urlDecode = null;
         String dataDecode = null;
 
         try {
             if (url != null) {
-                urlDecode = URLDecoder.decode(url, "UTF-8");
+                if (encodingType != null) {
+                    urlDecode = URLDecoder.decode(url, encodingType);
+                } else {
+                    urlDecode = URLDecoder.decode(url, "UTF-8");
+                }
             }
             if (data != null) {
+                if (encodingType != null) {
+                    dataDecode = URLDecoder.decode(data, encodingType);
+                }
                 dataDecode = URLDecoder.decode(data, "UTF-8");
             }
         } catch (IllegalArgumentException ignored) {
