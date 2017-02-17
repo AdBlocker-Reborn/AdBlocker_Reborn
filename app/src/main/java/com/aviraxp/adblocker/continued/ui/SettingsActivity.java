@@ -41,33 +41,24 @@ public class SettingsActivity extends PreferenceActivity {
         new AppPicker().execute();
         checkState();
         prepareDonationStatus();
-        paypalDonate();
-        openGithub();
-        openXDA();
+        uriListener();
         hideIconListener();
         licensesListener();
     }
 
-    private void openXDA() {
-        findPreference("XDA").setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
-            @Override
-            public boolean onPreferenceClick(Preference preference) {
-                Intent intent = new Intent();
-                intent.setAction(Intent.ACTION_VIEW)
-                        .setData(Uri.parse("https://forum.xda-developers.com/xposed/modules/xposed-adblocker-reborn-1-0-1-2017-02-11-t3554617"));
-                startActivity(intent);
-                return true;
-            }
-        });
+    private void uriListener() {
+        uriHelper("DONATE_PAYPAL", "https://paypal.me/wanghan1995315");
+        uriHelper("GITHUB", "https://github.com/aviraxp/AdBlocker_Reborn");
+        uriHelper("XDA", "https://forum.xda-developers.com/xposed/modules/xposed-adblocker-reborn-1-0-1-2017-02-11-t3554617");
     }
 
-    private void paypalDonate() {
-        findPreference("DONATE_PAYPAL").setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
+    private void uriHelper(String perf, final String uri) {
+        findPreference(perf).setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
             @Override
             public boolean onPreferenceClick(Preference preference) {
                 Intent intent = new Intent();
                 intent.setAction(Intent.ACTION_VIEW)
-                        .setData(Uri.parse("https://paypal.me/wanghan1995315"));
+                        .setData(Uri.parse(uri));
                 startActivity(intent);
                 return true;
             }
@@ -165,19 +156,6 @@ public class SettingsActivity extends PreferenceActivity {
         });
     }
 
-    private void openGithub() {
-        findPreference("GITHUB").setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
-            @Override
-            public boolean onPreferenceClick(Preference preference) {
-                Intent intent = new Intent();
-                intent.setAction(Intent.ACTION_VIEW)
-                        .setData(Uri.parse("https://github.com/aviraxp/AdBlocker_Reborn"));
-                startActivity(intent);
-                return true;
-            }
-        });
-    }
-
     private void hideIconListener() {
         findPreference("HIDEICON").setOnPreferenceChangeListener(new Preference.OnPreferenceChangeListener() {
             @Override
@@ -194,16 +172,18 @@ public class SettingsActivity extends PreferenceActivity {
         });
     }
 
-    public class AppPicker extends AsyncTask<Void, Void, Void> {
+    private class AppPicker extends AsyncTask<Void, Void, Void> {
 
         final MultiSelectListPreference disabledApps = (MultiSelectListPreference) findPreference("DISABLED_APPS");
         final List<CharSequence> appNames = new ArrayList<>();
         final List<CharSequence> packageNames = new ArrayList<>();
 
+        @Override
         protected void onPreExecute() {
             disabledApps.setEnabled(false);
         }
 
+        @Override
         protected Void doInBackground(Void... arg0) {
 
             final List<String[]> sortedApps = new ArrayList<>();
