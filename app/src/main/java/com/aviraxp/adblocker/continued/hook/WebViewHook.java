@@ -26,7 +26,7 @@ class WebViewHook {
 
     private static boolean adExist;
 
-    static void init(IXposedHookZygoteInit.StartupParam startupParam) throws Throwable {
+    void init(IXposedHookZygoteInit.StartupParam startupParam) throws Throwable {
         String MODULE_PATH = startupParam.modulePath;
         Resources res = XModuleResources.createInstance(MODULE_PATH, null);
         byte[] array = XposedHelpers.assetAsByteArray(res, "blocklist/regexurls");
@@ -36,7 +36,7 @@ class WebViewHook {
         Collections.addAll(regexList, sUrls);
     }
 
-    private static void removeAdView(final View view) {
+    private void removeAdView(final View view) {
 
         ViewGroup.LayoutParams params = view.getLayoutParams();
 
@@ -61,7 +61,7 @@ class WebViewHook {
         });
     }
 
-    public static void hook(final XC_LoadPackage.LoadPackageParam lpparam) {
+    public void hook(final XC_LoadPackage.LoadPackageParam lpparam) {
 
         if (!PreferencesHelper.isWebViewHookEnabled() || PreferencesHelper.disabledApps().contains(lpparam.packageName)) {
             return;
@@ -119,7 +119,7 @@ class WebViewHook {
         }
     }
 
-    private static boolean urlFiltering(String url, String data, String encodingType, XC_MethodHook.MethodHookParam param) {
+    private boolean urlFiltering(String url, String data, String encodingType, XC_MethodHook.MethodHookParam param) {
 
         String urlDecode = null;
         String dataDecode = null;
@@ -171,7 +171,7 @@ class WebViewHook {
         return false;
     }
 
-    private static boolean regexFilter(String decode, String regex, XC_MethodHook.MethodHookParam param) {
+    private boolean regexFilter(String decode, String regex, XC_MethodHook.MethodHookParam param) {
         if (decode != null) {
             Pattern regexPattern = Pattern.compile(regex);
             Matcher matcher = regexPattern.matcher(decode);

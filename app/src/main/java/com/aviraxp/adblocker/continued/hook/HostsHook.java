@@ -23,7 +23,7 @@ class HostsHook {
 
     private static final String BLOCK_MESSAGE = "Blocked by AdBlocker Reborn: ";
 
-    static void init(IXposedHookZygoteInit.StartupParam startupParam) throws Throwable {
+    void init(IXposedHookZygoteInit.StartupParam startupParam) throws Throwable {
         String MODULE_PATH = startupParam.modulePath;
         Resources res = XModuleResources.createInstance(MODULE_PATH, null);
         byte[] array = XposedHelpers.assetAsByteArray(res, "blocklist/hosts");
@@ -33,7 +33,7 @@ class HostsHook {
         Collections.addAll(hostsList, sUrls);
     }
 
-    public static void hook(final XC_LoadPackage.LoadPackageParam lpparam) {
+    public void hook(final XC_LoadPackage.LoadPackageParam lpparam) {
 
         if (!PreferencesHelper.isHostsHookEnabled() || PreferencesHelper.disabledApps().contains(lpparam.packageName)) {
             return;

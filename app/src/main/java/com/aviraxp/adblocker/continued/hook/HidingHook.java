@@ -24,7 +24,11 @@ import static com.aviraxp.adblocker.continued.hook.HookLoader.hideList;
 
 class HidingHook {
 
-    static void init(IXposedHookZygoteInit.StartupParam startupParam) throws Throwable {
+    private static boolean isTarget(String name) {
+        return name.equals(BuildConfig.APPLICATION_ID);
+    }
+
+    void init(IXposedHookZygoteInit.StartupParam startupParam) throws Throwable {
         String MODULE_PATH = startupParam.modulePath;
         Resources res = XModuleResources.createInstance(MODULE_PATH, null);
         byte[] array = XposedHelpers.assetAsByteArray(res, "blacklist/hidingapp");
@@ -35,7 +39,7 @@ class HidingHook {
     }
 
     @SuppressWarnings("unchecked")
-    public static void hook(final XC_LoadPackage.LoadPackageParam lpparam) {
+    public void hook(final XC_LoadPackage.LoadPackageParam lpparam) {
 
         if (!PreferencesHelper.isHidingHookEnabled() || PreferencesHelper.disabledApps().contains(lpparam.packageName) || !hideList.contains(lpparam.packageName)) {
             return;
@@ -131,9 +135,5 @@ class HidingHook {
         if (Build.VERSION.SDK_INT < Build.VERSION_CODES.LOLLIPOP_MR1) {
             XposedHelpers.findAndHookMethod("android.app.ActivityManager", lpparam.classLoader, "getRunningAppProcesses", getRunningAppProcessesHook);
         }
-    }
-
-    private static boolean isTarget(String name) {
-        return name.equals(BuildConfig.APPLICATION_ID);
     }
 }
