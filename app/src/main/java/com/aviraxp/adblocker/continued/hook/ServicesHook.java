@@ -24,7 +24,7 @@ class ServicesHook {
 
     private static final XC_MethodHook servicesStartHook = new XC_MethodHook() {
         @Override
-        protected void beforeHookedMethod(MethodHookParam param) throws Throwable {
+        protected void beforeHookedMethod(MethodHookParam param) {
             Intent intent = (Intent) param.args[1];
             handleServiceStart(param, intent);
         }
@@ -32,7 +32,7 @@ class ServicesHook {
 
     private static final XC_MethodHook servicesBindHook = new XC_MethodHook() {
         @Override
-        protected void beforeHookedMethod(MethodHookParam param) throws Throwable {
+        protected void beforeHookedMethod(MethodHookParam param) {
             Intent intent = (Intent) param.args[2];
             handleServiceStart(param, intent);
         }

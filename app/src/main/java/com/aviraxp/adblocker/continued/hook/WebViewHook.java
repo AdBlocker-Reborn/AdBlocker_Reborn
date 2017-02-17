@@ -160,26 +160,7 @@ class WebViewHook {
         try {
             for (String regexAdUrl : regexList) {
                 if ((urlDecode != null && urlDecode.startsWith("http")) || (dataDecode != null && dataDecode.startsWith("http"))) {
-                    if (urlDecode != null) {
-                        Pattern regexPattern = Pattern.compile(regexAdUrl);
-                        Matcher matcher = regexPattern.matcher(urlDecode);
-                        if (matcher.find()) {
-                            param.setResult(new Object());
-                            removeAdView((View) param.thisObject);
-                            param.setResult(new Object());
-                            return true;
-                        }
-                    }
-                    if (dataDecode != null) {
-                        Pattern regexPattern = Pattern.compile(regexAdUrl);
-                        Matcher matcher = regexPattern.matcher(dataDecode);
-                        if (matcher.find()) {
-                            param.setResult(new Object());
-                            removeAdView((View) param.thisObject);
-                            param.setResult(new Object());
-                            return true;
-                        }
-                    }
+                    return regexFilter(urlDecode, regexAdUrl, param) || regexFilter(dataDecode, regexAdUrl, param);
                 }
             }
         } catch (IllegalArgumentException ignored) {
@@ -187,6 +168,20 @@ class WebViewHook {
             LogUtils.logRecord(t, false);
         }
 
+        return false;
+    }
+
+    private static boolean regexFilter(String decode, String regex, XC_MethodHook.MethodHookParam param) {
+        if (decode != null) {
+            Pattern regexPattern = Pattern.compile(regex);
+            Matcher matcher = regexPattern.matcher(decode);
+            if (matcher.find()) {
+                param.setResult(new Object());
+                removeAdView((View) param.thisObject);
+                param.setResult(new Object());
+                return true;
+            }
+        }
         return false;
     }
 }

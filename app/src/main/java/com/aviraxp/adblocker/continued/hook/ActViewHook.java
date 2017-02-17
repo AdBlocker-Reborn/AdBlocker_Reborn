@@ -49,6 +49,7 @@ class ActViewHook {
         }
 
         XC_MethodHook activityCreateHook = new XC_MethodHook() {
+            @Override
             protected void afterHookedMethod(XC_MethodHook.MethodHookParam param) throws Throwable {
                 Activity activity = (Activity) param.thisObject;
                 String activityClassName = activity.getClass().getName();
