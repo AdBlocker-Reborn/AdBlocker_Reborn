@@ -116,6 +116,7 @@ class ActViewHook {
     private void hideIfAdView(Object paramObject, String paramString) {
         String str = paramObject.getClass().getName();
         if (str != null && (actViewList.contains(str) || (PreferencesHelper.isAggressiveHookEnabled() && isAggressiveBlock(str)))) {
+            ((View) paramObject).clearAnimation();
             ((View) paramObject).setVisibility(View.GONE);
             LogUtils.logRecord("View Block Success: " + paramString + "/" + str, true);
         }
