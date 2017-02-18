@@ -82,20 +82,6 @@ class HostsHook {
                     LogUtils.logRecord(t, false);
                 }
             }
-
-            @Override
-            protected void afterHookedMethod(MethodHookParam param) throws Throwable {
-                try {
-                    String host = (String) param.args[0];
-                    if (host != null && hostsList.contains(host)) {
-                        param.setResult(new Object());
-                        param.setThrowable(new UnknownHostException(BLOCK_MESSAGE + host));
-                        LogUtils.logRecord("Hosts Block Success: " + lpparam.packageName + "/" + host, true);
-                    }
-                } catch (Throwable t) {
-                    LogUtils.logRecord(t, false);
-                }
-            }
         };
 
         XC_MethodHook inetSockAddrClzHook = new XC_MethodHook() {
@@ -126,26 +112,6 @@ class HostsHook {
         XC_MethodHook ioBridgeHook = new XC_MethodHook() {
             @Override
             protected void beforeHookedMethod(MethodHookParam param) throws Throwable {
-                try {
-                    InetAddress addr = (InetAddress) param.args[1];
-                    String host = addr.getHostName();
-                    String ip = addr.getHostAddress();
-                    if (host != null && hostsList.contains(host)) {
-                        param.setResult(false);
-                        param.setThrowable(new UnknownHostException(BLOCK_MESSAGE + host));
-                        LogUtils.logRecord("Hosts Block Success: " + lpparam.packageName + "/" + host, true);
-                    } else if (ip != null && hostsList.contains(ip)) {
-                        param.setResult(false);
-                        param.setThrowable(new UnknownHostException(BLOCK_MESSAGE + ip));
-                        LogUtils.logRecord("Hosts Block Success: " + lpparam.packageName + "/" + ip, true);
-                    }
-                } catch (Throwable t) {
-                    LogUtils.logRecord(t, false);
-                }
-            }
-
-            @Override
-            protected void afterHookedMethod(MethodHookParam param) throws Throwable {
                 try {
                     InetAddress addr = (InetAddress) param.args[1];
                     String host = addr.getHostName();
