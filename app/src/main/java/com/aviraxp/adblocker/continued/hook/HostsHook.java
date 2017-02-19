@@ -18,6 +18,7 @@ import de.robv.android.xposed.XposedHelpers;
 import de.robv.android.xposed.callbacks.XC_LoadPackage;
 
 import static com.aviraxp.adblocker.continued.hook.HookLoader.hostsList;
+import static com.aviraxp.adblocker.continued.hook.HookLoader.hostsList_yhosts;
 
 class HostsHook {
 
@@ -27,10 +28,16 @@ class HostsHook {
         String MODULE_PATH = startupParam.modulePath;
         Resources res = XModuleResources.createInstance(MODULE_PATH, null);
         byte[] array = XposedHelpers.assetAsByteArray(res, "blocklist/hosts");
+        byte[] array2 = XposedHelpers.assetAsByteArray(res, "blocklist/hosts_yhosts");
         String decoded = new String(array, "UTF-8");
+        String decoded2 = new String(array2, "UTF-8");
+        String decoded3 = decoded2.replace("127.0.0.1 ", "");
         String[] sUrls = decoded.split("\n");
+        String[] sUrls2 = decoded3.split("\n");
         hostsList = new HashSet<>();
+        hostsList_yhosts = new HashSet<>();
         Collections.addAll(hostsList, sUrls);
+        Collections.addAll(hostsList, sUrls2);
     }
 
     public void hook(final XC_LoadPackage.LoadPackageParam lpparam) {
@@ -56,7 +63,7 @@ class HostsHook {
                         } else if (obj.getClass().getName().equals("java.lang.InetAddress")) {
                             host = ((InetAddress) obj).getHostName();
                         }
-                        if (host != null && !PreferencesHelper.whiteListElements().contains(host) && hostsList.contains(host)) {
+                        if (host != null && !PreferencesHelper.whiteListElements().contains(host) && (hostsList.contains(host))) {
                             param.args[0] = null;
                             param.setResult(new Object());
                             LogUtils.logRecord("Hosts Block Success: " + lpparam.packageName + "/" + host, true);
