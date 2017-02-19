@@ -18,7 +18,7 @@ import de.robv.android.xposed.XposedBridge;
 import de.robv.android.xposed.XposedHelpers;
 import de.robv.android.xposed.callbacks.XC_LoadPackage;
 
-import static com.aviraxp.adblocker.continued.hook.HookLoader.regexList;
+import static com.aviraxp.adblocker.continued.hook.HookLoader.urlList;
 
 class WebViewHook {
 
@@ -27,11 +27,11 @@ class WebViewHook {
     void init(IXposedHookZygoteInit.StartupParam startupParam) throws Throwable {
         String MODULE_PATH = startupParam.modulePath;
         Resources res = XModuleResources.createInstance(MODULE_PATH, null);
-        byte[] array = XposedHelpers.assetAsByteArray(res, "blocklist/regexurls");
+        byte[] array = XposedHelpers.assetAsByteArray(res, "blocklist/urls");
         String decoded = new String(array, "UTF-8");
         String[] sUrls = decoded.split("\n");
-        regexList = new HashSet<>();
-        Collections.addAll(regexList, sUrls);
+        urlList = new HashSet<>();
+        Collections.addAll(urlList, sUrls);
     }
 
     private void removeAdView(final View view) {
@@ -141,28 +141,44 @@ class WebViewHook {
             LogUtils.logRecord(t, false);
         }
 
-        try {
-            for (String adUrl : HookLoader.hostsList) {
-                if ((urlDecode != null && !PreferencesHelper.whiteListElements().contains(urlDecode) && urlDecode.startsWith("http") && urlDecode.substring(urlDecode.indexOf("://") + 3).startsWith(adUrl)) || (dataDecode != null && dataDecode.startsWith("http") && !PreferencesHelper.whiteListElements().contains(dataDecode) && dataDecode.substring(dataDecode.indexOf("://") + 3).startsWith(adUrl))) {
-                    param.setResult(new Object());
-                    removeAdView((View) param.thisObject);
-                    param.setResult(new Object());
-                    return true;
+        return hostsBlock(urlDecode, HookLoader.hostsList, param) || hostsBlock(dataDecode, HookLoader.hostsList, param) || urlBlock(urlDecode, HookLoader.urlList, param) || urlBlock(dataDecode, HookLoader.urlList, param);
+    }
+
+    private boolean hostsBlock(String string, HashSet<String> hashSet, XC_MethodHook.MethodHookParam param) {
+        if ((string != null && !PreferencesHelper.whiteListElements().contains(string) && string.startsWith("http"))) {
+            try {
+                for (String adUrl : hashSet) {
+                    if (string.substring(string.indexOf("://") + 3).startsWith(adUrl)) {
+                        param.setResult(new Object());
+                        removeAdView((View) param.thisObject);
+                        param.setResult(new Object());
+                        return true;
+                    }
                 }
+            } catch (IllegalArgumentException ignored) {
+            } catch (Throwable t) {
+                LogUtils.logRecord(t, false);
             }
-        } catch (IllegalArgumentException ignored) {
-        } catch (Throwable t) {
-            LogUtils.logRecord(t, false);
         }
-
-        try {
-
-        } catch (IllegalArgumentException ignored) {
-        } catch (Throwable t) {
-            LogUtils.logRecord(t, false);
-        }
-
         return false;
     }
 
+    private boolean urlBlock(String string, HashSet<String> hashSet, XC_MethodHook.MethodHookParam param) {
+        if ((string != null && !PreferencesHelper.whiteListElements().contains(string) && string.startsWith("http"))) {
+            try {
+                for (String adUrl : hashSet) {
+                    if (string.contains(adUrl)) {
+                        param.setResult(new Object());
+                        removeAdView((View) param.thisObject);
+                        param.setResult(new Object());
+                        return true;
+                    }
+                }
+            } catch (IllegalArgumentException ignored) {
+            } catch (Throwable t) {
+                LogUtils.logRecord(t, false);
+            }
+        }
+        return false;
+    }
 }

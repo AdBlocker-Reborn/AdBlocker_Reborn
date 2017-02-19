@@ -14,7 +14,7 @@ public class HookLoader implements IXposedHookLoadPackage, IXposedHookZygoteInit
     static HashSet<String> hostsList;
     static HashSet<String> receiversList;
     static HashSet<String> servicesList;
-    static HashSet<String> regexList;
+    static HashSet<String> urlList;
 
     public void handleLoadPackage(XC_LoadPackage.LoadPackageParam lpparam) throws Throwable {
         new ActViewHook().hook(lpparam);
