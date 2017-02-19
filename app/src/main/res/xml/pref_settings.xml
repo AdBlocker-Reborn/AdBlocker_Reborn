@@ -36,7 +36,7 @@
             android:summary="@string/receivers_hook_description"
             android:title="@string/receivers_hook" />
         <CheckBoxPreference
-            android:defaultValue="true"
+            android:defaultValue="false"
             android:key="HIDING_HOOK"
             android:summary="@string/hiding_hook_description"
             android:title="@string/hiding_hook" />
