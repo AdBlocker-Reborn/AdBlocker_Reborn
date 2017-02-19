@@ -56,7 +56,7 @@ class HostsHook {
                         } else if (obj.getClass().getName().equals("java.lang.InetAddress")) {
                             host = ((InetAddress) obj).getHostName();
                         }
-                        if (host != null && hostsList.contains(host)) {
+                        if (host != null && !PreferencesHelper.whiteListElements().contains(host) && hostsList.contains(host)) {
                             param.args[0] = null;
                             param.setResult(new Object());
                             LogUtils.logRecord("Hosts Block Success: " + lpparam.packageName + "/" + host, true);
@@ -73,7 +73,7 @@ class HostsHook {
             protected void beforeHookedMethod(MethodHookParam param) throws Throwable {
                 try {
                     String host = (String) param.args[0];
-                    if (host != null && hostsList.contains(host)) {
+                    if (host != null && !PreferencesHelper.whiteListElements().contains(host) && hostsList.contains(host)) {
                         param.setResult(new Object());
                         param.setThrowable(new UnknownHostException(BLOCK_MESSAGE + host));
                         LogUtils.logRecord("Hosts Block Success: " + lpparam.packageName + "/" + host, true);
@@ -96,7 +96,7 @@ class HostsHook {
                         } else if (obj.getClass().getName().equals("java.lang.InetAddress")) {
                             host = ((InetAddress) obj).getHostName();
                         }
-                        if (host != null && hostsList.contains(host)) {
+                        if (host != null && !PreferencesHelper.whiteListElements().contains(host) && hostsList.contains(host)) {
                             param.args[0] = "localhost";
                             param.setResult(new Object());
                             param.setThrowable(new UnknownHostException(BLOCK_MESSAGE + host));
@@ -116,11 +116,11 @@ class HostsHook {
                     InetAddress addr = (InetAddress) param.args[1];
                     String host = addr.getHostName();
                     String ip = addr.getHostAddress();
-                    if (host != null && hostsList.contains(host)) {
+                    if (host != null && !PreferencesHelper.whiteListElements().contains(host) && hostsList.contains(host)) {
                         param.setResult(false);
                         param.setThrowable(new UnknownHostException(BLOCK_MESSAGE + host));
                         LogUtils.logRecord("Hosts Block Success: " + lpparam.packageName + "/" + host, true);
-                    } else if (ip != null && hostsList.contains(ip)) {
+                    } else if (ip != null && !PreferencesHelper.whiteListElements().contains(ip) && hostsList.contains(ip)) {
                         param.setResult(false);
                         param.setThrowable(new UnknownHostException(BLOCK_MESSAGE + ip));
                         LogUtils.logRecord("Hosts Block Success: " + lpparam.packageName + "/" + ip, true);

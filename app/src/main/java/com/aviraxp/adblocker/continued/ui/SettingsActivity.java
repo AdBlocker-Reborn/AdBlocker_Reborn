@@ -38,8 +38,8 @@ public class SettingsActivity extends PreferenceActivity {
             getPreferenceManager().setSharedPreferencesMode(MODE_WORLD_READABLE);
         }
         addPreferencesFromResource(R.xml.pref_settings);
-        new AppPicker().execute();
         checkState();
+        new AppPicker().execute();
         prepareDonationStatus();
         uriListener();
         hideIconListener();

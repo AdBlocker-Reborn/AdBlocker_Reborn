@@ -11,8 +11,6 @@ import com.aviraxp.adblocker.continued.util.LogUtils;
 import java.net.URLDecoder;
 import java.util.Collections;
 import java.util.HashSet;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 import de.robv.android.xposed.IXposedHookZygoteInit;
 import de.robv.android.xposed.XC_MethodHook;
@@ -145,7 +143,7 @@ class WebViewHook {
 
         try {
             for (String adUrl : HookLoader.hostsList) {
-                if ((urlDecode != null && urlDecode.startsWith("http") && urlDecode.substring(urlDecode.indexOf("://") + 3).startsWith(adUrl)) || (dataDecode != null && dataDecode.startsWith("http") && dataDecode.substring(dataDecode.indexOf("://") + 3).startsWith(adUrl))) {
+                if ((urlDecode != null && !PreferencesHelper.whiteListElements().contains(urlDecode) && urlDecode.startsWith("http") && urlDecode.substring(urlDecode.indexOf("://") + 3).startsWith(adUrl)) || (dataDecode != null && dataDecode.startsWith("http") && !PreferencesHelper.whiteListElements().contains(dataDecode) && dataDecode.substring(dataDecode.indexOf("://") + 3).startsWith(adUrl))) {
                     param.setResult(new Object());
                     removeAdView((View) param.thisObject);
                     param.setResult(new Object());
@@ -158,11 +156,7 @@ class WebViewHook {
         }
 
         try {
-            for (String regexAdUrl : regexList) {
-                if ((urlDecode != null && urlDecode.startsWith("http")) || (dataDecode != null && dataDecode.startsWith("http"))) {
-                    return regexFilter(urlDecode, regexAdUrl, param) || regexFilter(dataDecode, regexAdUrl, param);
-                }
-            }
+
         } catch (IllegalArgumentException ignored) {
         } catch (Throwable t) {
             LogUtils.logRecord(t, false);
@@ -171,17 +165,4 @@ class WebViewHook {
         return false;
     }
 
-    private boolean regexFilter(String decode, String regex, XC_MethodHook.MethodHookParam param) {
-        if (decode != null) {
-            Pattern regexPattern = Pattern.compile(regex);
-            Matcher matcher = regexPattern.matcher(decode);
-            if (matcher.find()) {
-                param.setResult(new Object());
-                removeAdView((View) param.thisObject);
-                param.setResult(new Object());
-                return true;
-            }
-        }
-        return false;
-    }
 }

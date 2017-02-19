@@ -53,7 +53,7 @@ class ActViewHook {
             protected void afterHookedMethod(XC_MethodHook.MethodHookParam param) throws Throwable {
                 Activity activity = (Activity) param.thisObject;
                 String activityClassName = activity.getClass().getName();
-                if (activityClassName != null && (actViewList.contains(activityClassName) || (PreferencesHelper.isAggressiveHookEnabled() && isAggressiveBlock(activityClassName)))) {
+                if (activityClassName != null && !PreferencesHelper.whiteListElements().contains(activityClassName) && (actViewList.contains(activityClassName) || (PreferencesHelper.isAggressiveHookEnabled() && isAggressiveBlock(activityClassName)))) {
                     activity.overridePendingTransition(0, 0);
                     activity.finish();
                     activity.overridePendingTransition(0, 0);
@@ -69,7 +69,7 @@ class ActViewHook {
                     ComponentName Component = ((Intent) param.args[0]).getComponent();
                     if (Component != null) {
                         String activityClassName = Component.getClassName();
-                        if (activityClassName != null && actViewList.contains(activityClassName)) {
+                        if (activityClassName != null && !PreferencesHelper.whiteListElements().contains(activityClassName) && (actViewList.contains(activityClassName) || (PreferencesHelper.isAggressiveHookEnabled() && isAggressiveBlock(activityClassName)))) {
                             param.setResult(null);
                             LogUtils.logRecord("Activity Block Success: " + lpparam.packageName + "/" + activityClassName, true);
                         }
@@ -115,7 +115,7 @@ class ActViewHook {
 
     private void hideIfAdView(Object paramObject, String paramString) {
         String str = paramObject.getClass().getName();
-        if (str != null && (actViewList.contains(str) || (PreferencesHelper.isAggressiveHookEnabled() && isAggressiveBlock(str)))) {
+        if (str != null && !PreferencesHelper.whiteListElements().contains(str) && (actViewList.contains(str) || (PreferencesHelper.isAggressiveHookEnabled() && isAggressiveBlock(str)))) {
             ((View) paramObject).clearAnimation();
             ((View) paramObject).setVisibility(View.GONE);
             LogUtils.logRecord("View Block Success: " + paramString + "/" + str, true);

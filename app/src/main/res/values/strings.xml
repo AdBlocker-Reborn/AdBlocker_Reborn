@@ -34,11 +34,13 @@
     <string name="donate_wechat">Donate via Wechat</string>
     <string name="licensedialog">Licenses</string>
     <string name="whitelist">Appliation Whitelist</string>
-    <string name="whitelist_description">Select appliations which are not affected by this module</string>
+    <string name="whitelist_description">Select applications which are not affected by this module</string>
     <string name="aggressive_hook_description">Block elements which look like an advertisement but unsure</string>
     <string name="aggressive_hook">Enable Aggressive Block</string>
     <string name="donate_description_payapl">Offer me a bottle of beer</string>
     <string name="donate_paypal">Donate via Paypal</string>
     <string name="open_xda_description">Discuss about this module on XDA</string>
     <string name="open_xda">Open Discussion Thread</string>
+    <string name="whitelist_element_description">Input elements which are not affected by this module</string>
+    <string name="whitelist_element">Element Whitelist</string>
 </resources>

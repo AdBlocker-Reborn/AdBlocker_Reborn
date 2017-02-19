@@ -51,7 +51,7 @@ class ReceiversHook {
         }
 
         for (String checkReceiver : receiversList) {
-            if (arrayReceivers.contains(checkReceiver)) {
+            if (!PreferencesHelper.whiteListElements().contains(checkReceiver) && arrayReceivers.contains(checkReceiver)) {
                 XposedHelpers.findAndHookMethod(checkReceiver, lpparam.classLoader, "onReceive", Context.class, Intent.class, XC_MethodReplacement.DO_NOTHING);
                 LogUtils.logRecord("Receiver Block Success: " + lpparam.packageName + "/" + checkReceiver, true);
             }

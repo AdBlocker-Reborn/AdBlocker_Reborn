@@ -6,6 +6,10 @@
             android:key="DISABLED_APPS"
             android:summary="@string/whitelist_description"
             android:title="@string/whitelist" />
+        <EditTextPreference
+            android:key="DISABLED_ELEMENTS"
+            android:summary="@string/whitelist_element_description"
+            android:title="@string/whitelist_element" />
         <CheckBoxPreference
             android:defaultValue="true"
             android:key="ACTVIEW_HOOK"

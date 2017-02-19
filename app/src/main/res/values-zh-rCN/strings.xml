@@ -41,4 +41,6 @@
     <string name="donate_paypal">贝宝捐赠</string>
     <string name="open_xda">浏览讨论页面</string>
     <string name="open_xda_description">在 XDA 上浏览讨论主题</string>
+    <string name="whitelist_element_description">选择本模块不作用的元素</string>
+    <string name="whitelist_element">元素白名单</string>
 </resources>
