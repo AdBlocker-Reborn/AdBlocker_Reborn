@@ -63,7 +63,7 @@ class HostsHook {
                         } else if (obj.getClass().getName().equals("java.lang.InetAddress")) {
                             host = ((InetAddress) obj).getHostName();
                         }
-                        if (host != null && !PreferencesHelper.whiteListElements().contains(host) && (hostsList.contains(host))) {
+                        if (host != null && !PreferencesHelper.whiteListElements().contains(host) && hostsList.contains(host)) {
                             param.args[0] = null;
                             param.setResult(new Object());
                             LogUtils.logRecord("Hosts Block Success: " + lpparam.packageName + "/" + host, true);

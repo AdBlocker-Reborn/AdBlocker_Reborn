@@ -7,8 +7,8 @@ android {
         applicationId "com.aviraxp.adblocker.continued"
         minSdkVersion 15
         targetSdkVersion 25
-        versionCode 12
-        versionName "1.0.2 - 幻字巫女"
+        versionCode 13
+        versionName "1.1 - 致不灭的你"
     }
     buildTypes {
         release {
