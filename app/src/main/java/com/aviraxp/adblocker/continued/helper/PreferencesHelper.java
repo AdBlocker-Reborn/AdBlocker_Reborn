@@ -57,6 +57,10 @@ public class PreferencesHelper {
         return getModuleSharedPreferences().getBoolean("DEBUG", false);
     }
 
+    public static boolean isAndroidApp(String string) {
+        return string.startsWith("com.android") && !string.equals("com.android.webview");
+    }
+
     public static Set<String> disabledApps() {
         return getModuleSharedPreferences().getStringSet("DISABLED_APPS", new HashSet<String>());
     }
