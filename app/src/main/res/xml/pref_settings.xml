@@ -21,7 +21,7 @@
             android:summary="@string/hosts_hook_description"
             android:title="@string/hosts_hook" />
         <CheckBoxPreference
-            android:defaultValue="false"
+            android:defaultValue="true"
             android:key="WEBVIEW_HOOK"
             android:summary="@string/webview_hook_description"
             android:title="@string/webview_hook" />

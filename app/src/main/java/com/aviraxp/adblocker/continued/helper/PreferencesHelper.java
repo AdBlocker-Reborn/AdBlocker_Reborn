@@ -32,7 +32,7 @@ public class PreferencesHelper {
     }
 
     public static boolean isWebViewHookEnabled() {
-        return getModuleSharedPreferences().getBoolean("WEBVIEW_HOOK", false);
+        return getModuleSharedPreferences().getBoolean("WEBVIEW_HOOK", true);
     }
 
     public static boolean isServicesHookEnabled() {
