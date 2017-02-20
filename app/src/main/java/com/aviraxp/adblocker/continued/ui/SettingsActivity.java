@@ -19,6 +19,7 @@ import android.widget.Toast;
 
 import com.aviraxp.adblocker.continued.BuildConfig;
 import com.aviraxp.adblocker.continued.R;
+import com.aviraxp.wechatdonationhelper.Donation;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -147,10 +148,7 @@ public class SettingsActivity extends PreferenceActivity {
         findPreference("DONATE_WECHAT").setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
             @Override
             public boolean onPreferenceClick(Preference preference) {
-                Intent intent = new Intent();
-                intent.setClassName("com.tencent.mm", "com.tencent.mm.ui.LauncherUI")
-                        .putExtra("wxid_90m10eigpruz21", true);
-                startActivity(intent);
+                Donation.openWechatDonation("wxid_90m10eigpruz21", SettingsActivity.this);
                 return true;
             }
         });

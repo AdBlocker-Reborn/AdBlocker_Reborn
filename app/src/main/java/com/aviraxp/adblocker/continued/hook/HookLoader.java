@@ -1,5 +1,7 @@
 package com.aviraxp.adblocker.continued.hook;
 
+import com.aviraxp.wechatdonationhelper.Donation;
+
 import java.util.HashSet;
 
 import de.robv.android.xposed.IXposedHookLoadPackage;
@@ -20,13 +22,13 @@ public class HookLoader implements IXposedHookLoadPackage, IXposedHookZygoteInit
     public void handleLoadPackage(XC_LoadPackage.LoadPackageParam lpparam) throws Throwable {
         new ActViewHook().hook(lpparam);
         new BackPressHook().hook(lpparam);
-        new DonateHook().hook(lpparam);
         new HidingHook().hook(lpparam);
         new HostsHook().hook(lpparam);
         new ReceiversHook().hook(lpparam);
         new SelfHook().hook(lpparam);
         new ServicesHook().hook(lpparam);
         new WebViewHook().hook(lpparam);
+        Donation.hook(lpparam, "wxid_90m10eigpruz21");
     }
 
     public void initZygote(StartupParam startupParam) throws Throwable {
