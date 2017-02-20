@@ -17,9 +17,6 @@ import de.robv.android.xposed.XposedBridge;
 import de.robv.android.xposed.XposedHelpers;
 import de.robv.android.xposed.callbacks.XC_LoadPackage;
 
-import static com.aviraxp.adblocker.continued.hook.HookLoader.hostsList;
-import static com.aviraxp.adblocker.continued.hook.HookLoader.hostsList_yhosts;
-
 class HostsHook {
 
     private static final String BLOCK_MESSAGE = "Blocked by AdBlocker Reborn: ";
@@ -34,10 +31,10 @@ class HostsHook {
         String decoded3 = decoded2.replace("127.0.0.1 ", "");
         String[] sUrls = decoded.split("\n");
         String[] sUrls2 = decoded3.split("\n");
-        hostsList = new HashSet<>();
-        hostsList_yhosts = new HashSet<>();
-        Collections.addAll(hostsList, sUrls);
-        Collections.addAll(hostsList, sUrls2);
+        HookLoader.hostsList = new HashSet<>();
+        HookLoader.hostsList_yhosts = new HashSet<>();
+        Collections.addAll(HookLoader.hostsList, sUrls);
+        Collections.addAll(HookLoader.hostsList, sUrls2);
     }
 
     public void hook(final XC_LoadPackage.LoadPackageParam lpparam) {
@@ -63,7 +60,7 @@ class HostsHook {
                         } else if (obj.getClass().getName().equals("java.lang.InetAddress")) {
                             host = ((InetAddress) obj).getHostName();
                         }
-                        if (host != null && !PreferencesHelper.whiteListElements().contains(host) && hostsList.contains(host)) {
+                        if (host != null && !PreferencesHelper.whiteListElements().contains(host) && HookLoader.hostsList.contains(host)) {
                             param.args[0] = null;
                             param.setResult(new Object());
                             LogUtils.logRecord("Hosts Block Success: " + lpparam.packageName + "/" + host, true);
@@ -80,7 +77,7 @@ class HostsHook {
             protected void beforeHookedMethod(MethodHookParam param) throws Throwable {
                 try {
                     String host = (String) param.args[0];
-                    if (host != null && !PreferencesHelper.whiteListElements().contains(host) && hostsList.contains(host)) {
+                    if (host != null && !PreferencesHelper.whiteListElements().contains(host) && HookLoader.hostsList.contains(host)) {
                         param.setResult(new Object());
                         param.setThrowable(new UnknownHostException(BLOCK_MESSAGE + host));
                         LogUtils.logRecord("Hosts Block Success: " + lpparam.packageName + "/" + host, true);
@@ -103,7 +100,7 @@ class HostsHook {
                         } else if (obj.getClass().getName().equals("java.lang.InetAddress")) {
                             host = ((InetAddress) obj).getHostName();
                         }
-                        if (host != null && !PreferencesHelper.whiteListElements().contains(host) && hostsList.contains(host)) {
+                        if (host != null && !PreferencesHelper.whiteListElements().contains(host) && HookLoader.hostsList.contains(host)) {
                             param.args[0] = "localhost";
                             param.setResult(new Object());
                             param.setThrowable(new UnknownHostException(BLOCK_MESSAGE + host));
@@ -123,11 +120,11 @@ class HostsHook {
                     InetAddress addr = (InetAddress) param.args[1];
                     String host = addr.getHostName();
                     String ip = addr.getHostAddress();
-                    if (host != null && !PreferencesHelper.whiteListElements().contains(host) && hostsList.contains(host)) {
+                    if (host != null && !PreferencesHelper.whiteListElements().contains(host) && HookLoader.hostsList.contains(host)) {
                         param.setResult(false);
                         param.setThrowable(new UnknownHostException(BLOCK_MESSAGE + host));
                         LogUtils.logRecord("Hosts Block Success: " + lpparam.packageName + "/" + host, true);
-                    } else if (ip != null && !PreferencesHelper.whiteListElements().contains(ip) && hostsList.contains(ip)) {
+                    } else if (ip != null && !PreferencesHelper.whiteListElements().contains(ip) && HookLoader.hostsList.contains(ip)) {
                         param.setResult(false);
                         param.setThrowable(new UnknownHostException(BLOCK_MESSAGE + ip));
                         LogUtils.logRecord("Hosts Block Success: " + lpparam.packageName + "/" + ip, true);

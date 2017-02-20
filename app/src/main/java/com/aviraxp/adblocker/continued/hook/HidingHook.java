@@ -20,8 +20,6 @@ import de.robv.android.xposed.XC_MethodHook;
 import de.robv.android.xposed.XposedHelpers;
 import de.robv.android.xposed.callbacks.XC_LoadPackage;
 
-import static com.aviraxp.adblocker.continued.hook.HookLoader.hideList;
-
 class HidingHook {
 
     private static boolean isTarget(String name) {
@@ -34,14 +32,14 @@ class HidingHook {
         byte[] array = XposedHelpers.assetAsByteArray(res, "blacklist/hidingapp");
         String decoded = new String(array, "UTF-8");
         String[] sUrls = decoded.split("\n");
-        hideList = new HashSet<>();
-        Collections.addAll(hideList, sUrls);
+        HookLoader.hideList = new HashSet<>();
+        Collections.addAll(HookLoader.hideList, sUrls);
     }
 
     @SuppressWarnings("unchecked")
     public void hook(final XC_LoadPackage.LoadPackageParam lpparam) {
 
-        if (PreferencesHelper.isAndroidApp(lpparam.packageName) || !hideList.contains(lpparam.packageName) || !PreferencesHelper.isHidingHookEnabled() || PreferencesHelper.disabledApps().contains(lpparam.packageName)) {
+        if (PreferencesHelper.isAndroidApp(lpparam.packageName) || !HookLoader.hideList.contains(lpparam.packageName) || !PreferencesHelper.isHidingHookEnabled() || PreferencesHelper.disabledApps().contains(lpparam.packageName)) {
             return;
         }
 
@@ -49,14 +47,14 @@ class HidingHook {
             @Override
             protected void afterHookedMethod(MethodHookParam param) throws Throwable {
                 List<ApplicationInfo> applicationList = (List) param.getResult();
-                List<ApplicationInfo> resultapplicationList = new ArrayList<>();
+                List<ApplicationInfo> resultApplicationList = new ArrayList<>();
                 for (ApplicationInfo applicationInfo : applicationList) {
                     String packageName = applicationInfo.packageName;
                     if (!isTarget(packageName)) {
-                        resultapplicationList.add(applicationInfo);
+                        resultApplicationList.add(applicationInfo);
                     }
                 }
-                param.setResult(resultapplicationList);
+                param.setResult(resultApplicationList);
             }
         };
 
@@ -64,14 +62,14 @@ class HidingHook {
             @Override
             protected void afterHookedMethod(MethodHookParam param) throws Throwable {
                 List<PackageInfo> packageInfoList = (List) param.getResult();
-                List<PackageInfo> resultpackageInfoList = new ArrayList<>();
+                List<PackageInfo> resultPackageInfoList = new ArrayList<>();
                 for (PackageInfo packageInfo : packageInfoList) {
                     String packageName = packageInfo.packageName;
                     if (!isTarget(packageName)) {
-                        resultpackageInfoList.add(packageInfo);
+                        resultPackageInfoList.add(packageInfo);
                     }
                 }
-                param.setResult(resultpackageInfoList);
+                param.setResult(resultPackageInfoList);
             }
         };
 

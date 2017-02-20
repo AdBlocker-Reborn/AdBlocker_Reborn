@@ -18,8 +18,6 @@ import de.robv.android.xposed.XposedBridge;
 import de.robv.android.xposed.XposedHelpers;
 import de.robv.android.xposed.callbacks.XC_LoadPackage;
 
-import static com.aviraxp.adblocker.continued.hook.HookLoader.servicesList;
-
 class ServicesHook {
 
     private final XC_MethodHook servicesStartHook = new XC_MethodHook() {
@@ -48,8 +46,8 @@ class ServicesHook {
         byte[] array = XposedHelpers.assetAsByteArray(res, "blocklist/services");
         String decoded = new String(array, "UTF-8");
         String[] sUrls = decoded.split("\n");
-        servicesList = new HashSet<>();
-        Collections.addAll(servicesList, sUrls);
+        HookLoader.servicesList = new HashSet<>();
+        Collections.addAll(HookLoader.servicesList, sUrls);
         isMIUI();
         LogUtils.logRecord("MIUI Based: " + isMIUI(), true);
     }
@@ -77,7 +75,7 @@ class ServicesHook {
             if (serviceName != null) {
                 String packageName = serviceName.substring(0, serviceName.indexOf("/"));
                 String splitServicesName = serviceName.substring(serviceName.indexOf("/") + 1);
-                if (!PreferencesHelper.isAndroidApp(packageName) && !PreferencesHelper.disabledApps().contains(packageName) && !PreferencesHelper.whiteListElements().contains(serviceName) && ((!isMIUI() && servicesList.contains(splitServicesName)) || (isMIUI() && servicesList.contains(splitServicesName) && (!splitServicesName.toLowerCase().contains("xiaomi") || splitServicesName.toLowerCase().contains("ad"))))) {
+                if (!PreferencesHelper.isAndroidApp(packageName) && !PreferencesHelper.disabledApps().contains(packageName) && !PreferencesHelper.whiteListElements().contains(serviceName) && ((!isMIUI() && HookLoader.servicesList.contains(splitServicesName)) || (isMIUI() && HookLoader.servicesList.contains(splitServicesName) && (!splitServicesName.toLowerCase().contains("xiaomi") || splitServicesName.toLowerCase().contains("ad"))))) {
                     param.setResult(null);
                     LogUtils.logRecord("Service Block Success: " + serviceName, true);
                 }

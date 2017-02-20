@@ -18,8 +18,6 @@ import de.robv.android.xposed.XposedBridge;
 import de.robv.android.xposed.XposedHelpers;
 import de.robv.android.xposed.callbacks.XC_LoadPackage;
 
-import static com.aviraxp.adblocker.continued.hook.HookLoader.urlList;
-
 class WebViewHook {
 
     private static boolean adExist;
@@ -30,8 +28,8 @@ class WebViewHook {
         byte[] array = XposedHelpers.assetAsByteArray(res, "blocklist/urls");
         String decoded = new String(array, "UTF-8");
         String[] sUrls = decoded.split("\n");
-        urlList = new HashSet<>();
-        Collections.addAll(urlList, sUrls);
+        HookLoader.urlList = new HashSet<>();
+        Collections.addAll(HookLoader.urlList, sUrls);
     }
 
     private void removeAdView(final View view) {
