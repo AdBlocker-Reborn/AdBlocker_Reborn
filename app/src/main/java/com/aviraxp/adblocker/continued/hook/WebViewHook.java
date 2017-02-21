@@ -148,7 +148,7 @@ class WebViewHook {
             try {
                 for (String adUrl : hashSet) {
                     if (string.substring(string.indexOf("://") + 3).startsWith(adUrl)) {
-                        param.setResult(new Object());
+                        param.setResult(null);
                         removeAdView((View) param.thisObject);
                         return true;
                     }
@@ -166,7 +166,7 @@ class WebViewHook {
             try {
                 for (String adUrl : hashSet) {
                     if (string.contains(adUrl)) {
-                        param.setResult(new Object());
+                        param.setResult(null);
                         removeAdView((View) param.thisObject);
                         return true;
                     }
