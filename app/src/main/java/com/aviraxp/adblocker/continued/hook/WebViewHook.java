@@ -150,7 +150,6 @@ class WebViewHook {
                     if (string.substring(string.indexOf("://") + 3).startsWith(adUrl)) {
                         param.setResult(new Object());
                         removeAdView((View) param.thisObject);
-                        param.setResult(new Object());
                         return true;
                     }
                 }
@@ -169,7 +168,6 @@ class WebViewHook {
                     if (string.contains(adUrl)) {
                         param.setResult(new Object());
                         removeAdView((View) param.thisObject);
-                        param.setResult(new Object());
                         return true;
                     }
                 }
