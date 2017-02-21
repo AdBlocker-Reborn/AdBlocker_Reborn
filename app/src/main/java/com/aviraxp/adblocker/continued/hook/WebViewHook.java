@@ -131,8 +131,9 @@ class WebViewHook {
             if (data != null) {
                 if (encodingType != null) {
                     dataDecode = URLDecoder.decode(data, encodingType);
+                } else {
+                    dataDecode = URLDecoder.decode(data, "UTF-8");
                 }
-                dataDecode = URLDecoder.decode(data, "UTF-8");
             }
         } catch (IllegalArgumentException ignored) {
         } catch (Throwable t) {
