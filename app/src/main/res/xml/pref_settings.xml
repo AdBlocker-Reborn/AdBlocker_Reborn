@@ -1,7 +1,7 @@
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
     <PreferenceCategory
-        android:key="SETTINGS"
-        android:title="@string/settings">
+        android:key="WHITELISTS"
+        android:title="@string/whitelist">
         <MultiSelectListPreference
             android:key="DISABLED_APPS"
             android:summary="@string/whitelist_description"
@@ -10,6 +10,10 @@
             android:key="DISABLED_ELEMENTS"
             android:summary="@string/whitelist_element_description"
             android:title="@string/whitelist_element" />
+    </PreferenceCategory>
+    <PreferenceCategory
+        android:key="SETTINGS"
+        android:title="@string/settings">
         <CheckBoxPreference
             android:defaultValue="true"
             android:key="ACTVIEW_HOOK"
@@ -42,11 +46,6 @@
             android:title="@string/hiding_hook" />
         <CheckBoxPreference
             android:defaultValue="false"
-            android:key="BACKPRESS_HOOK"
-            android:summary="@string/backpress_hook_description"
-            android:title="@string/backpress_hook" />
-        <CheckBoxPreference
-            android:defaultValue="false"
             android:key="AGGRESSIVE_HOOK"
             android:summary="@string/aggressive_hook_description"
             android:title="@string/aggressive_hook" />
@@ -62,8 +61,17 @@
             android:title="@string/hide_launcher_icon" />
     </PreferenceCategory>
     <PreferenceCategory
-        android:key="ABOUT"
-        android:title="@string/about">
+        android:key="BONUS"
+        android:title="@string/bonus">
+        <CheckBoxPreference
+            android:defaultValue="false"
+            android:key="BACKPRESS_HOOK"
+            android:summary="@string/backpress_hook_description"
+            android:title="@string/backpress_hook" />
+    </PreferenceCategory>
+    <PreferenceCategory
+        android:key="DONATION"
+        android:title="@string/donate">
         <Preference
             android:key="DONATE_ALIPAY"
             android:summary="@string/donate_description_alipay"
@@ -76,6 +84,10 @@
             android:key="DONATE_PAYPAL"
             android:summary="@string/donate_description_payapl"
             android:title="@string/donate_paypal" />
+    </PreferenceCategory>
+    <PreferenceCategory
+        android:key="ABOUT"
+        android:title="@string/about">
         <PreferenceScreen
             android:key="XDA"
             android:summary="@string/open_xda_description"

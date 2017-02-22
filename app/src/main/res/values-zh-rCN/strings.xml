@@ -21,7 +21,7 @@
     <string name="license_description">本模块按照 GPL-3.0 协议发布</string>
     <string name="receivers_hook_description">根据内置列表拦截接收器</string>
     <string name="services_hook_description">根据内置列表拦截服务</string>
-    <string name="webview_hook_description">根据内置列表拦截页面元素（高度实验性，只支持特定方法）</string>
+    <string name="webview_hook_description">根据内置列表拦截页面元素（只支持特定方法）</string>
     <string name="open_project">浏览项目代码</string>
     <string name="open_project_description">在 Github 上浏览本项目</string>
     <string name="backpress_hook_description">允许取消任何对话框（当应用显示广告被拦截对话框时有用）</string>
@@ -41,6 +41,8 @@
     <string name="donate_paypal">贝宝捐赠</string>
     <string name="open_xda">浏览讨论页面</string>
     <string name="open_xda_description">在 XDA 上浏览讨论主题</string>
-    <string name="whitelist_element_description">选择本模块不作用的元素</string>
+    <string name="whitelist_element_description">输入本模块不作用的元素</string>
     <string name="whitelist_element">元素白名单</string>
+    <string name="bonus">额外</string>
+    <string name="donate">捐赠</string>
 </resources>
