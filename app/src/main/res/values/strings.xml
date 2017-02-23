@@ -47,4 +47,6 @@
     <string name="donate">Donation</string>
     <string name="system_apps_description">Don\'t act on system applications</string>
     <string name="system_apps">Enable System Application Protection</string>
+    <string name="shortcut_hook_description" >Block auto created shortcuts</string>
+    <string name="shortcut_hook" >Enable Shortcut Block</string>
 </resources>

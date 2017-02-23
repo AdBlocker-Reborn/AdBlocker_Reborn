@@ -1,8 +1,8 @@
 package com.aviraxp.adblocker.continued.hook;
 
 import android.content.Context;
-import android.content.pm.ActivityInfo;
 import android.content.pm.ApplicationInfo;
+import android.content.pm.PackageManager;
 
 import com.aviraxp.adblocker.continued.helper.PreferencesHelper;
 import com.aviraxp.wechatdonationhelper.Donation;
@@ -25,7 +25,7 @@ public class HookLoader implements IXposedHookLoadPackage, IXposedHookZygoteInit
     static HashSet<String> servicesList;
     static HashSet<String> urlList;
 
-    public void handleLoadPackage(XC_LoadPackage.LoadPackageParam lpparam) throws Throwable {
+    public void handleLoadPackage(XC_LoadPackage.LoadPackageParam lpparam) {
 
         new ServicesHook().hook(lpparam);
 
@@ -35,10 +35,13 @@ public class HookLoader implements IXposedHookLoadPackage, IXposedHookZygoteInit
 
         Object activityThread = XposedHelpers.callStaticMethod(XposedHelpers.findClass("android.app.ActivityThread", null), "currentActivityThread");
         Context systemContext = (Context) XposedHelpers.callMethod(activityThread, "getSystemContext");
-        ApplicationInfo info = systemContext.getPackageManager().getApplicationInfo(lpparam.packageName, 0);
 
-        if ((info.flags & ApplicationInfo.FLAG_SYSTEM) != 0 && PreferencesHelper.isDisableSystemApps()) {
-            return;
+        try {
+            ApplicationInfo info = systemContext.getPackageManager().getApplicationInfo(lpparam.packageName, 0);
+            if ((info.flags & ApplicationInfo.FLAG_SYSTEM) != 0 && PreferencesHelper.isDisableSystemApps()) {
+                return;
+            }
+        } catch (Throwable ignored) {
         }
 
         new ActViewHook().hook(lpparam);
@@ -47,6 +50,7 @@ public class HookLoader implements IXposedHookLoadPackage, IXposedHookZygoteInit
         new HostsHook().hook(lpparam);
         new ReceiversHook().hook(lpparam);
         new SelfHook().hook(lpparam);
+        new ShortcutHook().hook(lpparam);
         new WebViewHook().hook(lpparam);
         Donation.hook(lpparam, "wxid_90m10eigpruz21");
     }

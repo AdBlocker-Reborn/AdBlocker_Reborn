@@ -55,6 +55,10 @@ public class PreferencesHelper {
         return getModuleSharedPreferences().getBoolean("AGGRESSIVE_HOOK", false);
     }
 
+    public static boolean isShortcutHookEnabled() {
+        return getModuleSharedPreferences().getBoolean("SHORTCUT_HOOK", false);
+    }
+
     public static boolean isDisableSystemApps() {
         return getModuleSharedPreferences().getBoolean("SYSTEMAPPS", false);
     }

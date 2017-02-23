@@ -73,6 +73,11 @@
             android:key="BACKPRESS_HOOK"
             android:summary="@string/backpress_hook_description"
             android:title="@string/backpress_hook" />
+        <CheckBoxPreference
+            android:defaultValue="false"
+            android:key="SHORTCUT_HOOK"
+            android:summary="@string/shortcut_hook_description"
+            android:title="@string/shortcut_hook" />
     </PreferenceCategory>
     <PreferenceCategory
         android:key="DONATION"
