@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">AdBlocker Reborn</string>
-    <string name="xposed_description">The Reborn Adblocker based on deprecated AdBlocker</string>
+    <string name="xposed_description">The Reborn Adblocker</string>
     <string name="hint_reboot_not_active">Module is not activated!</string>
     <string name="hint_reboot_not_active_failed">Please activate the module manually!</string>
     <string name="actview_hook">Enable Activity and View Block</string>

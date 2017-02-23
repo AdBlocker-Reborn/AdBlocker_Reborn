@@ -1,6 +1,7 @@
 package com.aviraxp.adblocker.continued.hook;
 
 import android.content.Context;
+import android.content.pm.ActivityInfo;
 import android.content.pm.ApplicationInfo;
 
 import com.aviraxp.adblocker.continued.helper.PreferencesHelper;
@@ -28,7 +29,7 @@ public class HookLoader implements IXposedHookLoadPackage, IXposedHookZygoteInit
 
         new ServicesHook().hook(lpparam);
 
-        if (lpparam.packageName.equals("android") || (lpparam.packageName.contains("com.android") && !lpparam.packageName.equals("com.android.webview"))) {
+        if (lpparam.packageName.equals("android") || PreferencesHelper.isAndroidApp(lpparam.packageName)) {
             return;
         }
 
@@ -36,7 +37,7 @@ public class HookLoader implements IXposedHookLoadPackage, IXposedHookZygoteInit
         Context systemContext = (Context) XposedHelpers.callMethod(activityThread, "getSystemContext");
         ApplicationInfo info = systemContext.getPackageManager().getApplicationInfo(lpparam.packageName, 0);
 
-        if ((info.flags & ApplicationInfo.FLAG_UPDATED_SYSTEM_APP) != 0 && PreferencesHelper.isDisableSystemApps()) {
+        if ((info.flags & ApplicationInfo.FLAG_SYSTEM) != 0 && PreferencesHelper.isDisableSystemApps()) {
             return;
         }
 
