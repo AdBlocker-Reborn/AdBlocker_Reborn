@@ -33,14 +33,14 @@ class ReceiversHook {
 
     public void hook(XC_LoadPackage.LoadPackageParam lpparam) throws Throwable {
 
-        if (!PreferencesHelper.isReceiversHookEnabled() || PreferencesHelper.disabledApps().contains(lpparam.packageName) || lpparam.packageName.equals("android")) {
+        if (!PreferencesHelper.isReceiversHookEnabled() || PreferencesHelper.disabledApps().contains(lpparam.packageName)) {
             return;
         }
 
         ArrayList<String> arrayReceivers = new ArrayList<>();
         Object activityThread = XposedHelpers.callStaticMethod(XposedHelpers.findClass("android.app.ActivityThread", null), "currentActivityThread");
         Context systemContext = (Context) XposedHelpers.callMethod(activityThread, "getSystemContext");
-        ActivityInfo[] receiverInfo = systemContext.getPackageManager().getPackageInfo(systemContext.getPackageName(), PackageManager.GET_RECEIVERS).receivers;
+        ActivityInfo[] receiverInfo = systemContext.getPackageManager().getPackageInfo(lpparam.packageName, PackageManager.GET_RECEIVERS).receivers;
 
         if (receiverInfo != null) {
             for (ActivityInfo info : receiverInfo) {
