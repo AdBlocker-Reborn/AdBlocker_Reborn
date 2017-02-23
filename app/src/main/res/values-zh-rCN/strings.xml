@@ -45,4 +45,6 @@
     <string name="whitelist_element">元素白名单</string>
     <string name="bonus">额外</string>
     <string name="donate">捐赠</string>
+    <string name="system_apps_description">不作用于系统应用</string>
+    <string name="system_apps">启用系统应用保护</string>
 </resources>

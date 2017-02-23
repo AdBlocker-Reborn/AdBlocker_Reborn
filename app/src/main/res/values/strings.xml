@@ -45,4 +45,6 @@
     <string name="whitelist_element">Element Whitelist</string>
     <string name="bonus">Bonus</string>
     <string name="donate">Donation</string>
+    <string name="system_apps_description">Don\'t act on system applications</string>
+    <string name="system_apps">Enable System Application Protection</string>
 </resources>

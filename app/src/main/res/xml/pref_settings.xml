@@ -51,6 +51,11 @@
             android:title="@string/aggressive_hook" />
         <CheckBoxPreference
             android:defaultValue="false"
+            android:key="SYSTEMAPPS"
+            android:summary="@string/system_apps_description"
+            android:title="@string/system_apps" />
+        <CheckBoxPreference
+            android:defaultValue="false"
             android:key="DEBUG"
             android:summary="@string/debug_description"
             android:title="@string/debug" />
