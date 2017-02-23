@@ -28,7 +28,7 @@ class HostsHook {
         byte[] array2 = XposedHelpers.assetAsByteArray(res, "blocklist/hosts_yhosts");
         String decoded = new String(array, "UTF-8");
         String decoded2 = new String(array2, "UTF-8");
-        String decoded3 = decoded2.replace("127.0.0.1 ", "");
+        String decoded3 = decoded2.replace("127.0.0.1 ", "").replace("localhost", "workaround");
         String[] sUrls = decoded.split("\n");
         String[] sUrls2 = decoded3.split("\n");
         HookLoader.hostsList = new HashSet<>();
