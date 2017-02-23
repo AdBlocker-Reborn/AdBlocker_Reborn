@@ -75,7 +75,7 @@ class ServicesHook {
             if (serviceName != null) {
                 String packageName = serviceName.substring(0, serviceName.indexOf("/"));
                 String splitServicesName = serviceName.substring(serviceName.indexOf("/") + 1);
-                if (!PreferencesHelper.isAndroidApp(packageName) && !PreferencesHelper.disabledApps().contains(packageName) && !PreferencesHelper.whiteListElements().contains(serviceName) && ((!isMIUI() && HookLoader.servicesList.contains(splitServicesName)) || (isMIUI() && HookLoader.servicesList.contains(splitServicesName) && (!splitServicesName.toLowerCase().contains("xiaomi") || splitServicesName.toLowerCase().contains("ad"))))) {
+                if (!PreferencesHelper.disabledApps().contains(packageName) && !PreferencesHelper.whiteListElements().contains(serviceName) && ((!isMIUI() && HookLoader.servicesList.contains(splitServicesName)) || (isMIUI() && HookLoader.servicesList.contains(splitServicesName) && (!splitServicesName.toLowerCase().contains("xiaomi") || splitServicesName.toLowerCase().contains("ad"))))) {
                     param.setResult(null);
                     LogUtils.logRecord("Service Block Success: " + serviceName, true);
                 }
