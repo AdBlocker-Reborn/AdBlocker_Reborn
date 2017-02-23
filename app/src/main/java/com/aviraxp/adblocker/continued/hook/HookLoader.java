@@ -28,13 +28,14 @@ public class HookLoader implements IXposedHookLoadPackage, IXposedHookZygoteInit
 
         new ServicesHook().hook(lpparam);
 
-        if (lpparam.packageName.equals("android")) {
+        if (lpparam.packageName.equals("android") || (lpparam.packageName.contains("com.android") && !lpparam.packageName.equals("com.android.webview"))) {
             return;
         }
 
         Object activityThread = XposedHelpers.callStaticMethod(XposedHelpers.findClass("android.app.ActivityThread", null), "currentActivityThread");
         Context systemContext = (Context) XposedHelpers.callMethod(activityThread, "getSystemContext");
         ApplicationInfo info = systemContext.getPackageManager().getApplicationInfo(lpparam.packageName, 0);
+
         if ((info.flags & ApplicationInfo.FLAG_UPDATED_SYSTEM_APP) != 0 && PreferencesHelper.isDisableSystemApps()) {
             return;
         }
