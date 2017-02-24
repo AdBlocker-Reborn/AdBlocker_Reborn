@@ -18,7 +18,6 @@
     <string name="hiding_hook_description">Hide module to certain applications</string>
     <string name="donate_alipay">Donate via Alipay</string>
     <string name="donate_description_alipay">Offer me a cup of coffee</string>
-    <string name="donate_description_wechat">Offer me spicy strips</string>
     <string name="license">Open Source Licenses</string>
     <string name="license_description">This module is distributed under GPL-3.0 license</string>
     <string name="open_project">Explore Project Source Code</string>
@@ -31,7 +30,6 @@
     <string name="debug">Enable Debugging Mode</string>
     <string name="hide_launcher_icon">Hide Launcher Icon</string>
     <string name="hide_launcher_icon_description">You can still access settings via Xposed Installer</string>
-    <string name="donate_wechat">Donate via Wechat</string>
     <string name="licensedialog">Licenses</string>
     <string name="whitelist">Application Whitelist</string>
     <string name="whitelist_description">Select applications which will not be affected by this module</string>

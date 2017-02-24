@@ -19,7 +19,6 @@ import android.widget.Toast;
 
 import com.aviraxp.adblocker.continued.BuildConfig;
 import com.aviraxp.adblocker.continued.R;
-import com.aviraxp.wechatdonationhelper.Donation;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -67,7 +66,6 @@ public class SettingsActivity extends PreferenceActivity {
     }
 
     private void prepareDonationStatus() {
-        removePreference("com.tencent.mm", "DONATE_WECHAT");
         removePreference("com.eg.android.AlipayGphone", "DONATE_ALIPAY");
     }
 
@@ -78,8 +76,6 @@ public class SettingsActivity extends PreferenceActivity {
             if (!isAvailable) {
                 PreferenceCategory displayOptions = (PreferenceCategory) findPreference("ABOUT");
                 displayOptions.removePreference(findPreference(perfName));
-            } else if (packageName.equals("com.tencent.mm")) {
-                donateWechat();
             } else if (packageName.equals("com.eg.android.AlipayGphone")) {
                 donateAlipay();
             }
@@ -139,16 +135,6 @@ public class SettingsActivity extends PreferenceActivity {
             @Override
             public boolean onPreferenceClick(Preference preference) {
                 AlipayZeroSdk.startAlipayClient(SettingsActivity.this, "aex00388woilyb9ln32hlfe");
-                return true;
-            }
-        });
-    }
-
-    private void donateWechat() {
-        findPreference("DONATE_WECHAT").setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
-            @Override
-            public boolean onPreferenceClick(Preference preference) {
-                Donation.openWechatDonation("wxid_90m10eigpruz21", SettingsActivity.this);
                 return true;
             }
         });
