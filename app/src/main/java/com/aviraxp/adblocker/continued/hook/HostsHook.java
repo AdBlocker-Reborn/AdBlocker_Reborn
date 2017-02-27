@@ -51,23 +51,19 @@ class HostsHook {
         XC_MethodHook socketClzHook = new XC_MethodHook() {
             @Override
             protected void beforeHookedMethod(MethodHookParam param) {
-                try {
-                    if (param.args != null && param.args.length > 0 && param.args[0] != null) {
-                        Object obj = param.args[0];
-                        String host = null;
-                        if (obj.getClass().getName().equals("java.lang.String")) {
-                            host = (String) obj;
-                        } else if (obj.getClass().getName().equals("java.lang.InetAddress")) {
-                            host = ((InetAddress) obj).getHostName();
-                        }
-                        if (host != null && !PreferencesHelper.whiteListElements().contains(host) && HookLoader.hostsList.contains(host)) {
-                            param.args[0] = null;
-                            param.setResult(null);
-                            LogUtils.logRecord("Hosts Block Success: " + lpparam.packageName + "/" + host, true);
-                        }
+                if (param.args != null && param.args.length > 0 && param.args[0] != null) {
+                    Object obj = param.args[0];
+                    String host = null;
+                    if (obj instanceof String) {
+                        host = (String) obj;
+                    } else if (obj instanceof InetAddress) {
+                        host = ((InetAddress) obj).getHostName();
                     }
-                } catch (Throwable t) {
-                    LogUtils.logRecord(t, false);
+                    if (host != null && !PreferencesHelper.whiteListElements().contains(host) && HookLoader.hostsList.contains(host)) {
+                        param.args[0] = null;
+                        param.setResult(null);
+                        LogUtils.logRecord("Hosts Block Success: " + lpparam.packageName + "/" + host, true);
+                    }
                 }
             }
         };
@@ -75,15 +71,11 @@ class HostsHook {
         XC_MethodHook inetAddrHookSingleResult = new XC_MethodHook() {
             @Override
             protected void beforeHookedMethod(MethodHookParam param) {
-                try {
-                    String host = (String) param.args[0];
-                    if (host != null && !PreferencesHelper.whiteListElements().contains(host) && HookLoader.hostsList.contains(host)) {
-                        param.setResult(null);
-                        param.setThrowable(new UnknownHostException(BLOCK_MESSAGE + host));
-                        LogUtils.logRecord("Hosts Block Success: " + lpparam.packageName + "/" + host, true);
-                    }
-                } catch (Throwable t) {
-                    LogUtils.logRecord(t, false);
+                String host = (String) param.args[0];
+                if (host != null && !PreferencesHelper.whiteListElements().contains(host) && HookLoader.hostsList.contains(host)) {
+                    param.setResult(null);
+                    param.setThrowable(new UnknownHostException(BLOCK_MESSAGE + host));
+                    LogUtils.logRecord("Hosts Block Success: " + lpparam.packageName + "/" + host, true);
                 }
             }
         };
@@ -91,24 +83,20 @@ class HostsHook {
         XC_MethodHook inetSockAddrClzHook = new XC_MethodHook() {
             @Override
             protected void beforeHookedMethod(MethodHookParam param) {
-                try {
-                    if (param.args != null && param.args.length > 0 && param.args[0] != null) {
-                        Object obj = param.args[0];
-                        String host = null;
-                        if (obj.getClass().getName().equals("java.lang.String")) {
-                            host = (String) obj;
-                        } else if (obj.getClass().getName().equals("java.lang.InetAddress")) {
-                            host = ((InetAddress) obj).getHostName();
-                        }
-                        if (host != null && !PreferencesHelper.whiteListElements().contains(host) && HookLoader.hostsList.contains(host)) {
-                            param.args[0] = "localhost";
-                            param.setResult(null);
-                            param.setThrowable(new UnknownHostException(BLOCK_MESSAGE + host));
-                            LogUtils.logRecord("Hosts Block Success: " + lpparam.packageName + "/" + host, true);
-                        }
+                if (param.args != null && param.args.length > 0 && param.args[0] != null) {
+                    Object obj = param.args[0];
+                    String host = null;
+                    if (obj instanceof String) {
+                        host = (String) obj;
+                    } else if (obj instanceof InetAddress) {
+                        host = ((InetAddress) obj).getHostName();
                     }
-                } catch (Throwable t) {
-                    LogUtils.logRecord(t, false);
+                    if (host != null && !PreferencesHelper.whiteListElements().contains(host) && HookLoader.hostsList.contains(host)) {
+                        param.args[0] = "localhost";
+                        param.setResult(null);
+                        param.setThrowable(new UnknownHostException(BLOCK_MESSAGE + host));
+                        LogUtils.logRecord("Hosts Block Success: " + lpparam.packageName + "/" + host, true);
+                    }
                 }
             }
         };
@@ -116,21 +104,17 @@ class HostsHook {
         XC_MethodHook ioBridgeHook = new XC_MethodHook() {
             @Override
             protected void beforeHookedMethod(MethodHookParam param) {
-                try {
-                    InetAddress addr = (InetAddress) param.args[1];
-                    String host = addr.getHostName();
-                    String ip = addr.getHostAddress();
-                    if (host != null && !PreferencesHelper.whiteListElements().contains(host) && HookLoader.hostsList.contains(host)) {
-                        param.setResult(false);
-                        param.setThrowable(new UnknownHostException(BLOCK_MESSAGE + host));
-                        LogUtils.logRecord("Hosts Block Success: " + lpparam.packageName + "/" + host, true);
-                    } else if (ip != null && !PreferencesHelper.whiteListElements().contains(ip) && HookLoader.hostsList.contains(ip)) {
-                        param.setResult(false);
-                        param.setThrowable(new UnknownHostException(BLOCK_MESSAGE + ip));
-                        LogUtils.logRecord("Hosts Block Success: " + lpparam.packageName + "/" + ip, true);
-                    }
-                } catch (Throwable t) {
-                    LogUtils.logRecord(t, false);
+                InetAddress addr = (InetAddress) param.args[1];
+                String host = addr.getHostName();
+                String ip = addr.getHostAddress();
+                if (host != null && !PreferencesHelper.whiteListElements().contains(host) && HookLoader.hostsList.contains(host)) {
+                    param.setResult(false);
+                    param.setThrowable(new UnknownHostException(BLOCK_MESSAGE + host));
+                    LogUtils.logRecord("Hosts Block Success: " + lpparam.packageName + "/" + host, true);
+                } else if (ip != null && !PreferencesHelper.whiteListElements().contains(ip) && HookLoader.hostsList.contains(ip)) {
+                    param.setResult(false);
+                    param.setThrowable(new UnknownHostException(BLOCK_MESSAGE + ip));
+                    LogUtils.logRecord("Hosts Block Success: " + lpparam.packageName + "/" + ip, true);
                 }
             }
         };
