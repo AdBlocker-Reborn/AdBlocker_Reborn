@@ -43,10 +43,6 @@ public class PreferencesHelper {
         return getModuleSharedPreferences().getBoolean("RECEIVERS_HOOK", true);
     }
 
-    public static boolean isHidingHookEnabled() {
-        return getModuleSharedPreferences().getBoolean("HIDING_HOOK", false);
-    }
-
     public static boolean isBackPressHookEnabled() {
         return getModuleSharedPreferences().getBoolean("BACKPRESS_HOOK", false);
     }

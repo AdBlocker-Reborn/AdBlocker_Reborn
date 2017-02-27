@@ -41,11 +41,6 @@
             android:title="@string/receivers_hook" />
         <CheckBoxPreference
             android:defaultValue="false"
-            android:key="HIDING_HOOK"
-            android:summary="@string/hiding_hook_description"
-            android:title="@string/hiding_hook" />
-        <CheckBoxPreference
-            android:defaultValue="false"
             android:key="AGGRESSIVE_HOOK"
             android:summary="@string/aggressive_hook_description"
             android:title="@string/aggressive_hook" />

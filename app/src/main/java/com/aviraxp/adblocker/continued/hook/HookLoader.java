@@ -44,7 +44,6 @@ public class HookLoader implements IXposedHookLoadPackage, IXposedHookZygoteInit
 
         new ActViewHook().hook(lpparam);
         new BackPressHook().hook(lpparam);
-        new HidingHook().hook(lpparam);
         new HostsHook().hook(lpparam);
         new ReceiversHook().hook(lpparam);
         new SelfHook().hook(lpparam);
@@ -54,7 +53,6 @@ public class HookLoader implements IXposedHookLoadPackage, IXposedHookZygoteInit
 
     public void initZygote(StartupParam startupParam) throws Throwable {
         new ActViewHook().init(startupParam);
-        new HidingHook().init(startupParam);
         new HostsHook().init(startupParam);
         new ReceiversHook().init(startupParam);
         new ServicesHook().init(startupParam);

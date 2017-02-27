@@ -9,14 +9,12 @@
     <string name="webview_hook">启用 WebView 拦截</string>
     <string name="services_hook">启用服务拦截</string>
     <string name="receivers_hook">启用接收器拦截</string>
-    <string name="hiding_hook">启用自我隐藏</string>
     <string name="donate_alipay">支付宝捐赠</string>
     <string name="license">开放源代码许可</string>
     <string name="settings">设置</string>
     <string name="about">关于</string>
     <string name="donate_description_alipay">请我喝咖啡</string>
     <string name="actview_hook_description">根据内置列表拦截活动和视图</string>
-    <string name="hiding_hook_description">对特定应用隐藏模块</string>
     <string name="hosts_hook_description">根据内置列表拦截 URL（不修改系统文件，只支持特定方法）</string>
     <string name="license_description">本模块按照 GPL-3.0 协议发布</string>
     <string name="receivers_hook_description">根据内置列表拦截接收器</string>

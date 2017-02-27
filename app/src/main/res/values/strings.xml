@@ -14,8 +14,6 @@
     <string name="services_hook_description">Block services according to a preloaded list</string>
     <string name="receivers_hook">Enable Receivers Block</string>
     <string name="receivers_hook_description">Block receivers according to a preloaded list</string>
-    <string name="hiding_hook">Enable Self Hiding</string>
-    <string name="hiding_hook_description">Hide module to certain applications</string>
     <string name="donate_alipay">Donate via Alipay</string>
     <string name="donate_description_alipay">Offer me a cup of coffee</string>
     <string name="license">Open Source Licenses</string>
