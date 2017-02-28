@@ -32,7 +32,6 @@ class HostsHook {
         String[] sUrls = decoded.split("\n");
         String[] sUrls2 = decoded3.split("\n");
         HookLoader.hostsList = new HashSet<>();
-        HookLoader.hostsList_yhosts = new HashSet<>();
         Collections.addAll(HookLoader.hostsList, sUrls);
         Collections.addAll(HookLoader.hostsList, sUrls2);
     }

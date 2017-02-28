@@ -41,8 +41,8 @@
     <string name="whitelist_element">元素白名单</string>
     <string name="bonus">额外</string>
     <string name="donate">捐赠</string>
-    <string name="system_apps_description">不作用于系统应用</string>
-    <string name="system_apps">启用系统应用保护（覆盖白名单设置）</string>
+    <string name="system_apps_description">不作用于系统应用（覆盖白名单设置）</string>
+    <string name="system_apps">启用系统应用保护</string>
     <string name="shortcut_hook_description">拦截自动创建快捷方式</string>
     <string name="shortcut_hook">启用快捷方式拦截</string>
 </resources>
