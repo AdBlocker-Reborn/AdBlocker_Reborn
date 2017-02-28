@@ -94,8 +94,9 @@ class ActViewHook {
         XposedHelpers.findAndHookMethod(Activity.class, "onCreate", Bundle.class, activityCreateHook);
         XposedHelpers.findAndHookMethod(Activity.class, "startActivity", Intent.class, activityStartHook);
         XposedHelpers.findAndHookMethod(ContextWrapper.class, "startActivity", Intent.class, activityStartHook);
+        XposedHelpers.findAndHookMethod(Activity.class, "startActivityForResult", Intent.class, int.class, activityStartHook);
+        XposedHelpers.findAndHookMethod(Activity.class, "startActivityForResult", Intent.class, int.class, Bundle.class, activityStartHook);
         XposedHelpers.findAndHookMethod(View.class, "setVisibility", int.class, visibilityHook);
-        XposedBridge.hookAllMethods(Activity.class, "startActivityForResult", activityStartHook);
         XposedBridge.hookAllConstructors(View.class, viewHook);
         XposedBridge.hookAllConstructors(ViewGroup.class, viewHook);
     }
