@@ -1,6 +1,5 @@
 package com.aviraxp.adblocker.continued.hook;
 
-import android.content.Context;
 import android.content.pm.ApplicationInfo;
 
 import com.aviraxp.adblocker.continued.helper.PreferencesHelper;
@@ -9,16 +8,13 @@ import java.util.HashSet;
 
 import de.robv.android.xposed.IXposedHookLoadPackage;
 import de.robv.android.xposed.IXposedHookZygoteInit;
-import de.robv.android.xposed.XposedHelpers;
 import de.robv.android.xposed.callbacks.XC_LoadPackage;
 
 public class HookLoader implements IXposedHookLoadPackage, IXposedHookZygoteInit {
 
     static HashSet<String> actViewList;
     static HashSet<String> actViewList_aggressive;
-    static HashSet<String> hideList;
     static HashSet<String> hostsList;
-    static HashSet<String> hostsList_yhosts;
     static HashSet<String> receiversList;
     static HashSet<String> servicesList;
     static HashSet<String> urlList;
@@ -29,22 +25,8 @@ public class HookLoader implements IXposedHookLoadPackage, IXposedHookZygoteInit
         new ServicesHook().hook(lpparam);
         new ShortcutHook().hook(lpparam);
 
-        if (lpparam.packageName.equals("android") || PreferencesHelper.isAndroidApp(lpparam.packageName) || PreferencesHelper.disabledApps().contains(lpparam.packageName)) {
+        if (lpparam.packageName.equals("android") || PreferencesHelper.isAndroidApp(lpparam.packageName) || (PreferencesHelper.isDisableSystemApps() && (lpparam.appInfo.flags & ApplicationInfo.FLAG_SYSTEM) != 0) || PreferencesHelper.disabledApps().contains(lpparam.packageName)) {
             return;
-        }
-
-        if (PreferencesHelper.isDisableSystemApps()) {
-
-            Object activityThread = XposedHelpers.callStaticMethod(XposedHelpers.findClass("android.app.ActivityThread", null), "currentActivityThread");
-            Context systemContext = (Context) XposedHelpers.callMethod(activityThread, "getSystemContext");
-
-            try {
-                ApplicationInfo info = systemContext.getPackageManager().getApplicationInfo(lpparam.packageName, 0);
-                if ((info.flags & ApplicationInfo.FLAG_SYSTEM) != 0) {
-                    return;
-                }
-            } catch (Throwable ignored) {
-            }
         }
 
         new ActViewHook().hook(lpparam);
