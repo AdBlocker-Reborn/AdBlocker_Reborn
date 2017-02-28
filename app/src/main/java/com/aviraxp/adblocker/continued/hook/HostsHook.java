@@ -39,7 +39,7 @@ class HostsHook {
 
     public void hook(final XC_LoadPackage.LoadPackageParam lpparam) {
 
-        if (!PreferencesHelper.isHostsHookEnabled() || PreferencesHelper.disabledApps().contains(lpparam.packageName)) {
+        if (!PreferencesHelper.isHostsHookEnabled()) {
             return;
         }
 
@@ -60,7 +60,6 @@ class HostsHook {
                         host = ((InetAddress) obj).getHostName();
                     }
                     if (host != null && !PreferencesHelper.whiteListElements().contains(host) && HookLoader.hostsList.contains(host)) {
-                        param.args[0] = null;
                         param.setResult(null);
                         LogUtils.logRecord("Hosts Block Success: " + lpparam.packageName + "/" + host, true);
                     }
@@ -92,7 +91,6 @@ class HostsHook {
                         host = ((InetAddress) obj).getHostName();
                     }
                     if (host != null && !PreferencesHelper.whiteListElements().contains(host) && HookLoader.hostsList.contains(host)) {
-                        param.args[0] = "localhost";
                         param.setResult(null);
                         param.setThrowable(new UnknownHostException(BLOCK_MESSAGE + host));
                         LogUtils.logRecord("Hosts Block Success: " + lpparam.packageName + "/" + host, true);

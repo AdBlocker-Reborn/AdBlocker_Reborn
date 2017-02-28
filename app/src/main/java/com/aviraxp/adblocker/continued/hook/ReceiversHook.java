@@ -33,7 +33,7 @@ class ReceiversHook {
 
     public void hook(XC_LoadPackage.LoadPackageParam lpparam) {
 
-        if (!PreferencesHelper.isReceiversHookEnabled() || PreferencesHelper.disabledApps().contains(lpparam.packageName)) {
+        if (!PreferencesHelper.isReceiversHookEnabled()) {
             return;
         }
 

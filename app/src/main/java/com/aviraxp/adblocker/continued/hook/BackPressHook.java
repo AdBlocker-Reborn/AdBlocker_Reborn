@@ -10,7 +10,7 @@ class BackPressHook {
 
     public void hook(XC_LoadPackage.LoadPackageParam lpparam) {
 
-        if (!PreferencesHelper.isBackPressHookEnabled() || PreferencesHelper.disabledApps().contains(lpparam.packageName) || lpparam.packageName.equals("android")) {
+        if (!PreferencesHelper.isBackPressHookEnabled()) {
             return;
         }
 

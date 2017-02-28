@@ -41,7 +41,7 @@ class ActViewHook {
 
     public void hook(final XC_LoadPackage.LoadPackageParam lpparam) {
 
-        if (!PreferencesHelper.isActViewHookEnabled() || PreferencesHelper.disabledApps().contains(lpparam.packageName)) {
+        if (!PreferencesHelper.isActViewHookEnabled()) {
             return;
         }
 
@@ -78,7 +78,7 @@ class ActViewHook {
         XC_MethodHook viewHook = new XC_MethodHook() {
             @Override
             protected void afterHookedMethod(XC_MethodHook.MethodHookParam param) throws Throwable {
-                hideIfAdView(param.thisObject, lpparam.packageName);
+                hideIfAdView((View) param.thisObject, lpparam.packageName);
             }
         };
 
@@ -86,7 +86,7 @@ class ActViewHook {
             @Override
             protected void afterHookedMethod(XC_MethodHook.MethodHookParam param) throws Throwable {
                 if ((Integer) param.args[0] != 8) {
-                    hideIfAdView(param.thisObject, lpparam.packageName);
+                    hideIfAdView((View) param.thisObject, lpparam.packageName);
                 }
             }
         };
@@ -94,9 +94,8 @@ class ActViewHook {
         XposedHelpers.findAndHookMethod(Activity.class, "onCreate", Bundle.class, activityCreateHook);
         XposedHelpers.findAndHookMethod(Activity.class, "startActivity", Intent.class, activityStartHook);
         XposedHelpers.findAndHookMethod(ContextWrapper.class, "startActivity", Intent.class, activityStartHook);
-        XposedHelpers.findAndHookMethod(Activity.class, "startActivityForResult", Intent.class, int.class, activityStartHook);
-        XposedHelpers.findAndHookMethod(Activity.class, "startActivityForResult", Intent.class, int.class, Bundle.class, activityStartHook);
         XposedHelpers.findAndHookMethod(View.class, "setVisibility", int.class, visibilityHook);
+        XposedBridge.hookAllMethods(Activity.class, "startActivityForResult", activityStartHook);
         XposedBridge.hookAllConstructors(View.class, viewHook);
         XposedBridge.hookAllConstructors(ViewGroup.class, viewHook);
     }
@@ -110,11 +109,11 @@ class ActViewHook {
         return false;
     }
 
-    private void hideIfAdView(Object paramObject, String paramString) {
-        String str = paramObject.getClass().getName();
+    private void hideIfAdView(View paramView, String paramString) {
+        String str = paramView.getClass().getName();
         if (str != null && !PreferencesHelper.whiteListElements().contains(str) && (HookLoader.actViewList.contains(str) || (PreferencesHelper.isAggressiveHookEnabled() && isAggressiveBlock(str)))) {
-            ((View) paramObject).clearAnimation();
-            ((View) paramObject).setVisibility(View.GONE);
+            paramView.clearAnimation();
+            paramView.setVisibility(View.GONE);
             LogUtils.logRecord("View Block Success: " + paramString + "/" + str, true);
         }
     }

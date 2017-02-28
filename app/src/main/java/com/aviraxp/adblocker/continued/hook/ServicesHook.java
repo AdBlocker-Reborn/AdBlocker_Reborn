@@ -87,7 +87,6 @@ class ServicesHook {
                     }
                 } catch (Throwable ignored) {
                 }
-
             }
         }
     }

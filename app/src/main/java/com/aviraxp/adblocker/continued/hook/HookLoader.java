@@ -25,29 +25,32 @@ public class HookLoader implements IXposedHookLoadPackage, IXposedHookZygoteInit
 
     public void handleLoadPackage(XC_LoadPackage.LoadPackageParam lpparam) {
 
+        new SelfHook().hook(lpparam);
         new ServicesHook().hook(lpparam);
+        new ShortcutHook().hook(lpparam);
 
-        if (lpparam.packageName.equals("android") || PreferencesHelper.isAndroidApp(lpparam.packageName)) {
+        if (lpparam.packageName.equals("android") || PreferencesHelper.isAndroidApp(lpparam.packageName) || PreferencesHelper.disabledApps().contains(lpparam.packageName)) {
             return;
         }
 
-        Object activityThread = XposedHelpers.callStaticMethod(XposedHelpers.findClass("android.app.ActivityThread", null), "currentActivityThread");
-        Context systemContext = (Context) XposedHelpers.callMethod(activityThread, "getSystemContext");
+        if (PreferencesHelper.isDisableSystemApps()) {
 
-        try {
-            ApplicationInfo info = systemContext.getPackageManager().getApplicationInfo(lpparam.packageName, 0);
-            if ((info.flags & ApplicationInfo.FLAG_SYSTEM) != 0 && PreferencesHelper.isDisableSystemApps()) {
-                return;
+            Object activityThread = XposedHelpers.callStaticMethod(XposedHelpers.findClass("android.app.ActivityThread", null), "currentActivityThread");
+            Context systemContext = (Context) XposedHelpers.callMethod(activityThread, "getSystemContext");
+
+            try {
+                ApplicationInfo info = systemContext.getPackageManager().getApplicationInfo(lpparam.packageName, 0);
+                if ((info.flags & ApplicationInfo.FLAG_SYSTEM) != 0) {
+                    return;
+                }
+            } catch (Throwable ignored) {
             }
-        } catch (Throwable ignored) {
         }
 
         new ActViewHook().hook(lpparam);
         new BackPressHook().hook(lpparam);
         new HostsHook().hook(lpparam);
         new ReceiversHook().hook(lpparam);
-        new SelfHook().hook(lpparam);
-        new ShortcutHook().hook(lpparam);
         new WebViewHook().hook(lpparam);
     }
 
