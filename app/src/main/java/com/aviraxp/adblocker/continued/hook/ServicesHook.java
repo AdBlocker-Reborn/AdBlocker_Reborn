@@ -1,5 +1,6 @@
 package com.aviraxp.adblocker.continued.hook;
 
+import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.ApplicationInfo;
@@ -72,11 +73,11 @@ class ServicesHook {
     }
 
     private void handleServiceStart(XC_MethodHook.MethodHookParam param, Intent serviceIntent) {
-        if (serviceIntent != null && serviceIntent.getComponent() != null) {
-            String serviceName = serviceIntent.getComponent().flattenToShortString();
+        if (serviceIntent != null) {
+            ComponentName serviceName = serviceIntent.getComponent();
             if (serviceName != null) {
-                String packageName = serviceName.substring(0, serviceName.indexOf("/"));
-                String splitServicesName = serviceName.substring(serviceName.indexOf("/") + 1);
+                String packageName = serviceName.getClassName();
+                String splitServicesName = serviceName.getPackageName();
                 Object activityThread = XposedHelpers.callStaticMethod(XposedHelpers.findClass("android.app.ActivityThread", null), "currentActivityThread");
                 Context systemContext = (Context) XposedHelpers.callMethod(activityThread, "getSystemContext");
                 try {
