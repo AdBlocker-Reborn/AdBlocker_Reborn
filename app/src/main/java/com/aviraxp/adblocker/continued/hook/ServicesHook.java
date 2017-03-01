@@ -76,8 +76,8 @@ class ServicesHook {
         if (serviceIntent != null) {
             ComponentName serviceName = serviceIntent.getComponent();
             if (serviceName != null) {
-                String packageName = serviceName.getClassName();
-                String splitServicesName = serviceName.getPackageName();
+                String packageName = serviceName.getPackageName();
+                String splitServicesName = serviceName.getClassName();
                 Object activityThread = XposedHelpers.callStaticMethod(XposedHelpers.findClass("android.app.ActivityThread", null), "currentActivityThread");
                 Context systemContext = (Context) XposedHelpers.callMethod(activityThread, "getSystemContext");
                 try {
