@@ -4,6 +4,7 @@ import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.ApplicationInfo;
+import android.content.pm.PackageManager;
 import android.content.res.Resources;
 import android.content.res.XModuleResources;
 import android.os.Build;
@@ -78,15 +79,24 @@ class ServicesHook {
             if (serviceName != null) {
                 String packageName = serviceName.getPackageName();
                 String splitServicesName = serviceName.getClassName();
-                Object activityThread = XposedHelpers.callStaticMethod(XposedHelpers.findClass("android.app.ActivityThread", null), "currentActivityThread");
-                Context systemContext = (Context) XposedHelpers.callMethod(activityThread, "getSystemContext");
-                try {
-                    ApplicationInfo info = systemContext.getPackageManager().getApplicationInfo(packageName, 0);
-                    if (!((info.flags & ApplicationInfo.FLAG_SYSTEM) != 0 && PreferencesHelper.isDisableSystemApps()) && !PreferencesHelper.isAndroidApp(packageName) && !PreferencesHelper.disabledApps().contains(packageName) && !PreferencesHelper.whiteListElements().contains(splitServicesName) && ((!isMIUI() && HookLoader.servicesList.contains(splitServicesName)) || (isMIUI() && HookLoader.servicesList.contains(splitServicesName) && (!splitServicesName.toLowerCase().contains("xiaomi") || splitServicesName.toLowerCase().contains("ad"))))) {
+                if (!PreferencesHelper.isAndroidApp(packageName) && !PreferencesHelper.disabledApps().contains(packageName) && !PreferencesHelper.whiteListElements().contains(splitServicesName) && ((!isMIUI() && HookLoader.servicesList.contains(splitServicesName)) || (isMIUI() && HookLoader.servicesList.contains(splitServicesName) && (!splitServicesName.toLowerCase().contains("xiaomi") || splitServicesName.toLowerCase().contains("ad"))))) {
+                    if (!PreferencesHelper.isDisableSystemApps()) {
                         param.setResult(null);
                         LogUtils.logRecord("Service Block Success: " + serviceName, true);
+                    } else {
+                        try {
+                            Object activityThread = XposedHelpers.callStaticMethod(XposedHelpers.findClass("android.app.ActivityThread", null), "currentActivityThread");
+                            Context systemContext = (Context) XposedHelpers.callMethod(activityThread, "getSystemContext");
+                            ApplicationInfo info = systemContext.getPackageManager().getApplicationInfo(packageName, 0);
+                            if ((info.flags & ApplicationInfo.FLAG_SYSTEM) == 0) {
+                                param.setResult(null);
+                                LogUtils.logRecord("Service Block Success: " + serviceName, true);
+                            }
+                        } catch (PackageManager.NameNotFoundException ignored) {
+                        } catch (Throwable t) {
+                            LogUtils.logRecord(t, false);
+                        }
                     }
-                } catch (Throwable ignored) {
                 }
             }
         }
