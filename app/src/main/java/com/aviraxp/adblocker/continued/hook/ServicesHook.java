@@ -82,7 +82,7 @@ class ServicesHook {
                 if (!PreferencesHelper.isAndroidApp(packageName) && !PreferencesHelper.disabledApps().contains(packageName) && !PreferencesHelper.whiteListElements().contains(splitServicesName) && ((!isMIUI() && HookLoader.servicesList.contains(splitServicesName)) || (isMIUI() && HookLoader.servicesList.contains(splitServicesName) && (!splitServicesName.toLowerCase().contains("xiaomi") || splitServicesName.toLowerCase().contains("ad"))))) {
                     if (!PreferencesHelper.isDisableSystemApps()) {
                         param.setResult(null);
-                        LogUtils.logRecord("Service Block Success: " + serviceName, true);
+                        LogUtils.logRecord("Service Block Success: " + serviceName.flattenToShortString(), true);
                     } else {
                         try {
                             Object activityThread = XposedHelpers.callStaticMethod(XposedHelpers.findClass("android.app.ActivityThread", null), "currentActivityThread");
@@ -90,7 +90,7 @@ class ServicesHook {
                             ApplicationInfo info = systemContext.getPackageManager().getApplicationInfo(packageName, 0);
                             if ((info.flags & ApplicationInfo.FLAG_SYSTEM) == 0) {
                                 param.setResult(null);
-                                LogUtils.logRecord("Service Block Success: " + serviceName, true);
+                                LogUtils.logRecord("Service Block Success: " + serviceName.flattenToShortString(), true);
                             }
                         } catch (PackageManager.NameNotFoundException ignored) {
                         } catch (Throwable t) {
