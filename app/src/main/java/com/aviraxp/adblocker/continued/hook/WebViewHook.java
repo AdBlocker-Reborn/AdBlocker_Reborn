@@ -1,5 +1,7 @@
 package com.aviraxp.adblocker.continued.hook;
 
+import android.content.res.Resources;
+import android.content.res.XModuleResources;
 import android.view.View;
 import android.view.ViewGroup;
 
@@ -7,8 +9,10 @@ import com.aviraxp.adblocker.continued.helper.PreferencesHelper;
 import com.aviraxp.adblocker.continued.util.LogUtils;
 
 import java.net.URLDecoder;
+import java.util.Collections;
 import java.util.HashSet;
 
+import de.robv.android.xposed.IXposedHookZygoteInit;
 import de.robv.android.xposed.XC_MethodHook;
 import de.robv.android.xposed.XposedBridge;
 import de.robv.android.xposed.XposedHelpers;
@@ -17,6 +21,16 @@ import de.robv.android.xposed.callbacks.XC_LoadPackage;
 class WebViewHook {
 
     private static boolean adExist;
+
+    void init(IXposedHookZygoteInit.StartupParam startupParam) throws Throwable {
+        String MODULE_PATH = startupParam.modulePath;
+        Resources res = XModuleResources.createInstance(MODULE_PATH, null);
+        byte[] array = XposedHelpers.assetAsByteArray(res, "blocklist/urls");
+        String decoded = new String(array, "UTF-8");
+        String[] sUrls = decoded.split("\n");
+        HookLoader.urlList = new HashSet<>();
+        Collections.addAll(HookLoader.urlList, sUrls);
+    }
 
     private void removeAdView(final View view) {
 
@@ -125,14 +139,14 @@ class WebViewHook {
         return false;
     }
 
-    private String decode(String encoder, String encodingType) {
+    private String decode(String string, String encodingType) {
 
-        if (encoder != null) {
+        if (string != null) {
             try {
                 if (encodingType != null) {
-                    return URLDecoder.decode(encoder, encodingType);
+                    return URLDecoder.decode(string, encodingType);
                 } else {
-                    return URLDecoder.decode(encoder, "UTF-8");
+                    return URLDecoder.decode(string, "UTF-8");
                 }
             } catch (Throwable ignored) {
             }
