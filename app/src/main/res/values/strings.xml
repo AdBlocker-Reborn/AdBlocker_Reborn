@@ -45,4 +45,6 @@
     <string name="system_apps">Enable System Application Protection</string>
     <string name="shortcut_hook_description">Block auto created shortcuts</string>
     <string name="shortcut_hook">Enable Shortcut Block</string>
+    <string name="no_reload_description">Improve performance but every config will not take effects until next boot</string>
+    <string name="no_reload">Enable Compatibility Mode</string>
 </resources>

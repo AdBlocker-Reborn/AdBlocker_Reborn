@@ -12,12 +12,14 @@ import de.robv.android.xposed.XSharedPreferences;
 public class PreferencesHelper {
 
     private static XSharedPreferences preferences = null;
+    private static boolean isNoReloadPreferences = false;
 
     private static XSharedPreferences getModuleSharedPreferences() {
         if (preferences == null) {
             preferences = new XSharedPreferences(BuildConfig.APPLICATION_ID);
             preferences.makeWorldReadable();
-        } else {
+            isNoReloadPreferences = preferences.getBoolean("NORELOAD", false);
+        } else if (!isNoReloadPreferences) {
             preferences.reload();
         }
         return preferences;

@@ -45,4 +45,6 @@
     <string name="system_apps">启用系统应用保护</string>
     <string name="shortcut_hook_description">拦截自动创建快捷方式</string>
     <string name="shortcut_hook">启用快捷方式拦截</string>
+    <string name="no_reload_description">提升性能，但是所有设置将在下次重启后生效</string>
+    <string name="no_reload">启用兼容模式</string>
 </resources>
