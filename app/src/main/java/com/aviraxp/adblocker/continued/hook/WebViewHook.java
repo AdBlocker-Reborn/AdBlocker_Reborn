@@ -99,7 +99,7 @@ class WebViewHook {
                     String url = (String) param.args[0];
                     String data = (String) param.args[1];
                     String encodingType = (String) param.args[3];
-                    if (url != null && data != null) {
+                    if (url != null || data != null) {
                         adExist = urlFiltering(url, data, encodingType, param);
                         if (adExist) {
                             LogUtils.logRecord("WebView Block Success: " + lpparam.packageName + "/" + url + " & " + data, true);
@@ -116,30 +116,8 @@ class WebViewHook {
     }
 
     private boolean urlFiltering(String url, String data, String encodingType, XC_MethodHook.MethodHookParam param) {
-
-        String urlDecode = null;
-        String dataDecode = null;
-
-        try {
-            if (url != null) {
-                if (encodingType != null) {
-                    urlDecode = URLDecoder.decode(url, encodingType);
-                } else {
-                    urlDecode = URLDecoder.decode(url, "UTF-8");
-                }
-            }
-            if (data != null) {
-                if (encodingType != null) {
-                    dataDecode = URLDecoder.decode(data, encodingType);
-                } else {
-                    dataDecode = URLDecoder.decode(data, "UTF-8");
-                }
-            }
-        } catch (IllegalArgumentException ignored) {
-        } catch (Throwable t) {
-            LogUtils.logRecord(t, false);
-        }
-
+        String urlDecode = decode(url, encodingType);
+        String dataDecode = decode(data, encodingType);
         return hostsBlock(urlDecode, HookLoader.hostsList, param) || hostsBlock(dataDecode, HookLoader.hostsList, param) || urlBlock(urlDecode, HookLoader.urlList, param) || urlBlock(dataDecode, HookLoader.urlList, param);
     }
 
@@ -159,6 +137,22 @@ class WebViewHook {
             }
         }
         return false;
+    }
+
+    private String decode(String string, String encodingType) {
+
+        if (string != null) {
+            try {
+                if (encodingType != null) {
+                    return URLDecoder.decode(string, encodingType);
+                } else {
+                    return URLDecoder.decode(string, "UTF-8");
+                }
+            } catch (Throwable ignored) {
+            }
+        }
+
+        return null;
     }
 
     private boolean urlBlock(String string, HashSet<String> hashSet, XC_MethodHook.MethodHookParam param) {
