@@ -5,18 +5,12 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageManager;
-import android.content.res.Resources;
-import android.content.res.XModuleResources;
 import android.os.Build;
 import android.os.SystemProperties;
 
 import com.aviraxp.adblocker.continued.helper.PreferencesHelper;
 import com.aviraxp.adblocker.continued.util.LogUtils;
 
-import java.util.Collections;
-import java.util.HashSet;
-
-import de.robv.android.xposed.IXposedHookZygoteInit;
 import de.robv.android.xposed.XC_MethodHook;
 import de.robv.android.xposed.XposedBridge;
 import de.robv.android.xposed.XposedHelpers;
@@ -42,18 +36,6 @@ class ServicesHook {
 
     private static boolean isMIUI() {
         return !SystemProperties.get("ro.miui.ui.version.name", "").equals("");
-    }
-
-    void init(IXposedHookZygoteInit.StartupParam startupParam) throws Throwable {
-        String MODULE_PATH = startupParam.modulePath;
-        Resources res = XModuleResources.createInstance(MODULE_PATH, null);
-        byte[] array = XposedHelpers.assetAsByteArray(res, "blocklist/services");
-        String decoded = new String(array, "UTF-8");
-        String[] sUrls = decoded.split("\n");
-        HookLoader.servicesList = new HashSet<>();
-        Collections.addAll(HookLoader.servicesList, sUrls);
-        isMIUI();
-        LogUtils.logRecord("MIUI Based: " + isMIUI(), true);
     }
 
     public void hook(XC_LoadPackage.LoadPackageParam lpparam) {
