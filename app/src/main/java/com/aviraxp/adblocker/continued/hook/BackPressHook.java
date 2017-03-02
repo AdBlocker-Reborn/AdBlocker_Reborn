@@ -8,7 +8,7 @@ import de.robv.android.xposed.callbacks.XC_LoadPackage;
 
 class BackPressHook {
 
-    public void hook(XC_LoadPackage.LoadPackageParam lpparam) {
+    public void hook() {
 
         if (!PreferencesHelper.isBackPressHookEnabled()) {
             return;
