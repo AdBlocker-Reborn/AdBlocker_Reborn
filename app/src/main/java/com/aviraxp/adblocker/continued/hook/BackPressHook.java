@@ -22,8 +22,8 @@ class BackPressHook {
         };
 
         XposedBridge.hookAllMethods(android.app.Dialog.class, "setCancelable", backPressHook);
+        XposedBridge.hookAllMethods(android.app.Dialog.class, "setCanceledOnTouchOutside", backPressHook);
         XposedBridge.hookAllMethods(android.app.AlertDialog.Builder.class, "setCancelable", backPressHook);
-        XposedBridge.hookAllMethods(android.app.ProgressDialog.class, "setCancelable", backPressHook);
         XposedBridge.hookAllMethods(android.app.Activity.class, "setFinishOnTouchOutside", backPressHook);
     }
 }
