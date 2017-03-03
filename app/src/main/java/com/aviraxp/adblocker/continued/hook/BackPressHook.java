@@ -4,7 +4,6 @@ import com.aviraxp.adblocker.continued.helper.PreferencesHelper;
 
 import de.robv.android.xposed.XC_MethodHook;
 import de.robv.android.xposed.XposedBridge;
-import de.robv.android.xposed.callbacks.XC_LoadPackage;
 
 class BackPressHook {
 
