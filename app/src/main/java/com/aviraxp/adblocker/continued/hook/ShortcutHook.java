@@ -22,7 +22,7 @@ class ShortcutHook {
             protected void beforeHookedMethod(MethodHookParam param) {
                 Intent intent = (Intent) param.args[1];
                 if (intent != null && intent.getAction() != null && intent.getAction().equals("com.android.launcher.action.INSTALL_SHORTCUT")) {
-                    param.setResult(null);
+                    param.setResult(0);
                 }
             }
         };
