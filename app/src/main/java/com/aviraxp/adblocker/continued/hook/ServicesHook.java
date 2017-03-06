@@ -79,7 +79,7 @@ class ServicesHook {
             if (serviceName != null) {
                 String packageName = serviceName.getPackageName();
                 String splitServicesName = serviceName.getClassName();
-                if (!PreferencesHelper.isAndroidApp(packageName) && !PreferencesHelper.disabledApps().contains(packageName) && !PreferencesHelper.whiteListElements().contains(splitServicesName) && ((!isMIUI() && HookLoader.servicesList.contains(splitServicesName)) || (isMIUI() && HookLoader.servicesList.contains(splitServicesName) && (!splitServicesName.toLowerCase().contains("xiaomi") || splitServicesName.toLowerCase().contains("ad"))))) {
+                if (!PreferencesHelper.isAndroidApp(packageName) && !PreferencesHelper.disabledApps().contains(packageName) && !PreferencesHelper.whiteListElements().contains(splitServicesName) && (!isMIUI() && HookLoader.servicesList.contains(splitServicesName) || isMIUI() && HookLoader.servicesList.contains(splitServicesName) && (!splitServicesName.toLowerCase().contains("xiaomi") || splitServicesName.toLowerCase().contains("ad")))) {
                     if (!PreferencesHelper.isDisableSystemApps()) {
                         param.setResult(null);
                         LogUtils.logRecord("Service Block Success: " + serviceName.flattenToShortString(), true);
@@ -93,8 +93,6 @@ class ServicesHook {
                                 LogUtils.logRecord("Service Block Success: " + serviceName.flattenToShortString(), true);
                             }
                         } catch (PackageManager.NameNotFoundException ignored) {
-                        } catch (Throwable t) {
-                            LogUtils.logRecord(t, false);
                         }
                     }
                 }

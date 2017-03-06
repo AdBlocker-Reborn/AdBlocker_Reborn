@@ -44,7 +44,7 @@ class ReceiversHook {
 
         try {
             receiverInfo = systemContext.getPackageManager().getPackageInfo(lpparam.packageName, PackageManager.GET_RECEIVERS).receivers;
-        } catch (Throwable ignored) {
+        } catch (PackageManager.NameNotFoundException ignored) {
         }
 
         if (receiverInfo != null) {

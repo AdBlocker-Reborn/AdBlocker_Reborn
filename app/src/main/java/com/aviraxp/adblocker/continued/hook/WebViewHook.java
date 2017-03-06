@@ -8,6 +8,7 @@ import android.view.ViewGroup;
 import com.aviraxp.adblocker.continued.helper.PreferencesHelper;
 import com.aviraxp.adblocker.continued.util.LogUtils;
 
+import java.io.UnsupportedEncodingException;
 import java.net.URLDecoder;
 import java.util.Collections;
 import java.util.HashSet;
@@ -132,8 +133,6 @@ class WebViewHook {
                     }
                 }
             } catch (IllegalArgumentException ignored) {
-            } catch (Throwable t) {
-                LogUtils.logRecord(t, false);
             }
         }
         return false;
@@ -147,7 +146,7 @@ class WebViewHook {
                 } else {
                     return URLDecoder.decode(string, "UTF-8");
                 }
-            } catch (Throwable ignored) {
+            } catch (UnsupportedEncodingException ignored) {
             }
         }
         return null;
@@ -164,8 +163,6 @@ class WebViewHook {
                     }
                 }
             } catch (IllegalArgumentException ignored) {
-            } catch (Throwable t) {
-                LogUtils.logRecord(t, false);
             }
         }
         return false;
