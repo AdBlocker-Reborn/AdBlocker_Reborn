@@ -140,7 +140,6 @@ class WebViewHook {
     }
 
     private String decode(String string, String encodingType) {
-
         if (string != null) {
             try {
                 if (encodingType != null) {
@@ -151,7 +150,6 @@ class WebViewHook {
             } catch (Throwable ignored) {
             }
         }
-
         return null;
     }
 
