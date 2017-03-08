@@ -2,6 +2,8 @@ package com.aviraxp.adblocker.continued.hook;
 
 import android.content.res.Resources;
 import android.content.res.XModuleResources;
+import android.os.NetworkOnMainThreadException;
+import android.os.StrictMode;
 
 import com.aviraxp.adblocker.continued.helper.PreferencesHelper;
 import com.aviraxp.adblocker.continued.util.LogUtils;
@@ -87,7 +89,13 @@ class HostsHook {
                     if (obj instanceof String) {
                         host = (String) obj;
                     } else if (obj instanceof InetAddress) {
-                        host = ((InetAddress) obj).getHostName();
+                        try {
+                            host = ((InetAddress) obj).getHostName();
+                        } catch (NetworkOnMainThreadException e) {
+                            StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitNetwork().build();
+                            StrictMode.setThreadPolicy(policy);
+                            host = ((InetAddress) obj).getHostName();
+                        }
                     }
                     if (host != null && !PreferencesHelper.whiteListElements().contains(host) && HookLoader.hostsList.contains(host)) {
                         param.setResult(new Object());
