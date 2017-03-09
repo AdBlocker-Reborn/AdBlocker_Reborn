@@ -13,15 +13,11 @@ class ShortcutHook {
 
     public void hook(XC_LoadPackage.LoadPackageParam lpparam) {
 
-        if (!PreferencesHelper.isShortcutHookEnabled()) {
-            return;
-        }
-
         XC_MethodHook shortcutHook = new XC_MethodHook() {
             @Override
             protected void beforeHookedMethod(MethodHookParam param) {
                 Intent intent = (Intent) param.args[1];
-                if (intent != null && intent.getAction() != null && intent.getAction().equals("com.android.launcher.action.INSTALL_SHORTCUT")) {
+                if (PreferencesHelper.isShortcutHookEnabled() && intent != null && intent.getAction() != null && intent.getAction().equals("com.android.launcher.action.INSTALL_SHORTCUT")) {
                     param.setResult(0);
                 }
             }
