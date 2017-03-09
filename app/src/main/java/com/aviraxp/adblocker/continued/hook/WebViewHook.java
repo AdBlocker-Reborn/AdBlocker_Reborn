@@ -146,7 +146,7 @@ class WebViewHook {
                 } else {
                     return URLDecoder.decode(string, "UTF-8");
                 }
-            } catch (UnsupportedEncodingException ignored) {
+            } catch (UnsupportedEncodingException | IllegalArgumentException ignored) {
             }
         }
         return null;
