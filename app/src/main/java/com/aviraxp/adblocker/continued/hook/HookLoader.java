@@ -33,6 +33,7 @@ public class HookLoader implements IXposedHookLoadPackage, IXposedHookZygoteInit
         new BackPressHook().hook(lpparam);
         new HostsHook().hook(lpparam);
         new ReceiversHook().hook(lpparam);
+        new URLHook().hook(lpparam);
         new WebViewHook().hook(lpparam);
     }
 
