@@ -67,7 +67,7 @@ class WebViewHook {
         try {
             Class<?> webView = XposedHelpers.findClass("android.webkit.WebView", lpparam.classLoader);
 
-            XC_MethodHook loadUrlHook = new XC_MethodHook() {
+            XC_MethodHook urlHook = new XC_MethodHook() {
                 @Override
                 protected void beforeHookedMethod(XC_MethodHook.MethodHookParam param) {
                     String url = (String) param.args[0];
@@ -109,7 +109,8 @@ class WebViewHook {
                 }
             };
 
-            XposedBridge.hookAllMethods(webView, "loadUrl", loadUrlHook);
+            XposedBridge.hookAllMethods(webView, "postUrl", urlHook);
+            XposedBridge.hookAllMethods(webView, "loadUrl", urlHook);
             XposedBridge.hookAllMethods(webView, "loadData", loadDataHook);
             XposedBridge.hookAllMethods(webView, "loadDataWithBaseURL", loadDataWithBaseURL);
         } catch (XposedHelpers.ClassNotFoundError ignored) {
