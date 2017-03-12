@@ -4,6 +4,7 @@ import android.content.res.Resources;
 import android.content.res.XModuleResources;
 import android.view.View;
 import android.view.ViewGroup;
+import android.webkit.WebView;
 
 import com.aviraxp.adblocker.continued.helper.PreferencesHelper;
 import com.aviraxp.adblocker.continued.util.LogUtils;
@@ -65,8 +66,6 @@ class WebViewHook {
         }
 
         try {
-            Class<?> webView = XposedHelpers.findClass("android.webkit.WebView", lpparam.classLoader);
-
             XC_MethodHook urlHook = new XC_MethodHook() {
                 @Override
                 protected void beforeHookedMethod(XC_MethodHook.MethodHookParam param) {
@@ -109,10 +108,10 @@ class WebViewHook {
                 }
             };
 
-            XposedBridge.hookAllMethods(webView, "postUrl", urlHook);
-            XposedBridge.hookAllMethods(webView, "loadUrl", urlHook);
-            XposedBridge.hookAllMethods(webView, "loadData", loadDataHook);
-            XposedBridge.hookAllMethods(webView, "loadDataWithBaseURL", loadDataWithBaseURL);
+            XposedBridge.hookAllMethods(WebView.class, "postUrl", urlHook);
+            XposedBridge.hookAllMethods(WebView.class, "loadUrl", urlHook);
+            XposedBridge.hookAllMethods(WebView.class, "loadData", loadDataHook);
+            XposedBridge.hookAllMethods(WebView.class, "loadDataWithBaseURL", loadDataWithBaseURL);
         } catch (XposedHelpers.ClassNotFoundError ignored) {
         }
     }

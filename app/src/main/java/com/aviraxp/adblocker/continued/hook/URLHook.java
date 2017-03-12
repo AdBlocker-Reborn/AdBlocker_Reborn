@@ -58,6 +58,7 @@ class URLHook {
                 }
             }
         };
+
         XposedHelpers.findAndHookConstructor(URL.class, String.class, urlHook);
         XposedHelpers.findAndHookConstructor(URL.class, URL.class, String.class, urlHook);
         XposedHelpers.findAndHookConstructor(URL.class, String.class, String.class, int.class, String.class, hostsHook);

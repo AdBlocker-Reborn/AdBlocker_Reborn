@@ -10,6 +10,8 @@ import com.aviraxp.adblocker.continued.util.LogUtils;
 
 import java.net.ConnectException;
 import java.net.InetAddress;
+import java.net.InetSocketAddress;
+import java.net.Socket;
 import java.net.SocketException;
 import java.net.UnknownHostException;
 import java.util.Collections;
@@ -45,12 +47,6 @@ class HostsHook {
         if (!PreferencesHelper.isHostsHookEnabled()) {
             return;
         }
-
-        Class<?> inetAddrClz = XposedHelpers.findClass("java.net.InetAddress", lpparam.classLoader);
-        Class<?> inetSockAddrClz = XposedHelpers.findClass("java.net.InetSocketAddress", lpparam.classLoader);
-        Class<?> socketClz = XposedHelpers.findClass("java.net.Socket", lpparam.classLoader);
-        Class<?> ioBridgeClz = XposedHelpers.findClass("libcore.io.IoBridge", lpparam.classLoader);
-        Class<?> blockGuardOsClz = XposedHelpers.findClass("libcore.io.BlockGuardOs", lpparam.classLoader);
 
         XC_MethodHook socketClzHook = new XC_MethodHook() {
             @Override
@@ -148,11 +144,15 @@ class HostsHook {
             }
         };
 
-        XposedBridge.hookAllConstructors(socketClz, socketClzHook);
-        XposedBridge.hookAllConstructors(inetSockAddrClz, inetSockAddrClzHook);
-        XposedBridge.hookAllMethods(inetAddrClz, "getAllByName", inetAddrHookSingleResult);
-        XposedBridge.hookAllMethods(inetAddrClz, "getByName", inetAddrHookSingleResult);
-        XposedBridge.hookAllMethods(inetSockAddrClz, "createUnresolved", inetAddrHookSingleResult);
+
+        Class<?> ioBridgeClz = XposedHelpers.findClass("libcore.io.IoBridge", lpparam.classLoader);
+        Class<?> blockGuardOsClz = XposedHelpers.findClass("libcore.io.BlockGuardOs", lpparam.classLoader);
+
+        XposedBridge.hookAllConstructors(Socket.class, socketClzHook);
+        XposedBridge.hookAllConstructors(InetSocketAddress.class, inetSockAddrClzHook);
+        XposedBridge.hookAllMethods(InetAddress.class, "getAllByName", inetAddrHookSingleResult);
+        XposedBridge.hookAllMethods(InetAddress.class, "getByName", inetAddrHookSingleResult);
+        XposedBridge.hookAllMethods(InetSocketAddress.class, "createUnresolved", inetAddrHookSingleResult);
         XposedBridge.hookAllMethods(ioBridgeClz, "connect", ioBridgeHook);
         XposedBridge.hookAllMethods(ioBridgeClz, "connectErrno", ioBridgeHook);
         XposedBridge.hookAllMethods(ioBridgeClz, "isConnected", ioBridgeBooleanHook);
