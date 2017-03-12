@@ -112,41 +112,38 @@ class HostsHook {
         XC_MethodHook ioBridgeHook = new XC_MethodHook() {
             @Override
             protected void beforeHookedMethod(MethodHookParam param) {
-                InetAddress addr = (InetAddress) param.args[1];
-                String host = addr.getHostName();
-                String ip = addr.getHostAddress();
+                InetAddress address = (InetAddress) param.args[1];
+                String host = address.getHostName();
                 if (host != null && !PreferencesHelper.whiteListElements().contains(host) && HookLoader.hostsList.contains(host)) {
-                    param.setResult(false);
+                    param.setResult(null);
                     param.setThrowable(new UnknownHostException(BLOCK_MESSAGE + host));
                     LogUtils.logRecord("Hosts Block Success: " + lpparam.packageName + "/" + host, true);
-                } else if (ip != null && !PreferencesHelper.whiteListElements().contains(ip) && HookLoader.hostsList.contains(ip)) {
-                    param.setResult(false);
-                    param.setThrowable(new UnknownHostException(BLOCK_MESSAGE + ip));
-                    LogUtils.logRecord("Hosts Block Success: " + lpparam.packageName + "/" + ip, true);
                 }
             }
         };
 
         XC_MethodHook blockGuardOsHook = new XC_MethodHook() {
             @Override
-            protected void beforeHookedMethod(MethodHookParam param) throws Throwable {
+            protected void beforeHookedMethod(MethodHookParam param) {
                 InetAddress address = (InetAddress) param.args[1];
                 String host = address.getHostName();
                 if (host != null && !PreferencesHelper.whiteListElements().contains(host) && HookLoader.hostsList.contains(host)) {
                     param.setResult(null);
                     param.setThrowable(new SocketException(BLOCK_MESSAGE + host));
+                    LogUtils.logRecord("Hosts Block Success: " + lpparam.packageName + "/" + host, true);
                 }
             }
         };
 
         XC_MethodHook ioBridgeBooleanHook = new XC_MethodHook() {
             @Override
-            protected void beforeHookedMethod(MethodHookParam param) throws Throwable {
+            protected void beforeHookedMethod(MethodHookParam param) {
                 InetAddress address = (InetAddress) param.args[1];
                 String host = address.getHostName();
                 if (host != null && !PreferencesHelper.whiteListElements().contains(host) && HookLoader.hostsList.contains(host)) {
                     param.setResult(false);
                     param.setThrowable(new ConnectException(BLOCK_MESSAGE + host));
+                    LogUtils.logRecord("Hosts Block Success: " + lpparam.packageName + "/" + host, true);
                 }
             }
         };
