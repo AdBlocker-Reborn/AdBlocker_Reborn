@@ -8,7 +8,6 @@ import android.content.pm.PackageManager;
 import android.content.res.Resources;
 import android.content.res.XModuleResources;
 import android.os.Build;
-import android.os.SystemProperties;
 
 import com.aviraxp.adblocker.continued.helper.PreferencesHelper;
 import com.aviraxp.adblocker.continued.util.LogUtils;
@@ -40,10 +39,6 @@ class ServicesHook {
         }
     };
 
-    private static boolean isMIUI() {
-        return !SystemProperties.get("ro.miui.ui.version.name", "").equals("");
-    }
-
     void init(IXposedHookZygoteInit.StartupParam startupParam) throws Throwable {
         String MODULE_PATH = startupParam.modulePath;
         Resources res = XModuleResources.createInstance(MODULE_PATH, null);
@@ -52,12 +47,11 @@ class ServicesHook {
         String[] sUrls = decoded.split("\n");
         HookLoader.servicesList = new HashSet<>();
         Collections.addAll(HookLoader.servicesList, sUrls);
-        isMIUI();
-        LogUtils.logRecord("MIUI Based: " + isMIUI(), true);
+        PreferencesHelper.isMIUI();
+        LogUtils.logRecord("MIUI Based: " + PreferencesHelper.isMIUI(), true);
     }
 
     public void hook(XC_LoadPackage.LoadPackageParam lpparam) {
-
         if (lpparam.packageName.equals("android")) {
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1) {
                 XposedBridge.hookAllMethods(XposedHelpers.findClass("com.android.server.am.ActiveServices", lpparam.classLoader), "startServiceLocked", servicesStartHook);
@@ -75,7 +69,7 @@ class ServicesHook {
             if (serviceName != null) {
                 String packageName = serviceName.getPackageName();
                 String splitServicesName = serviceName.getClassName();
-                if (PreferencesHelper.isServicesHookEnabled() && !PreferencesHelper.isAndroidApp(packageName) && !PreferencesHelper.disabledApps().contains(packageName) && !PreferencesHelper.whiteListElements().contains(splitServicesName) && (!isMIUI() && HookLoader.servicesList.contains(splitServicesName) || isMIUI() && HookLoader.servicesList.contains(splitServicesName) && (!splitServicesName.toLowerCase().contains("xiaomi") || splitServicesName.toLowerCase().contains("ad")))) {
+                if (PreferencesHelper.isServicesHookEnabled() && !PreferencesHelper.isAndroidApp(packageName) && !PreferencesHelper.disabledApps().contains(packageName) && !PreferencesHelper.whiteListElements().contains(splitServicesName) && (!PreferencesHelper.isMIUI() && HookLoader.servicesList.contains(splitServicesName) || PreferencesHelper.isMIUI() && HookLoader.servicesList.contains(splitServicesName) && (!splitServicesName.toLowerCase().contains("xiaomi") || splitServicesName.toLowerCase().contains("ad")))) {
                     if (!PreferencesHelper.isDisableSystemApps()) {
                         param.setResult(null);
                         LogUtils.logRecord("Service Block Success: " + serviceName.flattenToShortString(), true);
