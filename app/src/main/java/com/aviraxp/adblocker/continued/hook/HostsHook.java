@@ -8,7 +8,9 @@ import android.os.StrictMode;
 import com.aviraxp.adblocker.continued.helper.PreferencesHelper;
 import com.aviraxp.adblocker.continued.util.LogUtils;
 
+import java.net.ConnectException;
 import java.net.InetAddress;
+import java.net.SocketException;
 import java.net.UnknownHostException;
 import java.util.Collections;
 import java.util.HashSet;
@@ -48,6 +50,7 @@ class HostsHook {
         Class<?> inetSockAddrClz = XposedHelpers.findClass("java.net.InetSocketAddress", lpparam.classLoader);
         Class<?> socketClz = XposedHelpers.findClass("java.net.Socket", lpparam.classLoader);
         Class<?> ioBridgeClz = XposedHelpers.findClass("libcore.io.IoBridge", lpparam.classLoader);
+        Class<?> blockGuardOsClz = XposedHelpers.findClass("libcore.io.BlockGuardOs", lpparam.classLoader);
 
         XC_MethodHook socketClzHook = new XC_MethodHook() {
             @Override
@@ -124,6 +127,30 @@ class HostsHook {
             }
         };
 
+        XC_MethodHook blockGuardOsHook = new XC_MethodHook() {
+            @Override
+            protected void beforeHookedMethod(MethodHookParam param) throws Throwable {
+                InetAddress address = (InetAddress) param.args[1];
+                String host = address.getHostName();
+                if (host != null && !PreferencesHelper.whiteListElements().contains(host) && HookLoader.hostsList.contains(host)) {
+                    param.setResult(null);
+                    param.setThrowable(new SocketException(BLOCK_MESSAGE + host));
+                }
+            }
+        };
+
+        XC_MethodHook ioBridgeBooleanHook = new XC_MethodHook() {
+            @Override
+            protected void beforeHookedMethod(MethodHookParam param) throws Throwable {
+                InetAddress address = (InetAddress) param.args[1];
+                String host = address.getHostName();
+                if (host != null && !PreferencesHelper.whiteListElements().contains(host) && HookLoader.hostsList.contains(host)) {
+                    param.setResult(false);
+                    param.setThrowable(new ConnectException(BLOCK_MESSAGE + host));
+                }
+            }
+        };
+
         XposedBridge.hookAllConstructors(socketClz, socketClzHook);
         XposedBridge.hookAllConstructors(inetSockAddrClz, inetSockAddrClzHook);
         XposedBridge.hookAllMethods(inetAddrClz, "getAllByName", inetAddrHookSingleResult);
@@ -131,5 +158,7 @@ class HostsHook {
         XposedBridge.hookAllMethods(inetSockAddrClz, "createUnresolved", inetAddrHookSingleResult);
         XposedBridge.hookAllMethods(ioBridgeClz, "connect", ioBridgeHook);
         XposedBridge.hookAllMethods(ioBridgeClz, "connectErrno", ioBridgeHook);
+        XposedBridge.hookAllMethods(ioBridgeClz, "isConnected", ioBridgeBooleanHook);
+        XposedBridge.hookAllMethods(blockGuardOsClz, "connect", blockGuardOsHook);
     }
 }
