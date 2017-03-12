@@ -21,7 +21,7 @@ class ShortcutHook {
                 Intent intent = (Intent) param.args[2];
                 if (PreferencesHelper.isShortcutHookEnabled() && intent != null && intent.getAction() != null && intent.getAction().equals("com.android.launcher.action.INSTALL_SHORTCUT")) {
                     param.setResult(0);
-                    LogUtils.logRecord("Shortcut Block Success:" + packageName, true);
+                    LogUtils.logRecord("Shortcut Block Success:" + packageName);
                 }
             }
         };

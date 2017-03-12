@@ -48,7 +48,7 @@ class ServicesHook {
         HookLoader.servicesList = new HashSet<>();
         Collections.addAll(HookLoader.servicesList, sUrls);
         PreferencesHelper.isMIUI();
-        LogUtils.logRecord("MIUI Based: " + PreferencesHelper.isMIUI(), true);
+        LogUtils.logRecord("MIUI Based: " + PreferencesHelper.isMIUI());
     }
 
     public void hook(XC_LoadPackage.LoadPackageParam lpparam) {
@@ -72,7 +72,7 @@ class ServicesHook {
                 if (PreferencesHelper.isServicesHookEnabled() && !PreferencesHelper.isAndroidApp(packageName) && !PreferencesHelper.disabledApps().contains(packageName) && !PreferencesHelper.whiteListElements().contains(splitServicesName) && (!PreferencesHelper.isMIUI() && HookLoader.servicesList.contains(splitServicesName) || PreferencesHelper.isMIUI() && HookLoader.servicesList.contains(splitServicesName) && (!splitServicesName.toLowerCase().contains("xiaomi") || splitServicesName.toLowerCase().contains("ad")))) {
                     if (!PreferencesHelper.isDisableSystemApps()) {
                         param.setResult(null);
-                        LogUtils.logRecord("Service Block Success: " + serviceName.flattenToShortString(), true);
+                        LogUtils.logRecord("Service Block Success: " + serviceName.flattenToShortString());
                     } else {
                         try {
                             Object activityThread = XposedHelpers.callStaticMethod(XposedHelpers.findClass("android.app.ActivityThread", null), "currentActivityThread");
@@ -80,7 +80,7 @@ class ServicesHook {
                             ApplicationInfo info = systemContext.getPackageManager().getApplicationInfo(packageName, 0);
                             if ((info.flags & ApplicationInfo.FLAG_SYSTEM) == 0) {
                                 param.setResult(null);
-                                LogUtils.logRecord("Service Block Success: " + serviceName.flattenToShortString(), true);
+                                LogUtils.logRecord("Service Block Success: " + serviceName.flattenToShortString());
                             }
                         } catch (PackageManager.NameNotFoundException ignored) {
                         }

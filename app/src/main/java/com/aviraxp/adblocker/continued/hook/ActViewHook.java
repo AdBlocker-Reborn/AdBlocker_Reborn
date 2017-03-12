@@ -54,7 +54,7 @@ class ActViewHook {
                     activity.overridePendingTransition(0, 0);
                     activity.finish();
                     activity.overridePendingTransition(0, 0);
-                    LogUtils.logRecord("Activity Block Success: " + lpparam.packageName + "/" + activityClassName, true);
+                    LogUtils.logRecord("Activity Block Success: " + lpparam.packageName + "/" + activityClassName);
                 }
             }
         };
@@ -68,7 +68,7 @@ class ActViewHook {
                         String activityClassName = Component.getClassName();
                         if (activityClassName != null && !PreferencesHelper.whiteListElements().contains(activityClassName) && (HookLoader.actViewList.contains(activityClassName) || PreferencesHelper.isAggressiveHookEnabled() && isAggressiveBlock(activityClassName))) {
                             param.setResult(null);
-                            LogUtils.logRecord("Activity Block Success: " + lpparam.packageName + "/" + activityClassName, true);
+                            LogUtils.logRecord("Activity Block Success: " + lpparam.packageName + "/" + activityClassName);
                         }
                     }
                 }
@@ -115,7 +115,7 @@ class ActViewHook {
         if (str != null && !PreferencesHelper.whiteListElements().contains(str) && (HookLoader.actViewList.contains(str) || PreferencesHelper.isAggressiveHookEnabled() && isAggressiveBlock(str))) {
             paramView.clearAnimation();
             paramView.setVisibility(View.GONE);
-            LogUtils.logRecord("View Block Success: " + paramString + "/" + str, true);
+            LogUtils.logRecord("View Block Success: " + paramString + "/" + str);
         }
     }
 }

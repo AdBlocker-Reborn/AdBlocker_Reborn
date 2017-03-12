@@ -18,9 +18,9 @@ class BackPressHook {
         XC_MethodHook backPressHook = new XC_MethodHook() {
             @Override
             protected void beforeHookedMethod(XC_MethodHook.MethodHookParam param) {
-                if (!((Boolean) param.args[0])) {
+                if (!(Boolean) param.args[0]) {
                     param.args[0] = true;
-                    LogUtils.logRecord("BackPressHook Success: " + lpparam.packageName, true);
+                    LogUtils.logRecord("BackPressHook Success: " + lpparam.packageName);
                 }
             }
         };

@@ -65,7 +65,7 @@ class HostsHook {
                     }
                     if (host != null && !PreferencesHelper.whiteListElements().contains(host) && HookLoader.hostsList.contains(host)) {
                         param.setResult(null);
-                        LogUtils.logRecord("Hosts Block Success: " + lpparam.packageName + "/" + host, true);
+                        LogUtils.logRecord("Hosts Block Success: " + lpparam.packageName + "/" + host);
                     }
                 }
             }
@@ -78,7 +78,7 @@ class HostsHook {
                 if (host != null && !PreferencesHelper.whiteListElements().contains(host) && HookLoader.hostsList.contains(host)) {
                     param.setResult(null);
                     param.setThrowable(new UnknownHostException(BLOCK_MESSAGE + host));
-                    LogUtils.logRecord("Hosts Block Success: " + lpparam.packageName + "/" + host, true);
+                    LogUtils.logRecord("Hosts Block Success: " + lpparam.packageName + "/" + host);
                 }
             }
         };
@@ -103,7 +103,7 @@ class HostsHook {
                     if (host != null && !PreferencesHelper.whiteListElements().contains(host) && HookLoader.hostsList.contains(host)) {
                         param.setResult(new Object());
                         param.setThrowable(new UnknownHostException(BLOCK_MESSAGE + host));
-                        LogUtils.logRecord("Hosts Block Success: " + lpparam.packageName + "/" + host, true);
+                        LogUtils.logRecord("Hosts Block Success: " + lpparam.packageName + "/" + host);
                     }
                 }
             }
@@ -117,7 +117,7 @@ class HostsHook {
                 if (host != null && !PreferencesHelper.whiteListElements().contains(host) && HookLoader.hostsList.contains(host)) {
                     param.setResult(null);
                     param.setThrowable(new UnknownHostException(BLOCK_MESSAGE + host));
-                    LogUtils.logRecord("Hosts Block Success: " + lpparam.packageName + "/" + host, true);
+                    LogUtils.logRecord("Hosts Block Success: " + lpparam.packageName + "/" + host);
                 }
             }
         };
@@ -130,7 +130,7 @@ class HostsHook {
                 if (host != null && !PreferencesHelper.whiteListElements().contains(host) && HookLoader.hostsList.contains(host)) {
                     param.setResult(null);
                     param.setThrowable(new SocketException(BLOCK_MESSAGE + host));
-                    LogUtils.logRecord("Hosts Block Success: " + lpparam.packageName + "/" + host, true);
+                    LogUtils.logRecord("Hosts Block Success: " + lpparam.packageName + "/" + host);
                 }
             }
         };
@@ -143,7 +143,7 @@ class HostsHook {
                 if (host != null && !PreferencesHelper.whiteListElements().contains(host) && HookLoader.hostsList.contains(host)) {
                     param.setResult(false);
                     param.setThrowable(new ConnectException(BLOCK_MESSAGE + host));
-                    LogUtils.logRecord("Hosts Block Success: " + lpparam.packageName + "/" + host, true);
+                    LogUtils.logRecord("Hosts Block Success: " + lpparam.packageName + "/" + host);
                 }
             }
         };

@@ -74,7 +74,7 @@ class WebViewHook {
                     if (url != null) {
                         adExist = urlFiltering(url, null, null, param);
                         if (adExist) {
-                            LogUtils.logRecord("WebView Block Success: " + lpparam.packageName + "/" + url, true);
+                            LogUtils.logRecord("WebView Block Success: " + lpparam.packageName + "/" + url);
                         }
                     }
                 }
@@ -88,7 +88,7 @@ class WebViewHook {
                     if (data != null) {
                         adExist = urlFiltering(null, data, encodingType, param);
                         if (adExist) {
-                            LogUtils.logRecord("WebView Block Success: " + lpparam.packageName + "/" + data, true);
+                            LogUtils.logRecord("WebView Block Success: " + lpparam.packageName + "/" + data);
                         }
                     }
                 }
@@ -103,7 +103,7 @@ class WebViewHook {
                     if (url != null || data != null) {
                         adExist = urlFiltering(url, data, encodingType, param);
                         if (adExist) {
-                            LogUtils.logRecord("WebView Block Success: " + lpparam.packageName + "/" + url + " & " + data, true);
+                            LogUtils.logRecord("WebView Block Success: " + lpparam.packageName + "/" + url + " & " + data);
                         }
                     }
                 }
