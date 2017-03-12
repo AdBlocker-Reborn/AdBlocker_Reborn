@@ -47,4 +47,6 @@
     <string name="shortcut_hook">Enable Shortcut Block</string>
     <string name="no_reload_description">Improve performance but every config will not take effects until next boot</string>
     <string name="no_reload">Enable Compatibility Mode</string>
+    <string name="url_hook_description">Block URLs according to a preloaded list</string>
+    <string name="url_hook">Enable URL Block</string>
 </resources>

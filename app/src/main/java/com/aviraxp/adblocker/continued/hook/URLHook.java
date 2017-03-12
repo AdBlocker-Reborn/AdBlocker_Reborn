@@ -17,6 +17,10 @@ class URLHook {
 
     public void hook(final XC_LoadPackage.LoadPackageParam lpparam) {
 
+        if (!PreferencesHelper.isURLHookEnabled()) {
+            return;
+        }
+
         XC_MethodHook urlHook = new XC_MethodHook() {
             @Override
             protected void beforeHookedMethod(MethodHookParam param) {
@@ -25,7 +29,7 @@ class URLHook {
                 } else {
                     url = (String) param.args[1];
                 }
-                if (url != null && url.startsWith("http")) {
+                if (url != null && !PreferencesHelper.whiteListElements().contains(url) && url.startsWith("http")) {
                     String urlCutting = url.substring(url.indexOf("://") + 3);
                     for (String host : HookLoader.hostsList) {
                         if (urlCutting.startsWith(host)) {

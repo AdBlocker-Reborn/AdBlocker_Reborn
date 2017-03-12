@@ -144,7 +144,6 @@ class HostsHook {
             }
         };
 
-
         Class<?> ioBridgeClz = XposedHelpers.findClass("libcore.io.IoBridge", lpparam.classLoader);
         Class<?> blockGuardOsClz = XposedHelpers.findClass("libcore.io.BlockGuardOs", lpparam.classLoader);
 

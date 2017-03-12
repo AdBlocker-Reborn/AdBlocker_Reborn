@@ -47,4 +47,6 @@
     <string name="shortcut_hook">启用快捷方式拦截</string>
     <string name="no_reload_description">提升性能，但是所有设置将在下次重启后生效</string>
     <string name="no_reload">启用兼容模式</string>
+    <string name="url_hook_description">根据内置列表拦截 URL</string>
+    <string name="url_hook">启用 URL 拦截</string>
 </resources>
