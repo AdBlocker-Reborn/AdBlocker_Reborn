@@ -3,6 +3,7 @@ package com.aviraxp.adblocker.continued.hook;
 import android.content.Intent;
 
 import com.aviraxp.adblocker.continued.helper.PreferencesHelper;
+import com.aviraxp.adblocker.continued.util.LogUtils;
 
 import de.robv.android.xposed.XC_MethodHook;
 import de.robv.android.xposed.XposedBridge;
@@ -16,16 +17,18 @@ class ShortcutHook {
         XC_MethodHook shortcutHook = new XC_MethodHook() {
             @Override
             protected void beforeHookedMethod(MethodHookParam param) {
-                Intent intent = (Intent) param.args[1];
+                String packageName = (String) param.args[1];
+                Intent intent = (Intent) param.args[2];
                 if (PreferencesHelper.isShortcutHookEnabled() && intent != null && intent.getAction() != null && intent.getAction().equals("com.android.launcher.action.INSTALL_SHORTCUT")) {
                     param.setResult(0);
+                    LogUtils.logRecord("Shortcut Block Success:" + packageName, true);
                 }
             }
         };
 
         if (lpparam.packageName.equals("android")) {
             Class<?> clazz = XposedHelpers.findClass("com.android.server.am.ActivityManagerService", lpparam.classLoader);
-            XposedBridge.hookAllMethods(clazz, "broadcastIntent", shortcutHook);
+            XposedBridge.hookAllMethods(clazz, "broadcastIntentLocked", shortcutHook);
         }
     }
 }
