@@ -13,7 +13,7 @@ import de.robv.android.xposed.callbacks.XC_LoadPackage;
 class URLHook {
 
     private static final String BLOCK_MESSAGE = "Blocked by AdBlocker Reborn: ";
-    private String url = null;
+    private static String url = null;
 
     public void hook(final XC_LoadPackage.LoadPackageParam lpparam) {
 
