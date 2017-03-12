@@ -65,7 +65,6 @@ class WebViewHook {
             return;
         }
 
-        try {
             XC_MethodHook urlHook = new XC_MethodHook() {
                 @Override
                 protected void beforeHookedMethod(XC_MethodHook.MethodHookParam param) {
@@ -112,8 +111,7 @@ class WebViewHook {
             XposedBridge.hookAllMethods(WebView.class, "loadUrl", urlHook);
             XposedBridge.hookAllMethods(WebView.class, "loadData", loadDataHook);
             XposedBridge.hookAllMethods(WebView.class, "loadDataWithBaseURL", loadDataWithBaseURL);
-        } catch (XposedHelpers.ClassNotFoundError ignored) {
-        }
+
     }
 
     private boolean urlFiltering(String url, String data, String encodingType, XC_MethodHook.MethodHookParam param) {
