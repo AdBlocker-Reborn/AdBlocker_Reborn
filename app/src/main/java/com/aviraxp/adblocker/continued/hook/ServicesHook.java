@@ -7,7 +7,6 @@ import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageManager;
 import android.content.res.Resources;
 import android.content.res.XModuleResources;
-import android.os.Build;
 
 import com.aviraxp.adblocker.continued.helper.PreferencesHelper;
 import com.aviraxp.adblocker.continued.util.LogUtils;
@@ -23,22 +22,6 @@ import de.robv.android.xposed.callbacks.XC_LoadPackage;
 
 class ServicesHook {
 
-    private final XC_MethodHook servicesStartHook = new XC_MethodHook() {
-        @Override
-        protected void beforeHookedMethod(MethodHookParam param) throws Throwable {
-            Intent intent = (Intent) param.args[1];
-            handleServiceStart(param, intent);
-        }
-    };
-
-    private final XC_MethodHook servicesBindHook = new XC_MethodHook() {
-        @Override
-        protected void beforeHookedMethod(MethodHookParam param) throws Throwable {
-            Intent intent = (Intent) param.args[2];
-            handleServiceStart(param, intent);
-        }
-    };
-
     void init(IXposedHookZygoteInit.StartupParam startupParam) throws Throwable {
         String MODULE_PATH = startupParam.modulePath;
         Resources res = XModuleResources.createInstance(MODULE_PATH, null);
@@ -52,14 +35,26 @@ class ServicesHook {
     }
 
     public void hook(XC_LoadPackage.LoadPackageParam lpparam) {
-        if (lpparam.packageName.equals("android")) {
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1) {
-                XposedBridge.hookAllMethods(XposedHelpers.findClass("com.android.server.am.ActiveServices", lpparam.classLoader), "startServiceLocked", servicesStartHook);
-                XposedBridge.hookAllMethods(XposedHelpers.findClass("com.android.server.am.ActiveServices", lpparam.classLoader), "bindServiceLocked", servicesBindHook);
-            } else {
-                XposedBridge.hookAllMethods(XposedHelpers.findClass("com.android.server.am.ActivityManagerService", lpparam.classLoader), "startServiceLocked", servicesStartHook);
-                XposedBridge.hookAllMethods(XposedHelpers.findClass("com.android.server.am.ActivityManagerService", lpparam.classLoader), "bindService", servicesBindHook);
+
+        XC_MethodHook servicesStartHook = new XC_MethodHook() {
+            @Override
+            protected void beforeHookedMethod(MethodHookParam param) {
+                Intent intent = (Intent) param.args[1];
+                handleServiceStart(param, intent);
             }
+        };
+
+        XC_MethodHook servicesBindHook = new XC_MethodHook() {
+            @Override
+            protected void beforeHookedMethod(MethodHookParam param) {
+                Intent intent = (Intent) param.args[2];
+                handleServiceStart(param, intent);
+            }
+        };
+
+        if (lpparam.packageName.equals("android")) {
+            XposedBridge.hookAllMethods(XposedHelpers.findClass("com.android.server.am.ActiveServices", lpparam.classLoader), "startServiceLocked", servicesStartHook);
+            XposedBridge.hookAllMethods(XposedHelpers.findClass("com.android.server.am.ActiveServices", lpparam.classLoader), "bindServiceLocked", servicesBindHook);
         }
     }
 
