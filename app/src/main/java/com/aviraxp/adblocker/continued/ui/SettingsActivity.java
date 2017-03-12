@@ -40,7 +40,7 @@ public class SettingsActivity extends PreferenceActivity {
         addPreferencesFromResource(R.xml.pref_settings);
         checkState();
         new AppPicker().execute();
-        prepareDonationStatus();
+        removePreference();
         uriListener();
         hideIconListener();
         licensesListener();
@@ -65,23 +65,19 @@ public class SettingsActivity extends PreferenceActivity {
         });
     }
 
-    private void prepareDonationStatus() {
-        removePreference("com.eg.android.AlipayGphone", "DONATE_ALIPAY");
-    }
-
-    private void removePreference(String packageName, String perfName) {
+    private void removePreference() {
         try {
-            PackageInfo info = getApplicationContext().getPackageManager().getPackageInfo(packageName, 0);
+            PackageInfo info = getApplicationContext().getPackageManager().getPackageInfo("com.eg.android.AlipayGphone", 0);
             boolean isAvailable = (info != null);
             if (!isAvailable) {
                 PreferenceCategory displayOptions = (PreferenceCategory) findPreference("ABOUT");
-                displayOptions.removePreference(findPreference(perfName));
-            } else if (packageName.equals("com.eg.android.AlipayGphone")) {
+                displayOptions.removePreference(findPreference("DONATE_ALIPAY"));
+            } else {
                 donateAlipay();
             }
         } catch (Throwable t) {
             PreferenceCategory displayOptions = (PreferenceCategory) findPreference("ABOUT");
-            displayOptions.removePreference(findPreference(perfName));
+            displayOptions.removePreference(findPreference("DONATE_ALIPAY"));
         }
     }
 
@@ -158,9 +154,9 @@ public class SettingsActivity extends PreferenceActivity {
 
     private class AppPicker extends AsyncTask<Void, Void, Void> {
 
-        final MultiSelectListPreference disabledApps = (MultiSelectListPreference) findPreference("DISABLED_APPS");
-        final List<CharSequence> appNames = new ArrayList<>();
-        final List<CharSequence> packageNames = new ArrayList<>();
+        private final MultiSelectListPreference disabledApps = (MultiSelectListPreference) findPreference("DISABLED_APPS");
+        private final List<CharSequence> appNames = new ArrayList<>();
+        private final List<CharSequence> packageNames = new ArrayList<>();
 
         @Override
         protected void onPreExecute() {
@@ -195,8 +191,8 @@ public class SettingsActivity extends PreferenceActivity {
 
         @Override
         protected void onPostExecute(Void result) {
-            CharSequence[] appNamesList = appNames.toArray(new CharSequence[appNames.size()]);
-            CharSequence[] packageNamesList = packageNames.toArray(new CharSequence[packageNames.size()]);
+            final CharSequence[] appNamesList = appNames.toArray(new CharSequence[appNames.size()]);
+            final CharSequence[] packageNamesList = packageNames.toArray(new CharSequence[packageNames.size()]);
             disabledApps.setEntries(appNamesList);
             disabledApps.setEntryValues(packageNamesList);
             disabledApps.setEnabled(true);
