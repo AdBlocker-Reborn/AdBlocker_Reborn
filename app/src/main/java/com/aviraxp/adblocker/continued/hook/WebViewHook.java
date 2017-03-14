@@ -7,6 +7,7 @@ import android.view.ViewGroup;
 import android.webkit.WebView;
 
 import com.aviraxp.adblocker.continued.helper.PreferencesHelper;
+import com.aviraxp.adblocker.continued.util.DecodeUtils;
 import com.aviraxp.adblocker.continued.util.LogUtils;
 
 import java.io.UnsupportedEncodingException;
@@ -115,8 +116,8 @@ class WebViewHook {
     }
 
     private boolean urlFiltering(String url, String data, String encodingType, XC_MethodHook.MethodHookParam param) {
-        String urlDecode = decode(url, encodingType);
-        String dataDecode = decode(data, encodingType);
+        String urlDecode = DecodeUtils.decode(url, encodingType);
+        String dataDecode = DecodeUtils.decode(data, encodingType);
         return hostsBlock(urlDecode, HookLoader.hostsList, param) || hostsBlock(dataDecode, HookLoader.hostsList, param) || urlBlock(urlDecode, HookLoader.urlList, param) || urlBlock(dataDecode, HookLoader.urlList, param);
     }
 
@@ -134,20 +135,6 @@ class WebViewHook {
             }
         }
         return false;
-    }
-
-    private String decode(String string, String encodingType) {
-        if (string != null) {
-            try {
-                if (encodingType != null) {
-                    return URLDecoder.decode(string, encodingType);
-                } else {
-                    return URLDecoder.decode(string, "UTF-8");
-                }
-            } catch (UnsupportedEncodingException | IllegalArgumentException ignored) {
-            }
-        }
-        return null;
     }
 
     private boolean urlBlock(String string, HashSet<String> hashSet, XC_MethodHook.MethodHookParam param) {
