@@ -30,21 +30,21 @@ class URLHook {
                 } else {
                     url = (String) param.args[1];
                 }
-                if (url != null && !PreferencesHelper.whiteListElements().contains(url) && url.startsWith("http")) {
+                if (url != null && url.startsWith("http")) {
                     String urlCutting = url.substring(url.indexOf("://") + 3);
                     for (String host : HookLoader.hostsList) {
-                        if (urlCutting.startsWith(host)) {
+                        if (urlCutting.startsWith(host) && !PreferencesHelper.whiteListElements().contains(host)) {
                             if (param.args.length == 1) {
                                 param.args[0] = "http://localhost";
                             } else {
                                 param.args[1] = "http://localhost";
                             }
-                            LogUtils.logRecord("URL Block Success: " + lpparam.packageName + "/" + url);
+                            LogUtils.logRecord("URL Block Success: " + lpparam.packageName + "/" + host);
                             return;
                         }
                     }
                     for (String adUrl : HookLoader.urlList) {
-                        if (urlCutting.contains(adUrl)) {
+                        if (urlCutting.contains(adUrl) && !PreferencesHelper.whiteListElements().contains(url)) {
                             if (param.args.length == 1) {
                                 param.args[0] = "http://localhost";
                             } else {
@@ -77,13 +77,15 @@ class URLHook {
                     String host = url.getHost();
                     if (host != null && !PreferencesHelper.whiteListElements().contains(host) && HookLoader.hostsList.contains(host)) {
                         param.args[0] = new URL("http://localhost");
+                        LogUtils.logRecord("URLConnection Block Success: " + lpparam.packageName + "/" + host);
                         return;
                     }
                     String urlDecode = DecodeUtils.decode(url.toString(), null);
-                    if (urlDecode != null) {
+                    if (urlDecode != null && !PreferencesHelper.whiteListElements().contains(urlDecode)) {
                         for (String adUrl : HookLoader.urlList) {
                             if (urlDecode.contains(adUrl)) {
                                 param.args[0] = new URL("http://localhost");
+                                LogUtils.logRecord("URLConnection Block Success: " + lpparam.packageName + "/" + urlDecode);
                                 return;
                             }
                         }
