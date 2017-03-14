@@ -15,7 +15,7 @@
     <string name="about">关于</string>
     <string name="donate_description_alipay">请我喝咖啡</string>
     <string name="actview_hook_description">根据内置列表拦截活动和视图</string>
-    <string name="hosts_hook_description">根据内置列表拦截 URL（不修改系统文件，只支持特定方法）</string>
+    <string name="hosts_hook_description">根据内置列表拦截主机地址（不修改系统文件，只支持特定方法）</string>
     <string name="license_description">本模块按照 GPL-3.0 协议发布</string>
     <string name="receivers_hook_description">根据内置列表拦截接收器</string>
     <string name="services_hook_description">根据内置列表拦截服务</string>
@@ -47,6 +47,6 @@
     <string name="shortcut_hook">启用快捷方式拦截</string>
     <string name="no_reload_description">提升性能，但是所有设置将在下次重启后生效</string>
     <string name="no_reload">启用兼容模式</string>
-    <string name="url_hook_description">根据内置列表拦截 URL</string>
+    <string name="url_hook_description">根据内置列表拦截 URL（高度实验性，只支持特定方法）</string>
     <string name="url_hook">启用 URL 拦截</string>
 </resources>

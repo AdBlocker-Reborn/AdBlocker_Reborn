@@ -7,7 +7,7 @@
     <string name="actview_hook">Enable Activity and View Block</string>
     <string name="actview_hook_description">Block activities and views according to a preloaded list</string>
     <string name="hosts_hook">Enable Hosts Block</string>
-    <string name="hosts_hook_description">Block URLs according to a preloaded list (Not modifying system hosts, Only support certain methods)</string>
+    <string name="hosts_hook_description">Block Host Names according to a preloaded list (Not modifying system hosts, Only support certain methods)</string>
     <string name="webview_hook">Enable WebView Block</string>
     <string name="webview_hook_description">Block page elements according to a preloaded list (Only support certain methods)</string>
     <string name="services_hook">Enable Services Block</string>
@@ -37,7 +37,7 @@
     <string name="donate_paypal">Donate via Paypal</string>
     <string name="open_xda_description">Discuss about this module on XDA</string>
     <string name="open_xda">Open Discussion Thread</string>
-    <string name="whitelist_element_description">Input elements which will not beaffected by this module</string>
+    <string name="whitelist_element_description">Input elements which will not be affected by this module</string>
     <string name="whitelist_element">Element Whitelist</string>
     <string name="bonus">Bonus</string>
     <string name="donate">Donation</string>
@@ -47,6 +47,6 @@
     <string name="shortcut_hook">Enable Shortcut Block</string>
     <string name="no_reload_description">Improve performance but every config will not take effects until next boot</string>
     <string name="no_reload">Enable Compatibility Mode</string>
-    <string name="url_hook_description">Block URLs according to a preloaded list</string>
+    <string name="url_hook_description">Block URLs according to a preloaded list (Highly experimental, only support certain methods</string>
     <string name="url_hook">Enable URL Block</string>
 </resources>

@@ -86,5 +86,4 @@ public class PreferencesHelper {
     public static List<String> whiteListElements() {
         return Arrays.asList(getModuleSharedPreferences().getString("DISABLED_ELEMENTS", "").split("\n"));
     }
-
 }

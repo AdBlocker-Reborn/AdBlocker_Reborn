@@ -10,8 +10,6 @@ import com.aviraxp.adblocker.continued.helper.PreferencesHelper;
 import com.aviraxp.adblocker.continued.util.DecodeUtils;
 import com.aviraxp.adblocker.continued.util.LogUtils;
 
-import java.io.UnsupportedEncodingException;
-import java.net.URLDecoder;
 import java.util.Collections;
 import java.util.HashSet;
 
@@ -66,52 +64,52 @@ class WebViewHook {
             return;
         }
 
-            XC_MethodHook urlHook = new XC_MethodHook() {
-                @Override
-                protected void beforeHookedMethod(XC_MethodHook.MethodHookParam param) {
-                    String url = (String) param.args[0];
-                    if (url != null) {
-                        adExist = urlFiltering(url, null, null, param);
-                        if (adExist) {
-                            LogUtils.logRecord("WebView Block Success: " + lpparam.packageName + "/" + url);
-                        }
+        XC_MethodHook urlHook = new XC_MethodHook() {
+            @Override
+            protected void beforeHookedMethod(XC_MethodHook.MethodHookParam param) {
+                String url = (String) param.args[0];
+                if (url != null) {
+                    adExist = urlFiltering(url, null, null, param);
+                    if (adExist) {
+                        LogUtils.logRecord("WebView Block Success: " + lpparam.packageName + "/" + url);
                     }
                 }
-            };
+            }
+        };
 
-            XC_MethodHook loadDataHook = new XC_MethodHook() {
-                @Override
-                protected void beforeHookedMethod(XC_MethodHook.MethodHookParam param) {
-                    String data = (String) param.args[0];
-                    String encodingType = (String) param.args[2];
-                    if (data != null) {
-                        adExist = urlFiltering(null, data, encodingType, param);
-                        if (adExist) {
-                            LogUtils.logRecord("WebView Block Success: " + lpparam.packageName + "/" + data);
-                        }
+        XC_MethodHook loadDataHook = new XC_MethodHook() {
+            @Override
+            protected void beforeHookedMethod(XC_MethodHook.MethodHookParam param) {
+                String data = (String) param.args[0];
+                String encodingType = (String) param.args[2];
+                if (data != null) {
+                    adExist = urlFiltering(null, data, encodingType, param);
+                    if (adExist) {
+                        LogUtils.logRecord("WebView Block Success: " + lpparam.packageName + "/" + data);
                     }
                 }
-            };
+            }
+        };
 
-            XC_MethodHook loadDataWithBaseURL = new XC_MethodHook() {
-                @Override
-                protected void beforeHookedMethod(XC_MethodHook.MethodHookParam param) {
-                    String url = (String) param.args[0];
-                    String data = (String) param.args[1];
-                    String encodingType = (String) param.args[3];
-                    if (url != null || data != null) {
-                        adExist = urlFiltering(url, data, encodingType, param);
-                        if (adExist) {
-                            LogUtils.logRecord("WebView Block Success: " + lpparam.packageName + "/" + url + " & " + data);
-                        }
+        XC_MethodHook loadDataWithBaseURL = new XC_MethodHook() {
+            @Override
+            protected void beforeHookedMethod(XC_MethodHook.MethodHookParam param) {
+                String url = (String) param.args[0];
+                String data = (String) param.args[1];
+                String encodingType = (String) param.args[3];
+                if (url != null || data != null) {
+                    adExist = urlFiltering(url, data, encodingType, param);
+                    if (adExist) {
+                        LogUtils.logRecord("WebView Block Success: " + lpparam.packageName + "/" + url + " & " + data);
                     }
                 }
-            };
+            }
+        };
 
-            XposedBridge.hookAllMethods(WebView.class, "postUrl", urlHook);
-            XposedBridge.hookAllMethods(WebView.class, "loadUrl", urlHook);
-            XposedBridge.hookAllMethods(WebView.class, "loadData", loadDataHook);
-            XposedBridge.hookAllMethods(WebView.class, "loadDataWithBaseURL", loadDataWithBaseURL);
+        XposedBridge.hookAllMethods(WebView.class, "postUrl", urlHook);
+        XposedBridge.hookAllMethods(WebView.class, "loadUrl", urlHook);
+        XposedBridge.hookAllMethods(WebView.class, "loadData", loadDataHook);
+        XposedBridge.hookAllMethods(WebView.class, "loadDataWithBaseURL", loadDataWithBaseURL);
 
     }
 
