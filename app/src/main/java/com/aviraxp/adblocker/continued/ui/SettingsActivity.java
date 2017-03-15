@@ -9,7 +9,6 @@ import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.AsyncTask;
-import android.os.Build;
 import android.os.Bundle;
 import android.preference.MultiSelectListPreference;
 import android.preference.Preference;
@@ -34,9 +33,7 @@ public class SettingsActivity extends PreferenceActivity {
 
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.N) {
-            getPreferenceManager().setSharedPreferencesMode(MODE_WORLD_READABLE);
-        }
+        getPreferenceManager().setSharedPreferencesMode(MODE_WORLD_READABLE);
         addPreferencesFromResource(R.xml.pref_settings);
         checkState();
         new AppPicker().execute();

@@ -6,9 +6,10 @@ android {
     defaultConfig {
         applicationId "com.aviraxp.adblocker.continued"
         minSdkVersion 15
+        maxSdkVersion 23
         targetSdkVersion 25
-        versionCode 15
-        versionName "1.2 - 在这世界的角落"
+        versionCode 19
+        versionName "1.5.2"
     }
     buildTypes {
         release {
@@ -25,5 +26,4 @@ android {
 dependencies {
     provided 'de.robv.android.xposed:api:82'
     compile 'moe.feng:AlipayZeroSdk:1.1'
-    provided files('libs/AndroidHiddenAPI.jar')
 }

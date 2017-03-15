@@ -110,7 +110,6 @@ class WebViewHook {
         XposedBridge.hookAllMethods(WebView.class, "loadUrl", urlHook);
         XposedBridge.hookAllMethods(WebView.class, "loadData", loadDataHook);
         XposedBridge.hookAllMethods(WebView.class, "loadDataWithBaseURL", loadDataWithBaseURL);
-
     }
 
     private boolean urlFiltering(String url, String data, String encodingType, XC_MethodHook.MethodHookParam param) {
