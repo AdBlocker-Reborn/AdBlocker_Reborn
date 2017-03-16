@@ -2,6 +2,8 @@ package com.aviraxp.adblocker.continued.hook;
 
 import android.content.res.Resources;
 import android.content.res.XModuleResources;
+import android.net.Network;
+import android.os.Build;
 import android.os.NetworkOnMainThreadException;
 import android.os.StrictMode;
 
@@ -152,9 +154,12 @@ class HostsHook {
         XposedBridge.hookAllMethods(InetAddress.class, "getAllByName", inetAddrHookSingleResult);
         XposedBridge.hookAllMethods(InetAddress.class, "getByName", inetAddrHookSingleResult);
         XposedBridge.hookAllMethods(InetSocketAddress.class, "createUnresolved", inetAddrHookSingleResult);
-        XposedBridge.hookAllMethods(ioBridgeClz, "connect", ioBridgeHook);
         XposedBridge.hookAllMethods(ioBridgeClz, "connectErrno", ioBridgeHook);
         XposedBridge.hookAllMethods(ioBridgeClz, "isConnected", ioBridgeBooleanHook);
         XposedBridge.hookAllMethods(blockGuardOsClz, "connect", blockGuardOsHook);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            XposedBridge.hookAllMethods(Network.class, "getAllByName", inetAddrHookSingleResult);
+            XposedBridge.hookAllMethods(Network.class, "getByName", inetAddrHookSingleResult);
+        }
     }
 }
