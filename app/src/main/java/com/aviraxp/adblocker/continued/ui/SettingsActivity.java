@@ -20,7 +20,6 @@ import android.widget.Toast;
 
 import com.aviraxp.adblocker.continued.BuildConfig;
 import com.aviraxp.adblocker.continued.R;
-import com.aviraxp.adblocker.continued.helper.PreferencesHelper;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -48,14 +47,14 @@ public class SettingsActivity extends PreferenceActivity {
     }
 
     private void showUpdateLog() {
-        if (PreferencesHelper.isUptoDate() != BuildConfig.VERSION_CODE) {
-            new LicensesDialog(SettingsActivity.this, "file:///android_asset/html/updatelog.html")
+        @SuppressLint("WorldReadableFiles")
+        SharedPreferences sp = getSharedPreferences("VERSION", MODE_WORLD_READABLE);
+        if (sp.getInt("VERSION", 0) != BuildConfig.VERSION_CODE) {
+            new LicensesDialog(SettingsActivity.this, "file:///android_asset/html/update.html")
                     .setTitle(R.string.licensedialog)
                     .setPositiveButton(android.R.string.ok, null)
                     .show();
-            @SuppressLint("WorldReadableFiles")
-            SharedPreferences.Editor sp = getSharedPreferences("VERSION", MODE_WORLD_READABLE).edit();
-            sp.putInt("VERSION", BuildConfig.VERSION_CODE)
+            sp.edit().putInt("VERSION", BuildConfig.VERSION_CODE)
                     .apply();
         }
     }

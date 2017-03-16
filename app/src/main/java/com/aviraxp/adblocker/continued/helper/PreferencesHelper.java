@@ -79,10 +79,6 @@ public class PreferencesHelper {
         return !SystemProperties.get("ro.miui.ui.version.name", "").equals("");
     }
 
-    public static int isUptoDate() {
-        return getModuleSharedPreferences().getInt("VERSION", 0);
-    }
-
     public static Set<String> disabledApps() {
         return getModuleSharedPreferences().getStringSet("DISABLED_APPS", new HashSet<String>());
     }
