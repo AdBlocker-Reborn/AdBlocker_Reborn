@@ -1,9 +1,11 @@
 package com.aviraxp.adblocker.continued.ui;
 
+import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.content.ComponentName;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
@@ -18,6 +20,7 @@ import android.widget.Toast;
 
 import com.aviraxp.adblocker.continued.BuildConfig;
 import com.aviraxp.adblocker.continued.R;
+import com.aviraxp.adblocker.continued.helper.PreferencesHelper;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -38,9 +41,23 @@ public class SettingsActivity extends PreferenceActivity {
         checkState();
         new AppPicker().execute();
         removePreference();
+        showUpdateLog();
         uriListener();
         hideIconListener();
         licensesListener();
+    }
+
+    private void showUpdateLog() {
+        if (PreferencesHelper.isUptoDate() != BuildConfig.VERSION_CODE) {
+            new LicensesDialog(SettingsActivity.this, "file:///android_asset/html/updatelog.html")
+                    .setTitle(R.string.licensedialog)
+                    .setPositiveButton(android.R.string.ok, null)
+                    .show();
+            @SuppressLint("WorldReadableFiles")
+            SharedPreferences.Editor sp = getSharedPreferences("VERSION", MODE_WORLD_READABLE).edit();
+            sp.putInt("VERSION", BuildConfig.VERSION_CODE)
+                    .apply();
+        }
     }
 
     private void uriListener() {
@@ -82,7 +99,7 @@ public class SettingsActivity extends PreferenceActivity {
         findPreference("LICENSES").setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
             @Override
             public boolean onPreferenceClick(Preference preference) {
-                new LicensesDialog(SettingsActivity.this)
+                new LicensesDialog(SettingsActivity.this, "file:///android_asset/html/licenses.html")
                         .setTitle(R.string.licensedialog)
                         .setPositiveButton(android.R.string.ok, null)
                         .show();

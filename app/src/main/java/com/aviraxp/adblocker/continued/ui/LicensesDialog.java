@@ -11,15 +11,15 @@ class LicensesDialog extends AlertDialog.Builder {
 
     private final Context ctx;
 
-    LicensesDialog(Context context) {
+    LicensesDialog(Context context, String url) {
         super(context);
         ctx = context;
-        init();
+        init(url);
     }
 
-    private void init() {
+    private void init(String url) {
         WebView view = new WebView(ctx);
-        view.loadUrl("file:///android_asset/licenses.html");
+        view.loadUrl(url);
         view.setWebViewClient(new WebViewClient() {
             @SuppressWarnings("deprecation")
             @Override
