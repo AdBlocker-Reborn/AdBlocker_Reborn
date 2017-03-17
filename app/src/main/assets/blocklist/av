@@ -20,17 +20,21 @@ com.ad2iction.mobileads.MraidVideoPlayerActivity
 com.adbert.AdbertADView
 com.adchina.android.ads.views.AdBrowserView
 com.adchina.android.ads.views.FullScreenAdActivity
+com.adcustom.sdk.ads.AdBanner
 com.adfonic.android.AdfonicActivity
 com.admarvel.android.ads.AdMarvelActivity
 com.admarvel.android.ads.AdMarvelMediationActivity
 com.admarvel.android.ads.AdMarvelVideoActivity
+com.admarvel.android.ads.AdMarvelView
 com.admob.android.ads.AdMobActivity
 com.admofi.sdk.lib.and.AdmofiActivity
 com.adsdk.sdk.banner.InAppWebView
 com.adsdk.sdk.mraid.MraidBrowser
 com.adsdk.sdk.video.RichMediaActivity
+com.adsdk.sdk.waterfall.Banner
 com.adsmogo.adview.AdsMogoWebView
 com.adsmogo.offers.adapters.WanpuAdView
+com.adtech.mobilesdk.publisher.view.AdtechBannerView
 com.adwo.adsdk.AdwoAdBrowserActivity
 com.adwo.adsdk.AdwoAdView
 com.adwo.adsdk.AdwoSplashAdActivity
@@ -128,6 +132,7 @@ com.hyprmx.android.sdk.activity.HyprMXRequiredInformationActivity
 com.hyprmx.android.sdk.activity.HyprMXVideoPlayerActivity
 com.hyprmx.android.sdk.activity.HyprMXWebTrafficActivity
 com.iadpush.adp.IA
+com.inmobi.ads.IMBanner
 com.inmobi.android.sample.app.AdBannerActivity
 com.inmobi.android.sample.app.AdInterstitialActivity
 com.inmobi.androidsdk.IMBrowserActivity
@@ -140,6 +145,7 @@ com.intentsoftware.addapptr.fullscreens.PromoHouseFullscreenActivity
 com.intentsoftware.addapptr.fullscreens.RTB1FullscreenActivity
 com.intentsoftware.addapptr.fullscreens.SmaatoFullscreenActivity
 com.intentsoftware.addapptr.fullscreens.SmartAdServerFullscreenActivity
+com.intowow.sdk.BannerAD
 com.intowow.sdk.ui.view.InstreamADView
 com.jirbo.adcolony.AdColonyBrowser
 com.jirbo.adcolony.AdColonyFullscreen
