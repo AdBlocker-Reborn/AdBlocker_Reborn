@@ -27,6 +27,8 @@ import de.robv.android.xposed.callbacks.XC_LoadPackage;
 
 class HostsHook {
 
+    private static final String BLOCK_MESSAGE = "Blocked by AdBlocker Reborn: ";
+
     void init(IXposedHookZygoteInit.StartupParam startupParam) throws Throwable {
         String MODULE_PATH = startupParam.modulePath;
         Resources res = XModuleResources.createInstance(MODULE_PATH, null);
@@ -73,6 +75,7 @@ class HostsHook {
                 String host = (String) param.args[0];
                 if (host != null && !PreferencesHelper.whiteListElements().contains(host) && HookLoader.hostsList.contains(host)) {
                     param.setResult(null);
+                    param.setThrowable(new UnknownHostException(BLOCK_MESSAGE + host));
                     LogUtils.logRecord("Hosts Block Success: " + lpparam.packageName + "/" + host);
                 }
             }
@@ -97,6 +100,7 @@ class HostsHook {
                     }
                     if (host != null && !PreferencesHelper.whiteListElements().contains(host) && HookLoader.hostsList.contains(host)) {
                         param.setResult(new Object());
+                        param.setThrowable(new UnknownHostException(BLOCK_MESSAGE + host));
                         LogUtils.logRecord("Hosts Block Success: " + lpparam.packageName + "/" + host);
                     }
                 }
@@ -110,6 +114,7 @@ class HostsHook {
                 String host = address.getHostName();
                 if (host != null && !PreferencesHelper.whiteListElements().contains(host) && HookLoader.hostsList.contains(host)) {
                     param.setResult(null);
+                    param.setThrowable(new UnknownHostException(BLOCK_MESSAGE + host));
                     LogUtils.logRecord("Hosts Block Success: " + lpparam.packageName + "/" + host);
                 }
             }
@@ -122,6 +127,7 @@ class HostsHook {
                 String host = address.getHostName();
                 if (host != null && !PreferencesHelper.whiteListElements().contains(host) && HookLoader.hostsList.contains(host)) {
                     param.setResult(null);
+                    param.setThrowable(new SocketException(BLOCK_MESSAGE + host));
                     LogUtils.logRecord("Hosts Block Success: " + lpparam.packageName + "/" + host);
                 }
             }
@@ -134,6 +140,7 @@ class HostsHook {
                 String host = address.getHostName();
                 if (host != null && !PreferencesHelper.whiteListElements().contains(host) && HookLoader.hostsList.contains(host)) {
                     param.setResult(false);
+                    param.setThrowable(new ConnectException(BLOCK_MESSAGE + host));
                     LogUtils.logRecord("Hosts Block Success: " + lpparam.packageName + "/" + host);
                 }
             }
