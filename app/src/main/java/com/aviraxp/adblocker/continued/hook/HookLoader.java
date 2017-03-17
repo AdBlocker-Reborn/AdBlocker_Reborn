@@ -25,7 +25,7 @@ public class HookLoader implements IXposedHookLoadPackage, IXposedHookZygoteInit
         new ServicesHook().hook(lpparam);
         new ShortcutHook().hook(lpparam);
 
-        if (lpparam.packageName.equals("android") || PreferencesHelper.isAndroidApp(lpparam.packageName) || PreferencesHelper.isDisableSystemApps() && (lpparam.appInfo.flags & ApplicationInfo.FLAG_SYSTEM) != 0 && !lpparam.packageName.contains("webview") || PreferencesHelper.disabledApps().contains(lpparam.packageName)) {
+        if (PreferencesHelper.isAndroidApp(lpparam.packageName) || PreferencesHelper.isDisabledSystemApp(lpparam) || PreferencesHelper.isWhitelisted(lpparam.packageName)) {
             return;
         }
 

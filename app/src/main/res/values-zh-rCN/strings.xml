@@ -29,8 +29,8 @@
     <string name="hide_launcher_icon">隐藏启动器图标</string>
     <string name="hide_launcher_icon_description">你仍可以通过 Xposed Installer 进入设置</string>
     <string name="licensedialog">许可</string>
-    <string name="whitelist">应用白名单</string>
-    <string name="whitelist_description">选择本模块不作用的应用</string>
+    <string name="whitelist">应用黑/白名单</string>
+    <string name="whitelist_description">选择白名单或黑名单应用</string>
     <string name="aggressive_hook_description">拦截不能确定是否为广告的元素</string>
     <string name="aggressive_hook">启用激进拦截</string>
     <string name="donate_description_payapl">请我喝啤酒</string>
@@ -49,4 +49,6 @@
     <string name="no_reload">启用兼容模式</string>
     <string name="url_hook_description">根据内置列表拦截 URL（高度实验性，只支持特定方法）</string>
     <string name="url_hook">启用 URL 拦截</string>
+    <string name="list_mode_description">当开启时对应用名单使用白名单模式，关闭时使用黑名单模式</string>
+    <string name="list_mode">白名单模式</string>
 </resources>

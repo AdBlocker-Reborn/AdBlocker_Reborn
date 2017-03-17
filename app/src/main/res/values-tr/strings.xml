@@ -29,8 +29,8 @@
     <string name="hide_launcher_icon">Başlatıcı Simgesini Gizle</string>
     <string name="hide_launcher_icon_description">Ayarlara Xposed Installer ile yine erişebilirsiniz</string>
     <string name="licensedialog">Lisanslar</string>
-    <string name="whitelist">Uygulama Beyaz Listesi</string>
-    <string name="whitelist_description">Bu modülden etkilenmeyecek uygulamaları seçin</string>
+    <string name="whitelist">Application Blacklist/Whitelist</string>
+    <string name="whitelist_description">Select blacklist/whitelist applications</string>
     <string name="aggressive_hook_description">Reklam gibi görünen ancak emin olmayan engel öğeleri</string>
     <string name="aggressive_hook">Agresif Engellemeyi Etkinleştir</string>
     <string name="donate_description_payapl">Bana bir şişe bira ısmarla</string>
@@ -49,4 +49,6 @@
     <string name="no_reload">Uyumluluk Modunu Etkinleştir</string>
     <string name="url_hook_description">URL\'leri önceden yüklenmiş bir listeye göre engelleyin (Yüksek deneysel, yalnızca belirli yöntemleri destekler)</string>
     <string name="url_hook">URL Engellemeyi Etkinleştir</string>
+    <string name="list_mode_description">Use whitelist mode for application list when enabled, blacklist mode when disabled</string>
+    <string name="list_mode">Whitelist Mode</string>
 </resources>

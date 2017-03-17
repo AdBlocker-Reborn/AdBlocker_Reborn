@@ -29,8 +29,8 @@
     <string name="hide_launcher_icon">Hide Launcher Icon</string>
     <string name="hide_launcher_icon_description">You can still access settings via Xposed Installer</string>
     <string name="licensedialog">Licenses</string>
-    <string name="whitelist">Application Whitelist</string>
-    <string name="whitelist_description">Select applications which will not be affected by this module</string>
+    <string name="whitelist">Application Blacklist/Whitelist</string>
+    <string name="whitelist_description">Select blacklist/whitelist applications</string>
     <string name="aggressive_hook_description">Block elements which look like an advertisement but unsure</string>
     <string name="aggressive_hook">Enable Aggressive Block</string>
     <string name="donate_description_payapl">Offer me a bottle of beer</string>
@@ -49,4 +49,6 @@
     <string name="no_reload">Enable Compatibility Mode</string>
     <string name="url_hook_description">Block URLs according to a preloaded list (Highly experimental, only support certain methods)</string>
     <string name="url_hook">Enable URL Block</string>
+    <string name="list_mode_description">Use whitelist mode for application list when enabled, blacklist mode when disabled</string>
+    <string name="list_mode">Whitelist Mode</string>
 </resources>

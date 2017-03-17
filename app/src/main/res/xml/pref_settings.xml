@@ -2,10 +2,19 @@
     <PreferenceCategory
         android:key="WHITELISTS"
         android:title="@string/whitelist">
+        <CheckBoxPreference
+            android:defaultValue="true"
+            android:key="LIST_MODE"
+            android:summary="@string/list_mode_description"
+            android:title="@string/list_mode" />
         <MultiSelectListPreference
             android:key="DISABLED_APPS"
             android:summary="@string/whitelist_description"
             android:title="@string/whitelist" />
+    </PreferenceCategory>
+    <PreferenceCategory
+        android:key="WHITELISTS_ELEMENT"
+        android:title="@string/whitelist_element">
         <EditTextPreference
             android:key="DISABLED_ELEMENTS"
             android:summary="@string/whitelist_element_description"

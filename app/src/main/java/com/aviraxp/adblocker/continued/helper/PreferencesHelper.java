@@ -1,5 +1,6 @@
 package com.aviraxp.adblocker.continued.helper;
 
+import android.content.pm.ApplicationInfo;
 import android.os.SystemProperties;
 
 import com.aviraxp.adblocker.continued.BuildConfig;
@@ -10,6 +11,7 @@ import java.util.List;
 import java.util.Set;
 
 import de.robv.android.xposed.XSharedPreferences;
+import de.robv.android.xposed.callbacks.XC_LoadPackage;
 
 public class PreferencesHelper {
 
@@ -71,8 +73,20 @@ public class PreferencesHelper {
         return getModuleSharedPreferences().getBoolean("DEBUG", false);
     }
 
+    public static boolean isWhitelisted(String string) {
+        return isWhiteListModeEnabled() && disabledApps().contains(string) || !isWhiteListModeEnabled() && !disabledApps().contains(string);
+    }
+
+    private static boolean isWhiteListModeEnabled() {
+        return getModuleSharedPreferences().getBoolean("LIST_MODE", true);
+    }
+
+    public static boolean isDisabledSystemApp(XC_LoadPackage.LoadPackageParam lpm) {
+        return isDisableSystemApps() && (lpm.appInfo.flags & ApplicationInfo.FLAG_SYSTEM) != 0 && !lpm.packageName.contains("webview");
+    }
+
     public static boolean isAndroidApp(String string) {
-        return string.startsWith("com.android") && !string.equals("com.android.webview");
+        return string.startsWith("com.android") && !string.equals("com.android.webview") || string.equals("android");
     }
 
     public static boolean isMIUI() {
