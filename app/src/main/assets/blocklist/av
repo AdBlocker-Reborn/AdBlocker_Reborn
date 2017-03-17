@@ -221,6 +221,7 @@ com.rhythmnewmedia.sdk.RhythmActivity
 com.rhythmnewmedia.sdk.video.RhythmVideoActivity
 com.sec.android.ad.AdActivity
 com.smartadserver.android.library.ui.SASAdView
+com.startapp.android.publish.AppWallActivity
 com.startapp.android.publish.FullScreenActivity
 com.startapp.android.publish.HtmlAd
 com.startapp.android.publish.OverlayActivity

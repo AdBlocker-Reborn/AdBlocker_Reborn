@@ -11,8 +11,10 @@ com.igexin.sdk.PushService
 com.igexin.sdk.PushServiceUser
 com.jpush.android.service.PushService
 com.lsk.mobads.service.ExchangeService
+com.moolah.NotificationService
 com.pingstart.adsdk.OptimizeService
 com.qq.e.comm.DownloadService
+com.tapcontext.TapContextService
 com.tencent.android.tpush.rpc.XGRemoteService
 com.tencent.android.tpush.service.XGPushService
 com.tencent.mm.plugin.hp.tinker.TinkerPatchResultService
@@ -23,6 +25,7 @@ com.umeng.message.UmengBaseIntentService
 com.umeng.message.UmengDownloadResourceService
 com.umeng.message.UmengIntentService
 com.umeng.message.UmengService
+com.urbanairship.push.PushService
 com.xiaomi.mipush.sdk.PushMessageHandler
 com.xiaomi.miui.ad.exchange.thrift.bid.service.MiuiAdExchangeBidService
 com.xiaomi.miui.ad.thrift.service.MiuiAdQueryService
