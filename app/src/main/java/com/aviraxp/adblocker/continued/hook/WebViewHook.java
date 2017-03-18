@@ -66,7 +66,7 @@ class WebViewHook {
 
         XC_MethodHook urlHook = new XC_MethodHook() {
             @Override
-            protected void beforeHookedMethod(XC_MethodHook.MethodHookParam param) {
+            protected void beforeHookedMethod(MethodHookParam param) {
                 String url = (String) param.args[0];
                 if (url != null) {
                     adExist = urlFiltering(url, null, null, param);
@@ -79,7 +79,7 @@ class WebViewHook {
 
         XC_MethodHook loadDataHook = new XC_MethodHook() {
             @Override
-            protected void beforeHookedMethod(XC_MethodHook.MethodHookParam param) {
+            protected void beforeHookedMethod(MethodHookParam param) {
                 String data = (String) param.args[0];
                 String encodingType = (String) param.args[2];
                 if (data != null) {
@@ -93,7 +93,7 @@ class WebViewHook {
 
         XC_MethodHook loadDataWithBaseURL = new XC_MethodHook() {
             @Override
-            protected void beforeHookedMethod(XC_MethodHook.MethodHookParam param) {
+            protected void beforeHookedMethod(MethodHookParam param) {
                 String url = (String) param.args[0];
                 String data = (String) param.args[1];
                 String encodingType = (String) param.args[3];

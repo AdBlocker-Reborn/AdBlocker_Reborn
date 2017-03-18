@@ -1,7 +1,5 @@
 package com.aviraxp.adblocker.continued.hook;
 
-import android.content.pm.ApplicationInfo;
-
 import com.aviraxp.adblocker.continued.helper.PreferencesHelper;
 
 import java.util.HashSet;
