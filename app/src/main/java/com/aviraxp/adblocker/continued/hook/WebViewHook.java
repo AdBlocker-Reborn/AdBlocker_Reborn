@@ -119,7 +119,7 @@ class WebViewHook {
     }
 
     private boolean hostsBlock(String string, HashSet<String> hashSet, XC_MethodHook.MethodHookParam param) {
-        if ((string != null && !PreferencesHelper.whiteListElements().contains(string) && string.startsWith("http"))) {
+        if (string != null && !PreferencesHelper.whiteListElements().contains(string) && string.startsWith("http")) {
             try {
                 for (String adUrl : hashSet) {
                     if (string.substring(string.indexOf("://") + 3).startsWith(adUrl)) {
@@ -135,7 +135,7 @@ class WebViewHook {
     }
 
     private boolean urlBlock(String string, HashSet<String> hashSet, XC_MethodHook.MethodHookParam param) {
-        if ((string != null && !PreferencesHelper.whiteListElements().contains(string) && string.startsWith("http"))) {
+        if (string != null && !PreferencesHelper.whiteListElements().contains(string) && string.startsWith("http")) {
             try {
                 for (String adUrl : hashSet) {
                     if (string.contains(adUrl)) {

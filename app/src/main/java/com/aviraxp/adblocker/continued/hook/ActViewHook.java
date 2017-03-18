@@ -6,7 +6,9 @@ import android.content.ContextWrapper;
 import android.content.Intent;
 import android.content.res.Resources;
 import android.content.res.XModuleResources;
+import android.os.Build;
 import android.os.Bundle;
+import android.os.UserHandle;
 import android.view.View;
 import android.view.ViewGroup;
 
@@ -47,7 +49,7 @@ class ActViewHook {
 
         XC_MethodHook activityCreateHook = new XC_MethodHook() {
             @Override
-            protected void afterHookedMethod(XC_MethodHook.MethodHookParam param) throws Throwable {
+            protected void afterHookedMethod(MethodHookParam param) throws Throwable {
                 Activity activity = (Activity) param.thisObject;
                 String activityClassName = activity.getClass().getName();
                 if (activityClassName != null && !PreferencesHelper.whiteListElements().contains(activityClassName) && (HookLoader.actViewList.contains(activityClassName) || PreferencesHelper.isAggressiveHookEnabled() && isAggressiveBlock(activityClassName))) {
@@ -61,7 +63,7 @@ class ActViewHook {
 
         XC_MethodHook activityStartHook = new XC_MethodHook() {
             @Override
-            protected void beforeHookedMethod(XC_MethodHook.MethodHookParam param) throws Throwable {
+            protected void beforeHookedMethod(MethodHookParam param) throws Throwable {
                 if (param.args[0] != null) {
                     ComponentName Component = ((Intent) param.args[0]).getComponent();
                     if (Component != null) {
@@ -77,14 +79,14 @@ class ActViewHook {
 
         XC_MethodHook viewHook = new XC_MethodHook() {
             @Override
-            protected void afterHookedMethod(XC_MethodHook.MethodHookParam param) throws Throwable {
+            protected void afterHookedMethod(MethodHookParam param) throws Throwable {
                 hideIfAdView((View) param.thisObject, lpparam.packageName);
             }
         };
 
         XC_MethodHook visibilityHook = new XC_MethodHook() {
             @Override
-            protected void afterHookedMethod(XC_MethodHook.MethodHookParam param) throws Throwable {
+            protected void afterHookedMethod(MethodHookParam param) throws Throwable {
                 if ((Integer) param.args[0] != 8) {
                     hideIfAdView((View) param.thisObject, lpparam.packageName);
                 }
@@ -99,6 +101,10 @@ class ActViewHook {
         XposedHelpers.findAndHookMethod(View.class, "setVisibility", int.class, visibilityHook);
         XposedBridge.hookAllConstructors(View.class, viewHook);
         XposedBridge.hookAllConstructors(ViewGroup.class, viewHook);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1) {
+            XposedHelpers.findAndHookMethod(Activity.class, "startActivityAsUser", Intent.class, Bundle.class, UserHandle.class, activityStartHook);
+            XposedHelpers.findAndHookMethod(Activity.class, "startActivityForResultAsUser", Intent.class, int.class, Bundle.class, UserHandle.class, activityStartHook);
+        }
     }
 
     private boolean isAggressiveBlock(String string) {
