@@ -1,5 +1,12 @@
 .AdActivity
+.ADActivity
 .ads.
 .adsdk.
 .adview.
 AdView
+.AdBrowserView
+.SplashAdActivity
+.AdBanner
+.FullScreenAdActivity
+.AdsActivity
+.FullActivity
