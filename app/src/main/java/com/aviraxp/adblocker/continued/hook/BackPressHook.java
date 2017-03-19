@@ -1,7 +1,9 @@
 package com.aviraxp.adblocker.continued.hook;
 
 import com.aviraxp.adblocker.continued.helper.PreferencesHelper;
+import com.aviraxp.adblocker.continued.util.ContextUtils;
 import com.aviraxp.adblocker.continued.util.LogUtils;
+import com.aviraxp.adblocker.continued.util.NotificationUtils;
 
 import de.robv.android.xposed.XC_MethodHook;
 import de.robv.android.xposed.XposedBridge;
@@ -21,6 +23,7 @@ class BackPressHook {
                 if (!(Boolean) param.args[0]) {
                     param.args[0] = true;
                     LogUtils.logRecord("BackPressHook Success: " + lpparam.packageName);
+                    NotificationUtils.setNotify(ContextUtils.getOwnContext());
                 }
             }
         };

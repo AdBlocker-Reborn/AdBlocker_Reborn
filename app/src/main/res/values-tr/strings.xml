@@ -51,4 +51,8 @@
     <string name="url_hook">URL Engellemeyi Etkinleştir</string>
     <string name="list_mode_description">Use whitelist mode for application list when enabled, blacklist mode when disabled</string>
     <string name="list_mode">Whitelist Mode</string>
+    <string name="notification">Block Succcess</string>
+    <string name="notification_des">Blocked one item</string>
+    <string name="show_notification_description">May cause notifications flooding</string>
+    <string name="show_notification">Show Notification when Blocking</string>
 </resources>

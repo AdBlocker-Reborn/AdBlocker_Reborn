@@ -11,14 +11,14 @@ import android.os.Bundle;
 import com.aviraxp.adblocker.continued.R;
 import com.aviraxp.adblocker.continued.ui.SettingsActivity;
 
+@SuppressWarnings("deprecation")
 public class NotificationUtils extends BroadcastReceiver {
 
-    public static void setNotify(String title, String description, String thirdline, int id, Context ctx) {
+    public static void setNotify(Context ctx) {
         Intent postNotification = new Intent("AdBlocker.intent.action.POST_NOTIFICATION");
-        postNotification.putExtra("description", description)
-                .putExtra("thirdline", thirdline)
-                .putExtra("id", id)
-                .putExtra("title", title);
+        postNotification.putExtra("description", R.string.notification_des)
+                .putExtra("id", 42)
+                .putExtra("title", R.string.notification);
         ctx.sendBroadcast(postNotification);
     }
 
@@ -44,7 +44,7 @@ public class NotificationUtils extends BroadcastReceiver {
                 String description = extras.getString("description");
                 int id = extras.getInt("id");
                 String title = extras.getString("title");
-                postNotification(title, description,  id, context);
+                postNotification(title, description, id, context);
             }
         }
     }

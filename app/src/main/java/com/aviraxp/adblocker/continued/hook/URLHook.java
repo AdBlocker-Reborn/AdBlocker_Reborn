@@ -1,8 +1,10 @@
 package com.aviraxp.adblocker.continued.hook;
 
 import com.aviraxp.adblocker.continued.helper.PreferencesHelper;
+import com.aviraxp.adblocker.continued.util.ContextUtils;
 import com.aviraxp.adblocker.continued.util.DecodeUtils;
 import com.aviraxp.adblocker.continued.util.LogUtils;
+import com.aviraxp.adblocker.continued.util.NotificationUtils;
 
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
@@ -40,6 +42,7 @@ class URLHook {
                                 param.args[1] = "http://localhost";
                             }
                             LogUtils.logRecord("URL Block Success: " + lpparam.packageName + "/" + host);
+                            NotificationUtils.setNotify(ContextUtils.getOwnContext());
                             return;
                         }
                     }
@@ -51,6 +54,7 @@ class URLHook {
                                 param.args[1] = "http://localhost";
                             }
                             LogUtils.logRecord("URL Block Success: " + lpparam.packageName + "/" + url);
+                            NotificationUtils.setNotify(ContextUtils.getOwnContext());
                             return;
                         }
                     }
@@ -65,6 +69,7 @@ class URLHook {
                 if (host != null && !PreferencesHelper.whiteListElements().contains(host) && HookLoader.hostsList.contains(host)) {
                     param.args[1] = "localhost";
                     LogUtils.logRecord("URL Block Success: " + lpparam.packageName + "/" + host);
+                    NotificationUtils.setNotify(ContextUtils.getOwnContext());
                 }
             }
         };
@@ -78,6 +83,7 @@ class URLHook {
                     if (host != null && !PreferencesHelper.whiteListElements().contains(host) && HookLoader.hostsList.contains(host)) {
                         param.args[0] = new URL("http://localhost");
                         LogUtils.logRecord("URLConnection Block Success: " + lpparam.packageName + "/" + host);
+                        NotificationUtils.setNotify(ContextUtils.getOwnContext());
                         return;
                     }
                     String urlDecode = DecodeUtils.decode(url.toString(), null);
@@ -86,6 +92,7 @@ class URLHook {
                             if (urlDecode.contains(adUrl)) {
                                 param.args[0] = new URL("http://localhost");
                                 LogUtils.logRecord("URLConnection Block Success: " + lpparam.packageName + "/" + urlDecode);
+                                NotificationUtils.setNotify(ContextUtils.getOwnContext());
                                 return;
                             }
                         }

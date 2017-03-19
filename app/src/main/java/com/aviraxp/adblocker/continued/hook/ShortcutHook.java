@@ -3,7 +3,9 @@ package com.aviraxp.adblocker.continued.hook;
 import android.content.Intent;
 
 import com.aviraxp.adblocker.continued.helper.PreferencesHelper;
+import com.aviraxp.adblocker.continued.util.ContextUtils;
 import com.aviraxp.adblocker.continued.util.LogUtils;
+import com.aviraxp.adblocker.continued.util.NotificationUtils;
 
 import de.robv.android.xposed.XC_MethodHook;
 import de.robv.android.xposed.XposedBridge;
@@ -22,6 +24,7 @@ class ShortcutHook {
                 if (PreferencesHelper.isShortcutHookEnabled() && intent != null && intent.getAction() != null && intent.getAction().equals("com.android.launcher.action.INSTALL_SHORTCUT")) {
                     param.setResult(0);
                     LogUtils.logRecord("Shortcut Block Success:" + packageName);
+                    NotificationUtils.setNotify(ContextUtils.getOwnContext());
                 }
             }
         };

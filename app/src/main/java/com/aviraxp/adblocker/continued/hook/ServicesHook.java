@@ -11,6 +11,7 @@ import android.os.Build;
 import com.aviraxp.adblocker.continued.helper.PreferencesHelper;
 import com.aviraxp.adblocker.continued.util.ContextUtils;
 import com.aviraxp.adblocker.continued.util.LogUtils;
+import com.aviraxp.adblocker.continued.util.NotificationUtils;
 
 import java.util.Collections;
 import java.util.HashSet;
@@ -74,12 +75,14 @@ class ServicesHook {
                     if (!PreferencesHelper.isDisableSystemApps()) {
                         param.setResult(null);
                         LogUtils.logRecord("Service Block Success: " + serviceName.flattenToShortString());
+                        NotificationUtils.setNotify(ContextUtils.getOwnContext());
                     } else {
                         try {
                             ApplicationInfo info = ContextUtils.getSystemContext().getPackageManager().getApplicationInfo(packageName, 0);
                             if ((info.flags & ApplicationInfo.FLAG_SYSTEM) == 0) {
                                 param.setResult(null);
                                 LogUtils.logRecord("Service Block Success: " + serviceName.flattenToShortString());
+                                NotificationUtils.setNotify(ContextUtils.getOwnContext());
                             }
                         } catch (PackageManager.NameNotFoundException ignored) {
                         }

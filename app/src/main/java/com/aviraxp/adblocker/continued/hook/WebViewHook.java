@@ -7,8 +7,10 @@ import android.view.ViewGroup;
 import android.webkit.WebView;
 
 import com.aviraxp.adblocker.continued.helper.PreferencesHelper;
+import com.aviraxp.adblocker.continued.util.ContextUtils;
 import com.aviraxp.adblocker.continued.util.DecodeUtils;
 import com.aviraxp.adblocker.continued.util.LogUtils;
+import com.aviraxp.adblocker.continued.util.NotificationUtils;
 
 import java.util.Collections;
 import java.util.HashSet;
@@ -72,6 +74,7 @@ class WebViewHook {
                     adExist = urlFiltering(url, null, null, param);
                     if (adExist) {
                         LogUtils.logRecord("WebView Block Success: " + lpparam.packageName + "/" + url);
+                        NotificationUtils.setNotify(ContextUtils.getOwnContext());
                     }
                 }
             }
@@ -86,6 +89,7 @@ class WebViewHook {
                     adExist = urlFiltering(null, data, encodingType, param);
                     if (adExist) {
                         LogUtils.logRecord("WebView Block Success: " + lpparam.packageName + "/" + data);
+                        NotificationUtils.setNotify(ContextUtils.getOwnContext());
                     }
                 }
             }
@@ -101,6 +105,7 @@ class WebViewHook {
                     adExist = urlFiltering(url, data, encodingType, param);
                     if (adExist) {
                         LogUtils.logRecord("WebView Block Success: " + lpparam.packageName + "/" + url + " & " + data);
+                        NotificationUtils.setNotify(ContextUtils.getOwnContext());
                     }
                 }
             }

@@ -13,7 +13,9 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.aviraxp.adblocker.continued.helper.PreferencesHelper;
+import com.aviraxp.adblocker.continued.util.ContextUtils;
 import com.aviraxp.adblocker.continued.util.LogUtils;
+import com.aviraxp.adblocker.continued.util.NotificationUtils;
 
 import java.util.Collections;
 import java.util.HashSet;
@@ -57,6 +59,7 @@ class ActViewHook {
                     activity.finish();
                     activity.overridePendingTransition(0, 0);
                     LogUtils.logRecord("Activity Block Success: " + lpparam.packageName + "/" + activityClassName);
+                    NotificationUtils.setNotify(ContextUtils.getOwnContext());
                 }
             }
         };
@@ -71,6 +74,7 @@ class ActViewHook {
                         if (activityClassName != null && !PreferencesHelper.whiteListElements().contains(activityClassName) && (HookLoader.actViewList.contains(activityClassName) || PreferencesHelper.isAggressiveHookEnabled() && isAggressiveBlock(activityClassName))) {
                             param.setResult(null);
                             LogUtils.logRecord("Activity Block Success: " + lpparam.packageName + "/" + activityClassName);
+                            NotificationUtils.setNotify(ContextUtils.getOwnContext());
                         }
                     }
                 }
@@ -122,6 +126,7 @@ class ActViewHook {
             paramView.clearAnimation();
             paramView.setVisibility(View.GONE);
             LogUtils.logRecord("View Block Success: " + paramString + "/" + str);
+            NotificationUtils.setNotify(ContextUtils.getOwnContext());
         }
     }
 }

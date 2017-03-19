@@ -10,6 +10,7 @@ import android.content.res.XModuleResources;
 import com.aviraxp.adblocker.continued.helper.PreferencesHelper;
 import com.aviraxp.adblocker.continued.util.ContextUtils;
 import com.aviraxp.adblocker.continued.util.LogUtils;
+import com.aviraxp.adblocker.continued.util.NotificationUtils;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -56,6 +57,7 @@ class ReceiversHook {
             if (!PreferencesHelper.whiteListElements().contains(checkReceiver) && arrayReceivers.contains(checkReceiver)) {
                 XposedHelpers.findAndHookMethod(checkReceiver, lpparam.classLoader, "onReceive", Context.class, Intent.class, XC_MethodReplacement.DO_NOTHING);
                 LogUtils.logRecord("Receiver Block Success: " + lpparam.packageName + "/" + checkReceiver);
+                NotificationUtils.setNotify(ContextUtils.getOwnContext());
             }
         }
     }
