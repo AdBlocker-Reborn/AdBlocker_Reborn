@@ -59,7 +59,7 @@
             android:summary="@string/aggressive_hook_description"
             android:title="@string/aggressive_hook" />
         <CheckBoxPreference
-            android:defaultValue="true"
+            android:defaultValue="false"
             android:key="SHOW_NOTIFICATION"
             android:summary="@string/show_notification_description"
             android:title="@string/show_notification" />

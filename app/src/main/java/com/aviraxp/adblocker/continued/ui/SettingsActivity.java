@@ -81,7 +81,7 @@ public class SettingsActivity extends PreferenceActivity {
     private void removePreference() {
         try {
             PackageInfo info = getApplicationContext().getPackageManager().getPackageInfo("com.eg.android.AlipayGphone", 0);
-            boolean isAvailable = (info != null);
+            boolean isAvailable = info != null;
             if (!isAvailable) {
                 PreferenceCategory displayOptions = (PreferenceCategory) findPreference("ABOUT");
                 displayOptions.removePreference(findPreference("DONATE_ALIPAY"));

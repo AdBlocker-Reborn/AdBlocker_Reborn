@@ -9,17 +9,20 @@ import android.content.Intent;
 import android.os.Bundle;
 
 import com.aviraxp.adblocker.continued.R;
+import com.aviraxp.adblocker.continued.helper.PreferencesHelper;
 import com.aviraxp.adblocker.continued.ui.SettingsActivity;
 
 @SuppressWarnings("deprecation")
 public class NotificationUtils extends BroadcastReceiver {
 
     public static void setNotify(Context ctx) {
-        Intent postNotification = new Intent("AdBlocker.intent.action.POST_NOTIFICATION");
-        postNotification.putExtra("description", ctx.getResources().getString(R.string.notification_des))
-                .putExtra("id", 42)
-                .putExtra("title", ctx.getResources().getString(R.string.notification));
-        ctx.sendBroadcast(postNotification);
+        if (PreferencesHelper.isShowNotification()) {
+            Intent postNotification = new Intent("AdBlocker.intent.action.POST_NOTIFICATION");
+            postNotification.putExtra("description", ctx.getResources().getString(R.string.notification_des))
+                    .putExtra("id", 42)
+                    .putExtra("title", ctx.getResources().getString(R.string.notification));
+            ctx.sendBroadcast(postNotification);
+        }
     }
 
     private void postNotification(String title, String description, int id, Context ctx) {
@@ -39,13 +42,11 @@ public class NotificationUtils extends BroadcastReceiver {
         String action = intent.getAction();
         Bundle extras = intent.getExtras();
         boolean hasExtras = extras != null;
-        if ("AdBlocker.intent.action.POST_NOTIFICATION".equals(action)) {
-            if (hasExtras) {
-                String description = extras.getString("description");
-                int id = extras.getInt("id");
-                String title = extras.getString("title");
-                postNotification(title, description, id, context);
-            }
+        if ("AdBlocker.intent.action.POST_NOTIFICATION".equals(action) && hasExtras) {
+            String description = extras.getString("description");
+            int id = extras.getInt("id");
+            String title = extras.getString("title");
+            postNotification(title, description, id, context);
         }
     }
 }
