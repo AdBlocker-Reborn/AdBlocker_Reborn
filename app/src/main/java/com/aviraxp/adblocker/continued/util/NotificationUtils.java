@@ -16,9 +16,9 @@ public class NotificationUtils extends BroadcastReceiver {
 
     public static void setNotify(Context ctx) {
         Intent postNotification = new Intent("AdBlocker.intent.action.POST_NOTIFICATION");
-        postNotification.putExtra("description", R.string.notification_des)
+        postNotification.putExtra("description", ctx.getResources().getString(R.string.notification_des))
                 .putExtra("id", 42)
-                .putExtra("title", R.string.notification);
+                .putExtra("title", ctx.getResources().getString(R.string.notification));
         ctx.sendBroadcast(postNotification);
     }
 
