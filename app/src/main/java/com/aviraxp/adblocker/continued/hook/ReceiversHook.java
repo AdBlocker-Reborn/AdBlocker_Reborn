@@ -8,6 +8,7 @@ import android.content.res.Resources;
 import android.content.res.XModuleResources;
 
 import com.aviraxp.adblocker.continued.helper.PreferencesHelper;
+import com.aviraxp.adblocker.continued.util.ContextUtils;
 import com.aviraxp.adblocker.continued.util.LogUtils;
 
 import java.util.ArrayList;
@@ -38,12 +39,10 @@ class ReceiversHook {
         }
 
         ArrayList<String> arrayReceivers = new ArrayList<>();
-        Object activityThread = XposedHelpers.callStaticMethod(XposedHelpers.findClass("android.app.ActivityThread", null), "currentActivityThread");
-        Context systemContext = (Context) XposedHelpers.callMethod(activityThread, "getSystemContext");
         ActivityInfo[] receiverInfo = new ActivityInfo[0];
 
         try {
-            receiverInfo = systemContext.getPackageManager().getPackageInfo(lpparam.packageName, PackageManager.GET_RECEIVERS).receivers;
+            receiverInfo = ContextUtils.getSystemContext().getPackageManager().getPackageInfo(lpparam.packageName, PackageManager.GET_RECEIVERS).receivers;
         } catch (PackageManager.NameNotFoundException ignored) {
         }
 

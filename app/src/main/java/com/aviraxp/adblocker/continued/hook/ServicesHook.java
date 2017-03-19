@@ -1,7 +1,6 @@
 package com.aviraxp.adblocker.continued.hook;
 
 import android.content.ComponentName;
-import android.content.Context;
 import android.content.Intent;
 import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageManager;
@@ -10,6 +9,7 @@ import android.content.res.XModuleResources;
 import android.os.Build;
 
 import com.aviraxp.adblocker.continued.helper.PreferencesHelper;
+import com.aviraxp.adblocker.continued.util.ContextUtils;
 import com.aviraxp.adblocker.continued.util.LogUtils;
 
 import java.util.Collections;
@@ -76,9 +76,7 @@ class ServicesHook {
                         LogUtils.logRecord("Service Block Success: " + serviceName.flattenToShortString());
                     } else {
                         try {
-                            Object activityThread = XposedHelpers.callStaticMethod(XposedHelpers.findClass("android.app.ActivityThread", null), "currentActivityThread");
-                            Context systemContext = (Context) XposedHelpers.callMethod(activityThread, "getSystemContext");
-                            ApplicationInfo info = systemContext.getPackageManager().getApplicationInfo(packageName, 0);
+                            ApplicationInfo info = ContextUtils.getSystemContext().getPackageManager().getApplicationInfo(packageName, 0);
                             if ((info.flags & ApplicationInfo.FLAG_SYSTEM) == 0) {
                                 param.setResult(null);
                                 LogUtils.logRecord("Service Block Success: " + serviceName.flattenToShortString());
