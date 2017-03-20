@@ -42,7 +42,7 @@ public class NotificationUtils extends BroadcastReceiver {
         String action = intent.getAction();
         Bundle extras = intent.getExtras();
         boolean hasExtras = extras != null;
-        if ("AdBlocker.intent.action.POST_NOTIFICATION".equals(action) && hasExtras) {
+        if (action.equals("AdBlocker.intent.action.POST_NOTIFICATION") && hasExtras) {
             String description = extras.getString("description");
             int id = extras.getInt("id");
             String title = extras.getString("title");

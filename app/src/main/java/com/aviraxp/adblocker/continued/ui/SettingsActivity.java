@@ -51,7 +51,7 @@ public class SettingsActivity extends PreferenceActivity {
         SharedPreferences sp = getSharedPreferences("VERSION", MODE_WORLD_READABLE);
         if (sp.getInt("VERSION", 0) != BuildConfig.VERSION_CODE) {
             new LicensesDialog(SettingsActivity.this, "file:///android_asset/html/update.html")
-                    .setTitle(R.string.licensedialog)
+                    .setTitle(R.string.updatelog)
                     .setPositiveButton(android.R.string.ok, null)
                     .show();
             sp.edit().putInt("VERSION", BuildConfig.VERSION_CODE)

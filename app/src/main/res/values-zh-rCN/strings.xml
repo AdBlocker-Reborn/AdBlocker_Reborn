@@ -55,4 +55,5 @@
     <string name="notification_des">已拦截一个元素</string>
     <string name="show_notification_description">可能产生大量通知</string>
     <string name="show_notification">被拦截时显示通知</string>
+    <string name="updatelog">更新日志</string>
 </resources>
