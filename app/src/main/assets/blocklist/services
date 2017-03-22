@@ -17,10 +17,6 @@ com.qq.e.comm.DownloadService
 com.tapcontext.TapContextService
 com.tencent.android.tpush.rpc.XGRemoteService
 com.tencent.android.tpush.service.XGPushService
-com.tencent.mm.plugin.hp.tinker.TinkerPatchResultService
-com.tencent.mm.plugin.recovery.service.RecoveryTinkerResultService
-com.tencent.tinker.lib.service.DefaultTinkerResultService
-com.tencent.tinker.lib.service.TinkerPatchService
 com.umeng.message.UmengBaseIntentService
 com.umeng.message.UmengDownloadResourceService
 com.umeng.message.UmengIntentService

@@ -48,7 +48,6 @@ com.amazon.device.ads.MraidBrowser
 com.amazon.device.ads.VideoActionHandler
 com.amoad.amoadsdk.AMoAdSdkWallActivity
 com.amobee.adsdk.AdManager
-com.amobee.richmedia.view.AmobeeActionHandler
 com.amobee.richmedia.view.Browser
 com.anchorfree.ui.ads.InneractiveActivity
 com.appbrain.AppBrainActivity
