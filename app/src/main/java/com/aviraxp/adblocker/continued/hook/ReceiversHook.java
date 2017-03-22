@@ -12,7 +12,6 @@ import com.aviraxp.adblocker.continued.util.ContextUtils;
 import com.aviraxp.adblocker.continued.util.LogUtils;
 import com.aviraxp.adblocker.continued.util.NotificationUtils;
 
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashSet;
 
@@ -39,7 +38,6 @@ class ReceiversHook {
             return;
         }
 
-        ArrayList<String> arrayReceivers = new ArrayList<>();
         ActivityInfo[] receiverInfo = new ActivityInfo[0];
 
         try {
@@ -49,15 +47,11 @@ class ReceiversHook {
 
         if (receiverInfo != null) {
             for (ActivityInfo info : receiverInfo) {
-                arrayReceivers.add(info.name);
-            }
-        }
-
-        for (String checkReceiver : HookLoader.receiversList) {
-            if (!PreferencesHelper.whiteListElements().contains(checkReceiver) && arrayReceivers.contains(checkReceiver)) {
-                XposedHelpers.findAndHookMethod(checkReceiver, lpparam.classLoader, "onReceive", Context.class, Intent.class, XC_MethodReplacement.DO_NOTHING);
-                LogUtils.logRecord("Receiver Block Success: " + lpparam.packageName + "/" + checkReceiver);
-                NotificationUtils.setNotify(ContextUtils.getOwnContext());
+                if (!PreferencesHelper.whiteListElements().contains(info.name) && HookLoader.receiversList.contains(info.name)) {
+                    XposedHelpers.findAndHookMethod(info.name, lpparam.classLoader, "onReceive", Context.class, Intent.class, XC_MethodReplacement.DO_NOTHING);
+                    LogUtils.logRecord("Receiver Block Success: " + lpparam.packageName + "/" + info.name);
+                    NotificationUtils.setNotify(ContextUtils.getOwnContext());
+                }
             }
         }
     }
