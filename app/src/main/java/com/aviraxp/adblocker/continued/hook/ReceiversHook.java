@@ -38,14 +38,8 @@ class ReceiversHook {
             return;
         }
 
-        ActivityInfo[] receiverInfo = new ActivityInfo[0];
-
         try {
-            receiverInfo = ContextUtils.getSystemContext().getPackageManager().getPackageInfo(lpparam.packageName, PackageManager.GET_RECEIVERS).receivers;
-        } catch (PackageManager.NameNotFoundException ignored) {
-        }
-
-        if (receiverInfo != null) {
+            ActivityInfo[] receiverInfo = ContextUtils.getSystemContext().getPackageManager().getPackageInfo(lpparam.packageName, PackageManager.GET_RECEIVERS).receivers;
             for (ActivityInfo info : receiverInfo) {
                 if (!PreferencesHelper.whiteListElements().contains(info.name) && HookLoader.receiversList.contains(info.name)) {
                     XposedHelpers.findAndHookMethod(info.name, lpparam.classLoader, "onReceive", Context.class, Intent.class, XC_MethodReplacement.DO_NOTHING);
@@ -53,6 +47,7 @@ class ReceiversHook {
                     NotificationUtils.setNotify(ContextUtils.getOwnContext());
                 }
             }
+        } catch (PackageManager.NameNotFoundException ignored) {
         }
     }
 }
