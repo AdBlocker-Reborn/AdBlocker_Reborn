@@ -40,11 +40,13 @@ class ReceiversHook {
 
         try {
             ActivityInfo[] receiverInfo = ContextUtils.getSystemContext().getPackageManager().getPackageInfo(lpparam.packageName, PackageManager.GET_RECEIVERS).receivers;
-            for (ActivityInfo info : receiverInfo) {
-                if (!PreferencesHelper.whiteListElements().contains(info.name) && HookLoader.receiversList.contains(info.name)) {
-                    XposedHelpers.findAndHookMethod(info.name, lpparam.classLoader, "onReceive", Context.class, Intent.class, XC_MethodReplacement.DO_NOTHING);
-                    LogUtils.logRecord("Receiver Block Success: " + lpparam.packageName + "/" + info.name);
-                    NotificationUtils.setNotify(ContextUtils.getOwnContext());
+            if (receiverInfo != null) {
+                for (ActivityInfo info : receiverInfo) {
+                    if (!PreferencesHelper.whiteListElements().contains(info.name) && HookLoader.receiversList.contains(info.name)) {
+                        XposedHelpers.findAndHookMethod(info.name, lpparam.classLoader, "onReceive", Context.class, Intent.class, XC_MethodReplacement.DO_NOTHING);
+                        LogUtils.logRecord("Receiver Block Success: " + lpparam.packageName + "/" + info.name);
+                        NotificationUtils.setNotify(ContextUtils.getOwnContext());
+                    }
                 }
             }
         } catch (PackageManager.NameNotFoundException ignored) {
