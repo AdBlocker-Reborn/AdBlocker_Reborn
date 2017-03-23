@@ -74,19 +74,18 @@ class ServicesHook {
                 if (PreferencesHelper.isServicesHookEnabled() && !PreferencesHelper.isAndroidApp(packageName) && !PreferencesHelper.isWhitelisted(packageName) && !PreferencesHelper.whiteListElements().contains(splitServicesName) && (!PreferencesHelper.isMIUI() && HookLoader.servicesList.contains(splitServicesName) || PreferencesHelper.isMIUI() && HookLoader.servicesList.contains(splitServicesName) && (!splitServicesName.toLowerCase().contains("xiaomi") || splitServicesName.toLowerCase().contains("ad")))) {
                     if (!PreferencesHelper.isDisableSystemApps()) {
                         param.setResult(null);
-                        LogUtils.logRecord("Service Block Success: " + serviceName.flattenToShortString());
-                        NotificationUtils.setNotify(ContextUtils.getOwnContext());
                     } else {
                         try {
                             ApplicationInfo info = ContextUtils.getSystemContext().getPackageManager().getApplicationInfo(packageName, 0);
                             if ((info.flags & ApplicationInfo.FLAG_SYSTEM) == 0) {
                                 param.setResult(null);
-                                LogUtils.logRecord("Service Block Success: " + serviceName.flattenToShortString());
-                                NotificationUtils.setNotify(ContextUtils.getOwnContext());
                             }
-                        } catch (PackageManager.NameNotFoundException ignored) {
+                        } catch (PackageManager.NameNotFoundException e) {
+                            return;
                         }
                     }
+                    LogUtils.logRecord("Service Block Success: " + serviceName.flattenToShortString());
+                    NotificationUtils.setNotify(ContextUtils.getOwnContext());
                 }
             }
         }
