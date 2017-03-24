@@ -13,6 +13,7 @@ import com.aviraxp.adblocker.continued.util.ContextUtils;
 import com.aviraxp.adblocker.continued.util.LogUtils;
 import com.aviraxp.adblocker.continued.util.NotificationUtils;
 
+import java.io.IOException;
 import java.util.Collections;
 import java.util.HashSet;
 
@@ -24,7 +25,7 @@ import de.robv.android.xposed.callbacks.XC_LoadPackage;
 
 class ServicesHook {
 
-    void init(IXposedHookZygoteInit.StartupParam startupParam) throws Throwable {
+    void init(IXposedHookZygoteInit.StartupParam startupParam) throws IOException {
         String MODULE_PATH = startupParam.modulePath;
         Resources res = XModuleResources.createInstance(MODULE_PATH, null);
         byte[] array = XposedHelpers.assetAsByteArray(res, "blocklist/services");
@@ -32,7 +33,6 @@ class ServicesHook {
         String[] sUrls = decoded.split("\n");
         HookLoader.servicesList = new HashSet<>();
         Collections.addAll(HookLoader.servicesList, sUrls);
-        PreferencesHelper.isMIUI();
         LogUtils.logRecord("MIUI Based: " + PreferencesHelper.isMIUI());
     }
 

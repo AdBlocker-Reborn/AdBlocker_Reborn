@@ -2,6 +2,7 @@ package com.aviraxp.adblocker.continued.hook;
 
 import com.aviraxp.adblocker.continued.helper.PreferencesHelper;
 
+import java.io.IOException;
 import java.util.HashSet;
 
 import de.robv.android.xposed.IXposedHookLoadPackage;
@@ -35,7 +36,7 @@ public class HookLoader implements IXposedHookLoadPackage, IXposedHookZygoteInit
         new WebViewHook().hook(lpparam);
     }
 
-    public void initZygote(StartupParam startupParam) throws Throwable {
+    public void initZygote(StartupParam startupParam) throws IOException {
         new ActViewHook().init(startupParam);
         new HostsHook().init(startupParam);
         new ReceiversHook().init(startupParam);
