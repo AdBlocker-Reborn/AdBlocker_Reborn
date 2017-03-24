@@ -44,6 +44,7 @@ class WebViewHook {
             params = new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, 0);
         } else {
             params.height = 0;
+            params.width = 0;
         }
         view.setLayoutParams(params);
 
@@ -55,6 +56,7 @@ class WebViewHook {
                     params = new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, 0);
                 } else {
                     params.height = 0;
+                    params.width = 0;
                 }
                 view.setLayoutParams(params);
             }
