@@ -38,16 +38,6 @@ class WebViewHook {
 
     private void removeAdView(final View view) {
 
-        ViewGroup.LayoutParams params = view.getLayoutParams();
-
-        if (params == null) {
-            params = new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, 0);
-        } else {
-            params.height = 0;
-            params.width = 0;
-        }
-        view.setLayoutParams(params);
-
         view.post(new Runnable() {
             @Override
             public void run() {
