@@ -3,6 +3,11 @@
     package="com.aviraxp.adblocker.continued"
     android:installLocation="internalOnly">
 
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
+
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -38,6 +43,12 @@
         <meta-data
             android:name="xposedminversion"
             android:value="53" />
+        <meta-data
+            android:name="ZHUGE_APPKEY"
+            android:value="401507ce8ddb43c395f4e7878a61eec7" />
+        <meta-data
+            android:name="ZHUGE_CHANNEL"
+            android:value="coolapk" />
 
         <receiver
             android:name=".receiver.NotificationReceiver"
@@ -47,5 +58,4 @@
             </intent-filter>
         </receiver>
     </application>
-
 </manifest>

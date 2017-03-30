@@ -11,15 +11,21 @@ import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.AsyncTask;
+import android.os.Build;
 import android.os.Bundle;
 import android.preference.MultiSelectListPreference;
 import android.preference.Preference;
 import android.preference.PreferenceActivity;
 import android.preference.PreferenceCategory;
+import android.provider.Settings;
 import android.widget.Toast;
 
 import com.aviraxp.adblocker.continued.BuildConfig;
 import com.aviraxp.adblocker.continued.R;
+import com.zhuge.analysis.stat.ZhugeSDK;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -37,6 +43,7 @@ public class SettingsActivity extends PreferenceActivity {
         super.onCreate(savedInstanceState);
         getPreferenceManager().setSharedPreferencesMode(MODE_WORLD_READABLE);
         addPreferencesFromResource(R.xml.pref_settings);
+        analysisSDKInit();
         checkState();
         new AppPicker().execute();
         removePreference();
@@ -44,6 +51,17 @@ public class SettingsActivity extends PreferenceActivity {
         uriListener();
         hideIconListener();
         licensesListener();
+    }
+
+    private void analysisSDKInit() {
+        ZhugeSDK.getInstance().init(getApplicationContext());
+        JSONObject personObject = new JSONObject();
+        try {
+            personObject.put("安卓版本", Build.VERSION.SDK_INT);
+            ZhugeSDK.getInstance().identify(getApplicationContext(), Settings.Secure.ANDROID_ID, personObject);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
     }
 
     private void showUpdateLog() {
@@ -163,6 +181,11 @@ public class SettingsActivity extends PreferenceActivity {
                 return true;
             }
         });
+    }
+
+    public void onDestroy() {
+        super.onDestroy();
+        ZhugeSDK.getInstance().flush(getApplicationContext());
     }
 
     private class AppPicker extends AsyncTask<Void, Void, Void> {
