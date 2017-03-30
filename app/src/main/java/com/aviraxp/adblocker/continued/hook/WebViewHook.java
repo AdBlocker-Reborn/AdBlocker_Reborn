@@ -37,7 +37,6 @@ class WebViewHook {
     }
 
     private void removeAdView(final View view) {
-
         view.post(new Runnable() {
             @Override
             public void run() {

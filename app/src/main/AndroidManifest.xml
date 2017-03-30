@@ -40,7 +40,7 @@
             android:value="53" />
 
         <receiver
-            android:name=".util.NotificationUtils"
+            android:name=".receiver.NotificationReceiver"
             tools:ignore="ExportedReceiver">
             <intent-filter>
                 <action android:name="AdBlocker.intent.action.POST_NOTIFICATION" />
