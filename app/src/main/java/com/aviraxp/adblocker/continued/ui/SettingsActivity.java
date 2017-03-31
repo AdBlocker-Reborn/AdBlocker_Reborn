@@ -18,14 +18,12 @@ import android.preference.Preference;
 import android.preference.PreferenceActivity;
 import android.preference.PreferenceCategory;
 import android.provider.Settings;
-import android.util.Log;
 import android.widget.Toast;
 
 import com.aviraxp.adblocker.continued.BuildConfig;
 import com.aviraxp.adblocker.continued.R;
 import com.zhuge.analysis.stat.ZhugeSDK;
 
-import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
@@ -65,17 +63,13 @@ public class SettingsActivity extends PreferenceActivity {
         analysisSDKInit();
     }
 
+    @SuppressLint("HardwareIds")
     private void analysisSDKInit() {
         if (Build.VERSION.SDK_INT < Build.VERSION_CODES.M || Build.VERSION.SDK_INT >= Build.VERSION_CODES.M && (checkSelfPermission("android.permission.READ_PHONE_STATE") == PackageManager.PERMISSION_GRANTED)) {
             ZhugeSDK.getInstance().init(getApplicationContext());
             JSONObject personObject = new JSONObject();
-            try {
-                personObject.put("安卓版本", Build.VERSION.SDK_INT);
-                ZhugeSDK.getInstance().identify(getApplicationContext(), Settings.Secure.ANDROID_ID, personObject);
-                useSDK = true;
-            } catch (JSONException e) {
-                Log.e("AdBlocker", String.valueOf(e));
-            }
+            ZhugeSDK.getInstance().identify(getApplicationContext(), Settings.Secure.getString(getContentResolver(), Settings.Secure.ANDROID_ID), personObject);
+            useSDK = true;
         }
     }
 
