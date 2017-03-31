@@ -22,6 +22,7 @@ import android.widget.Toast;
 
 import com.aviraxp.adblocker.continued.BuildConfig;
 import com.aviraxp.adblocker.continued.R;
+import com.oasisfeng.condom.CondomContext;
 import com.zhuge.analysis.stat.ZhugeSDK;
 
 import org.json.JSONObject;
@@ -66,9 +67,9 @@ public class SettingsActivity extends PreferenceActivity {
     @SuppressLint("HardwareIds")
     private void analysisSDKInit() {
         if (Build.VERSION.SDK_INT < Build.VERSION_CODES.M || Build.VERSION.SDK_INT >= Build.VERSION_CODES.M && (checkSelfPermission("android.permission.READ_PHONE_STATE") == PackageManager.PERMISSION_GRANTED)) {
-            ZhugeSDK.getInstance().init(getApplicationContext());
+            ZhugeSDK.getInstance().init(CondomContext.wrap(getApplicationContext(), "ZhuGeIO"));
             JSONObject personObject = new JSONObject();
-            ZhugeSDK.getInstance().identify(getApplicationContext(), Settings.Secure.getString(getContentResolver(), Settings.Secure.ANDROID_ID), personObject);
+            ZhugeSDK.getInstance().identify(CondomContext.wrap(getApplicationContext(), "ZhuGeIO"), Settings.Secure.getString(getContentResolver(), Settings.Secure.ANDROID_ID), personObject);
             useSDK = true;
         }
     }
@@ -195,7 +196,7 @@ public class SettingsActivity extends PreferenceActivity {
     public void onDestroy() {
         super.onDestroy();
         if (useSDK) {
-            ZhugeSDK.getInstance().flush(getApplicationContext());
+            ZhugeSDK.getInstance().flush(CondomContext.wrap(getApplicationContext(), "ZhuGeIO"));
         }
     }
 
