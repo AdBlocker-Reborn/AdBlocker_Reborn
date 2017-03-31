@@ -18,6 +18,7 @@ import android.preference.Preference;
 import android.preference.PreferenceActivity;
 import android.preference.PreferenceCategory;
 import android.provider.Settings;
+import android.util.Log;
 import android.widget.Toast;
 
 import com.aviraxp.adblocker.continued.BuildConfig;
@@ -38,13 +39,15 @@ import moe.feng.alipay.zerosdk.AlipayZeroSdk;
 public class SettingsActivity extends PreferenceActivity {
 
     static boolean isActivated = false;
+    private static boolean useSDK = false;
 
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         getPreferenceManager().setSharedPreferencesMode(MODE_WORLD_READABLE);
         addPreferencesFromResource(R.xml.pref_settings);
-        analysisSDKInit();
         checkState();
+        checkSDKPermission();
+        analysisSDKInit();
         new AppPicker().execute();
         removePreference();
         showUpdateLog();
@@ -53,14 +56,26 @@ public class SettingsActivity extends PreferenceActivity {
         licensesListener();
     }
 
+    private void checkSDKPermission() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            if (checkSelfPermission("android.permission.READ_PHONE_STATE") != PackageManager.PERMISSION_GRANTED) {
+                requestPermissions(new String[]{"android.permission.READ_PHONE_STATE"}, 0);
+            }
+        }
+        analysisSDKInit();
+    }
+
     private void analysisSDKInit() {
-        ZhugeSDK.getInstance().init(getApplicationContext());
-        JSONObject personObject = new JSONObject();
-        try {
-            personObject.put("安卓版本", Build.VERSION.SDK_INT);
-            ZhugeSDK.getInstance().identify(getApplicationContext(), Settings.Secure.ANDROID_ID, personObject);
-        } catch (JSONException e) {
-            e.printStackTrace();
+        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.M || Build.VERSION.SDK_INT >= Build.VERSION_CODES.M && (checkSelfPermission("android.permission.READ_PHONE_STATE") == PackageManager.PERMISSION_GRANTED)) {
+            ZhugeSDK.getInstance().init(getApplicationContext());
+            JSONObject personObject = new JSONObject();
+            try {
+                personObject.put("安卓版本", Build.VERSION.SDK_INT);
+                ZhugeSDK.getInstance().identify(getApplicationContext(), Settings.Secure.ANDROID_ID, personObject);
+                useSDK = true;
+            } catch (JSONException e) {
+                Log.e("AdBlocker", String.valueOf(e));
+            }
         }
     }
 
@@ -185,7 +200,9 @@ public class SettingsActivity extends PreferenceActivity {
 
     public void onDestroy() {
         super.onDestroy();
-        ZhugeSDK.getInstance().flush(getApplicationContext());
+        if (useSDK) {
+            ZhugeSDK.getInstance().flush(getApplicationContext());
+        }
     }
 
     private class AppPicker extends AsyncTask<Void, Void, Void> {
