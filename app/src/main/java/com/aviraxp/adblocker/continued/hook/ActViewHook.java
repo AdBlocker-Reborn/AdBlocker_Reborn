@@ -6,9 +6,7 @@ import android.content.ContextWrapper;
 import android.content.Intent;
 import android.content.res.Resources;
 import android.content.res.XModuleResources;
-import android.os.Build;
 import android.os.Bundle;
-import android.os.UserHandle;
 import android.view.View;
 import android.view.ViewGroup;
 
@@ -50,21 +48,6 @@ class ActViewHook {
             return;
         }
 
-        XC_MethodHook activityCreateHook = new XC_MethodHook() {
-            @Override
-            protected void afterHookedMethod(MethodHookParam param) throws Throwable {
-                Activity activity = (Activity) param.thisObject;
-                String activityClassName = activity.getClass().getName();
-                if (activityClassName != null && !PreferencesHelper.whiteListElements().contains(activityClassName) && (HookLoader.actViewList.contains(activityClassName) || PreferencesHelper.isAggressiveHookEnabled() && isAggressiveBlock(activityClassName))) {
-                    activity.overridePendingTransition(0, 0);
-                    activity.finish();
-                    activity.overridePendingTransition(0, 0);
-                    LogUtils.logRecord("Activity Block Success: " + lpparam.packageName + "/" + activityClassName);
-                    NotificationUtils.setNotify(ContextUtils.getOwnContext());
-                }
-            }
-        };
-
         XC_MethodHook activityStartHook = new XC_MethodHook() {
             @Override
             protected void beforeHookedMethod(MethodHookParam param) throws Throwable {
@@ -98,18 +81,12 @@ class ActViewHook {
             }
         };
 
-        XposedHelpers.findAndHookMethod(Activity.class, "onCreate", Bundle.class, activityCreateHook);
-        XposedHelpers.findAndHookMethod(Activity.class, "startActivity", Intent.class, activityStartHook);
         XposedHelpers.findAndHookMethod(ContextWrapper.class, "startActivity", Intent.class, activityStartHook);
         XposedHelpers.findAndHookMethod(Activity.class, "startActivityForResult", Intent.class, int.class, activityStartHook);
         XposedHelpers.findAndHookMethod(Activity.class, "startActivityForResult", Intent.class, int.class, Bundle.class, activityStartHook);
         XposedHelpers.findAndHookMethod(View.class, "setVisibility", int.class, visibilityHook);
         XposedBridge.hookAllConstructors(View.class, viewHook);
         XposedBridge.hookAllConstructors(ViewGroup.class, viewHook);
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1) {
-            XposedHelpers.findAndHookMethod(Activity.class, "startActivityAsUser", Intent.class, Bundle.class, UserHandle.class, activityStartHook);
-            XposedHelpers.findAndHookMethod(Activity.class, "startActivityForResultAsUser", Intent.class, int.class, Bundle.class, UserHandle.class, activityStartHook);
-        }
     }
 
     private boolean isAggressiveBlock(String string) {
