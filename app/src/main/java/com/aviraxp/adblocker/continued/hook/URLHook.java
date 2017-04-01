@@ -2,14 +2,11 @@ package com.aviraxp.adblocker.continued.hook;
 
 import com.aviraxp.adblocker.continued.helper.PreferencesHelper;
 import com.aviraxp.adblocker.continued.util.ContextUtils;
-import com.aviraxp.adblocker.continued.util.DecodeUtils;
 import com.aviraxp.adblocker.continued.util.LogUtils;
 import com.aviraxp.adblocker.continued.util.NotificationUtils;
+import com.aviraxp.adblocker.continued.util.SecureSocketUtils;
 
-import java.net.HttpURLConnection;
-import java.net.MalformedURLException;
 import java.net.URL;
-import java.net.URLConnection;
 
 import de.robv.android.xposed.XC_MethodHook;
 import de.robv.android.xposed.XposedHelpers;
@@ -37,9 +34,9 @@ class URLHook {
                     for (String host : HookLoader.hostsList) {
                         if (urlCutting.startsWith(host) && !PreferencesHelper.whiteListElements().contains(host)) {
                             if (param.args.length == 1) {
-                                param.args[0] = "http://localhost";
+                                SecureSocketUtils.determineHttps(param, 0, url);
                             } else {
-                                param.args[1] = "http://localhost";
+                                SecureSocketUtils.determineHttps(param, 1, url);
                             }
                             LogUtils.logRecord("URL Block Success: " + lpparam.packageName + "/" + host);
                             NotificationUtils.setNotify(ContextUtils.getOwnContext());
@@ -49,9 +46,9 @@ class URLHook {
                     for (String adUrl : HookLoader.urlList) {
                         if (urlCutting.contains(adUrl) && !PreferencesHelper.whiteListElements().contains(url)) {
                             if (param.args.length == 1) {
-                                param.args[0] = "http://localhost";
+                                SecureSocketUtils.determineHttps(param, 0, url);
                             } else {
-                                param.args[1] = "http://localhost";
+                                SecureSocketUtils.determineHttps(param, 1, url);
                             }
                             LogUtils.logRecord("URL Block Success: " + lpparam.packageName + "/" + url);
                             NotificationUtils.setNotify(ContextUtils.getOwnContext());
@@ -74,38 +71,9 @@ class URLHook {
             }
         };
 
-        XC_MethodHook urlConnectionHook = new XC_MethodHook() {
-            @Override
-            protected void beforeHookedMethod(MethodHookParam param) throws MalformedURLException {
-                URL url = (URL) param.args[0];
-                if (url != null) {
-                    String host = url.getHost();
-                    if (host != null && !PreferencesHelper.whiteListElements().contains(host) && HookLoader.hostsList.contains(host)) {
-                        param.args[0] = new URL("http://localhost");
-                        LogUtils.logRecord("URLConnection Block Success: " + lpparam.packageName + "/" + host);
-                        NotificationUtils.setNotify(ContextUtils.getOwnContext());
-                        return;
-                    }
-                    String urlDecode = DecodeUtils.decode(url.toString(), null);
-                    if (urlDecode != null && !PreferencesHelper.whiteListElements().contains(urlDecode)) {
-                        for (String adUrl : HookLoader.urlList) {
-                            if (urlDecode.contains(adUrl)) {
-                                param.args[0] = new URL("http://localhost");
-                                LogUtils.logRecord("URLConnection Block Success: " + lpparam.packageName + "/" + urlDecode);
-                                NotificationUtils.setNotify(ContextUtils.getOwnContext());
-                                return;
-                            }
-                        }
-                    }
-                }
-            }
-        };
-
         XposedHelpers.findAndHookConstructor(URL.class, String.class, urlHook);
         XposedHelpers.findAndHookConstructor(URL.class, URL.class, String.class, urlHook);
         XposedHelpers.findAndHookConstructor(URL.class, String.class, String.class, String.class, hostsHook);
         XposedHelpers.findAndHookConstructor(URL.class, String.class, String.class, int.class, String.class, hostsHook);
-        XposedHelpers.findAndHookConstructor(URLConnection.class, URL.class, urlConnectionHook);
-        XposedHelpers.findAndHookConstructor(HttpURLConnection.class, URL.class, urlConnectionHook);
     }
 }
