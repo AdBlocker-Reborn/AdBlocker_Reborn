@@ -8,11 +8,12 @@ import android.webkit.WebView;
 
 import com.aviraxp.adblocker.continued.helper.PreferencesHelper;
 import com.aviraxp.adblocker.continued.util.ContextUtils;
-import com.aviraxp.adblocker.continued.util.DecodeUtils;
 import com.aviraxp.adblocker.continued.util.LogUtils;
 import com.aviraxp.adblocker.continued.util.NotificationUtils;
 
 import java.io.IOException;
+import java.io.UnsupportedEncodingException;
+import java.net.URLDecoder;
 import java.util.Collections;
 import java.util.HashSet;
 
@@ -25,6 +26,20 @@ import de.robv.android.xposed.callbacks.XC_LoadPackage;
 class WebViewHook {
 
     private static boolean adExist;
+
+    private String decode(String string, String encodingType) {
+        if (string != null) {
+            try {
+                if (encodingType != null) {
+                    return URLDecoder.decode(string, encodingType);
+                } else {
+                    return URLDecoder.decode(string, "UTF-8");
+                }
+            } catch (UnsupportedEncodingException | IllegalArgumentException ignored) {
+            }
+        }
+        return null;
+    }
 
     void init(IXposedHookZygoteInit.StartupParam startupParam) throws IOException {
         String MODULE_PATH = startupParam.modulePath;
@@ -110,8 +125,8 @@ class WebViewHook {
     }
 
     private boolean urlFiltering(String url, String data, String encodingType, XC_MethodHook.MethodHookParam param) {
-        String urlDecode = DecodeUtils.decode(url, encodingType);
-        String dataDecode = DecodeUtils.decode(data, encodingType);
+        String urlDecode = decode(url, encodingType);
+        String dataDecode = decode(data, encodingType);
         return hostsBlock(urlDecode, HookLoader.hostsList, param) || hostsBlock(dataDecode, HookLoader.hostsList, param) || urlBlock(urlDecode, HookLoader.urlList, param) || urlBlock(dataDecode, HookLoader.urlList, param);
     }
 
