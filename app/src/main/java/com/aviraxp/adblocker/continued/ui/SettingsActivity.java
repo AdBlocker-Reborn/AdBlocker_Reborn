@@ -27,6 +27,7 @@ import com.zhuge.analysis.stat.ZhugeSDK;
 
 import org.json.JSONObject;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
@@ -42,7 +43,7 @@ public class SettingsActivity extends PreferenceActivity {
 
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        getPreferenceManager().setSharedPreferencesMode(MODE_WORLD_READABLE);
+        setWorldReadable();
         addPreferencesFromResource(R.xml.pref_settings);
         checkState();
         checkSDKPermission();
@@ -175,6 +176,24 @@ public class SettingsActivity extends PreferenceActivity {
                 return true;
             }
         });
+    }
+
+    @SuppressWarnings({"deprecation", "ResultOfMethodCallIgnored"})
+    @SuppressLint("SetWorldReadable")
+    private void setWorldReadable() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+            File dataDir = new File(getApplicationInfo().dataDir);
+            File prefsDir = new File(dataDir, "shared_prefs");
+            File prefsFile = new File(prefsDir, getPreferenceManager().getSharedPreferencesName() + ".xml");
+            if (prefsFile.exists()) {
+                for (File file : new File[]{dataDir, prefsDir, prefsFile}) {
+                    file.setReadable(true, false);
+                    file.setExecutable(true, false);
+                }
+            }
+        } else {
+            getPreferenceManager().setSharedPreferencesMode(MODE_WORLD_READABLE);
+        }
     }
 
     private void hideIconListener() {

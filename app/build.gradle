@@ -6,7 +6,6 @@ android {
     defaultConfig {
         applicationId "com.aviraxp.adblocker.continued"
         minSdkVersion 15
-        maxSdkVersion 23
         targetSdkVersion 25
         versionCode 21
         versionName "1.6.1"
