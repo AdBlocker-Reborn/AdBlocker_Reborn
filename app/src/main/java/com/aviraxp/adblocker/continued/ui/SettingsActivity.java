@@ -31,10 +31,12 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
+import java.util.Locale;
 
 import moe.feng.alipay.zerosdk.AlipayZeroSdk;
 
 @SuppressWarnings("deprecation")
+@SuppressLint("WorldReadableFiles")
 public class SettingsActivity extends PreferenceActivity {
 
     static boolean isActivated = false;
@@ -45,14 +47,14 @@ public class SettingsActivity extends PreferenceActivity {
         setWorldReadable();
         addPreferencesFromResource(R.xml.pref_settings);
         checkState();
-        checkSDKPermission();
-        analysisSDKInit();
+        showUpdateLog();
         new AppPicker().execute();
         removePreference();
-        showUpdateLog();
         uriListener();
         hideIconListener();
         licensesListener();
+        checkSDKPermission();
+        analysisSDKInit();
     }
 
     private void checkSDKPermission() {
@@ -66,7 +68,7 @@ public class SettingsActivity extends PreferenceActivity {
 
     @SuppressLint("HardwareIds")
     private void analysisSDKInit() {
-        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.M || Build.VERSION.SDK_INT >= Build.VERSION_CODES.M && (checkSelfPermission("android.permission.READ_PHONE_STATE") == PackageManager.PERMISSION_GRANTED)) {
+        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.M || Build.VERSION.SDK_INT >= Build.VERSION_CODES.M && checkSelfPermission("android.permission.READ_PHONE_STATE") == PackageManager.PERMISSION_GRANTED) {
             ZhugeSDK.getInstance().init(CondomContext.wrap(getApplicationContext(), "ZhuGeIO"));
             JSONObject personObject = new JSONObject();
             ZhugeSDK.getInstance().identify(CondomContext.wrap(getApplicationContext(), "ZhuGeIO"), Settings.Secure.getString(getContentResolver(), Settings.Secure.ANDROID_ID), personObject);
@@ -74,16 +76,23 @@ public class SettingsActivity extends PreferenceActivity {
         }
     }
 
-    @SuppressLint("WorldReadableFiles")
     private void showUpdateLog() {
         SharedPreferences sp = getSharedPreferences("VERSION", MODE_WORLD_READABLE);
         if (sp.getInt("VERSION", 0) != BuildConfig.VERSION_CODE) {
-            new LicensesDialog(SettingsActivity.this, "file:///android_asset/html/update.html")
+            new LicensesDialog(SettingsActivity.this, getLocalUpdateLog())
                     .setTitle(R.string.updatelog)
                     .setPositiveButton(android.R.string.ok, null)
                     .show();
             sp.edit().putInt("VERSION", BuildConfig.VERSION_CODE)
                     .apply();
+        }
+    }
+
+    private String getLocalUpdateLog() {
+        if (Locale.getDefault().getLanguage().equals("zh")) {
+            return "file:///android_asset/html/update_cn.html";
+        } else {
+            return "file:///android_asset/html/update_en.html";
         }
     }
 
