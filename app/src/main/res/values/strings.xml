@@ -54,5 +54,6 @@
     <string name="notification_des">Blocked one item</string>
     <string name="show_notification_description">May cause notifications flooding</string>
     <string name="show_notification">Show Notification when Blocking</string>
-    <string name="updatelog" >Update Log</string>
+    <string name="updatelog">Update Log</string>
+    <string name="notification_count">Total ADs blocked after last boot: </string>
 </resources>

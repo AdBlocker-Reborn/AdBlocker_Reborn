@@ -55,4 +55,5 @@
     <string name="show_notification_description">可能产生大量通知</string>
     <string name="show_notification">被拦截时显示通知</string>
     <string name="updatelog">更新日志</string>
+    <string name="notification_count">开机后共拦截广告数：</string>
 </resources>

@@ -14,6 +14,8 @@ import com.aviraxp.adblocker.continued.ui.SettingsActivity;
 @SuppressWarnings("deprecation")
 public class NotificationUtils {
 
+    private static int timeCount = 1;
+
     public static void setNotify(Context ctx) {
         if (PreferencesHelper.isShowNotification()) {
             Intent postNotification = new Intent("AdBlocker.intent.action.POST_NOTIFICATION");
@@ -29,10 +31,11 @@ public class NotificationUtils {
         Notification.Builder notification = new Notification.Builder(ctx)
                 .setTicker(description)
                 .setContentTitle(title)
-                .setContentText(description)
+                .setContentText(ctx.getResources().getString(R.string.notification_count) + String.valueOf(timeCount))
                 .setSmallIcon(R.mipmap.ic_notification)
                 .setContentIntent(pi)
                 .setAutoCancel(true);
+        timeCount = timeCount + 1;
         final NotificationManager notificationManager = (NotificationManager) ctx.getSystemService(Context.NOTIFICATION_SERVICE);
         notificationManager.notify(id, notification.getNotification());
         new Handler().postDelayed(new Runnable() {
