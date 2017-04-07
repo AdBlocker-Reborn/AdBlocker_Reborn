@@ -5,6 +5,7 @@ import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
+import android.os.Handler;
 
 import com.aviraxp.adblocker.continued.R;
 import com.aviraxp.adblocker.continued.helper.PreferencesHelper;
@@ -23,7 +24,7 @@ public class NotificationUtils {
         }
     }
 
-    public static void postNotification(String title, String description, int id, Context ctx) {
+    public static void postNotification(String title, String description, final int id, Context ctx) {
         PendingIntent pi = PendingIntent.getActivity(ctx, 0, new Intent(ctx, SettingsActivity.class), 0);
         Notification.Builder notification = new Notification.Builder(ctx)
                 .setTicker(description)
@@ -32,7 +33,13 @@ public class NotificationUtils {
                 .setSmallIcon(R.drawable.ic_launcher)
                 .setContentIntent(pi)
                 .setAutoCancel(true);
-        NotificationManager notificationManager = (NotificationManager) ctx.getSystemService(Context.NOTIFICATION_SERVICE);
+        final NotificationManager notificationManager = (NotificationManager) ctx.getSystemService(Context.NOTIFICATION_SERVICE);
         notificationManager.notify(id, notification.getNotification());
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                notificationManager.cancel(id);
+            }
+        }, 5000);
     }
 }
