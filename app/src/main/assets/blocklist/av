@@ -71,6 +71,8 @@ com.apprupt.sdk.CvOverlayActivity
 com.baidu.mobad.feeds.BaiduActivity
 com.baidu.mobads.AdView
 com.baidu.mobads.AppActivity
+com.baidu.mobads.SplashAd
+com.baidu.mobads.VideoAdView
 com.bansung.mobi.vserv.android.ads.VservAdManager
 com.bbm.ui.activities.SponsoredAdActivity
 com.bd.jsads.ApkDownloadComplete
@@ -81,6 +83,8 @@ com.bypush.PushActivity
 com.chartboost.sdk.CBImpressionActivity
 com.chartboost.sdk.Chartboost
 com.dianle.DianleOfferActivity
+com.dmzj.manhua.ad.ADChianADItemView
+com.dmzj.manhua.ad.ADImageView
 com.doimob.sdk.ads.AdsFull
 com.donson.momark.activity.AdActivity
 com.doumob.main.WebViewActivity

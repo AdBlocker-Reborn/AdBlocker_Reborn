@@ -1,8 +1,10 @@
 cn.aduu.adsdk.AduuPushAdReceiver
 com.admob.android.ads.analytics.InstallReceiver
 com.appodeal.ads.AppodealPackageAddedReceiver
+com.baidu.frontia.FrontiaPushMessageReceiver
 com.boyaa.admobile.broadcast.NetworkStateReceiver
 com.cfv.adsdk.OptimizeReceiver
+com.dmzj.manhua.ad.ADBroadCastReceiver
 com.heyzap.sdk.ads.PackageAddedReceiver
 com.inmobi.adtracker.androidsdk.IMAdTrackerReceiver
 com.inneractive.api.ads.sdk.impl.PckgAddReceiver
