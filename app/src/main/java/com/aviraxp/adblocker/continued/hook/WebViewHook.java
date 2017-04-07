@@ -25,7 +25,7 @@ import de.robv.android.xposed.callbacks.XC_LoadPackage;
 
 class WebViewHook {
 
-    private static boolean adExist;
+    private static boolean adExist = false;
 
     private String decode(String string, String encodingType) {
         if (string != null) {

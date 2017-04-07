@@ -3,7 +3,6 @@
     <string name="app_name">AdBlocker Reborn</string>
     <string name="xposed_description">The Reborn Adblocker</string>
     <string name="hint_reboot_not_active">Module is not activated!</string>
-    <string name="hint_reboot_not_active_failed">Please activate the module manually!</string>
     <string name="actview_hook">Enable Activity and View Block</string>
     <string name="actview_hook_description">Block activities and views according to a preloaded list</string>
     <string name="hosts_hook">Enable Hosts Block</string>

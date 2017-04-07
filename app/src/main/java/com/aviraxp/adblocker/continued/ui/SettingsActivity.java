@@ -18,7 +18,6 @@ import android.preference.Preference;
 import android.preference.PreferenceActivity;
 import android.preference.PreferenceCategory;
 import android.provider.Settings;
-import android.widget.Toast;
 
 import com.aviraxp.adblocker.continued.BuildConfig;
 import com.aviraxp.adblocker.continued.R;
@@ -75,8 +74,8 @@ public class SettingsActivity extends PreferenceActivity {
         }
     }
 
+    @SuppressLint("WorldReadableFiles")
     private void showUpdateLog() {
-        @SuppressLint("WorldReadableFiles")
         SharedPreferences sp = getSharedPreferences("VERSION", MODE_WORLD_READABLE);
         if (sp.getInt("VERSION", 0) != BuildConfig.VERSION_CODE) {
             new LicensesDialog(SettingsActivity.this, "file:///android_asset/html/update.html")
@@ -153,7 +152,6 @@ public class SettingsActivity extends PreferenceActivity {
     }
 
     private void openXposed() {
-        try {
             Intent intent = new Intent("de.robv.android.xposed.installer.OPEN_SECTION");
             if (getPackageManager().queryIntentActivities(intent, 0).isEmpty()) {
                 intent = getPackageManager().getLaunchIntentForPackage("de.robv.android.xposed.installer");
@@ -163,9 +161,6 @@ public class SettingsActivity extends PreferenceActivity {
                     .putExtra("fragment", 1)
                     .putExtra("module", BuildConfig.APPLICATION_ID);
             startActivity(intent);
-        } catch (Throwable t) {
-            Toast.makeText(getApplicationContext(), R.string.hint_reboot_not_active_failed, Toast.LENGTH_SHORT).show();
-        }
     }
 
     private void donateAlipay() {

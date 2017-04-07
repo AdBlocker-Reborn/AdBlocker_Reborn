@@ -10,8 +10,8 @@ import com.aviraxp.adblocker.continued.util.NotificationUtils;
 public class NotificationReceiver extends BroadcastReceiver {
     public void onReceive(Context context, Intent intent) {
         String action = intent.getAction();
-        Bundle extras = intent.getExtras();
-        if (action.equals("AdBlocker.intent.action.POST_NOTIFICATION") && extras != null) {
+        if (action.equals("AdBlocker.intent.action.POST_NOTIFICATION")) {
+            Bundle extras = intent.getExtras();
             String description = extras.getString("description");
             int id = extras.getInt("id");
             String title = extras.getString("title");

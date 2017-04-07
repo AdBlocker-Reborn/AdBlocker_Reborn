@@ -3,7 +3,6 @@
     <string name="app_name">AdBlocker Reborn</string>
     <string name="xposed_description">The Reborn Adblocker</string>
     <string name="hint_reboot_not_active">Modül etkinleştirilmedi!</string>
-    <string name="hint_reboot_not_active_failed">Lütfen modülü manuel olarak etkinleştirin!</string>
     <string name="actview_hook">Etkinliği Etkinleştir ve Engellemeyi Görüntüle</string>
     <string name="actview_hook_description">Önceden yüklenmiş bir listeye göre etkinlikleri ve görünümleri engelleyin</string>
     <string name="hosts_hook">Host Engellemeyi Etkinleştir</string>

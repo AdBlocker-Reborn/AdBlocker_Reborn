@@ -30,7 +30,7 @@ public class NotificationUtils {
                 .setTicker(description)
                 .setContentTitle(title)
                 .setContentText(description)
-                .setSmallIcon(R.drawable.ic_launcher)
+                .setSmallIcon(R.mipmap.ic_notification)
                 .setContentIntent(pi)
                 .setAutoCancel(true);
         final NotificationManager notificationManager = (NotificationManager) ctx.getSystemService(Context.NOTIFICATION_SERVICE);
