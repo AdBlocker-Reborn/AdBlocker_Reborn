@@ -48,12 +48,12 @@ public class SettingsActivity extends PreferenceActivity {
         addPreferencesFromResource(R.xml.pref_settings);
         checkState();
         showUpdateLog();
+        checkSDKPermission();
         new AppPicker().execute();
         removePreference();
         uriListener();
         hideIconListener();
         licensesListener();
-        checkSDKPermission();
         analysisSDKInit();
     }
 
@@ -182,7 +182,7 @@ public class SettingsActivity extends PreferenceActivity {
         });
     }
 
-    @SuppressWarnings({"deprecation", "ResultOfMethodCallIgnored"})
+    @SuppressWarnings("ResultOfMethodCallIgnored")
     @SuppressLint("SetWorldReadable")
     private void setWorldReadable() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {

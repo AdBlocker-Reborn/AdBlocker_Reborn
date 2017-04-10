@@ -50,7 +50,7 @@ class ActViewHook {
 
         XC_MethodHook activityStartHook = new XC_MethodHook() {
             @Override
-            protected void beforeHookedMethod(MethodHookParam param) throws Throwable {
+            protected void beforeHookedMethod(MethodHookParam param) {
                 if (param.args[0] != null) {
                     ComponentName Component = ((Intent) param.args[0]).getComponent();
                     if (Component != null) {
@@ -67,14 +67,14 @@ class ActViewHook {
 
         XC_MethodHook viewHook = new XC_MethodHook() {
             @Override
-            protected void afterHookedMethod(MethodHookParam param) throws Throwable {
+            protected void afterHookedMethod(MethodHookParam param) {
                 hideIfAdView((View) param.thisObject, lpparam.packageName);
             }
         };
 
         XC_MethodHook visibilityHook = new XC_MethodHook() {
             @Override
-            protected void afterHookedMethod(MethodHookParam param) throws Throwable {
+            protected void afterHookedMethod(MethodHookParam param) {
                 if ((Integer) param.args[0] != 8) {
                     hideIfAdView((View) param.thisObject, lpparam.packageName);
                 }
