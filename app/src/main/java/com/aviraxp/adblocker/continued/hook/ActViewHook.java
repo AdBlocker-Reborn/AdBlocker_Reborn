@@ -32,14 +32,19 @@ class ActViewHook {
         Resources res = XModuleResources.createInstance(MODULE_PATH, null);
         byte[] array = XposedHelpers.assetAsByteArray(res, "blocklist/av");
         byte[] array2 = XposedHelpers.assetAsByteArray(res, "blocklist/av_aggressive");
+        byte[] array3 = XposedHelpers.assetAsByteArray(res, "blocklist/av_specific");
         String decoded = new String(array, "UTF-8");
         String decoded2 = new String(array2, "UTF-8");
+        String decoded3 = new String(array3, "UTF-8");
         String[] sUrls = decoded.split("\n");
         String[] sUrls2 = decoded2.split("\n");
+        String[] sUrls3 = decoded3.split("\n");
         HookLoader.actViewList = new HashSet<>();
         HookLoader.actViewList_aggressive = new HashSet<>();
+        HookLoader.actViewList_specific = new HashSet<>();
         Collections.addAll(HookLoader.actViewList, sUrls);
         Collections.addAll(HookLoader.actViewList_aggressive, sUrls2);
+        Collections.addAll(HookLoader.actViewList_specific, sUrls3);
     }
 
     public void hook(final XC_LoadPackage.LoadPackageParam lpparam) {
@@ -55,7 +60,7 @@ class ActViewHook {
                     ComponentName Component = ((Intent) param.args[0]).getComponent();
                     if (Component != null) {
                         String activityClassName = Component.getClassName();
-                        if (activityClassName != null && !PreferencesHelper.whiteListElements().contains(activityClassName) && (HookLoader.actViewList.contains(activityClassName) || PreferencesHelper.isAggressiveHookEnabled() && isAggressiveBlock(activityClassName))) {
+                        if (activityClassName != null && !PreferencesHelper.whiteListElements().contains(activityClassName) && (HookLoader.actViewList.contains(activityClassName) || isSpecificBlock(lpparam.packageName, activityClassName) || PreferencesHelper.isAggressiveHookEnabled() && isAggressiveBlock(activityClassName))) {
                             param.setResult(null);
                             LogUtils.logRecord("Activity Block Success: " + lpparam.packageName + "/" + activityClassName);
                             NotificationUtils.setNotify(ContextUtils.getOwnContext());
@@ -98,12 +103,21 @@ class ActViewHook {
         return false;
     }
 
+    private boolean isSpecificBlock(String string, String string2) {
+        for (String listItem : HookLoader.actViewList_specific) {
+            if (listItem.startsWith(string) && listItem.endsWith(string2)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
     private void hideIfAdView(View paramView, String paramString) {
-        String str = paramView.getClass().getName();
-        if (str != null && !PreferencesHelper.whiteListElements().contains(str) && (HookLoader.actViewList.contains(str) || PreferencesHelper.isAggressiveHookEnabled() && isAggressiveBlock(str))) {
+        String viewName = paramView.getClass().getName();
+        if (viewName != null && !PreferencesHelper.whiteListElements().contains(viewName) && (HookLoader.actViewList.contains(viewName) || isSpecificBlock(paramString, viewName) || PreferencesHelper.isAggressiveHookEnabled() && isAggressiveBlock(viewName))) {
             paramView.clearAnimation();
             paramView.setVisibility(View.GONE);
-            LogUtils.logRecord("View Block Success: " + paramString + "/" + str);
+            LogUtils.logRecord("View Block Success: " + paramString + "/" + viewName);
             NotificationUtils.setNotify(ContextUtils.getOwnContext());
         }
     }

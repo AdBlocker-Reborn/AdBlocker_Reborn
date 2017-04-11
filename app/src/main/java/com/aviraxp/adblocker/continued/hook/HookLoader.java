@@ -13,6 +13,7 @@ public class HookLoader implements IXposedHookLoadPackage, IXposedHookZygoteInit
 
     static HashSet<String> actViewList;
     static HashSet<String> actViewList_aggressive;
+    static HashSet<String> actViewList_specific;
     static HashSet<String> hostsList;
     static HashSet<String> receiversList;
     static HashSet<String> servicesList;
