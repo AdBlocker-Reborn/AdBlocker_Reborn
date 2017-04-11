@@ -17,6 +17,7 @@ import android.preference.MultiSelectListPreference;
 import android.preference.Preference;
 import android.preference.PreferenceActivity;
 import android.preference.PreferenceCategory;
+import android.preference.PreferenceManager;
 import android.provider.Settings;
 
 import com.aviraxp.adblocker.continued.BuildConfig;
@@ -77,7 +78,7 @@ public class SettingsActivity extends PreferenceActivity {
     }
 
     private void showUpdateLog() {
-        SharedPreferences sp = getSharedPreferences("VERSION", MODE_WORLD_READABLE);
+        SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
         if (sp.getInt("VERSION", 0) != BuildConfig.VERSION_CODE) {
             new LicensesDialog(SettingsActivity.this, getLocalUpdateLog())
                     .setTitle(R.string.updatelog)
