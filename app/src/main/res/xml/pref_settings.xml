@@ -114,6 +114,10 @@
         android:key="ABOUT"
         android:title="@string/about">
         <PreferenceScreen
+            android:key="TRANSLATOR"
+            android:summary="@string/app_translator"
+            android:title="@string/translator" />
+        <PreferenceScreen
             android:key="XDA"
             android:summary="@string/open_xda_description"
             android:title="@string/open_xda" />

@@ -56,4 +56,6 @@
     <string name="show_notification">Show Notification when Blocking</string>
     <string name="updatelog">Update Log</string>
     <string name="notification_count">Total ADs blocked after last boot: </string>
+    <string name="app_translator">aviraxp</string>
+    <string name="translator">Translator</string>
 </resources>

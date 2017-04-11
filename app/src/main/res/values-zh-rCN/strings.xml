@@ -56,4 +56,6 @@
     <string name="show_notification">被拦截时显示通知</string>
     <string name="updatelog">更新日志</string>
     <string name="notification_count">开机后共拦截广告数：</string>
+    <string name="app_translator">aviraxp</string>
+    <string name="translator">翻译者</string>
 </resources>
