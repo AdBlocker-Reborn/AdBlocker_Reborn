@@ -39,7 +39,7 @@
             android:summary="@string/webview_hook_description"
             android:title="@string/webview_hook" />
         <CheckBoxPreference
-            android:defaultValue="false"
+            android:defaultValue="true"
             android:key="URL_HOOK"
             android:summary="@string/url_hook_description"
             android:title="@string/url_hook" />

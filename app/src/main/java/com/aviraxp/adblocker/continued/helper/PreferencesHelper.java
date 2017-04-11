@@ -54,7 +54,7 @@ public class PreferencesHelper {
     }
 
     public static boolean isURLHookEnabled() {
-        return getModuleSharedPreferences().getBoolean("URL_HOOK", false);
+        return getModuleSharedPreferences().getBoolean("URL_HOOK", true);
     }
 
     public static boolean isAggressiveHookEnabled() {
