@@ -103,8 +103,8 @@ public class SettingsActivity extends PreferenceActivity {
         uriHelper("XDA", "https://forum.xda-developers.com/xposed/modules/xposed-adblocker-reborn-1-0-1-2017-02-11-t3554617");
     }
 
-    private void uriHelper(String perf, final String uri) {
-        findPreference(perf).setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
+    private void uriHelper(String pref, final String uri) {
+        findPreference(pref).setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
             @Override
             public boolean onPreferenceClick(Preference preference) {
                 Intent intent = new Intent();
