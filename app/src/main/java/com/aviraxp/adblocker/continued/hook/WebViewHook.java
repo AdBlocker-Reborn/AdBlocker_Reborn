@@ -3,7 +3,6 @@ package com.aviraxp.adblocker.continued.hook;
 import android.content.res.Resources;
 import android.content.res.XModuleResources;
 import android.view.View;
-import android.view.ViewGroup;
 import android.webkit.WebView;
 
 import com.aviraxp.adblocker.continued.helper.PreferencesHelper;
@@ -49,22 +48,6 @@ class WebViewHook {
         String[] sUrls = decoded.split("\n");
         HookLoader.urlList = new HashSet<>();
         Collections.addAll(HookLoader.urlList, sUrls);
-    }
-
-    private void removeAdView(final View view) {
-        view.post(new Runnable() {
-            @Override
-            public void run() {
-                ViewGroup.LayoutParams params = view.getLayoutParams();
-                if (params == null) {
-                    params = new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, 0);
-                } else {
-                    params.height = 0;
-                    params.width = 0;
-                }
-                view.setLayoutParams(params);
-            }
-        });
     }
 
     public void hook(final XC_LoadPackage.LoadPackageParam lpparam) {
@@ -136,7 +119,8 @@ class WebViewHook {
                 for (String adUrl : hashSet) {
                     if (string.substring(string.indexOf("://") + 3).startsWith(adUrl)) {
                         param.setResult(null);
-                        removeAdView((View) param.thisObject);
+                        ((View) param.thisObject).clearAnimation();
+                        ((View) param.thisObject).setVisibility(View.GONE);
                         return true;
                     }
                 }
@@ -152,7 +136,8 @@ class WebViewHook {
                 for (String adUrl : hashSet) {
                     if (string.contains(adUrl)) {
                         param.setResult(null);
-                        removeAdView((View) param.thisObject);
+                        ((View) param.thisObject).clearAnimation();
+                        ((View) param.thisObject).setVisibility(View.GONE);
                         return true;
                     }
                 }
