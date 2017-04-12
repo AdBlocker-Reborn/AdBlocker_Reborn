@@ -243,7 +243,9 @@ public class SettingsActivity extends PreferenceActivity {
             final List<ApplicationInfo> packages = pm.getInstalledApplications(PackageManager.GET_META_DATA);
 
             for (ApplicationInfo app : packages) {
-                sortedApps.add(new String[]{app.packageName, app.loadLabel(pm).toString()});
+                if (!app.packageName.startsWith("com.android")) {
+                    sortedApps.add(new String[]{app.packageName, app.loadLabel(pm).toString()});
+                }
             }
 
             Collections.sort(sortedApps, new Comparator<String[]>() {
