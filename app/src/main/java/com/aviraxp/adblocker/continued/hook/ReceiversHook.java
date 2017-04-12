@@ -33,7 +33,7 @@ class ReceiversHook {
         Collections.addAll(HookLoader.receiversList, sUrls);
     }
 
-    public void hook(XC_LoadPackage.LoadPackageParam lpparam) {
+    public void hook(final XC_LoadPackage.LoadPackageParam lpparam) {
 
         if (!PreferencesHelper.isReceiversHookEnabled()) {
             return;

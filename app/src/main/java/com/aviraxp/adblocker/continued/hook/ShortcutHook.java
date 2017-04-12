@@ -14,7 +14,7 @@ import de.robv.android.xposed.callbacks.XC_LoadPackage;
 
 class ShortcutHook {
 
-    public void hook(XC_LoadPackage.LoadPackageParam lpparam) {
+    public void hook(final XC_LoadPackage.LoadPackageParam lpparam) {
 
         XC_MethodHook shortcutHook = new XC_MethodHook() {
             @Override

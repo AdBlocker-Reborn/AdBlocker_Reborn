@@ -36,7 +36,7 @@ class ServicesHook {
         LogUtils.logRecord("MIUI Based: " + PreferencesHelper.isMIUI());
     }
 
-    public void hook(XC_LoadPackage.LoadPackageParam lpparam) {
+    public void hook(final XC_LoadPackage.LoadPackageParam lpparam) {
 
         XC_MethodHook servicesStartHook = new XC_MethodHook() {
             @Override
