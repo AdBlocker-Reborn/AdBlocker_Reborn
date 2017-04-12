@@ -52,6 +52,7 @@
 
         <receiver
             android:name=".receiver.NotificationReceiver"
+            android:process=":remote"
             tools:ignore="ExportedReceiver">
             <intent-filter>
                 <action android:name="AdBlocker.intent.action.POST_NOTIFICATION" />
