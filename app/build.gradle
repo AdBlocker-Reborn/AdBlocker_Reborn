@@ -21,6 +21,9 @@ android {
             shrinkResources false
         }
     }
+    lintOptions {
+        abortOnError false
+    }
 }
 
 dependencies {
