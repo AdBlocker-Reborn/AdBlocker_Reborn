@@ -24,7 +24,7 @@ public class BlocklistInitUtils {
 
     private String decodeString(String resName, byte[] array) throws UnsupportedEncodingException {
         String decoded = new String(array, "UTF-8");
-        if (resName.equals("hosts_yhosts")) {
+        if (resName.equals("blocklist/hosts_yhosts")) {
             decoded = decoded.replace("127.0.0.1 ", "").replace("localhost", "workaround");
         }
         return decoded;
