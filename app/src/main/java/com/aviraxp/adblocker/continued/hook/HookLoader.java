@@ -1,6 +1,7 @@
 package com.aviraxp.adblocker.continued.hook;
 
 import com.aviraxp.adblocker.continued.helper.PreferencesHelper;
+import com.aviraxp.adblocker.continued.util.BlocklistInit;
 
 import java.io.IOException;
 import java.util.HashSet;
@@ -11,13 +12,13 @@ import de.robv.android.xposed.callbacks.XC_LoadPackage;
 
 public class HookLoader implements IXposedHookLoadPackage, IXposedHookZygoteInit {
 
-    static HashSet<String> actViewList;
-    static HashSet<String> actViewList_aggressive;
-    static HashSet<String> actViewList_specific;
-    static HashSet<String> hostsList;
-    static HashSet<String> receiversList;
-    static HashSet<String> servicesList;
-    static HashSet<String> urlList;
+    static HashSet<String> actViewList = new HashSet<>();
+    static HashSet<String> actViewList_aggressive = new HashSet<>();
+    static HashSet<String> actViewList_specific = new HashSet<>();
+    static HashSet<String> hostsList = new HashSet<>();
+    static HashSet<String> receiversList = new HashSet<>();
+    static HashSet<String> servicesList = new HashSet<>();
+    static HashSet<String> urlList = new HashSet<>();
 
     public void handleLoadPackage(XC_LoadPackage.LoadPackageParam lpparam) {
 
@@ -38,10 +39,13 @@ public class HookLoader implements IXposedHookLoadPackage, IXposedHookZygoteInit
     }
 
     public void initZygote(StartupParam startupParam) throws IOException {
-        new ActViewHook().init(startupParam);
-        new HostsHook().init(startupParam);
-        new ReceiversHook().init(startupParam);
-        new ServicesHook().init(startupParam);
-        new WebViewHook().init(startupParam);
+        new BlocklistInit().init(startupParam, "blocklist/av", HookLoader.actViewList);
+        new BlocklistInit().init(startupParam, "blocklist/av_specific", HookLoader.actViewList);
+        new BlocklistInit().init(startupParam, "blocklist/av_aggressive", HookLoader.actViewList);
+        new BlocklistInit().init(startupParam, "blocklist/hosts", HookLoader.actViewList);
+        new BlocklistInit().init(startupParam, "blocklist/hosts_yhosts", HookLoader.actViewList);
+        new BlocklistInit().init(startupParam, "blocklist/services", HookLoader.actViewList);
+        new BlocklistInit().init(startupParam, "blocklist/urls", HookLoader.actViewList);
+        new BlocklistInit().init(startupParam, "blocklist/receivers", HookLoader.actViewList);
     }
 }

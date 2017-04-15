@@ -162,15 +162,15 @@ public class SettingsActivity extends PreferenceActivity {
     }
 
     private void openXposed() {
-            Intent intent = new Intent("de.robv.android.xposed.installer.OPEN_SECTION");
-            if (getPackageManager().queryIntentActivities(intent, 0).isEmpty()) {
-                intent = getPackageManager().getLaunchIntentForPackage("de.robv.android.xposed.installer");
-            }
-            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
-                    .putExtra("section", "modules")
-                    .putExtra("fragment", 1)
-                    .putExtra("module", BuildConfig.APPLICATION_ID);
-            startActivity(intent);
+        Intent intent = new Intent("de.robv.android.xposed.installer.OPEN_SECTION");
+        if (getPackageManager().queryIntentActivities(intent, 0).isEmpty()) {
+            intent = getPackageManager().getLaunchIntentForPackage("de.robv.android.xposed.installer");
+        }
+        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+                .putExtra("section", "modules")
+                .putExtra("fragment", 1)
+                .putExtra("module", BuildConfig.APPLICATION_ID);
+        startActivity(intent);
     }
 
     private void donateAlipay() {

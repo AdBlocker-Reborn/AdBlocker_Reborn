@@ -1,7 +1,5 @@
 package com.aviraxp.adblocker.continued.hook;
 
-import android.content.res.Resources;
-import android.content.res.XModuleResources;
 import android.view.View;
 import android.webkit.WebView;
 
@@ -10,16 +8,12 @@ import com.aviraxp.adblocker.continued.util.ContextUtils;
 import com.aviraxp.adblocker.continued.util.LogUtils;
 import com.aviraxp.adblocker.continued.util.NotificationUtils;
 
-import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.net.URLDecoder;
-import java.util.Collections;
 import java.util.HashSet;
 
-import de.robv.android.xposed.IXposedHookZygoteInit;
 import de.robv.android.xposed.XC_MethodHook;
 import de.robv.android.xposed.XposedBridge;
-import de.robv.android.xposed.XposedHelpers;
 import de.robv.android.xposed.callbacks.XC_LoadPackage;
 
 class WebViewHook {
@@ -38,16 +32,6 @@ class WebViewHook {
             }
         }
         return null;
-    }
-
-    void init(IXposedHookZygoteInit.StartupParam startupParam) throws IOException {
-        String MODULE_PATH = startupParam.modulePath;
-        Resources res = XModuleResources.createInstance(MODULE_PATH, null);
-        byte[] array = XposedHelpers.assetAsByteArray(res, "blocklist/urls");
-        String decoded = new String(array, "UTF-8");
-        String[] sUrls = decoded.split("\n");
-        HookLoader.urlList = new HashSet<>();
-        Collections.addAll(HookLoader.urlList, sUrls);
     }
 
     public void hook(final XC_LoadPackage.LoadPackageParam lpparam) {

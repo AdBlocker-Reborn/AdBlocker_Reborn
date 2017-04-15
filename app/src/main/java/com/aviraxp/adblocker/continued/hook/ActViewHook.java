@@ -4,8 +4,6 @@ import android.app.Activity;
 import android.content.ComponentName;
 import android.content.ContextWrapper;
 import android.content.Intent;
-import android.content.res.Resources;
-import android.content.res.XModuleResources;
 import android.os.Bundle;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,37 +13,12 @@ import com.aviraxp.adblocker.continued.util.ContextUtils;
 import com.aviraxp.adblocker.continued.util.LogUtils;
 import com.aviraxp.adblocker.continued.util.NotificationUtils;
 
-import java.io.IOException;
-import java.util.Collections;
-import java.util.HashSet;
-
-import de.robv.android.xposed.IXposedHookZygoteInit;
 import de.robv.android.xposed.XC_MethodHook;
 import de.robv.android.xposed.XposedBridge;
 import de.robv.android.xposed.XposedHelpers;
 import de.robv.android.xposed.callbacks.XC_LoadPackage;
 
 class ActViewHook {
-
-    void init(IXposedHookZygoteInit.StartupParam startupParam) throws IOException {
-        String MODULE_PATH = startupParam.modulePath;
-        Resources res = XModuleResources.createInstance(MODULE_PATH, null);
-        byte[] array = XposedHelpers.assetAsByteArray(res, "blocklist/av");
-        byte[] array2 = XposedHelpers.assetAsByteArray(res, "blocklist/av_aggressive");
-        byte[] array3 = XposedHelpers.assetAsByteArray(res, "blocklist/av_specific");
-        String decoded = new String(array, "UTF-8");
-        String decoded2 = new String(array2, "UTF-8");
-        String decoded3 = new String(array3, "UTF-8");
-        String[] sUrls = decoded.split("\n");
-        String[] sUrls2 = decoded2.split("\n");
-        String[] sUrls3 = decoded3.split("\n");
-        HookLoader.actViewList = new HashSet<>();
-        HookLoader.actViewList_aggressive = new HashSet<>();
-        HookLoader.actViewList_specific = new HashSet<>();
-        Collections.addAll(HookLoader.actViewList, sUrls);
-        Collections.addAll(HookLoader.actViewList_aggressive, sUrls2);
-        Collections.addAll(HookLoader.actViewList_specific, sUrls3);
-    }
 
     public void hook(final XC_LoadPackage.LoadPackageParam lpparam) {
 

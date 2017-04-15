@@ -1,7 +1,5 @@
 package com.aviraxp.adblocker.continued.hook;
 
-import android.content.res.Resources;
-import android.content.res.XModuleResources;
 import android.net.Network;
 import android.os.Build;
 import android.os.NetworkOnMainThreadException;
@@ -12,17 +10,13 @@ import com.aviraxp.adblocker.continued.util.ContextUtils;
 import com.aviraxp.adblocker.continued.util.LogUtils;
 import com.aviraxp.adblocker.continued.util.NotificationUtils;
 
-import java.io.IOException;
 import java.net.ConnectException;
 import java.net.InetAddress;
 import java.net.InetSocketAddress;
 import java.net.Socket;
 import java.net.SocketException;
 import java.net.UnknownHostException;
-import java.util.Collections;
-import java.util.HashSet;
 
-import de.robv.android.xposed.IXposedHookZygoteInit;
 import de.robv.android.xposed.XC_MethodHook;
 import de.robv.android.xposed.XposedBridge;
 import de.robv.android.xposed.XposedHelpers;
@@ -31,21 +25,6 @@ import de.robv.android.xposed.callbacks.XC_LoadPackage;
 class HostsHook {
 
     private static final String BLOCK_MESSAGE = "Blocked by AdBlocker Reborn: ";
-
-    void init(IXposedHookZygoteInit.StartupParam startupParam) throws IOException {
-        String MODULE_PATH = startupParam.modulePath;
-        Resources res = XModuleResources.createInstance(MODULE_PATH, null);
-        byte[] array = XposedHelpers.assetAsByteArray(res, "blocklist/hosts");
-        byte[] array2 = XposedHelpers.assetAsByteArray(res, "blocklist/hosts_yhosts");
-        String decoded = new String(array, "UTF-8");
-        String decoded2 = new String(array2, "UTF-8");
-        String decoded3 = decoded2.replace("127.0.0.1 ", "").replace("localhost", "workaround");
-        String[] sUrls = decoded.split("\n");
-        String[] sUrls2 = decoded3.split("\n");
-        HookLoader.hostsList = new HashSet<>();
-        Collections.addAll(HookLoader.hostsList, sUrls);
-        Collections.addAll(HookLoader.hostsList, sUrls2);
-    }
 
     public void hook(final XC_LoadPackage.LoadPackageParam lpparam) {
 
