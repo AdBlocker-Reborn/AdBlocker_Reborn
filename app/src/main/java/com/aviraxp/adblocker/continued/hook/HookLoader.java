@@ -1,7 +1,7 @@
 package com.aviraxp.adblocker.continued.hook;
 
 import com.aviraxp.adblocker.continued.helper.PreferencesHelper;
-import com.aviraxp.adblocker.continued.util.BlocklistInit;
+import com.aviraxp.adblocker.continued.util.BlocklistInitUtils;
 
 import java.io.IOException;
 import java.util.HashSet;
@@ -39,13 +39,13 @@ public class HookLoader implements IXposedHookLoadPackage, IXposedHookZygoteInit
     }
 
     public void initZygote(StartupParam startupParam) throws IOException {
-        new BlocklistInit().init(startupParam, "blocklist/av", HookLoader.actViewList);
-        new BlocklistInit().init(startupParam, "blocklist/av_specific", HookLoader.actViewList);
-        new BlocklistInit().init(startupParam, "blocklist/av_aggressive", HookLoader.actViewList);
-        new BlocklistInit().init(startupParam, "blocklist/hosts", HookLoader.actViewList);
-        new BlocklistInit().init(startupParam, "blocklist/hosts_yhosts", HookLoader.actViewList);
-        new BlocklistInit().init(startupParam, "blocklist/services", HookLoader.actViewList);
-        new BlocklistInit().init(startupParam, "blocklist/urls", HookLoader.actViewList);
-        new BlocklistInit().init(startupParam, "blocklist/receivers", HookLoader.actViewList);
+        new BlocklistInitUtils().init(startupParam, "blocklist/av", HookLoader.actViewList);
+        new BlocklistInitUtils().init(startupParam, "blocklist/av_specific", HookLoader.actViewList);
+        new BlocklistInitUtils().init(startupParam, "blocklist/av_aggressive", HookLoader.actViewList);
+        new BlocklistInitUtils().init(startupParam, "blocklist/hosts", HookLoader.actViewList);
+        new BlocklistInitUtils().init(startupParam, "blocklist/hosts_yhosts", HookLoader.actViewList);
+        new BlocklistInitUtils().init(startupParam, "blocklist/services", HookLoader.actViewList);
+        new BlocklistInitUtils().init(startupParam, "blocklist/urls", HookLoader.actViewList);
+        new BlocklistInitUtils().init(startupParam, "blocklist/receivers", HookLoader.actViewList);
     }
 }

@@ -90,7 +90,7 @@ public class PreferencesHelper {
     }
 
     public static boolean isAndroidApp(String string) {
-        return string.startsWith("com.android") && !string.equals("com.android.webview") || string.equals("android");
+        return string.startsWith("com.android") && !string.equals("com.android.webview") || string.toLowerCase().equals("android");
     }
 
     public static boolean isMIUI() {

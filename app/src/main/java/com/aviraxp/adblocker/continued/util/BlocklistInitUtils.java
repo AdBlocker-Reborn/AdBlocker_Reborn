@@ -11,7 +11,7 @@ import java.util.HashSet;
 import de.robv.android.xposed.IXposedHookZygoteInit;
 import de.robv.android.xposed.XposedHelpers;
 
-public class BlocklistInit {
+public class BlocklistInitUtils {
 
     public void init(IXposedHookZygoteInit.StartupParam startupParam, String resName, HashSet blocklistName) throws IOException {
         String MODULE_PATH = startupParam.modulePath;
