@@ -10,7 +10,6 @@ import com.aviraxp.adblocker.continued.util.NotificationUtils;
 
 import java.io.UnsupportedEncodingException;
 import java.net.URLDecoder;
-import java.util.HashSet;
 
 import de.robv.android.xposed.XC_MethodHook;
 import de.robv.android.xposed.XposedBridge;
@@ -94,13 +93,13 @@ class WebViewHook {
     private boolean urlFiltering(String url, String data, String encodingType, XC_MethodHook.MethodHookParam param) {
         String urlDecode = decode(url, encodingType);
         String dataDecode = decode(data, encodingType);
-        return hostsBlock(urlDecode, HookLoader.hostsList, param) || hostsBlock(dataDecode, HookLoader.hostsList, param) || urlBlock(urlDecode, HookLoader.urlList, param) || urlBlock(dataDecode, HookLoader.urlList, param);
+        return hostsBlock(urlDecode, param) || hostsBlock(dataDecode, param) || urlBlock(urlDecode, param) || urlBlock(dataDecode, param);
     }
 
-    private boolean hostsBlock(String string, HashSet<String> hashSet, XC_MethodHook.MethodHookParam param) {
+    private boolean hostsBlock(String string, XC_MethodHook.MethodHookParam param) {
         if (string != null && !PreferencesHelper.whiteListElements().contains(string) && string.startsWith("http")) {
             try {
-                for (String adUrl : hashSet) {
+                for (String adUrl : HookLoader.hostsList) {
                     if (string.substring(string.indexOf("://") + 3).startsWith(adUrl)) {
                         param.setResult(null);
                         ((View) param.thisObject).clearAnimation();
@@ -114,10 +113,10 @@ class WebViewHook {
         return false;
     }
 
-    private boolean urlBlock(String string, HashSet<String> hashSet, XC_MethodHook.MethodHookParam param) {
+    private boolean urlBlock(String string, XC_MethodHook.MethodHookParam param) {
         if (string != null && !PreferencesHelper.whiteListElements().contains(string) && string.startsWith("http")) {
             try {
-                for (String adUrl : hashSet) {
+                for (String adUrl : HookLoader.urlList) {
                     if (string.contains(adUrl)) {
                         param.setResult(null);
                         ((View) param.thisObject).clearAnimation();

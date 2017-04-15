@@ -1,7 +1,7 @@
 package android.os;
 
 public class SystemProperties {
-    @SuppressWarnings("UnusedParameters")
+    @SuppressWarnings({"UnusedParameters", "SameParameterValue"})
     public static String get(String key, String val) {
         throw new UnsupportedOperationException();
     }
