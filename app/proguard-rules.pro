@@ -16,8 +16,6 @@
 #   public *;
 #}
 
--dontwarn android.content.ContentResolver
--dontwarn javax.annotation.**
 -obfuscationdictionary dictionary-elder.txt
 -keepattributes SourceFile,LineNumberTable
 -keep class com.aviraxp.adblocker.continued.hook.HookLoader

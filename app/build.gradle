@@ -30,5 +30,5 @@ dependencies {
     provided 'de.robv.android.xposed:api:82'
     compile 'moe.feng:AlipayZeroSdk:1.1'
     compile 'com.zhuge.analysis:zhugeio:latest.integration'
-    compile 'com.oasisfeng.condom:library:1.0.0@aar'
+    compile 'com.oasisfeng.condom:library:1.0.2'
 }
