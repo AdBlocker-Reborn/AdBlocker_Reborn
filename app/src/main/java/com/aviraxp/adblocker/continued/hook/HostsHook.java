@@ -43,7 +43,7 @@ class HostsHook {
                     } else if (obj instanceof InetAddress) {
                         host = ((InetAddress) obj).getHostName();
                     }
-                    if (host != null && !PreferencesHelper.whiteListElements().contains(host) && HookLoader.hostsList.contains(host)) {
+                    if (host != null && HookLoader.hostsList.contains(host) && !PreferencesHelper.whiteListElements().contains(host)) {
                         param.setResult(null);
                         LogUtils.logRecord("Hosts Block Success: " + lpparam.packageName + "/" + host);
                         NotificationUtils.setNotify(ContextUtils.getOwnContext());
@@ -56,7 +56,7 @@ class HostsHook {
             @Override
             protected void beforeHookedMethod(MethodHookParam param) {
                 String host = (String) param.args[0];
-                if (host != null && !PreferencesHelper.whiteListElements().contains(host) && HookLoader.hostsList.contains(host)) {
+                if (host != null && HookLoader.hostsList.contains(host) && !PreferencesHelper.whiteListElements().contains(host)) {
                     param.setResult(null);
                     param.setThrowable(new UnknownHostException(BLOCK_MESSAGE + host));
                     LogUtils.logRecord("Hosts Block Success: " + lpparam.packageName + "/" + host);
@@ -82,7 +82,7 @@ class HostsHook {
                             host = ((InetAddress) obj).getHostName();
                         }
                     }
-                    if (host != null && !PreferencesHelper.whiteListElements().contains(host) && HookLoader.hostsList.contains(host)) {
+                    if (host != null && HookLoader.hostsList.contains(host) && !PreferencesHelper.whiteListElements().contains(host)) {
                         param.setResult(new Object());
                         param.setThrowable(new UnknownHostException(BLOCK_MESSAGE + host));
                         LogUtils.logRecord("Hosts Block Success: " + lpparam.packageName + "/" + host);
@@ -97,7 +97,7 @@ class HostsHook {
             protected void beforeHookedMethod(MethodHookParam param) {
                 InetAddress address = (InetAddress) param.args[1];
                 String host = address.getHostName();
-                if (host != null && !PreferencesHelper.whiteListElements().contains(host) && HookLoader.hostsList.contains(host)) {
+                if (host != null && HookLoader.hostsList.contains(host) && !PreferencesHelper.whiteListElements().contains(host)) {
                     param.setResult(null);
                     param.setThrowable(new UnknownHostException(BLOCK_MESSAGE + host));
                     LogUtils.logRecord("Hosts Block Success: " + lpparam.packageName + "/" + host);
@@ -111,7 +111,7 @@ class HostsHook {
             protected void beforeHookedMethod(MethodHookParam param) {
                 InetAddress address = (InetAddress) param.args[1];
                 String host = address.getHostName();
-                if (host != null && !PreferencesHelper.whiteListElements().contains(host) && HookLoader.hostsList.contains(host)) {
+                if (host != null && HookLoader.hostsList.contains(host) && !PreferencesHelper.whiteListElements().contains(host)) {
                     param.setResult(null);
                     param.setThrowable(new SocketException(BLOCK_MESSAGE + host));
                     LogUtils.logRecord("Hosts Block Success: " + lpparam.packageName + "/" + host);
@@ -125,7 +125,7 @@ class HostsHook {
             protected void beforeHookedMethod(MethodHookParam param) {
                 InetAddress address = (InetAddress) param.args[1];
                 String host = address.getHostName();
-                if (host != null && !PreferencesHelper.whiteListElements().contains(host) && HookLoader.hostsList.contains(host)) {
+                if (host != null && HookLoader.hostsList.contains(host) && !PreferencesHelper.whiteListElements().contains(host)) {
                     param.setResult(false);
                     param.setThrowable(new ConnectException(BLOCK_MESSAGE + host));
                     LogUtils.logRecord("Hosts Block Success: " + lpparam.packageName + "/" + host);

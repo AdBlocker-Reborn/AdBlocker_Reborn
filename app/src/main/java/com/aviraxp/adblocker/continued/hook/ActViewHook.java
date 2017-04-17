@@ -33,7 +33,7 @@ class ActViewHook {
                     ComponentName Component = ((Intent) param.args[0]).getComponent();
                     if (Component != null) {
                         String activityClassName = Component.getClassName();
-                        if (activityClassName != null && !PreferencesHelper.whiteListElements().contains(activityClassName) && (HookLoader.actViewList.contains(activityClassName) || isSpecificBlock(lpparam.packageName, activityClassName) || PreferencesHelper.isAggressiveHookEnabled() && isAggressiveBlock(activityClassName))) {
+                        if (activityClassName != null && (HookLoader.actViewList.contains(activityClassName) || isSpecificBlock(lpparam.packageName, activityClassName) || PreferencesHelper.isAggressiveHookEnabled() && isAggressiveBlock(activityClassName)) && !PreferencesHelper.whiteListElements().contains(activityClassName)) {
                             param.setResult(null);
                             LogUtils.logRecord("Activity Block Success: " + lpparam.packageName + "/" + activityClassName);
                             NotificationUtils.setNotify(ContextUtils.getOwnContext());
@@ -87,7 +87,7 @@ class ActViewHook {
 
     private void hideIfAdView(View paramView, String paramString) {
         String viewName = paramView.getClass().getName();
-        if (viewName != null && !PreferencesHelper.whiteListElements().contains(viewName) && (HookLoader.actViewList.contains(viewName) || isSpecificBlock(paramString, viewName) || PreferencesHelper.isAggressiveHookEnabled() && isAggressiveBlock(viewName))) {
+        if (viewName != null && (HookLoader.actViewList.contains(viewName) || isSpecificBlock(paramString, viewName) || PreferencesHelper.isAggressiveHookEnabled() && isAggressiveBlock(viewName)) && !PreferencesHelper.whiteListElements().contains(viewName)) {
             paramView.clearAnimation();
             paramView.setVisibility(View.GONE);
             LogUtils.logRecord("View Block Success: " + paramString + "/" + viewName);

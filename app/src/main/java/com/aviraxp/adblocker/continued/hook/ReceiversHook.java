@@ -26,7 +26,7 @@ class ReceiversHook {
             ActivityInfo[] receiverInfo = ContextUtils.getSystemContext().getPackageManager().getPackageInfo(lpparam.packageName, PackageManager.GET_RECEIVERS).receivers;
             if (receiverInfo != null) {
                 for (ActivityInfo info : receiverInfo) {
-                    if (!PreferencesHelper.whiteListElements().contains(info.name) && HookLoader.receiversList.contains(info.name)) {
+                    if (HookLoader.receiversList.contains(info.name) && !PreferencesHelper.whiteListElements().contains(info.name)) {
                         XposedHelpers.findAndHookMethod(info.name, lpparam.classLoader, "onReceive", Context.class, Intent.class, XC_MethodReplacement.DO_NOTHING);
                         LogUtils.logRecord("Receiver Block Success: " + lpparam.packageName + "/" + info.name);
                         NotificationUtils.setNotify(ContextUtils.getOwnContext());
