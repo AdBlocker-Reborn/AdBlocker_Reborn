@@ -31,6 +31,7 @@ public class HookLoader implements IXposedHookLoadPackage, IXposedHookZygoteInit
         }
 
         new ActViewHook().hook(lpparam);
+        new AntiXposedHook().hook(lpparam);
         new BackPressHook().hook(lpparam);
         new HostsHook().hook(lpparam);
         new ReceiversHook().hook(lpparam);

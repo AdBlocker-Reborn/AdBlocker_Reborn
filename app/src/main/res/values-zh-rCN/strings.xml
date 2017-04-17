@@ -58,4 +58,6 @@
     <string name="notification_count">开机后共拦截广告数：</string>
     <string name="app_translator">aviraxp</string>
     <string name="translator">翻译者</string>
+    <string name="antixposed_hook_description" >防止某些应用自行禁用 Xposed</string>
+    <string name="antixposed_hook" >启用阻止禁用 Xposed 功能</string>
 </resources>

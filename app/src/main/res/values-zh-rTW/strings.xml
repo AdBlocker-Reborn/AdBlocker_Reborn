@@ -58,4 +58,6 @@
     <string name="xposed_description">這是重生版的 Adblocker</string>
     <string name="app_translator">tommy1616</string>
     <string name="translator">Translator</string>
+    <string name="antixposed_hook_description" >Prevent some applications from blocking xposed themselves</string>
+    <string name="antixposed_hook" >Enable Anti-Anti Xposed Block</string>
 </resources>

@@ -104,4 +104,8 @@ public class PreferencesHelper {
     public static List<String> whiteListElements() {
         return Arrays.asList(getModuleSharedPreferences().getString("DISABLED_ELEMENTS", "").split("\n"));
     }
+
+    public static boolean isDisableXposedEnabled() {
+        return getModuleSharedPreferences().getBoolean("ANTIXPOSED_HOOK", false);
+    }
 }

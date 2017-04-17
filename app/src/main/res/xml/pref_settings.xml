@@ -97,6 +97,11 @@
             android:key="SHORTCUT_HOOK"
             android:summary="@string/shortcut_hook_description"
             android:title="@string/shortcut_hook" />
+        <CheckBoxPreference
+            android:defaultValue="false"
+            android:key="ANTIXPOSED_HOOK"
+            android:summary="@string/antixposed_hook_description"
+            android:title="@string/antixposed_hook" />
     </PreferenceCategory>
     <PreferenceCategory
         android:key="DONATION"
