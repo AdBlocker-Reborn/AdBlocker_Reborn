@@ -30,7 +30,7 @@ class URLHook {
     private static String urlLengthTweaker(XC_MethodHook.MethodHookParam param) {
         String url;
         if (param.args.length == 2) {
-            url = (String) param.args[1];
+            url = lengthTweaker(param) + param.args[1];
         } else if (param.args.length == 3) {
             url = (String) param.args[2];
         } else {
