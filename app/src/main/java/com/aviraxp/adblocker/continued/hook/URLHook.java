@@ -14,13 +14,25 @@ import de.robv.android.xposed.callbacks.XC_LoadPackage;
 
 class URLHook {
 
+    private static String httpsTweaker(String string) {
+        if (string.startsWith("https")) {
+            return "https://127.0.0.1";
+        } else {
+            return "http://127.0.0.1";
+        }
+    }
+
     private static String lengthTweaker(XC_MethodHook.MethodHookParam param) {
         String host;
         if (param.args.length == 1) {
             host = (String) param.args[0];
         } else if (param.args.length == 2) {
             URL urlOrigin = (URL) param.args[0];
-            host = urlOrigin.toString();
+            if (urlOrigin != null) {
+                host = urlOrigin.toString();
+            } else {
+                host = null;
+            }
         } else {
             host = (String) param.args[1];
         }
@@ -30,7 +42,11 @@ class URLHook {
     private static String urlLengthTweaker(XC_MethodHook.MethodHookParam param) {
         String url;
         if (param.args.length == 2) {
-            url = lengthTweaker(param) + param.args[1];
+            if (lengthTweaker(param) != null) {
+                url = lengthTweaker(param) + param.args[1];
+            } else {
+                url = (String) param.args[1];
+            }
         } else if (param.args.length == 3) {
             url = (String) param.args[2];
         } else {
@@ -39,14 +55,14 @@ class URLHook {
         return url;
     }
 
-    private static void lengthSetter(XC_MethodHook.MethodHookParam param) throws MalformedURLException {
+    private static void lengthSetter(XC_MethodHook.MethodHookParam param, String string) throws MalformedURLException {
         if (param.args.length == 1) {
-            param.args[0] = "127.0.0.1";
+            param.args[0] = httpsTweaker(string);
         } else if (param.args.length == 2) {
-            URL url = new URL("127.0.0.1");
+            URL url = new URL(httpsTweaker(string));
             param.args[0] = url;
         } else {
-            param.args[1] = "127.0.0.1";
+            param.args[1] = httpsTweaker(string);
         }
     }
 
@@ -63,7 +79,7 @@ class URLHook {
                 if (url != null) {
                     for (String adUrl : HookLoader.urlList) {
                         if (url.contains(adUrl) && !PreferencesHelper.whiteListElements().contains(url)) {
-                            lengthSetter(param);
+                            lengthSetter(param, lengthTweaker(param));
                             LogUtils.logRecord("URL Block Success: " + lpparam.packageName + "/" + url);
                             NotificationUtils.setNotify(ContextUtils.getOwnContext());
                             return;
@@ -81,7 +97,7 @@ class URLHook {
                     String urlCutting = url.substring(url.indexOf("://") + 3);
                     for (String adUrl : HookLoader.hostsList) {
                         if (urlCutting.startsWith(adUrl) && !PreferencesHelper.whiteListElements().contains(adUrl)) {
-                            lengthSetter(param);
+                            lengthSetter(param, url);
                             LogUtils.logRecord("URL Block Success: " + lpparam.packageName + "/" + urlCutting);
                             NotificationUtils.setNotify(ContextUtils.getOwnContext());
                             return;
