@@ -11,7 +11,7 @@ class AntiXposedHook {
 
     public void hook(final XC_LoadPackage.LoadPackageParam lpparam) {
 
-        if (!PreferencesHelper.isDisableXposedEnabled() || lpparam.packageName.contains("me.piebridge")) {
+        if (!PreferencesHelper.isDisableXposedEnabled()) {
             return;
         }
 
