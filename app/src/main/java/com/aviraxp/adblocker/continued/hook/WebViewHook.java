@@ -8,9 +8,6 @@ import com.aviraxp.adblocker.continued.util.ContextUtils;
 import com.aviraxp.adblocker.continued.util.LogUtils;
 import com.aviraxp.adblocker.continued.util.NotificationUtils;
 
-import java.io.UnsupportedEncodingException;
-import java.net.URLDecoder;
-
 import de.robv.android.xposed.XC_MethodHook;
 import de.robv.android.xposed.XposedBridge;
 import de.robv.android.xposed.callbacks.XC_LoadPackage;
@@ -18,20 +15,6 @@ import de.robv.android.xposed.callbacks.XC_LoadPackage;
 class WebViewHook {
 
     private static boolean adExist = false;
-
-    private String decode(String string, String encodingType) {
-        if (string != null) {
-            try {
-                if (encodingType != null) {
-                    return URLDecoder.decode(string, encodingType);
-                } else {
-                    return URLDecoder.decode(string, "UTF-8");
-                }
-            } catch (UnsupportedEncodingException | IllegalArgumentException ignored) {
-            }
-        }
-        return null;
-    }
 
     public void hook(final XC_LoadPackage.LoadPackageParam lpparam) {
 
@@ -44,7 +27,7 @@ class WebViewHook {
             protected void beforeHookedMethod(MethodHookParam param) {
                 String url = (String) param.args[0];
                 if (url != null) {
-                    adExist = urlFiltering(url, null, null, param);
+                    adExist = urlFiltering(url, null, param);
                     if (adExist) {
                         LogUtils.logRecord("WebView Block Success: " + lpparam.packageName + "/" + url);
                         NotificationUtils.setNotify(ContextUtils.getOwnContext());
@@ -59,7 +42,7 @@ class WebViewHook {
                 String data = (String) param.args[0];
                 String encodingType = (String) param.args[2];
                 if (data != null) {
-                    adExist = urlFiltering(null, data, encodingType, param);
+                    adExist = urlFiltering(null, data, param);
                     if (adExist) {
                         LogUtils.logRecord("WebView Block Success: " + lpparam.packageName + "/" + data);
                         NotificationUtils.setNotify(ContextUtils.getOwnContext());
@@ -75,7 +58,7 @@ class WebViewHook {
                 String data = (String) param.args[1];
                 String encodingType = (String) param.args[3];
                 if (url != null || data != null) {
-                    adExist = urlFiltering(url, data, encodingType, param);
+                    adExist = urlFiltering(url, data, param);
                     if (adExist) {
                         LogUtils.logRecord("WebView Block Success: " + lpparam.packageName + "/" + url + " & " + data);
                         NotificationUtils.setNotify(ContextUtils.getOwnContext());
@@ -90,10 +73,8 @@ class WebViewHook {
         XposedBridge.hookAllMethods(WebView.class, "loadDataWithBaseURL", loadDataWithBaseURL);
     }
 
-    private boolean urlFiltering(String url, String data, String encodingType, XC_MethodHook.MethodHookParam param) {
-        String urlDecode = decode(url, encodingType);
-        String dataDecode = decode(data, encodingType);
-        return hostsBlock(urlDecode, param) || hostsBlock(dataDecode, param) || urlBlock(urlDecode, param) || urlBlock(dataDecode, param);
+    private boolean urlFiltering(String url, String data, XC_MethodHook.MethodHookParam param) {
+        return hostsBlock(url, param) || hostsBlock(data, param) || urlBlock(url, param) || urlBlock(data, param);
     }
 
     private boolean hostsBlock(String string, XC_MethodHook.MethodHookParam param) {
