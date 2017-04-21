@@ -19,7 +19,7 @@ class AntiXposedHook {
             @Override
             protected void beforeHookedMethod(MethodHookParam param) {
                 if (param.args[0].equals("disableHooks") || param.args[0].equals("sHookedMethodCallbacks")) {
-                    param.setThrowable(new ClassNotFoundException());
+                    param.setThrowable(new NoClassDefFoundError());
                     LogUtils.logRecord("AntiXposedHook Success: " + lpparam.packageName);
                 }
             }
