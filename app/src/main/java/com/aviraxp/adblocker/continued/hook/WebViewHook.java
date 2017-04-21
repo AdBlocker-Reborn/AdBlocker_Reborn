@@ -1,7 +1,11 @@
 package com.aviraxp.adblocker.continued.hook;
 
+import android.annotation.SuppressLint;
 import android.view.View;
+import android.webkit.WebResourceRequest;
+import android.webkit.WebResourceResponse;
 import android.webkit.WebView;
+import android.webkit.WebViewClient;
 
 import com.aviraxp.adblocker.continued.helper.PreferencesHelper;
 import com.aviraxp.adblocker.continued.util.ContextUtils;
@@ -22,6 +26,32 @@ class WebViewHook {
             return;
         }
 
+        XC_MethodHook requestHook = new XC_MethodHook() {
+            @Override
+            protected void beforeHookedMethod(MethodHookParam param) throws Throwable {
+                String url = checkURL(param);
+                if (url != null) {
+                    String urlCutting = url.substring(url.indexOf("://") + 3);
+                    for (String adUrl : HookLoader.hostsList) {
+                        if (urlCutting.startsWith(adUrl)) {
+                            param.setResult(new WebResourceResponse(null, null, null));
+                            LogUtils.logRecord("WebViewClient Block Success: " + lpparam.packageName + "/" + urlCutting);
+                            NotificationUtils.setNotify(ContextUtils.getOwnContext());
+                            return;
+                        }
+                    }
+                    for (String adUrl : HookLoader.urlList) {
+                        if (urlCutting.contains(adUrl)) {
+                            param.setResult(new WebResourceResponse(null, null, null));
+                            LogUtils.logRecord("WebViewClient Block Success: " + lpparam.packageName + "/" + urlCutting);
+                            NotificationUtils.setNotify(ContextUtils.getOwnContext());
+                            return;
+                        }
+                    }
+                }
+            }
+        };
+
         XC_MethodHook urlHook = new XC_MethodHook() {
             @Override
             protected void beforeHookedMethod(MethodHookParam param) {
@@ -40,7 +70,6 @@ class WebViewHook {
             @Override
             protected void beforeHookedMethod(MethodHookParam param) {
                 String data = (String) param.args[0];
-                String encodingType = (String) param.args[2];
                 if (data != null) {
                     adExist = urlFiltering(null, data, param);
                     if (adExist) {
@@ -56,7 +85,6 @@ class WebViewHook {
             protected void beforeHookedMethod(MethodHookParam param) {
                 String url = (String) param.args[0];
                 String data = (String) param.args[1];
-                String encodingType = (String) param.args[3];
                 if (url != null || data != null) {
                     adExist = urlFiltering(url, data, param);
                     if (adExist) {
@@ -67,6 +95,7 @@ class WebViewHook {
             }
         };
 
+        XposedBridge.hookAllMethods(WebViewClient.class, "shouldInterceptRequest", requestHook);
         XposedBridge.hookAllMethods(WebView.class, "postUrl", urlHook);
         XposedBridge.hookAllMethods(WebView.class, "loadUrl", urlHook);
         XposedBridge.hookAllMethods(WebView.class, "loadData", loadDataHook);
@@ -109,5 +138,15 @@ class WebViewHook {
             }
         }
         return false;
+    }
+
+    @SuppressLint("NewApi")
+    private String checkURL(XC_MethodHook.MethodHookParam param) {
+        if (param.args[1] instanceof String) {
+            return param.args[1].toString();
+        } else {
+            WebResourceRequest request = (WebResourceRequest) param.args[1];
+            return request.getUrl().toString();
+        }
     }
 }
