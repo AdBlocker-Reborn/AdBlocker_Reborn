@@ -108,16 +108,13 @@ class WebViewHook {
 
     private boolean hostsBlock(String string, XC_MethodHook.MethodHookParam param) {
         if (string != null && string.startsWith("http")) {
-            try {
-                for (String adUrl : HookLoader.hostsList) {
-                    if (string.substring(string.indexOf("://") + 3).startsWith(adUrl) && !PreferencesHelper.whiteListElements().contains(string)) {
-                        param.setResult(null);
-                        ((View) param.thisObject).clearAnimation();
-                        ((View) param.thisObject).setVisibility(View.GONE);
-                        return true;
-                    }
+            for (String adUrl : HookLoader.hostsList) {
+                if (string.substring(string.indexOf("://") + 3).startsWith(adUrl) && !PreferencesHelper.whiteListElements().contains(string)) {
+                    param.setResult(null);
+                    ((View) param.thisObject).clearAnimation();
+                    ((View) param.thisObject).setVisibility(View.GONE);
+                    return true;
                 }
-            } catch (IllegalArgumentException ignored) {
             }
         }
         return false;
@@ -125,16 +122,13 @@ class WebViewHook {
 
     private boolean urlBlock(String string, XC_MethodHook.MethodHookParam param) {
         if (string != null && string.startsWith("http")) {
-            try {
-                for (String adUrl : HookLoader.urlList) {
-                    if (string.contains(adUrl) && !PreferencesHelper.whiteListElements().contains(string)) {
-                        param.setResult(null);
-                        ((View) param.thisObject).clearAnimation();
-                        ((View) param.thisObject).setVisibility(View.GONE);
-                        return true;
-                    }
+            for (String adUrl : HookLoader.urlList) {
+                if (string.contains(adUrl) && !PreferencesHelper.whiteListElements().contains(string)) {
+                    param.setResult(null);
+                    ((View) param.thisObject).clearAnimation();
+                    ((View) param.thisObject).setVisibility(View.GONE);
+                    return true;
                 }
-            } catch (IllegalArgumentException ignored) {
             }
         }
         return false;
