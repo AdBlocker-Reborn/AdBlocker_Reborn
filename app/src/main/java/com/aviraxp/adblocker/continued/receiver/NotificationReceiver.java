@@ -15,7 +15,7 @@ public class NotificationReceiver extends BroadcastReceiver {
             String description = extras.getString("description");
             int id = extras.getInt("id");
             String title = extras.getString("title");
-            new NotificationUtils().postNotification(title, description, id, context);
+            NotificationUtils.postNotification(title, description, id, context);
         }
     }
 }
