@@ -98,7 +98,7 @@ public class SettingsActivity extends PreferenceActivity {
     }
 
     private void uriListener() {
-        uriHelper("DONATE_PAYPAL", "https://paypal.me/wanghan1995315");
+        uriHelper("DONATE_PAYPAL", "https://ko-fi.com/A46115EM");
         uriHelper("GITHUB", "https://github.com/aviraxp/AdBlocker_Reborn");
         uriHelper("XDA", "https://forum.xda-developers.com/xposed/modules/xposed-adblocker-reborn-1-0-1-2017-02-11-t3554617");
     }
