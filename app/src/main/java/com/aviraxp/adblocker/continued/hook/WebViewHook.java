@@ -33,17 +33,17 @@ class WebViewHook {
                 if (url != null) {
                     String urlCutting = url.substring(url.indexOf("://") + 3);
                     for (String adUrl : HookLoader.hostsList) {
-                        if (urlCutting.startsWith(adUrl)) {
+                        if (urlCutting.startsWith(adUrl) && !PreferencesHelper.whiteListElements().contains(url)) {
                             param.setResult(new WebResourceResponse(null, null, null));
-                            LogUtils.logRecord("WebViewClient Block Success: " + lpparam.packageName + "/" + urlCutting);
+                            LogUtils.logRecord("WebViewClient Block Success: " + lpparam.packageName + "/" + url);
                             NotificationUtils.setNotify(ContextUtils.getOwnContext());
                             return;
                         }
                     }
                     for (String adUrl : HookLoader.urlList) {
-                        if (urlCutting.contains(adUrl)) {
+                        if (urlCutting.contains(adUrl) && !PreferencesHelper.whiteListElements().contains(url)) {
                             param.setResult(new WebResourceResponse(null, null, null));
-                            LogUtils.logRecord("WebViewClient Block Success: " + lpparam.packageName + "/" + urlCutting);
+                            LogUtils.logRecord("WebViewClient Block Success: " + lpparam.packageName + "/" + url);
                             NotificationUtils.setNotify(ContextUtils.getOwnContext());
                             return;
                         }

@@ -96,9 +96,9 @@ class URLHook {
                 if (url != null && url.startsWith("http")) {
                     String urlCutting = url.substring(url.indexOf("://") + 3);
                     for (String adUrl : HookLoader.hostsList) {
-                        if (urlCutting.startsWith(adUrl) && !PreferencesHelper.whiteListElements().contains(adUrl)) {
+                        if (urlCutting.startsWith(adUrl) && !PreferencesHelper.whiteListElements().contains(url)) {
                             lengthSetter(param, url);
-                            LogUtils.logRecord("URL Block Success: " + lpparam.packageName + "/" + urlCutting);
+                            LogUtils.logRecord("URL Block Success: " + lpparam.packageName + "/" + url);
                             NotificationUtils.setNotify(ContextUtils.getOwnContext());
                             return;
                         }
