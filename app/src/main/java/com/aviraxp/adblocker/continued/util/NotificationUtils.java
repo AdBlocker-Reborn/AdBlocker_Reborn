@@ -26,7 +26,7 @@ public class NotificationUtils {
         }
     }
 
-    public static void postNotification(String title, String description, final int id, Context ctx) {
+    public void postNotification(String title, String description, final int id, Context ctx) {
         PendingIntent pi = PendingIntent.getActivity(ctx, 0, new Intent(ctx, SettingsActivity.class), 0);
         Notification.Builder notification = new Notification.Builder(ctx)
                 .setTicker(description)
@@ -35,14 +35,16 @@ public class NotificationUtils {
                 .setSmallIcon(R.mipmap.ic_notification)
                 .setContentIntent(pi)
                 .setAutoCancel(true);
-        timeCount = timeCount + 1;
-        final NotificationManager notificationManager = (NotificationManager) ctx.getSystemService(Context.NOTIFICATION_SERVICE);
-        notificationManager.notify(id, notification.getNotification());
-        new Handler().postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                notificationManager.cancel(id);
-            }
-        }, 5000);
+        synchronized (this) {
+            timeCount = timeCount + 1;
+            final NotificationManager notificationManager = (NotificationManager) ctx.getSystemService(Context.NOTIFICATION_SERVICE);
+            notificationManager.notify(id, notification.getNotification());
+            new Handler().postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    notificationManager.cancel(id);
+                }
+            }, 5000);
+        }
     }
 }
