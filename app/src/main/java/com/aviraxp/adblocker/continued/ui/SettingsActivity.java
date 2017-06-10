@@ -243,7 +243,7 @@ public class SettingsActivity extends PreferenceActivity {
             final List<ApplicationInfo> packages = pm.getInstalledApplications(PackageManager.GET_META_DATA);
 
             for (ApplicationInfo app : packages) {
-                if (!app.packageName.startsWith("com.android") && !app.packageName.equalsIgnoreCase("android") || app.packageName.equals("com.android.webview")) {
+                if (!app.packageName.startsWith("com.android") && !app.packageName.equalsIgnoreCase("android") || app.packageName.equals("com.android.webview") || app.packageName.equals("com.android.chrome")) {
                     sortedApps.add(new String[]{app.packageName, app.loadLabel(pm).toString()});
                 }
             }
