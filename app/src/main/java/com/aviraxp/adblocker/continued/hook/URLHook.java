@@ -78,7 +78,7 @@ class URLHook {
                 String url = urlLengthTweaker(param);
                 if (url != null) {
                     for (String adUrl : HookLoader.urlList) {
-                        if (url.contains(adUrl) && !PreferencesHelper.whiteListElements().contains(url)) {
+                        if (lengthTweaker(param) != null && url.contains(adUrl) && !PreferencesHelper.whiteListElements().contains(url)) {
                             lengthSetter(param, lengthTweaker(param));
                             LogUtils.logRecord("URL Block Success: " + lpparam.packageName + "/" + url);
                             NotificationUtils.setNotify(ContextUtils.getOwnContext());
