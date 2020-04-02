@@ -29,6 +29,4 @@ android {
 dependencies {
     compileOnly 'de.robv.android.xposed:api:82'
     implementation 'moe.feng:AlipayZeroSdk:1.1'
-    implementation 'com.zhuge.analysis:zhugeio:latest.integration'
-    implementation 'com.oasisfeng.condom:library:1.0.2'
 }

@@ -18,14 +18,9 @@ import android.preference.Preference;
 import android.preference.PreferenceActivity;
 import android.preference.PreferenceCategory;
 import android.preference.PreferenceManager;
-import android.provider.Settings;
 
 import com.aviraxp.adblocker.continued.BuildConfig;
 import com.aviraxp.adblocker.continued.R;
-import com.oasisfeng.condom.CondomContext;
-import com.zhuge.analysis.stat.ZhugeSDK;
-
-import org.json.JSONObject;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -41,7 +36,6 @@ import moe.feng.alipay.zerosdk.AlipayZeroSdk;
 public class SettingsActivity extends PreferenceActivity {
 
     static boolean isActivated = false;
-    private static boolean useSDK = false;
 
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -49,32 +43,11 @@ public class SettingsActivity extends PreferenceActivity {
         addPreferencesFromResource(R.xml.pref_settings);
         checkState();
         showUpdateLog();
-        checkSDKPermission();
         new AppPicker().execute();
         removePreference();
         uriListener();
         hideIconListener();
         licensesListener();
-        analysisSDKInit();
-    }
-
-    private void checkSDKPermission() {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-            if (checkSelfPermission("android.permission.READ_PHONE_STATE") != PackageManager.PERMISSION_GRANTED) {
-                requestPermissions(new String[]{"android.permission.READ_PHONE_STATE"}, 0);
-            }
-        }
-        analysisSDKInit();
-    }
-
-    @SuppressLint("HardwareIds")
-    private void analysisSDKInit() {
-        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.M || Build.VERSION.SDK_INT >= Build.VERSION_CODES.M && checkSelfPermission("android.permission.READ_PHONE_STATE") == PackageManager.PERMISSION_GRANTED) {
-            ZhugeSDK.getInstance().init(CondomContext.wrap(getApplicationContext(), "ZhuGeIO"));
-            JSONObject personObject = new JSONObject();
-            ZhugeSDK.getInstance().identify(CondomContext.wrap(getApplicationContext(), "ZhuGeIO"), Settings.Secure.getString(getContentResolver(), Settings.Secure.ANDROID_ID), personObject);
-            useSDK = true;
-        }
     }
 
     private void showUpdateLog() {
@@ -215,13 +188,6 @@ public class SettingsActivity extends PreferenceActivity {
                 return true;
             }
         });
-    }
-
-    public void onDestroy() {
-        super.onDestroy();
-        if (useSDK) {
-            ZhugeSDK.getInstance().flush(CondomContext.wrap(getApplicationContext(), "ZhuGeIO"));
-        }
     }
 
     private class AppPicker extends AsyncTask<Void, Void, Void> {
