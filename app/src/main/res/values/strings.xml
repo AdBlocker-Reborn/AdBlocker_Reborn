@@ -58,6 +58,6 @@
     <string name="notification_count">Total ADs blocked after last boot: </string>
     <string name="app_translator">aviraxp</string>
     <string name="translator">Translator</string>
-    <string name="antixposed_hook_description" >Prevent some applications from blocking xposed themselves</string>
-    <string name="antixposed_hook" >Enable Anti-Anti Xposed Block</string>
+    <string name="antixposed_hook_description">Prevent some applications from blocking xposed themselves</string>
+    <string name="antixposed_hook">Enable Anti-Anti Xposed Block</string>
 </resources>

@@ -58,6 +58,6 @@
     <string name="notification_count">Son önyüklemeden sonra engellenen toplam reklam sayısı: </string>
     <string name="app_translator">ilker binzet</string>
     <string name="translator">Çevirmen</string>
-    <string name="antixposed_hook_description" >Bazı uygulamaların xposed\'ı engellemesini engelleyin.</string>
-    <string name="antixposed_hook" >Anti-Anti Xposed Engellemeyi Etkinleştir</string>
+    <string name="antixposed_hook_description">Bazı uygulamaların xposed\'ı engellemesini engelleyin.</string>
+    <string name="antixposed_hook">Anti-Anti Xposed Engellemeyi Etkinleştir</string>
 </resources>
