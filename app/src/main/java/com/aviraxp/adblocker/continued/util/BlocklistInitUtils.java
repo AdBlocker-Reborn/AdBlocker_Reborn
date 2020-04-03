@@ -4,7 +4,7 @@ import android.content.res.Resources;
 import android.content.res.XModuleResources;
 
 import java.io.IOException;
-import java.io.UnsupportedEncodingException;
+import java.nio.charset.StandardCharsets;
 import java.util.Collections;
 import java.util.HashSet;
 
@@ -22,8 +22,8 @@ public class BlocklistInitUtils {
         Collections.addAll(blocklistName, sUrls);
     }
 
-    private String decodeString(String resName, byte[] array) throws UnsupportedEncodingException {
-        String decoded = new String(array, "UTF-8");
+    private String decodeString(String resName, byte[] array) {
+        String decoded = new String(array, StandardCharsets.UTF_8);
         if (resName.equals("blocklist/hosts_yhosts")) {
             decoded = decoded.replace("127.0.0.1 ", "").replace("localhost", "workaround");
         }
