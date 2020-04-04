@@ -60,11 +60,6 @@
             android:title="@string/aggressive_hook" />
         <CheckBoxPreference
             android:defaultValue="false"
-            android:key="SHOW_NOTIFICATION"
-            android:summary="@string/show_notification_description"
-            android:title="@string/show_notification" />
-        <CheckBoxPreference
-            android:defaultValue="false"
             android:key="SYSTEMAPPS"
             android:summary="@string/system_apps_description"
             android:title="@string/system_apps" />

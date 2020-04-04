@@ -1,6 +1,5 @@
 package com.aviraxp.adblocker.continued.hook;
 
-import android.annotation.SuppressLint;
 import android.view.View;
 import android.webkit.WebResourceRequest;
 import android.webkit.WebResourceResponse;
@@ -8,9 +7,7 @@ import android.webkit.WebView;
 import android.webkit.WebViewClient;
 
 import com.aviraxp.adblocker.continued.helper.PreferencesHelper;
-import com.aviraxp.adblocker.continued.util.ContextUtils;
 import com.aviraxp.adblocker.continued.util.LogUtils;
-import com.aviraxp.adblocker.continued.util.NotificationUtils;
 
 import de.robv.android.xposed.XC_MethodHook;
 import de.robv.android.xposed.XposedBridge;
@@ -36,7 +33,6 @@ class WebViewHook {
                         if (urlCutting.startsWith(adUrl) && !PreferencesHelper.whiteListElements().contains(url)) {
                             param.setResult(new WebResourceResponse(null, null, null));
                             LogUtils.logRecord("WebViewClient Block Success: " + lpparam.packageName + "/" + url);
-                            NotificationUtils.setNotify(ContextUtils.getOwnContext());
                             return;
                         }
                     }
@@ -44,7 +40,6 @@ class WebViewHook {
                         if (urlCutting.contains(adUrl) && !PreferencesHelper.whiteListElements().contains(url)) {
                             param.setResult(new WebResourceResponse(null, null, null));
                             LogUtils.logRecord("WebViewClient Block Success: " + lpparam.packageName + "/" + url);
-                            NotificationUtils.setNotify(ContextUtils.getOwnContext());
                             return;
                         }
                     }
@@ -60,7 +55,6 @@ class WebViewHook {
                     adExist = urlFiltering(url, null, param);
                     if (adExist) {
                         LogUtils.logRecord("WebView Block Success: " + lpparam.packageName + "/" + url);
-                        NotificationUtils.setNotify(ContextUtils.getOwnContext());
                     }
                 }
             }
@@ -74,7 +68,6 @@ class WebViewHook {
                     adExist = urlFiltering(null, data, param);
                     if (adExist) {
                         LogUtils.logRecord("WebView Block Success: " + lpparam.packageName + "/" + data);
-                        NotificationUtils.setNotify(ContextUtils.getOwnContext());
                     }
                 }
             }
@@ -89,7 +82,6 @@ class WebViewHook {
                     adExist = urlFiltering(url, data, param);
                     if (adExist) {
                         LogUtils.logRecord("WebView Block Success: " + lpparam.packageName + "/" + url + " & " + data);
-                        NotificationUtils.setNotify(ContextUtils.getOwnContext());
                     }
                 }
             }
@@ -134,7 +126,6 @@ class WebViewHook {
         return false;
     }
 
-    @SuppressLint("NewApi")
     private String checkURL(XC_MethodHook.MethodHookParam param) {
         if (param.args[1] instanceof String) {
             return param.args[1].toString();

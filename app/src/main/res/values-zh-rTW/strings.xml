@@ -31,9 +31,6 @@
     <string name="list_mode_description">啟動應用程式清單時使用白名單模式，關閉黑名單模式</string>
     <string name="no_reload">啟動相容模式</string>
     <string name="no_reload_description">改善效能，但是下次重新啟動之後才會套用</string>
-    <string name="notification">阻擋成功</string>
-    <string name="notification_count">上次啟動後，總共有這麼多個廣告被阻擋：</string>
-    <string name="notification_des">阻擋了一個項目</string>
     <string name="open_project">瀏覽項目編碼</string>
     <string name="open_project_description">在 Github 顯示專案編碼</string>
     <string name="open_xda">開啟討論頁面</string>
@@ -45,8 +42,6 @@
     <string name="settings">設定</string>
     <string name="shortcut_hook">啟動捷徑阻擋</string>
     <string name="shortcut_hook_description">阻擋自動建立的捷徑</string>
-    <string name="show_notification">當阻擋時顯示通知</string>
-    <string name="show_notification_description">可能導致通知欄崩潰</string>
     <string name="system_apps">啟動系統應用程式保護</string>
     <string name="system_apps_description">不要阻擋系統應用程式（將會覆蓋白名單的設定）</string>
     <string name="translator">翻譯人員</string>

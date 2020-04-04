@@ -69,10 +69,6 @@ public class PreferencesHelper {
         return getModuleSharedPreferences().getBoolean("SYSTEMAPPS", false);
     }
 
-    public static boolean isShowNotification() {
-        return getModuleSharedPreferences().getBoolean("SHOW_NOTIFICATION", false);
-    }
-
     public static boolean isDebugModeEnabled() {
         return getModuleSharedPreferences().getBoolean("DEBUG", false);
     }

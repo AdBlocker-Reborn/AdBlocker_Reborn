@@ -5,9 +5,7 @@ import android.os.NetworkOnMainThreadException;
 import android.os.StrictMode;
 
 import com.aviraxp.adblocker.continued.helper.PreferencesHelper;
-import com.aviraxp.adblocker.continued.util.ContextUtils;
 import com.aviraxp.adblocker.continued.util.LogUtils;
-import com.aviraxp.adblocker.continued.util.NotificationUtils;
 
 import java.net.InetAddress;
 import java.net.InetSocketAddress;
@@ -42,7 +40,6 @@ class HostsHook {
                     if (host != null && HookLoader.hostsList.contains(host) && !PreferencesHelper.whiteListElements().contains(host)) {
                         param.setResult(null);
                         LogUtils.logRecord("Hosts Block Success: " + lpparam.packageName + "/" + host);
-                        NotificationUtils.setNotify(ContextUtils.getOwnContext());
                     }
                 }
             }
@@ -56,7 +53,6 @@ class HostsHook {
                     param.setResult(null);
                     param.setThrowable(new UnknownHostException());
                     LogUtils.logRecord("Hosts Block Success: " + lpparam.packageName + "/" + host);
-                    NotificationUtils.setNotify(ContextUtils.getOwnContext());
                 }
             }
         };
@@ -82,7 +78,6 @@ class HostsHook {
                         param.setResult(new Object());
                         param.setThrowable(new UnknownHostException());
                         LogUtils.logRecord("Hosts Block Success: " + lpparam.packageName + "/" + host);
-                        NotificationUtils.setNotify(ContextUtils.getOwnContext());
                     }
                 }
             }
@@ -97,7 +92,6 @@ class HostsHook {
                     param.setResult(null);
                     param.setThrowable(new UnknownHostException());
                     LogUtils.logRecord("Hosts Block Success: " + lpparam.packageName + "/" + host);
-                    NotificationUtils.setNotify(ContextUtils.getOwnContext());
                 }
             }
         };
@@ -111,7 +105,6 @@ class HostsHook {
                     param.setResult(null);
                     param.setThrowable(new SocketException());
                     LogUtils.logRecord("Hosts Block Success: " + lpparam.packageName + "/" + host);
-                    NotificationUtils.setNotify(ContextUtils.getOwnContext());
                 }
             }
         };
@@ -124,7 +117,6 @@ class HostsHook {
                 if (host != null && HookLoader.hostsList.contains(host) && !PreferencesHelper.whiteListElements().contains(host)) {
                     param.setResult(false);
                     LogUtils.logRecord("Hosts Block Success: " + lpparam.packageName + "/" + host);
-                    NotificationUtils.setNotify(ContextUtils.getOwnContext());
                 }
             }
         };

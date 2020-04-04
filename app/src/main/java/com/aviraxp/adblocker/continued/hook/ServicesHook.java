@@ -8,7 +8,6 @@ import android.content.pm.PackageManager;
 import com.aviraxp.adblocker.continued.helper.PreferencesHelper;
 import com.aviraxp.adblocker.continued.util.ContextUtils;
 import com.aviraxp.adblocker.continued.util.LogUtils;
-import com.aviraxp.adblocker.continued.util.NotificationUtils;
 
 import de.robv.android.xposed.XC_MethodHook;
 import de.robv.android.xposed.XposedBridge;
@@ -61,7 +60,6 @@ class ServicesHook {
                         }
                     }
                     LogUtils.logRecord("Service Block Success: " + serviceName.flattenToShortString());
-                    NotificationUtils.setNotify(ContextUtils.getOwnContext());
                 }
             }
         }

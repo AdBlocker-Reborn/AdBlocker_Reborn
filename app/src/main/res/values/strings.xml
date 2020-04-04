@@ -50,12 +50,7 @@
     <string name="url_hook">Enable URL Block</string>
     <string name="list_mode_description">Use whitelist mode for application list when enabled, blacklist mode when disabled</string>
     <string name="list_mode">Whitelist Mode</string>
-    <string name="notification">Block Succcess</string>
-    <string name="notification_des">Blocked one item</string>
-    <string name="show_notification_description">May cause notifications flooding</string>
-    <string name="show_notification">Show Notification when Blocking</string>
     <string name="updatelog">Update Log</string>
-    <string name="notification_count">Total ADs blocked after last boot: </string>
     <string name="app_translator">aviraxp</string>
     <string name="translator">Translator</string>
     <string name="antixposed_hook_description">Prevent some applications from blocking xposed themselves</string>

@@ -1,9 +1,7 @@
 package com.aviraxp.adblocker.continued.hook;
 
 import com.aviraxp.adblocker.continued.helper.PreferencesHelper;
-import com.aviraxp.adblocker.continued.util.ContextUtils;
 import com.aviraxp.adblocker.continued.util.LogUtils;
-import com.aviraxp.adblocker.continued.util.NotificationUtils;
 
 import java.net.MalformedURLException;
 import java.net.URL;
@@ -81,7 +79,6 @@ class URLHook {
                         if (lengthTweaker(param) != null && url.contains(adUrl) && !PreferencesHelper.whiteListElements().contains(url)) {
                             lengthSetter(param, lengthTweaker(param));
                             LogUtils.logRecord("URL Block Success: " + lpparam.packageName + "/" + url);
-                            NotificationUtils.setNotify(ContextUtils.getOwnContext());
                             return;
                         }
                     }
@@ -99,7 +96,6 @@ class URLHook {
                         if (urlCutting.startsWith(adUrl) && !PreferencesHelper.whiteListElements().contains(url)) {
                             lengthSetter(param, url);
                             LogUtils.logRecord("URL Block Success: " + lpparam.packageName + "/" + url);
-                            NotificationUtils.setNotify(ContextUtils.getOwnContext());
                             return;
                         }
                     }

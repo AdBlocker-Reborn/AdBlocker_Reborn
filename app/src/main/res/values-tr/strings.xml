@@ -50,12 +50,7 @@
     <string name="url_hook">URL Engellemeyi Etkinleştir</string>
     <string name="list_mode_description">Etkinleştirildiğinde uygulama listesi için beyaz liste modunu, devre dışı bırakıldığında kara liste modunu kullanın</string>
     <string name="list_mode">Beyaz Liste Modu</string>
-    <string name="notification">Engelleme Başarılı</string>
-    <string name="notification_des">Bir öğe engellendi</string>
-    <string name="show_notification_description">Bildirimlerin flood\'a neden olabilir</string>
-    <string name="show_notification">Engelleme Sırasında Bildirim Göster</string>
     <string name="updatelog">Günlüğü Güncelle</string>
-    <string name="notification_count">Son önyüklemeden sonra engellenen toplam reklam sayısı: </string>
     <string name="app_translator">ilker binzet</string>
     <string name="translator">Çevirmen</string>
     <string name="antixposed_hook_description">Bazı uygulamaların xposed\'ı engellemesini engelleyin.</string>
