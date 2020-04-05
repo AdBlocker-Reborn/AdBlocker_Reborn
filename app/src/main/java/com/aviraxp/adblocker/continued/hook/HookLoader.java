@@ -42,7 +42,6 @@ public class HookLoader implements IXposedHookLoadPackage, IXposedHookZygoteInit
     public void initZygote(StartupParam startupParam) throws IOException {
         new BlocklistInitUtils().init(startupParam, "blocklist/av", HookLoader.actViewList);
         new BlocklistInitUtils().init(startupParam, "blocklist/av_aggressive", HookLoader.actViewList_aggressive);
-        new BlocklistInitUtils().init(startupParam, "blocklist/av_specific", HookLoader.actViewList_specific);
         new BlocklistInitUtils().init(startupParam, "blocklist/hosts", HookLoader.hostsList);
         new BlocklistInitUtils().init(startupParam, "blocklist/hosts_yhosts", HookLoader.hostsList);
         new BlocklistInitUtils().init(startupParam, "blocklist/services", HookLoader.servicesList);

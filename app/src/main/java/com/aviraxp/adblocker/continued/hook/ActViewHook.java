@@ -31,7 +31,7 @@ class ActViewHook {
                     ComponentName Component = ((Intent) param.args[0]).getComponent();
                     if (Component != null) {
                         String activityClassName = Component.getClassName();
-                        if (activityClassName != null && (HookLoader.actViewList.contains(activityClassName) || isSpecificBlock(lpparam.packageName, activityClassName) || PreferencesHelper.isAggressiveHookEnabled() && isAggressiveBlock(activityClassName)) && !PreferencesHelper.whiteListElements().contains(activityClassName)) {
+                        if (activityClassName != null && (HookLoader.actViewList.contains(activityClassName) || PreferencesHelper.isAggressiveHookEnabled() && isAggressiveBlock(activityClassName)) && !PreferencesHelper.whiteListElements().contains(activityClassName)) {
                             param.setResult(null);
                             LogUtils.logRecord("Activity Block Success: " + lpparam.packageName + "/" + activityClassName);
                         }
@@ -73,18 +73,12 @@ class ActViewHook {
         return false;
     }
 
-    private boolean isSpecificBlock(String string, String string2) {
-        for (String listItem : HookLoader.actViewList_specific) {
-            if (listItem.startsWith(string) && listItem.endsWith(string2)) {
-                return true;
-            }
-        }
-        return false;
-    }
-
     private void hideIfAdView(View paramView, String paramString) {
         String viewName = paramView.getClass().getName();
-        if (viewName != null && (HookLoader.actViewList.contains(viewName) || isSpecificBlock(paramString, viewName) || PreferencesHelper.isAggressiveHookEnabled() && isAggressiveBlock(viewName)) && !PreferencesHelper.whiteListElements().contains(viewName)) {
+        if (PreferencesHelper.whiteListElements().contains(viewName)) {
+            return;
+        }
+        if (PreferencesHelper.isAggressiveHookEnabled() && isAggressiveBlock(viewName) || HookLoader.actViewList.contains(viewName)) {
             paramView.clearAnimation();
             paramView.setVisibility(View.GONE);
             LogUtils.logRecord("View Block Success: " + paramString + "/" + viewName);
