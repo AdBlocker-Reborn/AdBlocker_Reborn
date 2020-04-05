@@ -21,7 +21,6 @@ class LicensesDialog extends AlertDialog.Builder {
         WebView view = new WebView(ctx);
         view.loadUrl(url);
         view.setWebViewClient(new WebViewClient() {
-            @SuppressWarnings("deprecation")
             @Override
             public boolean shouldOverrideUrlLoading(WebView view, String url) {
                 if (url != null && url.startsWith("http")) {
