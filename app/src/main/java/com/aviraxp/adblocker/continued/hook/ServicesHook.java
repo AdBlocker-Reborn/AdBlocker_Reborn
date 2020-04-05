@@ -34,7 +34,7 @@ class ServicesHook {
             }
         };
 
-        if (lpparam.packageName.equals("android")) {
+        if (PreferencesHelper.isServicesHookEnabled() && lpparam.packageName.equals("android")) {
             XposedBridge.hookAllMethods(XposedHelpers.findClass("com.android.server.am.ActiveServices", lpparam.classLoader), "startServiceLocked", servicesStartHook);
             XposedBridge.hookAllMethods(XposedHelpers.findClass("com.android.server.am.ActiveServices", lpparam.classLoader), "bindServiceLocked", servicesBindHook);
         }
@@ -46,7 +46,7 @@ class ServicesHook {
             if (serviceName != null) {
                 String packageName = serviceName.getPackageName();
                 String splitServicesName = serviceName.getClassName();
-                if ((!PreferencesHelper.isMIUI() && HookLoader.servicesList.contains(splitServicesName) || PreferencesHelper.isMIUI() && HookLoader.servicesList.contains(splitServicesName) && (!splitServicesName.toLowerCase().contains("xiaomi") || splitServicesName.toLowerCase().contains("ad"))) && PreferencesHelper.isServicesHookEnabled() && !PreferencesHelper.isAndroidApp(packageName) && !PreferencesHelper.isWhitelisted(packageName) && !PreferencesHelper.whiteListElements().contains(splitServicesName)) {
+                if (HookLoader.servicesList.contains(splitServicesName) && !PreferencesHelper.isWhitelisted(packageName) && !PreferencesHelper.whiteListElements().contains(splitServicesName)) {
                     if (!PreferencesHelper.isDisableSystemApps()) {
                         param.setResult(null);
                     } else {

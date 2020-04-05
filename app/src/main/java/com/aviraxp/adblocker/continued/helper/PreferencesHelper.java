@@ -1,7 +1,6 @@
 package com.aviraxp.adblocker.continued.helper;
 
 import android.content.pm.ApplicationInfo;
-import android.os.SystemProperties;
 
 import com.aviraxp.adblocker.continued.BuildConfig;
 
@@ -87,10 +86,6 @@ public class PreferencesHelper {
 
     public static boolean isAndroidApp(String string) {
         return string.startsWith("com.android") && !string.equals("com.android.webview") || string.equalsIgnoreCase("android");
-    }
-
-    public static boolean isMIUI() {
-        return !SystemProperties.get("ro.miui.ui.version.name", "").equals("");
     }
 
     private static Set<String> disabledApps() {

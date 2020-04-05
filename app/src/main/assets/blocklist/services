@@ -22,10 +22,6 @@ com.umeng.message.UmengDownloadResourceService
 com.umeng.message.UmengIntentService
 com.umeng.message.UmengService
 com.urbanairship.push.PushService
-com.xiaomi.mipush.sdk.PushMessageHandler
-com.xiaomi.miui.ad.exchange.thrift.bid.service.MiuiAdExchangeBidService
-com.xiaomi.miui.ad.thrift.service.MiuiAdQueryService
-com.xiaomi.push.service.XMPushService
 jp.tekunodo.service.AdfurikunWallService
 net.adways.appdriver.sdk.AppDriverLogIntentService
 net.adxmi.android.AdService
