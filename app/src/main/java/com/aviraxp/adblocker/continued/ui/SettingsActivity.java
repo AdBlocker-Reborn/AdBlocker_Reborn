@@ -231,8 +231,8 @@ public class SettingsActivity extends PreferenceActivity {
 
         @Override
         protected void onPostExecute(Void result) {
-            final CharSequence[] appNamesList = appNames.toArray(new CharSequence[appNames.size()]);
-            final CharSequence[] packageNamesList = packageNames.toArray(new CharSequence[packageNames.size()]);
+            final CharSequence[] appNamesList = appNames.toArray(new CharSequence[0]);
+            final CharSequence[] packageNamesList = packageNames.toArray(new CharSequence[0]);
             disabledApps.setEntries(appNamesList);
             disabledApps.setEntryValues(packageNamesList);
             disabledApps.setEnabled(true);
