@@ -1,7 +1,7 @@
 apply plugin: 'com.android.application'
 
 android {
-    compileSdkVersion 25
+    compileSdkVersion 29
     defaultConfig {
         applicationId "com.aviraxp.adblocker.continued"
         minSdkVersion 21
