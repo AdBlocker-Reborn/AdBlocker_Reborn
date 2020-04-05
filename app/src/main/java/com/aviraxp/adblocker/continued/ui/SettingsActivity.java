@@ -3,7 +3,6 @@ package com.aviraxp.adblocker.continued.ui;
 import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.content.ComponentName;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.ApplicationInfo;
@@ -123,27 +122,9 @@ public class SettingsActivity extends PreferenceActivity {
             new AlertDialog.Builder(this)
                     .setCancelable(true)
                     .setMessage(R.string.hint_reboot_not_active)
-                    .setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialog, int id) {
-                            openXposed();
-                        }
-                    })
                     .setNegativeButton(android.R.string.cancel, null)
                     .show();
         }
-    }
-
-    private void openXposed() {
-        Intent intent = new Intent("de.robv.android.xposed.installer.OPEN_SECTION");
-        if (getPackageManager().queryIntentActivities(intent, 0).isEmpty()) {
-            intent = getPackageManager().getLaunchIntentForPackage("de.robv.android.xposed.installer");
-        }
-        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
-                .putExtra("section", "modules")
-                .putExtra("fragment", 1)
-                .putExtra("module", BuildConfig.APPLICATION_ID);
-        startActivity(intent);
     }
 
     private void donateAlipay() {
