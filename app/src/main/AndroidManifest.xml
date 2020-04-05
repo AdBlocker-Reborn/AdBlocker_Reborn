@@ -38,12 +38,6 @@
         <meta-data
             android:name="xposedminversion"
             android:value="53" />
-        <meta-data
-            android:name="ZHUGE_APPKEY"
-            android:value="401507ce8ddb43c395f4e7878a61eec7" />
-        <meta-data
-            android:name="ZHUGE_CHANNEL"
-            android:value="coolapk" />
 
     </application>
 </manifest>
