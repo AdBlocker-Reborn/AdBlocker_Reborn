@@ -64,7 +64,7 @@
             android:summary="@string/system_apps_description"
             android:title="@string/system_apps" />
         <CheckBoxPreference
-            android:defaultValue="false"
+            android:defaultValue="true"
             android:key="NORELOAD"
             android:summary="@string/no_reload_description"
             android:title="@string/no_reload" />

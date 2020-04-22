@@ -21,7 +21,7 @@ public class PreferencesHelper {
         if (preferences == null) {
             preferences = new XSharedPreferences(BuildConfig.APPLICATION_ID);
             preferences.makeWorldReadable();
-            isNoReloadPreferences = preferences.getBoolean("NORELOAD", false);
+            isNoReloadPreferences = preferences.getBoolean("NORELOAD", true);
         } else if (!isNoReloadPreferences) {
             preferences.reload();
         }
